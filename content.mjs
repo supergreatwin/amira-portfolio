@@ -47,6 +47,7 @@ export const films = [
   },
   {
     id: 'biophilia', title: 'Biophilia', posterWidth: 607, genre: 'Collaborative documentary', year: 2023, seconds: 1793,
+    trailer: { youtubeId: '2z-i75VBvSY', titleAr: 'بيوفيليا' },
     excerpt: 'A closer look at the nature that persists amid the noise of urban life.',
     synopsis: 'In this increasingly fast-paced world, especially in big urban cities, everything is becoming man-made, and we indulge and indulge. Every once in a while, if we’re lucky enough, we get to turn the volume down and be humbled by the greatest artist: nature. It has the ability to remind us of what is real and natural amidst the noise. This is an open invitation to embrace the beauty of nature in urban spaces, notice what it can be despite endless urbanization, and become one with it. While everything manufactured can seem like a feat of genius, nature, too, deserves to be celebrated and embraced.',
     credits: [['Production', 'Duemila30 Productions']],
@@ -59,6 +60,7 @@ export const films = [
   },
   {
     id: 'mamina', title: 'Mamina', posterWidth: 637, genre: 'Short documentary', year: 2025, seconds: 885,
+    trailer: { youtubeId: '9-ksBDgAwFk', titleAr: 'مامينا' },
     excerpt: 'After losing her grandmother, Amira returns to the memories they made together in her kitchen.',
     synopsis: 'Amira, a young woman deeply attached to her grandmother, is struggling to cope with her loss. Their bond was nurtured in her grandmother’s kitchen through cooking and sharing meals together. Now, without her grandmother’s abundant love, Amira feels lost and misses her terribly. As she grieves and searches for love in those around her, including her mother, and within herself, she begins to uncover what might be the key to moving forward despite the pain.',
     credits: [['Director', 'Amira Abdel-Fadil'], ['Producer', 'IMS Nazra']],
@@ -71,6 +73,7 @@ export const films = [
   },
   {
     id: 'double-edged-sword', title: 'A Double-Edged Sword', posterWidth: 636, genre: 'Short documentary', year: 2023, seconds: 795,
+    trailer: { youtubeId: 'LlEB9mEAB_Y', titleAr: 'سيف ذو حدين' },
     excerpt: 'How food waste in the supply chain connects to hunger and climate change.',
     synopsis: 'A short documentary about food waste in the food chain and its link to climate change and hunger.',
     credits: [['Director', 'Amira Abdel-Fadil']],

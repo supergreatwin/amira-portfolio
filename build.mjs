@@ -3,7 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collaborations, films, locales, movieWeb, site, writing } from './content.mjs';
-import { collaborationItems, homepageWriting } from './sections.mjs';
+import { collaborationItems, homepageTrailers, homepageWriting, trailerPlayer } from './sections.mjs';
 
 const locale = locales.en;
 
@@ -98,12 +98,13 @@ function filmPage(film, index) {
   const previous = films[(index + films.length - 1) % films.length];
   const next = films[(index + 1) % films.length];
   const lead = film.stills.find(asset => asset[1] > asset[2]);
+  const trailer = trailerPlayer(film);
   return `<article class="shell section project">
     <a class="line-link back-link" href="index.html#work">${icon('arrow-left')} All films</a>
     <div class="project-heading">${sectionTag(String(index + 1).padStart(2, '0'), 'Film')}<h1>${escape(film.title)}</h1>${meta(film) ? `<p class="film-meta">${meta(film)}</p>` : ''}</div>
     ${lead ? `<figure class="project-hero">${image(lead, { priority: true, sizes: '(max-width: 1360px) 100vw, 1280px' })}<figcaption>Still from <i>${escape(film.title)}</i></figcaption></figure>` : ''}
     <div class="project-body">${galleryItem(poster(film), `Original poster · ${film.title}`, 'poster', { priority: !lead, sizes: '(max-width: 720px) 65vw, 28vw' }, 'project-poster')}<div class="prose project-copy">${film.synopsis ? `<h2>Synopsis</h2><p>${escape(film.synopsis)}</p>` : ''}<h2>Production credits</h2><dl class="credits">${film.credits.map(([role, person]) => `<div><dt>${escape(role)}</dt><dd>${escape(person)}</dd></div>`).join('')}</dl><div class="actions">${contactCTA}</div></div></div>
-    <section class="project-gallery" aria-labelledby="stills-title"><h2 id="stills-title">Film stills</h2><div class="gallery-grid">${film.stills.map((asset, assetIndex) => galleryItem(asset, `Film still ${String(assetIndex + 1).padStart(2, '0')} · ${film.title}`, film.id)).join('')}</div></section>
+    ${trailer ? `<div class="project-trailer">${trailer}</div>\n    ` : ''}<section class="project-gallery" aria-labelledby="stills-title"><h2 id="stills-title">Film stills</h2><div class="gallery-grid">${film.stills.map((asset, assetIndex) => galleryItem(asset, `Film still ${String(assetIndex + 1).padStart(2, '0')} · ${film.title}`, film.id)).join('')}</div></section>
     <nav class="related" aria-label="Related films"><a href="${filmPath(previous)}"><span>${icon('arrow-left')} Previous film</span><strong>${escape(previous.title)}</strong></a><a href="${filmPath(next)}"><span>Next film ${icon('arrow-right')}</span><strong>${escape(next.title)}</strong></a></nav>
   </article>`;
 }
@@ -122,7 +123,7 @@ const pages = [
   { file: 'about.html', title: 'About', description: 'About Cairo-based filmmaker, photographer, writer, and visual artist Amira Abdelfadil.', content: aboutPage(), structured: person },
   { file: 'writing.html', title: 'Writing', description: 'Selected essays and film writing from Thought.is and MovieWeb.', content: `<section class="shell section inner-page">${sectionTag('01', 'Archive')}<h1>Beyond the <em>frame</em></h1><p class="section-intro">Selected essays and film writing from Thought.is and MovieWeb.</p>${writingList()}</section>`, structured: { '@type': 'ItemList', itemListElement: [...writing, ...movieWeb].map((entry, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: entry.title, url: entry.url, ...(entry.summary ? { author: { '@id': person['@id'] } } : {}) } })) } },
   { file: 'contact.html', title: 'Contact', description: 'Contact filmmaker and visual artist Amira Abdelfadil by email or through her official social profiles.', content: `<section class="shell section inner-page contact-page">${sectionTag('01', 'Enquiries')}<h1>Contact <em>Amira</em></h1><p class="contact-lead">Let’s collaborate on stories worth telling.</p><p class="section-intro">Get in touch for filmmaking, documentary projects, creative collaborations, and professional enquiries.</p><a class="line-link contact-email" href="mailto:${escape(site.email)}">${escape(site.email)} ${icon('arrow-right')}</a>${socialProfiles()}</section>` },
-  ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
+  ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, trailer: Boolean(film.trailer), content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
 ];
 
 const address = file => new URL(file, site.url).href;
@@ -151,7 +152,7 @@ function render(page) {
   <meta property="og:image" content="${site.url}assets/${page.image ?? 'mamina-02.jpg'}">
   <meta property="og:image:alt" content="${escape(page.image ? `${page.title} poster` : hero[3])}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="${stylesheet}">
+  <link rel="stylesheet" href="${stylesheet}">${page.trailer ? `\n  <link rel="stylesheet" href="${versioned('trailer.css')}">` : ''}
   <script src="${script}" defer></script>
   ${page.structured ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>` : ''}
 </head>
@@ -172,7 +173,7 @@ function render(page) {
 const outputs = pages.map(page => [page.file, render(page)]);
 for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
   const source = readFileSync(join(root, file), 'utf8');
-  outputs.push([file, source
+  outputs.push([file, homepageTrailers(source, films, arabic)
     .replace(/(<!-- collaborations:start -->)[\s\S]*?(<!-- collaborations:end -->)/, (_, start, end) => `${start}\n${collaborationItems(collaborations, arabic)}\n          ${end}`)
     .replace(/(<!-- movieweb:start -->)[\s\S]*?(<!-- movieweb:end -->)/, (_, start, end) => `${start}\n${homepageWriting(movieWeb, arabic)}\n          ${end}`)]);
 }
