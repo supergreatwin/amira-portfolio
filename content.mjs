@@ -15,7 +15,7 @@ export const locales = {
     lang: 'en', dir: 'ltr', ogLocale: 'en_US',
     navigation: [
       ['Home', '#top'], ['Films', '#work'], ['Art & Photography', 'art.html'],
-      ['Writing', 'writing.html'], ['About', 'about.html'], ['Contact', 'contact.html'],
+      ['Writing', 'writing.html'], ['Collaborations', '#collaborations'], ['About', 'about.html'], ['Contact', 'contact.html'],
     ],
   },
 };
@@ -49,7 +49,7 @@ export const films = [
     id: 'biophilia', title: 'Biophilia', posterWidth: 607, genre: 'Collaborative documentary', year: 2023, seconds: 1793,
     excerpt: 'A closer look at the nature that persists amid the noise of urban life.',
     synopsis: 'In this increasingly fast-paced world, especially in big urban cities, everything is becoming man-made, and we indulge and indulge. Every once in a while, if we’re lucky enough, we get to turn the volume down and be humbled by the greatest artist: nature. It has the ability to remind us of what is real and natural amidst the noise. This is an open invitation to embrace the beauty of nature in urban spaces, notice what it can be despite endless urbanization, and become one with it. While everything manufactured can seem like a feat of genius, nature, too, deserves to be celebrated and embraced.',
-    credits: [['Co-directors', 'Kateřina Sivoková, Rama Abdi & Amira Abdel-Fadil'], ['Production', 'Duemila30 Productions']],
+    credits: [['Production', 'Duemila30 Productions']],
     stills: [
       ['biophilia-01.jpg', 1120, 563, 'A tree and a green cart along an urban road'],
       ['biophilia-02.jpg', 1120, 652, 'A person in blue looking down a narrow city street'],
@@ -62,7 +62,6 @@ export const films = [
     excerpt: 'After losing her grandmother, Amira returns to the memories they made together in her kitchen.',
     synopsis: 'Amira, a young woman deeply attached to her grandmother, is struggling to cope with her loss. Their bond was nurtured in her grandmother’s kitchen through cooking and sharing meals together. Now, without her grandmother’s abundant love, Amira feels lost and misses her terribly. As she grieves and searches for love in those around her, including her mother, and within herself, she begins to uncover what might be the key to moving forward despite the pain.',
     credits: [['Director', 'Amira Abdel-Fadil'], ['Producer', 'IMS Nazra']],
-    watch: ['View the Sundance Collab preview', 'https://collab.sundance.org/catalog/Mamina-2026-01-28-044318'],
     stills: [
       ['mamina-01.jpg', 1120, 578, 'A pot and pan on a kitchen stove'],
       ['mamina-02.jpg', 1344, 709, 'Two women talk on a balcony overlooking Cairo'],
@@ -88,4 +87,77 @@ export const writing = [
   { title: 'The Beauty of Capturing Memories', summary: 'Revisiting family albums brings forgotten moments and earlier versions of ourselves into focus.', url: 'https://thought.is/the-beauty-of-capturing-memories/' },
   { title: 'Maybe One Day I’ll Write a Masterpiece', summary: 'An essay on the urge to write, the distance between ambition and practice, and the value of continuing.', url: 'https://thought.is/maybe-one-day-ill-write-a-masterpiece/' },
   { title: 'No Matter What, I Will Always Choose Effort', summary: 'A reflection on taking chances and showing up when it would be easier to choose comfort.', url: 'https://thought.is/no-matter-what-i-will-always-choose-effort/' },
+];
+
+export const movieWeb = [
+  {
+    title: 'Romance Movies Have Affected How We Perceive Love',
+    titleAr: 'كيف تؤثر الأفلام الرومانسية في نظرتنا إلى الحب؟',
+    url: 'https://movieweb.com/the-danger-of-romantic-movies-in-how-we-perceive-love/',
+    publication: 'MovieWeb',
+    byline: 'Amria Abdel-Fadil',
+  },
+  {
+    title: 'The 11 All-Time Best Documentaries About Racism',
+    titleAr: 'أفضل ١١ فيلمًا وثائقيًا عن العنصرية',
+    url: 'https://movieweb.com/the-best-documentaries-about-racism/',
+    publication: 'MovieWeb',
+    byline: 'Rachel Holbrook and Julian Roman',
+  },
+  {
+    title: 'Blue Lock: 11 Life Lessons We All Can Learn from the Popular Soccer Anime TV Show',
+    titleAr: '١١ درسًا في الحياة من أنمي كرة القدم «بلو لوك»',
+    url: 'https://movieweb.com/blue-lock-life-lessons-we-can-learn/',
+    publication: 'MovieWeb',
+    byline: 'Bernard Herrera and Amria Abdel-Fadil',
+  },
+];
+
+export const collaborations = [
+  {
+    title: 'Sweet & Salty', titleAr: 'حلو وحادق',
+    description: 'Co-directed with Sarah El Halawany. Production credits include Nazra Films, Goethe Institute, IMS, and Red Star.',
+    descriptionAr: 'إخراج مشترك مع سارة الحلواني. وتضم جهات الإنتاج نظرة فيلمز، ومعهد غوته، وآي إم إس، وريد ستار.',
+  },
+  {
+    title: 'Biophilia', titleAr: 'بيوفيليا',
+    description: 'Made with Rama Abdi and Kateřina Sivoková through Duemila30 Productions.',
+    descriptionAr: 'أُنجز الفيلم بالتعاون مع راما عبدي وكاتِرينا سيفوكوفا، ومن إنتاج دويميلا ترينتا.',
+    url: 'https://www.duemila30.com/production/biophilia',
+  },
+  {
+    title: 'Mamina', titleAr: 'مامينا',
+    description: 'Produced by IMS Nazra, with Menna Ahmed on cinematography, Hisham Abdelrazek on editing, and Mohab Ezz on sound.',
+    descriptionAr: 'من إنتاج آي إم إس ونظرة، وتصوير منّة أحمد، ومونتاج هشام عبد الرازق، وتصميم ومزج الصوت لمهاب عز.',
+  },
+  {
+    title: 'A Double-Edged Sword', titleAr: 'سيف ذو حدين',
+    description: 'Co-written with Magda Baraka, who also appears in the film. Sound design and mixing with Khaled Saleh.',
+    descriptionAr: 'كتبت أميرة الفيلم بالاشتراك مع ماجدة بركة، التي تظهر فيه أيضًا، وتعاونت مع خالد صالح في تصميم الصوت ومزجه.',
+  },
+  {
+    title: 'Outside the Frame', titleAr: 'بره الكادر',
+    description: 'Played Raghda in the short film.',
+    descriptionAr: 'أدّت دور رغدة في الفيلم القصير.',
+  },
+  {
+    title: 'Netsharek', titleAr: 'نتشارك',
+    description: 'Edited and refined a food-management project for students at the University of Hull and the Arab Academy for Science, Technology and Maritime Transport.',
+    descriptionAr: 'شاركت في تحرير ومراجعة مشروع عن إدارة الطعام لطلاب جامعة هال والأكاديمية العربية للعلوم والتكنولوجيا والنقل البحري.',
+  },
+  {
+    title: 'ByAmirah', titleAr: 'ByAmirah',
+    description: 'Works with Abdelrahman Mohamed on creative development, film marketing, research, and behind-the-scenes content.',
+    descriptionAr: 'تتعاون مع عبد الرحمن محمد في تطوير الأفكار وتسويق الأفلام والبحث وتوثيق الكواليس.',
+  },
+  {
+    title: 'Ismailia International Film Festival for Documentaries and Shorts', titleAr: 'مهرجان الإسماعيلية الدولي للأفلام التسجيلية والقصيرة',
+    description: 'Served as general coordinator.',
+    descriptionAr: 'تولّت مهمة المنسّقة العامة للمهرجان.',
+  },
+  {
+    title: 'Editorial contributions', titleAr: 'المساهمات التحريرية',
+    description: 'Contributed to MovieWeb, Thought Catalog, Collective World, and Vertical Network.',
+    descriptionAr: 'ساهمت في منصات MovieWeb وThought Catalog وCollective World وVertical Network.',
+  },
 ];

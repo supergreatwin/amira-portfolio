@@ -5,11 +5,11 @@ const hero = document.querySelector('.hero');
 const heroMedia = document.querySelector('.hero-media');
 const visual = document.querySelector('.hero-visual');
 const topbar = document.querySelector('.topbar');
-const mobile = window.matchMedia('(max-width: 720px)');
+const mobile = window.matchMedia('(max-width: 930px)');
 const menu = topbar.querySelector('.menu-toggle');
 const panel = topbar.querySelector('#navigation-panel');
 const navLinks = Array.from(topbar.querySelectorAll('a[href^="#"]'));
-const navSections = Array.from(document.querySelectorAll('#work, #about, #writing, #contact'));
+const navSections = Array.from(document.querySelectorAll('#work, #art, #writing, #collaborations, #about, #contact'));
 
 function setMenu(open) {
   menu.setAttribute('aria-expanded', String(open));
@@ -166,7 +166,7 @@ function showProject(index) {
   dialogContent.getAnimations().forEach(animation => animation.cancel());
   dialogContent.replaceChildren(...Array.from(project.children, child => child.cloneNode(true)));
   dialogContent.querySelector('h3').id = 'project-title';
-  projectPage.href = `film-${film}.html`;
+  if (projectPage) projectPage.href = `film-${film}.html`;
   dialogCount.textContent = `${String(currentProject + 1).padStart(2, '0')} / ${String(projectLinks.length).padStart(2, '0')}`;
   dialog.scrollTop = 0;
 }

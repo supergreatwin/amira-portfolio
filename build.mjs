@@ -2,7 +2,8 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { films, locales, site, writing } from './content.mjs';
+import { collaborations, films, locales, movieWeb, site, writing } from './content.mjs';
+import { collaborationItems, homepageWriting } from './sections.mjs';
 
 const locale = locales.en;
 
@@ -53,7 +54,7 @@ function header(page) {
   return `<header class="topbar"><div class="shell nav-inner">
     <a class="brand" href="index.html" aria-label="Amira Abdelfadil, home">amira abdelfadil</a>
     <div class="nav-panel" id="navigation-panel"><div><nav aria-label="Primary">${navigationLinks(page, 'panel')}</nav></div></div>
-    <div class="nav-actions"><nav class="nav-shortcuts" aria-label="Contact">${navigationLinks(page, 'contact')}</nav><button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navigation-panel" hidden><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+    <div class="nav-actions"><nav class="nav-shortcuts" aria-label="Contact and language">${navigationLinks(page, 'contact')}<a href="${arabicPage(page)}" lang="ar" hreflang="ar">العربية</a></nav><button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navigation-panel" hidden><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
   </div><div class="read-progress" aria-hidden="true"></div></header>`;
 }
 
@@ -82,7 +83,7 @@ function galleryItem(asset, caption, group, settings, className = '') {
 }
 
 function writingList() {
-  return `<div class="essay-list">${writing.map((entry, index) => `<article class="essay"><span class="folio" aria-hidden="true">0${index + 1}</span><div><h3>${external(entry.url, entry.title, 'essay-title')}</h3><p>${escape(entry.summary)}</p><p class="film-meta">Thought.is</p></div></article>`).join('')}</div>`;
+  return `<div class="essay-list">${[...writing, ...movieWeb].map((entry, index) => `<article class="essay"><span class="folio" aria-hidden="true">0${index + 1}</span><div><h3>${external(entry.url, entry.title, 'essay-title')}</h3>${entry.summary ? `<p>${escape(entry.summary)}</p>` : ''}<p class="film-meta">${escape(entry.publication ?? 'Thought.is')}${entry.byline ? ` · ${escape(entry.byline)}` : ''}</p></div></article>`).join('')}</div>`;
 }
 
 const contactCTA = `<a class="pill" href="contact.html">Contact Amira ${icon('arrow-right')}</a>`;
@@ -101,7 +102,7 @@ function filmPage(film, index) {
     <a class="line-link back-link" href="index.html#work">${icon('arrow-left')} All films</a>
     <div class="project-heading">${sectionTag(String(index + 1).padStart(2, '0'), 'Film')}<h1>${escape(film.title)}</h1>${meta(film) ? `<p class="film-meta">${meta(film)}</p>` : ''}</div>
     ${lead ? `<figure class="project-hero">${image(lead, { priority: true, sizes: '(max-width: 1360px) 100vw, 1280px' })}<figcaption>Still from <i>${escape(film.title)}</i></figcaption></figure>` : ''}
-    <div class="project-body">${galleryItem(poster(film), `Original poster · ${film.title}`, 'poster', { priority: !lead, sizes: '(max-width: 720px) 65vw, 28vw' }, 'project-poster')}<div class="prose project-copy">${film.synopsis ? `<h2>Synopsis</h2><p>${escape(film.synopsis)}</p>` : ''}<h2>Production credits</h2><dl class="credits">${film.credits.map(([role, person]) => `<div><dt>${escape(role)}</dt><dd>${escape(person)}</dd></div>`).join('')}</dl>${film.watch ? external(film.watch[1], film.watch[0]) : ''}<div class="actions">${contactCTA}</div></div></div>
+    <div class="project-body">${galleryItem(poster(film), `Original poster · ${film.title}`, 'poster', { priority: !lead, sizes: '(max-width: 720px) 65vw, 28vw' }, 'project-poster')}<div class="prose project-copy">${film.synopsis ? `<h2>Synopsis</h2><p>${escape(film.synopsis)}</p>` : ''}<h2>Production credits</h2><dl class="credits">${film.credits.map(([role, person]) => `<div><dt>${escape(role)}</dt><dd>${escape(person)}</dd></div>`).join('')}</dl><div class="actions">${contactCTA}</div></div></div>
     <section class="project-gallery" aria-labelledby="stills-title"><h2 id="stills-title">Film stills</h2><div class="gallery-grid">${film.stills.map((asset, assetIndex) => galleryItem(asset, `Film still ${String(assetIndex + 1).padStart(2, '0')} · ${film.title}`, film.id)).join('')}</div></section>
     <nav class="related" aria-label="Related films"><a href="${filmPath(previous)}"><span>${icon('arrow-left')} Previous film</span><strong>${escape(previous.title)}</strong></a><a href="${filmPath(next)}"><span>Next film ${icon('arrow-right')}</span><strong>${escape(next.title)}</strong></a></nav>
   </article>`;
@@ -119,12 +120,16 @@ const person = { '@type': 'Person', '@id': `${site.url}#amira`, name: site.name,
 const pages = [
   { file: 'art.html', title: 'Art & Photography', description: 'Photography by Amira Abdelfadil, a filmmaker and visual artist based in Cairo.', content: visualPage() },
   { file: 'about.html', title: 'About', description: 'About Cairo-based filmmaker, photographer, writer, and visual artist Amira Abdelfadil.', content: aboutPage(), structured: person },
-  { file: 'writing.html', title: 'Writing', description: 'Selected essays by Amira Abdelfadil on memory, writing, and taking chances.', content: `<section class="shell section inner-page">${sectionTag('01', 'Archive')}<h1>Beyond the <em>frame</em></h1><p class="section-intro">Selected essays by Amira Abdelfadil, published at Thought.is.</p>${writingList()}</section>`, structured: { '@type': 'ItemList', itemListElement: writing.map((entry, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: entry.title, url: entry.url, author: { '@id': person['@id'] } } })) } },
+  { file: 'writing.html', title: 'Writing', description: 'Selected essays and film writing from Thought.is and MovieWeb.', content: `<section class="shell section inner-page">${sectionTag('01', 'Archive')}<h1>Beyond the <em>frame</em></h1><p class="section-intro">Selected essays and film writing from Thought.is and MovieWeb.</p>${writingList()}</section>`, structured: { '@type': 'ItemList', itemListElement: [...writing, ...movieWeb].map((entry, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: entry.title, url: entry.url, ...(entry.summary ? { author: { '@id': person['@id'] } } : {}) } })) } },
   { file: 'contact.html', title: 'Contact', description: 'Contact filmmaker and visual artist Amira Abdelfadil by email or through her official social profiles.', content: `<section class="shell section inner-page contact-page">${sectionTag('01', 'Enquiries')}<h1>Contact <em>Amira</em></h1><p class="contact-lead">Let’s collaborate on stories worth telling.</p><p class="section-intro">Get in touch for filmmaking, documentary projects, creative collaborations, and professional enquiries.</p><a class="line-link contact-email" href="mailto:${escape(site.email)}">${escape(site.email)} ${icon('arrow-right')}</a>${socialProfiles()}</section>` },
   ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
 ];
 
 const address = file => new URL(file, site.url).href;
+const arabicPage = file => {
+  if (file.startsWith('film-')) return `ar/#project-${file.slice(5, -5)}`;
+  return `ar/#${file.slice(0, -5)}`;
+};
 
 function render(page) {
   const url = address(page.file);
@@ -165,7 +170,13 @@ function render(page) {
 }
 
 const outputs = pages.map(page => [page.file, render(page)]);
-outputs.push(['sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[site.url, ...pages.map(page => address(page.file))].map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`]);
+for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
+  const source = readFileSync(join(root, file), 'utf8');
+  outputs.push([file, source
+    .replace(/(<!-- collaborations:start -->)[\s\S]*?(<!-- collaborations:end -->)/, (_, start, end) => `${start}\n${collaborationItems(collaborations, arabic)}\n          ${end}`)
+    .replace(/(<!-- movieweb:start -->)[\s\S]*?(<!-- movieweb:end -->)/, (_, start, end) => `${start}\n${homepageWriting(movieWeb, arabic)}\n          ${end}`)]);
+}
+outputs.push(['sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[site.url, address('ar/'), ...pages.map(page => address(page.file))].map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`]);
 outputs.push(['robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}sitemap.xml\n`]);
 
 for (const [file, contents] of outputs) {
