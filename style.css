@@ -67,7 +67,8 @@ figcaption { display: flex; align-items: baseline; justify-content: space-betwee
 .topbar .nav-contact { color: var(--burgundy); }
 .topbar nav a::after { position: absolute; content: ''; block-size: 1px; inset: auto 0 .47rem; background: var(--burgundy); transform: scaleX(0); transform-origin: left; transition: transform .24s var(--ease); }
 .topbar nav a:hover::after, .topbar nav a[aria-current]::after { transform: scaleX(1); }
-.nav-actions { display: none; }
+.nav-actions { display: flex; align-items: center; }
+.nav-actions .menu-toggle { display: none; }
 .menu-toggle { display: grid; inline-size: 2.75rem; min-block-size: 2.75rem; place-items: center; padding: 0; border: 1px solid var(--line); border-radius: 50%; background: none; }
 .menu-icon { display: grid; gap: 4px; inline-size: 1.15rem; }
 .menu-icon > span { block-size: 1.5px; border-radius: 1px; background: currentColor; transition: transform .2s, opacity .2s; }
@@ -165,6 +166,7 @@ figcaption { display: flex; align-items: baseline; justify-content: space-betwee
 @media (max-width: 950px) {
   .topbar.has-menu .nav-inner { gap: .5rem; flex-wrap: wrap; }
   .topbar.has-menu .nav-actions { display: flex; align-items: center; gap: .55rem; margin-inline-start: auto; }
+  .topbar.has-menu .nav-actions .menu-toggle { display: grid; }
   .nav-shortcuts { gap: .65rem; }
   .topbar.has-menu .nav-panel { display: grid; grid-template-rows: 0fr; position: absolute; inset: 100% 0 auto; background: var(--ivory); visibility: hidden; opacity: 0; transition: grid-template-rows .25s var(--ease), opacity .2s, visibility .25s; gap: 0; }
   .topbar.has-menu .nav-panel.open { grid-template-rows: 1fr; visibility: visible; opacity: 1; border-block-end: 1px solid var(--line); }

@@ -15,28 +15,29 @@ export const locales = {
     lang: 'en', dir: 'ltr', ogLocale: 'en_US',
     navigation: [
       ['Home', '#top'], ['Films', '#work'], ['Art & Photography', 'art.html'],
-      ['About', 'about.html'], ['Writing', 'writing.html'], ['Contact', 'contact.html'],
+      ['Writing', 'writing.html'], ['About', 'about.html'], ['Contact', 'contact.html'],
     ],
   },
 };
 
 export const films = [
   {
-    id: 'sweet-and-salty', title: 'Sweet & Salty', posterWidth: 636,
+    id: 'sweet-and-salty', title: 'Sweet & Salty', posterWidth: 636, seconds: 2483,
     excerpt: 'Two strangers in Cairo pursue dreams rooted in their love of food.',
     synopsis: 'From the heart of Cairo, Nabil and Somaya are strangers pursuing dreams rooted in their love of food. Though their paths are different, their stories echo one another. Each navigates the delicate space between ambition and circumstance, shaped by memory, sacrifice, and the people who surround them.',
-    credits: [['A film by', 'Amira Abdel-Fadil & Sarah El Halawany']],
-    galleryTitle: 'Details from the original poster',
+    credits: [['Co-directed by', 'Amira Abdel-Fadil & Sarah El Halawany'], ['Production', 'Nazra Films, Goethe Institute, IMS, Red Star']],
     stills: [
-      ['sweet-and-salty-detail-01.webp', 174, 249, 'Somaya smiling at a table'],
-      ['sweet-and-salty-detail-02.webp', 174, 249, 'A pink candle standing in a dessert'],
-      ['sweet-and-salty-detail-03.webp', 174, 249, 'Nabil laughing in a market'],
+      ['sweet-and-salty-01.jpg', 1440, 790, 'Somaya laughing at a table'],
+      ['sweet-and-salty-02.jpg', 1440, 686, 'A chocolate pastry with a pink candle'],
+      ['sweet-and-salty-03.jpg', 1440, 735, 'A cook stirring a dish on the stovetop'],
+      ['sweet-and-salty-04.jpg', 1440, 1130, 'Nabil laughing at a night market'],
     ],
   },
   {
-    id: 'street-x-food', title: 'Street X Food', posterWidth: 707,
-    tagline: 'A love letter to Cairo and its people.',
-    credits: [['A film by', 'Amira Abdel-Fadil']],
+    id: 'street-x-food', title: 'Street X Food', posterWidth: 707, seconds: 348,
+    excerpt: 'A glimpse into Cairo’s vibrant street life through its street vendors, cooks, and the people who gather around their meals.',
+    synopsis: 'Street X Food is a glimpse into Cairo’s vibrant street life, where food pulses like a heartbeat. Through its street vendors, cooks, and the people who gather around their meals, the film captures the flavours, energy, and everyday connections of a city shaped by resilience and community.',
+    credits: [['Directed by', 'Amira Abdel-Fadil']],
     stills: [
       ['street-x-food-01.jpg', 1120, 573, 'A pan of food at a street food stand'],
       ['street-x-food-02.jpg', 1120, 571, 'Two men seated in a market street'],
@@ -51,30 +52,34 @@ export const films = [
     credits: [['Co-directors', 'Kateřina Sivoková, Rama Abdi & Amira Abdel-Fadil'], ['Production', 'Duemila30 Productions']],
     stills: [
       ['biophilia-01.jpg', 1120, 563, 'A tree and a green cart along an urban road'],
+      ['biophilia-02.jpg', 1120, 652, 'A person in blue looking down a narrow city street'],
       ['biophilia-03.jpg', 1120, 630, 'A goat with a city in the distance'],
+      ['biophilia-04.jpg', 1440, 810, 'Two people sitting among the branches of a tree'],
     ],
   },
   {
-    id: 'mamina', title: 'Mamina', arabic: 'مامينا', posterWidth: 637, genre: 'Short documentary', year: 2025,
+    id: 'mamina', title: 'Mamina', posterWidth: 637, genre: 'Short documentary', year: 2025, seconds: 885,
     excerpt: 'After losing her grandmother, Amira returns to the memories they made together in her kitchen.',
     synopsis: 'Amira, a young woman deeply attached to her grandmother, is struggling to cope with her loss. Their bond was nurtured in her grandmother’s kitchen through cooking and sharing meals together. Now, without her grandmother’s abundant love, Amira feels lost and misses her terribly. As she grieves and searches for love in those around her, including her mother, and within herself, she begins to uncover what might be the key to moving forward despite the pain.',
-    credits: [['Director & writer', 'Amira Mahmoud Abdel-Fadil'], ['Producer', 'IMS Nazra'], ['Cinematography', 'Menna Ahmed'], ['Editing', 'Hisham Abdelrazek'], ['Sound design & mixing', 'Mohab Ezz']],
+    credits: [['Director', 'Amira Abdel-Fadil'], ['Producer', 'IMS Nazra']],
     watch: ['View the Sundance Collab preview', 'https://collab.sundance.org/catalog/Mamina-2026-01-28-044318'],
     stills: [
       ['mamina-01.jpg', 1120, 578, 'A pot and pan on a kitchen stove'],
       ['mamina-02.jpg', 1344, 709, 'Two women talk on a balcony overlooking Cairo'],
       ['mamina-03.jpg', 1120, 624, 'Two people in bright clothes lying in grass'],
+      ['mamina-04.jpg', 992, 1080, 'An old portrait of Amira’s grandmother wearing a headscarf'],
     ],
   },
   {
-    id: 'double-edged-sword', title: 'A Double-Edged Sword', arabic: 'سيف ذو حدين', posterWidth: 636, genre: 'Short documentary', year: 2023, seconds: 795,
+    id: 'double-edged-sword', title: 'A Double-Edged Sword', posterWidth: 636, genre: 'Short documentary', year: 2023, seconds: 795,
     excerpt: 'How food waste in the supply chain connects to hunger and climate change.',
     synopsis: 'A short documentary about food waste in the food chain and its link to climate change and hunger.',
-    credits: [['Director, producer, cinematographer & editor', 'Amira Abdel-Fadil'], ['Co-writers', 'Amira Abdel-Fadil & Magda Baraka'], ['Sound design & mixing', 'Amira Abdel-Fadil & Khaled Saleh'], ['Cast', 'Magda Baraka']],
+    credits: [['Director', 'Amira Abdel-Fadil']],
     stills: [
       ['double-edged-sword-01.jpg', 1120, 653, 'A person in a red shirt lying in grass'],
       ['double-edged-sword-02.jpg', 1120, 648, 'A person working among rows of crops'],
       ['double-edged-sword-03.jpg', 1120, 662, 'Cattle in a dry field'],
+      ['double-edged-sword-04.jpg', 1370, 743, 'A fire burning beside a field lined with palm trees'],
     ],
   },
 ];
