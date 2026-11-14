@@ -28,3 +28,7 @@
   border: 0;
   background: #171413;
 }
+
+.film-trailer iframe:not([src]) {
+  display: none;
+}

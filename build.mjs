@@ -153,7 +153,7 @@ function render(page) {
   <meta property="og:image:alt" content="${escape(page.image ? `${page.title} poster` : hero[3])}">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="${stylesheet}">${page.trailer ? `\n  <link rel="stylesheet" href="${versioned('trailer.css')}">` : ''}
-  <script src="${script}" defer></script>
+  <script src="${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
   ${page.structured ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>` : ''}
 </head>
 <body id="top">

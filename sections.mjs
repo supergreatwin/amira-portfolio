@@ -9,7 +9,7 @@ export function trailerPlayer(film, arabic = false) {
   const open = arabic ? 'شاهده على يوتيوب' : 'Watch on YouTube';
   return `<details class="film-trailer">
   <summary>${watch}</summary>
-  <iframe src="https://www.youtube-nocookie.com/embed/${youtubeId}" title="${escape(title)}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
+  <iframe data-src="https://www.youtube-nocookie.com/embed/${youtubeId}" title="${escape(title)}" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>
   <a class="line-link" href="https://youtu.be/${youtubeId}" target="_blank" rel="noopener noreferrer">${open}</a>
 </details>`;
 }
