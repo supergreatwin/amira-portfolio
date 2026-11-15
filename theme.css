@@ -1,0 +1,96 @@
+/* Amira Abdelfadil — coordinated light/dark color system.
+   This sheet loads LAST on both the home and inner-page stylesheets. */
+:root { color-scheme: light; }
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  /* Homepage tokens */
+  --ivory: #1b1919;
+  --espresso: #141213;
+  --latte: #302925;
+  --beige: #342b29;
+  --surface: #272323;
+  --text: #f2eae2;
+  --muted: #c9baae;
+  --plum: #e0acb8;
+  --burgundy: #e0acb8;
+  --accent: #e0acb8;
+  --accent-text: #201719;
+  --line: #f2e3d52e;
+  /* Inner-page tokens */
+  --ink: #f2eae2;
+  --clay: #c9a59b;
+}
+/* Header and shared interactive toggle */
+.theme-toggle {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: 2.6rem;
+  block-size: 2.6rem;
+  min-inline-size: 2.6rem;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  color: var(--accent, var(--burgundy));
+  cursor: pointer;
+  transition: background .22s ease, border-color .22s ease, color .22s ease;
+}
+.theme-toggle:hover { background: var(--latte); border-color: var(--accent, var(--burgundy)); }
+.theme-toggle:focus-visible { outline: 2px solid var(--accent, var(--burgundy)); outline-offset: 3px; }
+.theme-toggle .theme-icon { display: block; inline-size: 1.1rem; block-size: 1.1rem; stroke: currentColor; fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.theme-toggle .theme-sun { display: none; }
+:root[data-theme="dark"] .theme-toggle .theme-sun { display: block; }
+:root[data-theme="dark"] .theme-toggle .theme-moon { display: none; }
+
+/* Home — only replace fixed colors the existing variables cannot reach. */
+:root[data-theme="dark"] body { background: var(--ivory); color: var(--text); }
+:root[data-theme="dark"] .topbar { background: #1b1919f2; border-color: var(--line); }
+:root[data-theme="dark"] .topbar.scrolled { background: #242020f6; box-shadow: 0 7px 24px #0006; }
+:root[data-theme="dark"] .hero-kicker { color: var(--accent); }
+:root[data-theme="dark"] .film-link:hover, :root[data-theme="dark"] .film-link:focus-visible { border-color: #e0acb899; box-shadow: 0 12px 32px #0004; }
+:root[data-theme="dark"] .frame-credit { background: #171416e6; color: #f8f4ec; }
+:root[data-theme="dark"] .writing { --muted: #d2c3b7; }
+:root[data-theme="dark"] .about { background: var(--latte); }
+:root[data-theme="dark"] .footer {
+  --text: #f3eae1;
+  --muted: #c4b0a4;
+  --accent: #e8b9c2;
+  --line: #f2e3d538;
+  color: var(--text);
+  background: #100e0f;
+}
+:root[data-theme="dark"] .footer .display { color: var(--text); }
+:root[data-theme="dark"] .film-no { color: #f8f4ec; background: #191516; }
+:root[data-theme="dark"] .film-grid[data-layout="index"] .film-no { color: #f8f4ec; background: #191516; }
+:root[data-theme="dark"] .project-dialog { background: var(--ivory); color: var(--text); box-shadow: 0 24px 90px #0009; }
+:root[data-theme="dark"] .dialog-bar { background: var(--ivory); }
+
+/* Days with Amira: dark hand-drawn title remains legible in both themes. */
+:root[data-theme="dark"] .portrait-experience { --portrait-line: #f2e3d538; border-top-color: var(--portrait-line); }
+:root[data-theme="dark"] .portrait-title-card { background: #292420; border-color: #4b4140; }
+:root[data-theme="dark"] .portrait-tab:hover { background: #ffffff0b; }
+:root[data-theme="dark"] .portrait-tab[aria-selected="true"] { background: #f8f4ec14; }
+:root[data-theme="dark"] .portrait-scene { background: #24201f; }
+:root[data-theme="dark"] .portrait-scene::before { border-color: #f8f4ec26; }
+:root[data-theme="dark"] .portrait-modal { color: #f8f4ec; }
+
+/* Inner pages — the header and photographic lightbox include fixed light hues. */
+:root[data-theme="dark"] .project-hero img { background: #171414; }
+:root[data-theme="dark"] .topbar.has-menu .nav-panel { background: var(--ivory); }
+:root[data-theme="dark"] .lightbox { background: #171414; color: #f8f4ec; }
+:root[data-theme="dark"] .lightbox-count, :root[data-theme="dark"] .lightbox-stage figcaption { color: #decfc5; }
+:root[data-theme="dark"] .lightbox :focus-visible { outline-color: #e8b9c2; }
+
+/* Thin white photography frames are an intentional editorial treatment.
+   Preserve them in dark mode rather than inverting pictures. */
+:root[data-theme="dark"] .photography-grid .image-link,
+:root[data-theme="dark"] .photography-collection picture { box-shadow: 0 0 0 1px #f8f4ec35; }
+
+@media (max-width: 950px) {
+  .theme-toggle { inline-size: 2.45rem; block-size: 2.45rem; min-inline-size: 2.45rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .theme-toggle { transition: none; }
+}
