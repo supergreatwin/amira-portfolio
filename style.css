@@ -105,6 +105,12 @@ figcaption { display: flex; align-items: baseline; justify-content: space-betwee
 
 .contact-lead { margin-block-start: .9rem; font: 550 clamp(1.35rem, 3vw, 2.25rem)/1.2 var(--body); color: var(--burgundy); }
 .contact-page .section-intro { max-width: 60ch; }
+.collaboration-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); gap: 0 var(--gap); max-width: 60rem; margin-block-start: 1.5rem; }
+.collaboration-list > div { padding-block: 1rem; border-block-start: 1px solid var(--line); }
+.collaboration-list dt { font-weight: 650; }
+.collaboration-list dd { margin-block: .35rem 0; color: var(--muted); }
+.collaboration-list .icon { inline-size: .9rem; block-size: .9rem; vertical-align: -.1em; }
+html[dir="rtl"] :is(.brand, h1, h2, h3) { letter-spacing: normal; }
 .contact-email { margin-block-start: .75rem; }
 .footer { border-block-start: 1px solid var(--line); }
 .footer-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 1.1rem var(--gap); padding-block: 2rem 1rem; }

@@ -1,0 +1,36 @@
+.project-body > .poster-column {
+  grid-column: 1 / span 4;
+  max-inline-size: 28rem;
+}
+
+.poster-column > .project-poster {
+  display: block;
+  margin-inline: auto;
+}
+
+.film-crew {
+  display: grid;
+  gap: .75rem;
+  margin: 1rem 0 0;
+  padding-block-start: .85rem;
+  border-block-start: 1px solid var(--line);
+}
+
+.film-crew dt {
+  color: var(--accent, var(--burgundy));
+  font-size: .8rem;
+  font-weight: 650;
+}
+
+.film-crew dd {
+  margin: .15rem 0 0;
+  font-size: .92rem;
+  line-height: 1.45;
+}
+
+@media (max-width: 720px) {
+  .project-body > .poster-column {
+    grid-column: 1;
+    max-inline-size: none;
+  }
+}

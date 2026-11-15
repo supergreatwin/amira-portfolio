@@ -3,10 +3,8 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collaborations, films, locales, site } from './content.mjs';
-import { collaborationItems, homepageTrailers, trailerPlayer, writingArchive } from './sections.mjs';
+import { collaborationItems, filmCrew, homepageCrew, homepageTrailers, trailerPlayer, writingIntro, writingSection } from './sections.mjs';
 import { writingArchives } from './writings.mjs';
-
-const locale = locales.en;
 
 const root = fileURLToPath(new URL('./', import.meta.url));
 const versioned = file => `${file}?v=${createHash('sha256').update(readFileSync(join(root, file))).digest('hex').slice(0, 12)}`;
@@ -25,6 +23,7 @@ const intro = '<p>Amira’s documentaries pay attention to familiar places and t
 
 const symbols = `<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <symbol id="arrow-external" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11"/></symbol>
+  <symbol id="arrow-up-right" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11"/></symbol>
   <symbol id="arrow-right" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
   <symbol id="arrow-left" viewBox="0 0 24 24"><path d="M20 12H5m6-6-6 6 6 6"/></symbol>
   <symbol id="close-icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
@@ -34,11 +33,13 @@ const symbols = `<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hi
   <symbol id="linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7m4 0v-7m0 3a2.5 2.5 0 0 1 5 0v4"/><circle class="icon-fill" cx="8" cy="7" r=".9"/></symbol>
 </svg>`;
 
-function socialProfiles() {
-  return `<ul class="social-profiles" aria-label="Official social profiles">${site.socials.map(profile => `<li><a href="${escape(profile.url)}" ${outbound}>${icon(profile.id)}<span><strong>${profile.name}</strong><span>${escape(profile.profile)}</span><small>${profile.label}</small></span>${icon('arrow-external')}</a></li>`).join('')}</ul>`;
+function socialProfiles(arabic) {
+  const labels = { instagram: 'يوميات بصرية', tiktok: 'من الكواليس', linkedin: 'تواصل مهني' };
+  return `<ul class="social-profiles" aria-label="${arabic ? 'الحسابات الرسمية' : 'Official social profiles'}">${site.socials.map(profile => `<li><a href="${escape(profile.url)}" ${outbound}>${icon(profile.id)}<span><strong>${profile.name}</strong><span>${escape(profile.profile)}</span><small>${arabic ? labels[profile.id] : profile.label}</small></span>${icon('arrow-external')}</a></li>`).join('')}</ul>`;
 }
 
-function navigationLinks(page, placement = 'footer') {
+function navigationLinks(page, placement = 'footer', arabic = false) {
+  const locale = arabic ? locales.ar : locales.en;
   const standaloneLinks = placement === 'contact'
     ? locale.navigation.filter(([, url]) => url === 'contact.html')
     : locale.navigation.filter(([, url]) => url !== '#top' && url !== 'contact.html');
@@ -47,23 +48,27 @@ function navigationLinks(page, placement = 'footer') {
     const contact = url === 'contact.html';
     const current = page === url || (url === '#work' && page.startsWith('film-'));
     const href = url.startsWith('#') ? `index.html${url}` : url;
-    return `<a href="${href}"${contact ? ' class="nav-contact"' : ''}${current ? ' aria-current="page"' : ''}>${escape(contact && placement !== 'footer' ? 'Contact Me' : label)}</a>`;
+    return `<a href="${href}"${contact ? ' class="nav-contact"' : ''}${current ? ' aria-current="page"' : ''}>${escape(contact && placement !== 'footer' ? (arabic ? 'تواصل معي' : 'Contact Me') : label)}</a>`;
   }).join('');
 }
 
-function header(page) {
+function header(page, arabic) {
+  const language = arabic
+    ? `<a href="../${page}" lang="en" hreflang="en">English</a>`
+    : `<a href="${arabicPage(page)}" lang="ar" hreflang="ar">العربية</a>`;
   return `<header class="topbar"><div class="shell nav-inner">
-    <a class="brand" href="index.html" aria-label="Amira Abdelfadil, home">amira abdelfadil</a>
-    <div class="nav-panel" id="navigation-panel"><div><nav aria-label="Primary">${navigationLinks(page, 'panel')}</nav></div></div>
-    <div class="nav-actions"><nav class="nav-shortcuts" aria-label="Contact and language">${navigationLinks(page, 'contact')}<a href="${arabicPage(page)}" lang="ar" hreflang="ar">العربية</a></nav><button class="menu-toggle" type="button" aria-label="Menu" aria-expanded="false" aria-controls="navigation-panel" hidden><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
+    <a class="brand" href="index.html" aria-label="${arabic ? 'أميرة عبد الفضيل، الصفحة الرئيسية' : 'Amira Abdelfadil, home'}">${arabic ? 'أميرة عبد الفضيل' : 'amira abdelfadil'}</a>
+    <div class="nav-panel" id="navigation-panel"><div><nav aria-label="${arabic ? 'التنقل الرئيسي' : 'Primary'}">${navigationLinks(page, 'panel', arabic)}</nav></div></div>
+    <div class="nav-actions"><nav class="nav-shortcuts" aria-label="${arabic ? 'التواصل واللغة' : 'Contact and language'}">${navigationLinks(page, 'contact', arabic)}${language}</nav><button class="menu-toggle" type="button" aria-label="${arabic ? 'القائمة' : 'Menu'}" aria-expanded="false" aria-controls="navigation-panel" hidden><span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span></button></div>
   </div><div class="read-progress" aria-hidden="true"></div></header>`;
 }
 
-function footer(page) {
+function footer(page, arabic) {
+  const name = arabic ? 'أميرة عبد الفضيل' : 'Amira Abdelfadil';
   return `<footer class="footer"><div class="shell footer-inner">
-    <div><p class="footer-name">Amira Abdelfadil</p><p>Filmmaker · Visual Artist</p></div>
-    <nav aria-label="Footer">${navigationLinks(page)}</nav>
-    <div class="footer-base"><span>© Amira Abdelfadil</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div>
+    <div><p class="footer-name">${name}</p><p>${arabic ? 'صانعة أفلام وفنانة بصرية' : 'Filmmaker · Visual Artist'}</p></div>
+    <nav aria-label="${arabic ? 'التنقل أسفل الصفحة' : 'Footer'}">${navigationLinks(page, 'footer', arabic)}</nav>
+    <div class="footer-base"><span>© ${name}</span><a href="#top">${arabic ? 'أعلى الصفحة' : 'Back to top'} <span aria-hidden="true">↑</span></a></div>
   </div></footer>`;
 }
 
@@ -100,7 +105,7 @@ function filmPage(film, index) {
     <a class="line-link back-link" href="index.html#work">${icon('arrow-left')} All films</a>
     <div class="project-heading">${sectionTag(String(index + 1).padStart(2, '0'), 'Film')}<h1>${escape(film.title)}</h1>${meta(film) ? `<p class="film-meta">${meta(film)}</p>` : ''}</div>
     ${lead ? `<figure class="project-hero">${image(lead, { priority: true, sizes: '(max-width: 1360px) 100vw, 1280px' })}<figcaption>Still from <i>${escape(film.title)}</i></figcaption></figure>` : ''}
-    <div class="project-body">${galleryItem(poster(film), `Original poster · ${film.title}`, 'poster', { priority: !lead, sizes: '(max-width: 720px) 65vw, 28vw' }, 'project-poster')}<div class="prose project-copy">${film.synopsis ? `<h2>Synopsis</h2><p>${escape(film.synopsis)}</p>` : ''}<h2>Production credits</h2><dl class="credits">${film.credits.map(([role, person]) => `<div><dt>${escape(role)}</dt><dd>${escape(person)}</dd></div>`).join('')}</dl><div class="actions">${contactCTA}</div></div></div>
+    <div class="project-body"><div class="poster-column">${galleryItem(poster(film), `Original poster · ${film.title}`, 'poster', { priority: !lead, sizes: '(max-width: 720px) 65vw, 28vw' }, 'project-poster')}${filmCrew(film)}</div><div class="prose project-copy">${film.synopsis ? `<h2>Synopsis</h2><p>${escape(film.synopsis)}</p>` : ''}<div class="actions">${contactCTA}</div></div></div>
     ${trailer ? `<div class="project-trailer">${trailer}</div>\n    ` : ''}<section class="project-gallery" aria-labelledby="stills-title"><h2 id="stills-title">Film stills</h2><div class="gallery-grid">${film.stills.map((asset, assetIndex) => galleryItem(asset, `Film still ${String(assetIndex + 1).padStart(2, '0')} · ${film.title}`, film.id)).join('')}</div></section>
     <nav class="related" aria-label="Related films"><a href="${filmPath(previous)}"><span>${icon('arrow-left')} Previous film</span><strong>${escape(previous.title)}</strong></a><a href="${filmPath(next)}"><span>Next film ${icon('arrow-right')}</span><strong>${escape(next.title)}</strong></a></nav>
   </article>`;
@@ -114,24 +119,49 @@ function aboutPage() {
   return `<section class="shell section inner-page editorial-grid about-page"><div>${sectionTag('01', 'Biography')}<p class="arabic-kicker" lang="ar" dir="rtl">أميرة عبد الفضيل</p><h1>About <em>Amira</em></h1><div class="prose"><p>Amira Abdel-Fadil is a Cairo-based filmmaker, photographer, writer, and visual artist. She studied broadcasting at October University for Modern Sciences and Arts.</p>${intro}<p>Her work spans directing, writing, producing, cinematography, editing, and sound. Outside her films she has worked in digital media, script development, event coordination, and education.</p></div><div class="actions">${contactCTA}</div></div><figure>${image(portrait, { priority: true })}<figcaption>Amira Abdelfadil · Portrait</figcaption></figure></section>`;
 }
 
+function contactPage(arabic) {
+  const heading = arabic ? 'تواصل مع <em>أميرة</em>' : 'Contact <em>Amira</em>';
+  const lead = arabic ? 'لنتعاون على رواية قصص تستحق أن تُحكى.' : 'Let’s collaborate together on stories worth telling.';
+  const details = arabic ? 'للتعاون في صناعة الأفلام والمشاريع الوثائقية والإبداعية، أو للاستفسارات المهنية.' : 'Get in touch for filmmaking, documentary projects, creative collaborations, and professional enquiries.';
+  return `<section class="shell section inner-page contact-page"><h1>${heading}</h1><p class="contact-lead">${lead}</p><p class="section-intro">${details}</p><a class="line-link contact-email" href="mailto:${escape(site.email)}"><bdi>${escape(site.email)}</bdi> ${icon('arrow-right')}</a>${socialProfiles(arabic)}</section>`;
+}
+
+function collaborationPage(arabic) {
+  const heading = arabic ? 'التعاونات' : 'Collaborations';
+  return `<section class="shell section inner-page"><h1>${heading}</h1><dl class="collaboration-list">\n${collaborationItems(collaborations, arabic)}\n</dl></section>`;
+}
+
+const contactAndCollaborationPages = [false, true].flatMap(arabic => {
+  const prefix = arabic ? 'ar/' : '';
+  return [
+    { file: `${prefix}contact.html`, title: arabic ? 'تواصل' : 'Contact', description: arabic ? 'تواصل مع صانعة الأفلام أميرة عبد الفضيل.' : 'Contact filmmaker and visual artist Amira Abdelfadil.', content: contactPage(arabic) },
+    { file: `${prefix}collaborations.html`, title: arabic ? 'التعاونات' : 'Collaborations', description: arabic ? 'أعمال أميرة عبد الفضيل المشتركة في السينما والكتابة.' : 'Film and editorial collaborations by Amira Abdelfadil.', content: collaborationPage(arabic) },
+  ];
+});
+
 const person = { '@type': 'Person', '@id': `${site.url}#amira`, name: site.name, url: site.url, image: `${site.url}assets/amira-portrait.jpg`, jobTitle: 'Filmmaker and visual artist', sameAs: site.socials.map(profile => profile.url) };
 const pages = [
   { file: 'art.html', title: 'Art & Photography', description: 'Photography by Amira Abdelfadil, a filmmaker and visual artist based in Cairo.', content: visualPage() },
   { file: 'about.html', title: 'About', description: 'About Cairo-based filmmaker, photographer, writer, and visual artist Amira Abdelfadil.', content: aboutPage(), structured: person },
-  { file: 'writing.html', title: 'Writing', description: "Browse Amira Abdelfadil’s essays, film writing, and research drafts by publication.", content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">Essays, film writing, and research drafts by publication.</p>${writingArchive(writingArchives)}</section>`, structured: { '@type': 'ItemList', itemListElement: writingArchives.flatMap(group => group.articles).map(([title, url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
-  { file: 'contact.html', title: 'Contact', description: 'Contact filmmaker and visual artist Amira Abdelfadil by email or through her official social profiles.', content: `<section class="shell section inner-page contact-page">${sectionTag('01', 'Enquiries')}<h1>Contact <em>Amira</em></h1><p class="contact-lead">Let’s collaborate on stories worth telling.</p><p class="section-intro">Get in touch for filmmaking, documentary projects, creative collaborations, and professional enquiries.</p><a class="line-link contact-email" href="mailto:${escape(site.email)}">${escape(site.email)} ${icon('arrow-right')}</a>${socialProfiles()}</section>` },
-  ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, trailer: Boolean(film.trailer), content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
+  { file: 'writing.html', title: 'Writing', description: writingIntro[0], content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">${writingIntro[0]}</p>${writingSection(writingArchives)}</section>`, structured: { '@type': 'ItemList', itemListElement: writingArchives.flatMap(group => group.articles).map(([title, url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
+  ...contactAndCollaborationPages,
+  ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, crew: true, trailer: Boolean(film.trailer), content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
 ];
 
 const address = file => new URL(file, site.url).href;
 const arabicPage = file => {
   if (file.startsWith('film-')) return `ar/#project-${file.slice(5, -5)}`;
+  if (file === 'contact.html' || file === 'collaborations.html') return `ar/${file}`;
   return `ar/#${file.slice(0, -5)}`;
 };
 
 function render(page) {
+  const arabic = page.file.startsWith('ar/');
+  const locale = arabic ? locales.ar : locales.en;
+  const prefix = arabic ? '../' : '';
+  const current = page.file.split('/').at(-1);
   const url = address(page.file);
-  const title = `${page.title} | ${site.name}`;
+  const title = `${page.title} | ${arabic ? 'أميرة عبد الفضيل' : site.name}`;
   return `<!doctype html>
 <html lang="${locale.lang}" dir="${locale.dir}">
 <head>
@@ -149,18 +179,18 @@ function render(page) {
   <meta property="og:image" content="${site.url}assets/${page.image ?? 'mamina-02.jpg'}">
   <meta property="og:image:alt" content="${escape(page.image ? `${page.title} poster` : hero[3])}">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="stylesheet" href="${stylesheet}">${page.trailer ? `\n  <link rel="stylesheet" href="${versioned('trailer.css')}">` : ''}
-  ${page.file === 'writing.html' ? '<link rel="stylesheet" href="writing.css">\n  ' : ''}<script src="${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
+  <link rel="stylesheet" href="${prefix}${stylesheet}">${page.trailer ? `\n  <link rel="stylesheet" href="${versioned('trailer.css')}">` : ''}${page.crew ? `\n  <link rel="stylesheet" href="${versioned('crew.css')}">` : ''}
+  ${page.file === 'writing.html' ? `<link rel="stylesheet" href="${versioned('writing.css')}">\n  ` : ''}<script src="${prefix}${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
   ${page.structured ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>` : ''}
 </head>
 <body id="top">
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">${arabic ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
   ${symbols}
-  ${header(page.file)}
+  ${header(current, arabic)}
   <main id="main" tabindex="-1">
   ${page.content}
   </main>
-  ${footer(page.file)}
+  ${footer(current, arabic)}
   ${lightbox}
 </body>
 </html>
@@ -170,9 +200,8 @@ function render(page) {
 const outputs = pages.map(page => [page.file, render(page)]);
 for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
   const source = readFileSync(join(root, file), 'utf8');
-  outputs.push([file, homepageTrailers(source, films, arabic)
-    .replace(/(<!-- collaborations:start -->)[\s\S]*?(<!-- collaborations:end -->)/, (_, start, end) => `${start}\n${collaborationItems(collaborations, arabic)}\n          ${end}`)
-    .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingArchive(writingArchives, arabic).replace(/^/gm, '        ')}\n        ${end}`)]);
+  outputs.push([file, homepageCrew(homepageTrailers(source, films, arabic), films, arabic)
+    .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingSection(writingArchives, arabic).replace(/^/gm, '        ')}\n        ${end}`)]);
 }
 outputs.push(['sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[site.url, address('ar/'), ...pages.map(page => address(page.file))].map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`]);
 outputs.push(['robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}sitemap.xml\n`]);

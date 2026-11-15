@@ -1,6 +1,67 @@
 const escape = value => value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 const arrow = '<svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg>';
 
+export const writingIntro = [
+  'A collection of essays on memory, identity, the creative process and taking chances.',
+  'مجموعة مقالات عن الذاكرة والهوية والعملية الإبداعية والجرأة على خوض التجربة.',
+];
+
+const featuredEssays = [
+  {
+    heading: ['Personal essays', 'مقالات شخصية'],
+    articles: [
+      ['The Beauty of Capturing Memories', 'جمال توثيق الذكريات', 'https://thought.is/the-beauty-of-capturing-memories/'],
+      ['Maybe One Day I’ll Write a Masterpiece', 'ربما أكتب يومًا عملًا خالدًا', 'https://thought.is/maybe-one-day-ill-write-a-masterpiece/'],
+      ['No Matter What, I Will Always Choose Effort', 'مهما حدث، سأختار دائمًا بذل الجهد', 'https://thought.is/no-matter-what-i-will-always-choose-effort/'],
+    ],
+  },
+  {
+    heading: ['Essays on film', 'مقالات عن السينما'],
+    articles: [
+      ['Romance Movies Have Affected How We Perceive Love', 'كيف أثّرت الأفلام الرومانسية في نظرتنا إلى الحب؟', 'https://movieweb.com/the-danger-of-romantic-movies-in-how-we-perceive-love/'],
+      ['The 11 All-Time Best Documentaries About Racism', 'أفضل ١١ فيلمًا وثائقيًا عن العنصرية', 'https://movieweb.com/the-best-documentaries-about-racism/'],
+      ['Blue Lock: 11 Life Lessons We All Can Learn from the Popular Soccer Anime TV Show', '١١ درسًا في الحياة من أنمي كرة القدم «بلو لوك»', 'https://movieweb.com/blue-lock-life-lessons-we-can-learn/'],
+    ],
+  },
+];
+
+export function filmCrew(film, arabic = false) {
+  const credits = arabic ? film.creditsAr : film.credits;
+  return `<dl class="film-crew">${credits.map(([role, person]) => `<div><dt>${escape(role)}</dt><dd>${escape(person)}</dd></div>`).join('')}</dl>`;
+}
+
+export function homepageCrew(html, films, arabic) {
+  return html.replace(
+    /(<article class="film-detail" id="project-([a-z-]+)">)([\s\S]*?)(<\/article>)/g,
+    (_, start, id, mark, end) => {
+      const film = films.find(entry => entry.id === id);
+      const poster = /<img class="project-poster"[^>]*>/;
+      const oldColumn = /<div class="poster-column">[\s\S]*?<\/dl><\/div>/;
+      const currentPoster = mark.match(poster)[0];
+      const column = `<div class="poster-column">${currentPoster}${filmCrew(film, arabic)}</div>`;
+      const body = oldColumn.test(mark)
+        ? mark.replace(oldColumn, () => column)
+        : mark.replace(poster, () => column).replace(/\n +<dl>[\s\S]*?<\/dl>/, '');
+      return start + body + end;
+    },
+  );
+}
+
+export function writingSection(groups, arabic = false) {
+  const index = Number(arabic);
+  const archive = arabic ? 'تصفّح الأرشيف الكامل' : 'Browse the full writing archive';
+  const categories = featuredEssays.map(category => `<section class="featured-essays">
+  <h3>${category.heading[index]}</h3>
+  <ul>${category.articles.map(([english, translated, url]) => `<li><a href="${url}"${arabic ? ' hreflang="en"' : ''}>${escape(arabic ? translated : english)} <span aria-hidden="true">↗</span></a></li>`).join('')}</ul>
+</section>`).join('\n');
+  return `<div class="writing-selection">
+${categories}
+<details class="full-writing-archive"><summary>${archive}</summary>
+${writingArchive(groups, arabic)}
+</details>
+</div>`;
+}
+
 export function trailerPlayer(film, arabic = false) {
   if (!film.trailer) return '';
   const { youtubeId, titleAr } = film.trailer;

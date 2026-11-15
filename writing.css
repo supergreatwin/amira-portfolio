@@ -40,3 +40,50 @@
   text-decoration: underline;
   text-underline-offset: .2em;
 }
+.writing-selection {
+  display: grid;
+  gap: 1.25rem;
+  max-inline-size: 44rem;
+}
+
+.inner-page > .writing-selection {
+  margin-block-start: 2rem;
+}
+
+.featured-essays h3 {
+  margin-block: 0 .35rem;
+  font-size: 1rem;
+}
+
+.featured-essays ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.featured-essays li {
+  border-block-start: 1px solid var(--line);
+}
+
+.featured-essays a {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: .65rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.featured-essays a:hover,
+.featured-essays a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+
+.full-writing-archive > summary {
+  padding-block: .65rem;
+  cursor: pointer;
+  color: var(--accent, var(--burgundy));
+  font-weight: 650;
+}
+
