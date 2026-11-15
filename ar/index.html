@@ -9,11 +9,13 @@
   <meta property="og:description" content="مختارات من أفلام وكتابات أميرة عبد الفضيل، صانعة أفلام وفنانة متعددة التخصصات.">
   <meta property="og:image" content="https://supergreatwin.github.io/amira-portfolio/assets/mamina-02.jpg">
   <link rel="stylesheet" href="../home.css?v=collaborations">
+  <link rel="stylesheet" href="../portrait.css?v=days-1">
   <link rel="stylesheet" href="../trailer.css">
   <link rel="stylesheet" href="../crew.css?v=f2820b8b3daa">
   <link rel="stylesheet" href="../writing.css?v=60ee204f25a0">
   <script src="../trailer.js" defer></script>
   <script src="../home.js?v=collaborations" defer></script>
+  <script src="../portrait.js?v=days-1" defer></script>
   <link rel="alternate" hreflang="en" href="../">
   <link rel="alternate" hreflang="ar" href="./">
   <link rel="canonical" href="https://supergreatwin.github.io/amira-portfolio/ar/">
@@ -273,6 +275,54 @@
         </div>
         <img class="about-portrait" src="../assets/amira-portrait.jpg" alt="أميرة تحمل كاميرا" width="540" height="720" loading="lazy">
       </div>
+
+      <!-- portrait-experience:start -->
+      <div class="portrait-experience" id="portrait" aria-labelledby="portrait-heading">
+        <div class="portrait-head">
+          <div><p class="eyebrow">بورتريه شخصي · أيام مع أميرة</p><h3 id="portrait-heading">خارج <em>الكادر.</em></h3></div>
+          <p>مساحة أكثر قربًا من أميرة؛ حوارات عفوية، أسئلة صغيرة، ولحظات هادئة تكشف الإنسانة خلف الأفلام.</p>
+        </div>
+        <div class="portrait-feature">
+          <div class="portrait-title-card" aria-label="أيام مع أميرة">
+            <span class="portrait-arabic" lang="ar" dir="rtl">أيام مع أميرة</span>
+            <span class="portrait-credit" lang="ar" dir="rtl">كتابة وإخراج أميرة عبد الفضيل</span>
+            <div class="portrait-filmstrip" dir="ltr"><span>AMIRA ABDELFADIL</span><span>01 / 03</span></div>
+          </div>
+          <div class="portrait-summary">
+            <p class="eyebrow">أيام مع أميرة · مقاطع مختارة</p>
+            <h4>حكاية تُروى في التفاصيل.</h4><p>من سؤال عن المستقبل إلى لحظة على ضفاف النهر. دعوة للتعرّف على أميرة بعيدًا عن الصورة الرسمية.</p>
+            <div class="portrait-actions">
+              <button type="button" class="portrait-play" data-portrait-play="youtube">شاهد على يوتيوب <span aria-hidden="true">↗</span></button>
+              <button type="button" class="portrait-play portrait-secondary" data-portrait-play="tiktok">لحظة على تيك توك <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="portrait-moments">
+          <div class="portrait-moments-head"><h4>لحظات من البورتريه</h4><p>اختَر لحظة لاستكشاف تفاصيلها.</p></div>
+          <div class="portrait-moments-grid">
+            <div class="portrait-tabs" role="tablist" aria-label="لحظات من البورتريه">
+          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-question" data-portrait-moment="question" aria-controls="portrait-moment-panel" aria-selected="true" tabindex="0">
+            <span class="portrait-number">01</span><span><strong>المستقبل</strong><small>سؤال عن السنوات الخمس القادمة</small></span><span class="portrait-length" dir="ltr">00:31</span>
+          </button>
+          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-conversation" data-portrait-moment="conversation" aria-controls="portrait-moment-panel" aria-selected="false" tabindex="-1">
+            <span class="portrait-number">02</span><span><strong>الحوار</strong><small>لقطة قريبة وعفوية</small></span><span class="portrait-length" dir="ltr">00:24</span>
+          </button>
+          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-riverside" data-portrait-moment="riverside" aria-controls="portrait-moment-panel" aria-selected="false" tabindex="-1">
+            <span class="portrait-number">03</span><span><strong>النهر</strong><small>تأمل من خلف الشرفة</small></span><span class="portrait-length" dir="ltr">00:24</span>
+          </button>
+            </div>
+            <div class="portrait-scene" role="tabpanel" id="portrait-moment-panel" tabindex="0" aria-labelledby="portrait-tab-question">
+              <p class="eyebrow">من البورتريه · <span data-moment-number>01</span></p>
+              <h5 data-moment-title>نظرة إلى المستقبل</h5>
+              <p data-moment-desc>سؤال هادئ عن السنوات الخمس القادمة.</p>
+              <p class="portrait-quote" lang="ar" dir="rtl" data-moment-quote>«شايفة نفسك فين كمان خمس سنين؟»</p>
+              <div class="portrait-scene-bottom"><span>مقطع مختار</span><span data-moment-time dir="ltr">00:31</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="portrait-source-note">الفيديوهات المتاحة تعمل عبر منصتيها الأصليتين. أما المقاطع المرسلة فتظهر هنا كفصول تحريرية لحين نشر ملفاتها على الموقع.</p>
+      </div>
+      <!-- portrait-experience:end -->
     </section>
   </main>
 
@@ -288,6 +338,13 @@
     </div>
     <div class="footer-base eyebrow"><span>أميرة عبد الفضيل <span class="mid-dot">·</span> القاهرة، مصر</span><a href="#top">العودة إلى الأعلى <span aria-hidden="true">↑</span></a></div>
   </footer>
+
+
+  <dialog class="portrait-modal" aria-label="مشغل الفيديو">
+    <div class="portrait-modal-bar"><span data-portrait-modal-title>Amira Abdelfadil</span><button type="button" data-portrait-close>إغلاق ✕</button></div>
+    <div class="portrait-player" data-provider="youtube"></div>
+    <a data-portrait-external href="https://youtu.be/1vrU0HedW4M" target="_blank" rel="noopener noreferrer">افتح الفيديو الأصلي ↗</a>
+  </dialog>
 
   <dialog class="project-dialog" aria-labelledby="project-title">
     <div class="dialog-bar eyebrow"><span>أفلام مختارة <span class="dialog-count" dir="ltr"></span></span><button type="button" class="icon-circle" data-close aria-label="إغلاق تفاصيل الفيلم"><svg class="icon"><use href="#close-icon"/></svg></button></div>
