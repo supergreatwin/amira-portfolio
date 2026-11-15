@@ -1,12 +1,13 @@
 .photography-collections {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 16rem));
+  grid-template-columns: repeat(4, minmax(0, 16rem));
   gap: clamp(.75rem, 2vw, 1.5rem);
   margin-block: 2rem;
 }
 
 .photography-collection {
   display: grid;
+  align-content: start;
   gap: .5rem;
   font: 650 1.125rem var(--body);
 }
@@ -15,6 +16,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: .5rem;
 }
 
 .photography-grid {
@@ -53,6 +55,10 @@
 }
 
 @media (max-width: 860px) {
+  .photography-collections {
+    grid-template-columns: repeat(2, minmax(0, 16rem));
+  }
+
   .photography-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
