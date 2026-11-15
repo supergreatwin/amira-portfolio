@@ -3,7 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collaborations, films, locales, site } from './content.mjs';
-import { italyPhotos } from './photos.mjs';
+import { collectionPhotos, photographyCollections } from './photos.mjs';
 import { collaborationItems, featuredEssays, filmCrew, homepageCrew, homepageTrailers, trailerPlayer, writingIntro, writingSection } from './sections.mjs';
 
 const root = fileURLToPath(new URL('./', import.meta.url));
@@ -91,9 +91,9 @@ function galleryItem(asset, caption, group, settings = {}, className = '') {
 const contactCTA = `<a class="pill" href="contact.html">Contact Amira ${icon('arrow-right')}</a>`;
 const portrait = ['amira-portrait.jpg', 540, 720, 'Amira holding a camera'];
 const hero = ['mamina-02.jpg', 1344, 709, 'Two women talk on a balcony overlooking Cairo'];
-const lightbox = (arabic, photography) => `<dialog class="lightbox${photography ? ' photography-lightbox' : ''}" aria-labelledby="lightbox-title">
-  <div class="lightbox-toolbar"><h2 id="lightbox-title">${arabic ? 'عارض الصور' : 'Image viewer'}</h2><p class="lightbox-count" aria-live="polite"></p><button class="round-button" type="button" data-close aria-label="${arabic ? 'إغلاق عارض الصور' : 'Close image viewer'}">${icon('close-icon')}</button></div>
-  <div class="lightbox-stage"><button class="round-button" type="button" data-step="-1" aria-label="${arabic ? 'الصورة السابقة' : 'Previous image'}">${icon('arrow-left')}</button><figure><img alt="" draggable="false"><figcaption></figcaption></figure><button class="round-button" type="button" data-step="1" aria-label="${arabic ? 'الصورة التالية' : 'Next image'}">${icon('arrow-right')}</button></div>
+const lightbox = `<dialog class="lightbox" aria-labelledby="lightbox-title">
+  <div class="lightbox-toolbar"><h2 id="lightbox-title">Image viewer</h2><p class="lightbox-count" aria-live="polite"></p><button class="round-button" type="button" data-close aria-label="Close image viewer">${icon('close-icon')}</button></div>
+  <div class="lightbox-stage"><button class="round-button" type="button" data-step="-1" aria-label="Previous image">${icon('arrow-left')}</button><figure><img alt="" draggable="false"><figcaption></figcaption></figure><button class="round-button" type="button" data-step="1" aria-label="Next image">${icon('arrow-right')}</button></div>
 </dialog>`;
 
 function filmPage(film, index) {
@@ -115,20 +115,24 @@ function visualPage(arabic) {
   const heading = arabic ? 'الفن و<em>التصوير</em>' : 'Art &amp; <em>Photography</em>';
   const intro = arabic ? 'مختارات من أعمال أميرة في التصوير الفوتوغرافي' : 'A showcase of Amira’s Photography';
   const instagram = arabic ? 'يوميات أميرة البصرية على إنستغرام' : 'View Amira’s visual diary on Instagram';
-  const cover = italyPhotos(arabic)[0];
+  const localeIndex = arabic ? 1 : 0;
+  const prefix = arabic ? '../' : '';
+  const cards = photographyCollections.map(collection => {
+    const cover = collectionPhotos(collection, localeIndex)[0];
+    return `<a class="photography-collection" href="${collection.id}.html">${image(cover, { priority: collection === photographyCollections[0], prefix })}<span>${collection.title[localeIndex]} ${icon(arabic ? 'arrow-left' : 'arrow-right')}</span></a>`;
+  });
   return `<section class="shell section inner-page"><h1>${heading}</h1><p class="section-intro">${intro}</p>
-    <a class="photography-collection" href="italy.html">${image(cover, { priority: true, prefix: arabic ? '../' : '' })}<span>${arabic ? 'إيطاليا' : 'Italy'} ${icon(arabic ? 'arrow-left' : 'arrow-right')}</span></a>
+    <div class="photography-collections">${cards.join('\n    ')}</div>
     <div class="actions">${external(site.socials.find(profile => profile.id === 'instagram').url, instagram, 'pill')}</div></section>`;
 }
 
-function italyPage(arabic) {
-  const name = arabic ? 'إيطاليا' : 'Italy';
+function collectionPage(title, photos, arabic) {
   const back = arabic ? 'الفن والتصوير' : 'Art &amp; Photography';
   const prefix = arabic ? '../' : '';
-  return `<section class="shell section inner-page italy-page" aria-labelledby="italy-title">
+  return `<section class="shell section inner-page" aria-labelledby="collection-title">
     <a class="line-link back-link" href="art.html">${icon(arabic ? 'arrow-right' : 'arrow-left')} ${back}</a>
-    <h1 id="italy-title">${name}</h1>
-    <div class="photography-grid">${italyPhotos(arabic).map((asset, index) => galleryItem(asset, '', 'italy', { prefix, arabic, priority: index === 0 })).join('\n    ')}</div>
+    <h1 id="collection-title">${title}</h1>
+    <div class="photography-grid">${photos.map((asset, index) => image(asset, { prefix, priority: index === 0 })).join('\n    ')}</div>
   </section>`;
 }
 
@@ -159,10 +163,16 @@ const contactAndCollaborationPages = [false, true].flatMap(arabic => {
 const person = { '@type': 'Person', '@id': `${site.url}#amira`, name: site.name, url: site.url, image: `${site.url}assets/amira-portrait.jpg`, jobTitle: 'Filmmaker and visual artist', sameAs: site.socials.map(profile => profile.url) };
 const photographyPages = [false, true].flatMap(arabic => {
   const prefix = arabic ? 'ar/' : '';
-  const [image, , , imageAlt] = italyPhotos(arabic)[0];
+  const localeIndex = arabic ? 1 : 0;
+  const [image, , , imageAlt] = collectionPhotos(photographyCollections[0], localeIndex)[0];
   return [
     { file: `${prefix}art.html`, title: arabic ? 'الفن والتصوير' : 'Art & Photography', description: arabic ? 'أعمال أميرة عبد الفضيل في التصوير الفوتوغرافي.' : 'Photography by Amira Abdelfadil.', image, imageAlt, photography: true, content: visualPage(arabic) },
-    { file: `${prefix}italy.html`, title: arabic ? 'إيطاليا' : 'Italy', description: arabic ? 'إيطاليا بعدسة أميرة عبد الفضيل.' : 'Italy, a photography series by Amira Abdelfadil.', image, imageAlt, photography: true, content: italyPage(arabic) },
+    ...photographyCollections.map(collection => {
+      const photos = collectionPhotos(collection, localeIndex);
+      const [image, , , imageAlt] = photos[0];
+      const title = collection.title[localeIndex];
+      return { file: `${prefix}${collection.id}.html`, title, description: arabic ? `${title} بعدسة أميرة عبد الفضيل.` : `${title}, a photography series by Amira Abdelfadil.`, image, imageAlt, photography: true, content: collectionPage(title, photos, arabic) };
+    }),
   ];
 });
 const pages = [
@@ -176,7 +186,7 @@ const pages = [
 const address = file => new URL(file, site.url).href;
 const arabicPage = file => {
   if (file.startsWith('film-')) return `ar/#project-${file.slice(5, -5)}`;
-  if (['contact.html', 'collaborations.html', 'art.html', 'italy.html'].includes(file)) return `ar/${file}`;
+  if (pages.some(page => page.file === `ar/${file}`)) return `ar/${file}`;
   return `ar/#${file.slice(0, -5)}`;
 };
 
@@ -219,7 +229,7 @@ function render(page) {
   ${page.content}
   </main>
   ${footer(current, arabic)}
-  ${lightbox(page.photography && arabic, page.photography)}
+  ${lightbox}
 </body>
 </html>
 `;

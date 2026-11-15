@@ -24,9 +24,37 @@ const italy = [
   ['Pedestrians on a tree-lined street with sunlit buildings', 'مشاة في شارع تصطفّ الأشجار على جانبيه وتضيء الشمس مبانيه'],
 ];
 
-export function italyPhotos(arabic) {
-  return italy.map(([englishAlt, arabicAlt], index) => [
-    `photography/italy/${String(index + 1).padStart(2, '0')}.jpg`,
-    720, 1280, arabic ? arabicAlt : englishAlt,
+const alexandria = [
+  ['A person stands on shore rocks beneath a pink sky', 'شخص يقف على صخور الشاطئ تحت سماء وردية'],
+  ['The red Amir sign on a white building', 'لافتة أمير الحمراء على مبنى أبيض'],
+  ['A child in a yellow cap beside a black-and-yellow taxi', 'طفل يرتدي قبّعة صفراء بجوار سيارة أجرة سوداء وصفراء'],
+  ['A girl with a pink flower in her hair at the waterfront', 'فتاة تزيّن شعرها زهرة وردية على الواجهة البحرية'],
+  ['A statue of Charlie Chaplin overlooking a square', 'تمثال تشارلي تشابلن يطلّ على ساحة'],
+  ['Ornate white arches on a red-brick façade', 'أقواس بيضاء مزخرفة على واجهة من الطوب الأحمر'],
+  ['A juice shop with an orange awning and bundles of sugarcane', 'محل عصير بمظلّة برتقالية وحزم من قصب السكر'],
+  ['An exterior staircase between apartment buildings', 'درج خارجي بين مبانٍ سكنية'],
+  ['The Alexandria Opera House sign beneath a carved arch', 'لافتة دار أوبرا الإسكندرية تحت قوس مزخرف'],
+  ['The Théâtre Mohamed Aly inscription on an ornate pediment', 'اسم مسرح محمد علي على واجهة مزخرفة'],
+  ['A statue of a seated oud player among palms', 'تمثال لعازف عود جالس بين أشجار النخيل'],
+  ['Three white chairs in a shaded courtyard', 'ثلاثة كراسٍ بيضاء في فناء مظلّل'],
+  ['Colourful laundry hanging from a cream and red balcony', 'غسيل ملوّن منشور على شرفة بواجهة قشدية وحمراء'],
+  ['White laundry draped over an iron balcony railing', 'غسيل أبيض معلّق على درابزين شرفة حديدي'],
+  ['Coffee beans in metal dispensers under a Brazilian coffee sign', 'حبوب قهوة في أوعية معدنية أسفل لافتة للقهوة البرازيلية'],
+  ['Turquoise doors behind a curved iron balcony', 'أبواب فيروزية خلف شرفة مستديرة ذات درابزين حديدي'],
+  ['An equestrian statue in front of a stone building', 'تمثال لفارس على ظهر حصان أمام مبنى حجري'],
+  ['A black-and-yellow taxi on a palm-lined street', 'سيارة أجرة سوداء وصفراء في شارع تحفّه أشجار النخيل'],
+  ['A tall monument surrounded by palms and street lamps', 'نصب شاهق تحيط به أشجار النخيل ومصابيح الشارع'],
+  ['The New Capry Hotel sign across a row of curved balconies', 'لافتة فندق نيو كابري على صفّ من الشرفات المنحنية'],
+];
+
+export const photographyCollections = [
+  { id: 'italy', title: ['Italy', 'إيطاليا'], captions: italy },
+  { id: 'alexandria', title: ['Alexandria', 'الإسكندرية'], captions: alexandria },
+];
+
+export function collectionPhotos(collection, localeIndex) {
+  return collection.captions.map((caption, index) => [
+    `photography/${collection.id}/${String(index + 1).padStart(2, '0')}.jpg`,
+    720, 1280, caption[localeIndex],
   ]);
 }

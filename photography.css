@@ -1,7 +1,12 @@
+.photography-collections {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 16rem));
+  gap: clamp(.75rem, 2vw, 1.5rem);
+  margin-block: 2rem;
+}
+
 .photography-collection {
   display: grid;
-  width: min(100%, 16rem);
-  margin-block: 2rem;
   gap: .5rem;
   font: 650 1.125rem var(--body);
 }
@@ -19,19 +24,13 @@
   margin-block-start: 2rem;
 }
 
-.photography-grid .image-link,
-.photography-collection picture,
-.photography-lightbox img {
-  border: 2px solid #fff;
-}
-
-.photography-grid .image-link,
+.photography-grid picture,
 .photography-collection picture {
+  border: 2px solid #fff;
   display: block;
   box-shadow: 0 0 0 1px rgb(40 35 31 / .14);
 }
 
-.photography-grid picture,
 .photography-grid img,
 .photography-collection img {
   display: block;
@@ -43,14 +42,6 @@
   height: auto;
   aspect-ratio: 2 / 3;
   object-fit: cover;
-}
-
-.photography-lightbox .lightbox-stage {
-  direction: ltr;
-}
-
-.photography-lightbox figcaption:empty {
-  display: none;
 }
 
 @media (max-width: 860px) {
