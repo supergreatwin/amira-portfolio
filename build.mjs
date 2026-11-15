@@ -3,8 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collaborations, films, locales, site } from './content.mjs';
-import { collaborationItems, filmCrew, homepageCrew, homepageTrailers, trailerPlayer, writingIntro, writingSection } from './sections.mjs';
-import { writingArchives } from './writings.mjs';
+import { collaborationItems, featuredEssays, filmCrew, homepageCrew, homepageTrailers, trailerPlayer, writingIntro, writingSection } from './sections.mjs';
 
 const root = fileURLToPath(new URL('./', import.meta.url));
 const versioned = file => `${file}?v=${createHash('sha256').update(readFileSync(join(root, file))).digest('hex').slice(0, 12)}`;
@@ -142,7 +141,7 @@ const person = { '@type': 'Person', '@id': `${site.url}#amira`, name: site.name,
 const pages = [
   { file: 'art.html', title: 'Art & Photography', description: 'Photography by Amira Abdelfadil, a filmmaker and visual artist based in Cairo.', content: visualPage() },
   { file: 'about.html', title: 'About', description: 'About Cairo-based filmmaker, photographer, writer, and visual artist Amira Abdelfadil.', content: aboutPage(), structured: person },
-  { file: 'writing.html', title: 'Writing', description: writingIntro[0], content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">${writingIntro[0]}</p>${writingSection({ archives: writingArchives })}</section>`, structured: { '@type': 'ItemList', itemListElement: writingArchives.flatMap(group => group.articles).map(([title, url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
+  { file: 'writing.html', title: 'Writing', description: writingIntro[0], content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">${writingIntro[0]}</p>${writingSection()}</section>`, structured: { '@type': 'ItemList', itemListElement: featuredEssays.flatMap(group => group.articles).map(([title, , url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
   ...contactAndCollaborationPages,
   ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, crew: true, trailer: Boolean(film.trailer), content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
 ];
