@@ -1,0 +1,42 @@
+.writing-archive {
+  border-block-start: 1px solid var(--line);
+}
+
+.writing-archive:last-child {
+  border-block-end: 1px solid var(--line);
+}
+
+.writing-archive summary {
+  min-block-size: 2.75rem;
+  padding-block: .7rem;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.archive-count {
+  margin-inline-start: .5rem;
+  color: var(--muted);
+  font-size: .82em;
+  font-variant-numeric: tabular-nums;
+}
+
+.writing-archive ul {
+  margin-block: 0 1rem;
+  padding-inline-start: 1.2rem;
+}
+
+.writing-archive li {
+  margin-block: .3rem;
+}
+
+.writing-archive li a {
+  display: inline-block;
+  padding-block: .35rem;
+  line-height: 1.45;
+}
+
+.writing-archive a:hover,
+.writing-archive a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}

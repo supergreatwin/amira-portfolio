@@ -76,43 +76,13 @@ export const films = [
     trailer: { youtubeId: 'LlEB9mEAB_Y', titleAr: 'سيف ذو حدين' },
     excerpt: 'How food waste in the supply chain connects to hunger and climate change.',
     synopsis: 'A short documentary about food waste in the food chain and its link to climate change and hunger.',
-    credits: [['Director', 'Amira Abdel-Fadil']],
+    credits: [['Director', 'Amira Abdel-Fadil'], ['Producer', 'Amira Abdel-Fadil']],
     stills: [
       ['double-edged-sword-01.jpg', 1120, 653, 'A person in a red shirt lying in grass'],
       ['double-edged-sword-02.jpg', 1120, 648, 'A person working among rows of crops'],
       ['double-edged-sword-03.jpg', 1120, 662, 'Cattle in a dry field'],
       ['double-edged-sword-04.jpg', 1370, 743, 'A fire burning beside a field lined with palm trees'],
     ],
-  },
-];
-
-export const writing = [
-  { title: 'The Beauty of Capturing Memories', summary: 'Revisiting family albums brings forgotten moments and earlier versions of ourselves into focus.', url: 'https://thought.is/the-beauty-of-capturing-memories/' },
-  { title: 'Maybe One Day I’ll Write a Masterpiece', summary: 'An essay on the urge to write, the distance between ambition and practice, and the value of continuing.', url: 'https://thought.is/maybe-one-day-ill-write-a-masterpiece/' },
-  { title: 'No Matter What, I Will Always Choose Effort', summary: 'A reflection on taking chances and showing up when it would be easier to choose comfort.', url: 'https://thought.is/no-matter-what-i-will-always-choose-effort/' },
-];
-
-export const movieWeb = [
-  {
-    title: 'Romance Movies Have Affected How We Perceive Love',
-    titleAr: 'كيف تؤثر الأفلام الرومانسية في نظرتنا إلى الحب؟',
-    url: 'https://movieweb.com/the-danger-of-romantic-movies-in-how-we-perceive-love/',
-    publication: 'MovieWeb',
-    byline: 'Amria Abdel-Fadil',
-  },
-  {
-    title: 'The 11 All-Time Best Documentaries About Racism',
-    titleAr: 'أفضل ١١ فيلمًا وثائقيًا عن العنصرية',
-    url: 'https://movieweb.com/the-best-documentaries-about-racism/',
-    publication: 'MovieWeb',
-    byline: 'Rachel Holbrook and Julian Roman',
-  },
-  {
-    title: 'Blue Lock: 11 Life Lessons We All Can Learn from the Popular Soccer Anime TV Show',
-    titleAr: '١١ درسًا في الحياة من أنمي كرة القدم «بلو لوك»',
-    url: 'https://movieweb.com/blue-lock-life-lessons-we-can-learn/',
-    publication: 'MovieWeb',
-    byline: 'Bernard Herrera and Amria Abdel-Fadil',
   },
 ];
 

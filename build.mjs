@@ -2,8 +2,9 @@ import { createHash } from 'node:crypto';
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { collaborations, films, locales, movieWeb, site, writing } from './content.mjs';
-import { collaborationItems, homepageTrailers, homepageWriting, trailerPlayer } from './sections.mjs';
+import { collaborations, films, locales, site } from './content.mjs';
+import { collaborationItems, homepageTrailers, trailerPlayer, writingArchive } from './sections.mjs';
+import { writingArchives } from './writings.mjs';
 
 const locale = locales.en;
 
@@ -82,10 +83,6 @@ function galleryItem(asset, caption, group, settings, className = '') {
   return `<figure${className ? ` class="${className}"` : ''}><a class="image-link" href="${href}" data-lightbox="${group}" data-caption="${escape(caption)}" data-width="${width}" data-height="${height}" aria-label="Enlarge image: ${escape(alt)}">${image(asset, settings)}<span class="image-expand">${icon('expand-icon')}</span></a><figcaption>${escape(caption)}</figcaption></figure>`;
 }
 
-function writingList() {
-  return `<div class="essay-list">${[...writing, ...movieWeb].map((entry, index) => `<article class="essay"><span class="folio" aria-hidden="true">0${index + 1}</span><div><h3>${external(entry.url, entry.title, 'essay-title')}</h3>${entry.summary ? `<p>${escape(entry.summary)}</p>` : ''}<p class="film-meta">${escape(entry.publication ?? 'Thought.is')}${entry.byline ? ` · ${escape(entry.byline)}` : ''}</p></div></article>`).join('')}</div>`;
-}
-
 const contactCTA = `<a class="pill" href="contact.html">Contact Amira ${icon('arrow-right')}</a>`;
 const portrait = ['amira-portrait.jpg', 540, 720, 'Amira holding a camera'];
 const hero = ['mamina-02.jpg', 1344, 709, 'Two women talk on a balcony overlooking Cairo'];
@@ -121,7 +118,7 @@ const person = { '@type': 'Person', '@id': `${site.url}#amira`, name: site.name,
 const pages = [
   { file: 'art.html', title: 'Art & Photography', description: 'Photography by Amira Abdelfadil, a filmmaker and visual artist based in Cairo.', content: visualPage() },
   { file: 'about.html', title: 'About', description: 'About Cairo-based filmmaker, photographer, writer, and visual artist Amira Abdelfadil.', content: aboutPage(), structured: person },
-  { file: 'writing.html', title: 'Writing', description: 'Selected essays and film writing from Thought.is and MovieWeb.', content: `<section class="shell section inner-page">${sectionTag('01', 'Archive')}<h1>Beyond the <em>frame</em></h1><p class="section-intro">Selected essays and film writing from Thought.is and MovieWeb.</p>${writingList()}</section>`, structured: { '@type': 'ItemList', itemListElement: [...writing, ...movieWeb].map((entry, index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: entry.title, url: entry.url, ...(entry.summary ? { author: { '@id': person['@id'] } } : {}) } })) } },
+  { file: 'writing.html', title: 'Writing', description: "Browse Amira Abdelfadil’s essays, film writing, and research drafts by publication.", content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">Essays, film writing, and research drafts by publication.</p>${writingArchive(writingArchives)}</section>`, structured: { '@type': 'ItemList', itemListElement: writingArchives.flatMap(group => group.articles).map(([title, url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
   { file: 'contact.html', title: 'Contact', description: 'Contact filmmaker and visual artist Amira Abdelfadil by email or through her official social profiles.', content: `<section class="shell section inner-page contact-page">${sectionTag('01', 'Enquiries')}<h1>Contact <em>Amira</em></h1><p class="contact-lead">Let’s collaborate on stories worth telling.</p><p class="section-intro">Get in touch for filmmaking, documentary projects, creative collaborations, and professional enquiries.</p><a class="line-link contact-email" href="mailto:${escape(site.email)}">${escape(site.email)} ${icon('arrow-right')}</a>${socialProfiles()}</section>` },
   ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, trailer: Boolean(film.trailer), content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
 ];
@@ -153,7 +150,7 @@ function render(page) {
   <meta property="og:image:alt" content="${escape(page.image ? `${page.title} poster` : hero[3])}">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="${stylesheet}">${page.trailer ? `\n  <link rel="stylesheet" href="${versioned('trailer.css')}">` : ''}
-  <script src="${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
+  ${page.file === 'writing.html' ? '<link rel="stylesheet" href="writing.css">\n  ' : ''}<script src="${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
   ${page.structured ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>` : ''}
 </head>
 <body id="top">
@@ -175,7 +172,7 @@ for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
   const source = readFileSync(join(root, file), 'utf8');
   outputs.push([file, homepageTrailers(source, films, arabic)
     .replace(/(<!-- collaborations:start -->)[\s\S]*?(<!-- collaborations:end -->)/, (_, start, end) => `${start}\n${collaborationItems(collaborations, arabic)}\n          ${end}`)
-    .replace(/(<!-- movieweb:start -->)[\s\S]*?(<!-- movieweb:end -->)/, (_, start, end) => `${start}\n${homepageWriting(movieWeb, arabic)}\n          ${end}`)]);
+    .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingArchive(writingArchives, arabic).replace(/^/gm, '        ')}\n        ${end}`)]);
 }
 outputs.push(['sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[site.url, address('ar/'), ...pages.map(page => address(page.file))].map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`]);
 outputs.push(['robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}sitemap.xml\n`]);

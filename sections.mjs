@@ -36,10 +36,16 @@ export function collaborationItems(entries, arabic) {
   }).join('\n');
 }
 
-export function homepageWriting(entries, arabic) {
-  return entries.map((entry, index) => {
-    const title = escape(arabic ? entry.titleAr : entry.title);
-    const attribution = entry.byline ? `${entry.publication} · ${entry.byline}` : entry.publication;
-    return `          <a class="essay" href="${escape(entry.url)}"${arabic ? ' hreflang="en"' : ''}><span class="eyebrow" aria-hidden="true">0${index + 4}</span><span><strong>${title}</strong><span class="eyebrow" lang="en" dir="ltr">${escape(attribution)}</span></span><span class="icon-circle">${arrow}</span></a>`;
-  }).join('\n');
+export function writingArchive(groups, arabic = false) {
+  const viewProfile = arabic ? 'صفحة الكاتبة على' : 'Author page at';
+  const count = new Intl.NumberFormat(arabic ? 'ar-EG' : 'en');
+  const language = arabic ? ' lang="en" dir="ltr" hreflang="en"' : '';
+  return `<div class="writing-archives">${groups.map(group => `
+  <details class="writing-archive">
+    <summary>${escape(arabic ? group.titleAr : group.title)} <span class="archive-count">${count.format(group.articles.length)}</span></summary>
+    <a class="line-link archive-source" href="${escape(group.url)}"${arabic ? ' hreflang="en"' : ''}>${viewProfile} <bdi>${escape(group.publication)}</bdi></a>
+    <ul>${group.articles.map(([title, url]) => `\n      <li><a href="${escape(url)}"${language}>${escape(title)}</a></li>`).join('')}
+    </ul>
+  </details>`).join('')}
+</div>`;
 }
