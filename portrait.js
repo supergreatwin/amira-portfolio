@@ -72,13 +72,22 @@
     artwork.loading = 'lazy';
     artwork.hidden = true;
     artwork.addEventListener('load',()=>{
-      artwork.hidden = false;
-      titleCard.classList.add('has-original-art');
+      artwork.hidden = klass !== 'portrait-art-primary';
+      if(klass === 'portrait-art-primary') titleCard.classList.add('has-original-art');
     });
     titleCard.prepend(artwork);
   }
-  addArtwork('portrait-title.webp','portrait-art-primary');
-  addArtwork('portrait-credits.webp','portrait-art-secondary');
+  const primaryArt = addArtwork('portrait-title.webp','portrait-art-primary');
+  const creditArt = addArtwork('portrait-credits.webp','portrait-art-secondary');
+  creditArt.hidden = true;
+  // Hold each original card clearly without crossfading or overlapping handwriting.
+  let showCredits = false;
+  setInterval(() => {
+    if(!primaryArt.naturalWidth || !creditArt.naturalWidth) return;
+    showCredits = !showCredits;
+    primaryArt.hidden = showCredits;
+    creditArt.hidden = !showCredits;
+  }, 8000);
   const opening = document.createElement('video');
   opening.className = 'portrait-opening-video';
   opening.src = mediaBase + 'portrait-opening.mp4';
@@ -129,32 +138,6 @@
   const modal = document.querySelector('.portrait-modal');
   const player = modal?.querySelector('.portrait-player');
   const close = modal?.querySelector('[data-portrait-close]');
-  const external = modal?.querySelector('[data-portrait-external]');
-  const title = modal?.querySelector('[data-portrait-modal-title]');
-  const sources = {
-    youtube:{embed:'https://www.youtube-nocookie.com/embed/1vrU0HedW4M?autoplay=1&rel=0',url:'https://youtu.be/1vrU0HedW4M',title:'Amira Abdelfadil — YouTube video'},
-    tiktok:{embed:'https://www.tiktok.com/player/v1/7702955168425397512',url:'https://www.tiktok.com/@byamiramero/video/7702955168425397512',title:'Amira Abdelfadil — TikTok video'},
-  };
-  experience.querySelectorAll('[data-portrait-play]').forEach(button => button.addEventListener('click',()=>{
-    const key=button.dataset.portraitPlay;
-    const source=sources[key];
-    if(!source) return;
-    if(!modal || typeof modal.showModal!=='function') {window.open(source.url,'_blank','noopener,noreferrer');return;}
-    player.dataset.provider=key;
-    const frame=document.createElement('iframe');
-    frame.src=source.embed;
-    frame.title=source.title;
-    frame.allow='autoplay; encrypted-media; picture-in-picture; fullscreen; web-share';
-    frame.allowFullscreen=true;
-    frame.referrerPolicy='strict-origin-when-cross-origin';
-    player.replaceChildren(frame);
-    external.hidden=false;
-    external.href=source.url;
-    external.textContent=arabic?'افتح الفيديو الأصلي ↗':'Watch on original platform ↗';
-    title.textContent=key==='tiktok'?'TikTok · @byamiramero':'YouTube · Amira Abdelfadil';
-    modal.showModal();
-    close.focus();
-  }));
   if(modal) {
     close.addEventListener('click',()=>modal.close());
     modal.addEventListener('close',()=>{player.replaceChildren();delete player.dataset.provider;});
