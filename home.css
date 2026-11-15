@@ -379,3 +379,18 @@ html[dir="rtl"] .read-progress { transform-origin: right; }
 @media (max-width: 430px) {
   .topbar.has-menu .films-shortcut { display: none; }
 }
+
+
+/* Curated cross-platform video collection */
+.selected-videos { border-top: 1px solid var(--line); }
+.selected-videos-intro { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 1rem 3rem; margin: 1.4rem 0 2rem; }
+.selected-videos-intro .section-deck { max-width: 35ch; }
+.selected-videos-grid { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(15rem, 1fr); align-items: start; gap: clamp(1.25rem, 3.5vw, 3rem); }
+.selected-video { min-width: 0; }
+.selected-video h3 { margin: 0 0 .85rem; font-size: .83rem; font-weight: 650; letter-spacing: .04em; color: var(--muted); }
+.selected-video-player { overflow: hidden; border: 1px solid var(--line); border-radius: .75rem; background: #171413; }
+.selected-video-player iframe { display: block; width: 100%; border: 0; aspect-ratio: 16 / 9; }
+.selected-video-tiktok .selected-video-player { width: min(100%, 24rem); margin-inline: auto; }
+.selected-video-tiktok iframe { aspect-ratio: 9 / 16; }
+.selected-video > .line-link { display: inline-flex; margin-top: .9rem; }
+@media (max-width: 700px) { .selected-videos-grid { grid-template-columns: minmax(0, 1fr); } .selected-video-tiktok .selected-video-player { margin-inline: 0; } }
