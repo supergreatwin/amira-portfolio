@@ -56,3 +56,18 @@ html[dir="rtl"] .portrait-tab[aria-selected="true"]{box-shadow:inset -3px 0 var(
 @media(max-width:760px){.portrait-head,.portrait-feature,.portrait-moments-grid{grid-template-columns:1fr}.portrait-feature{gap:1.6rem}.portrait-title-card{min-height:13rem}.portrait-scene{min-height:15rem}.portrait-head h3{font-size:clamp(2.3rem,9vw,4.4rem)}}
 @media(max-width:450px){.portrait-tab{grid-template-columns:1.6rem minmax(0,1fr) auto;gap:.5rem}.portrait-tab strong{font-size:.95rem}.portrait-source-note{font-size:.7rem}}
 @media(prefers-reduced-motion:reduce){.portrait-title-card .portrait-arabic{animation:none}}
+
+
+/* Progressive enhancement: original footage is used as soon as media files exist. */
+.portrait-title-card .portrait-title-art{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#fff;z-index:0}
+.portrait-title-card.has-original-art .portrait-arabic,
+.portrait-title-card.has-original-art .portrait-credit{visibility:hidden}
+.portrait-title-card .portrait-art-primary:not([hidden]){animation:portrait-title-cycle 9s linear infinite}
+.portrait-title-card .portrait-art-secondary:not([hidden]){animation:portrait-credits-cycle 9s linear infinite}
+.portrait-title-card .portrait-filmstrip{z-index:2}
+.portrait-title-card .portrait-opening-video:not([hidden]){position:absolute;right:1.25rem;bottom:2.4rem;width:min(30%,13rem);aspect-ratio:16/9;object-fit:cover;background:#171413;border:1px solid #fff8;border-radius:.45rem;z-index:3;box-shadow:0 9px 28px #17141330}
+.portrait-native-clip:not([hidden]){display:block;inline-size:100%;max-block-size:19rem;aspect-ratio:16/9;object-fit:contain;margin-block:.95rem .3rem;border-radius:.5rem;background:#171413}
+.portrait-modal .portrait-player[data-provider="feature"]{max-width:none;aspect-ratio:16/9}
+@keyframes portrait-title-cycle{0%,42%{opacity:1}50%,92%{opacity:0}100%{opacity:1}}
+@keyframes portrait-credits-cycle{0%,42%{opacity:0}50%,92%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.portrait-title-card .portrait-art-primary:not([hidden]){animation:none;opacity:1}.portrait-title-card .portrait-art-secondary:not([hidden]){animation:none;opacity:0}.portrait-title-card .portrait-opening-video{display:none!important}}
