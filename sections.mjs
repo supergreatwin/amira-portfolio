@@ -47,18 +47,18 @@ export function homepageCrew(html, films, arabic) {
   );
 }
 
-export function writingSection(groups, arabic = false) {
+export function writingSection({ arabic = false, archives = [] } = {}) {
   const index = Number(arabic);
   const archive = arabic ? 'تصفّح الأرشيف الكامل' : 'Browse the full writing archive';
   const categories = featuredEssays.map(category => `<section class="featured-essays">
   <h3>${category.heading[index]}</h3>
   <ul>${category.articles.map(([english, translated, url]) => `<li><a href="${url}"${arabic ? ' hreflang="en"' : ''}>${escape(arabic ? translated : english)} <span aria-hidden="true">↗</span></a></li>`).join('')}</ul>
 </section>`).join('\n');
+  const fullArchive = archives.length ? `\n<details class="full-writing-archive"><summary>${archive}</summary>
+${writingArchive(archives, arabic)}
+</details>` : '';
   return `<div class="writing-selection">
-${categories}
-<details class="full-writing-archive"><summary>${archive}</summary>
-${writingArchive(groups, arabic)}
-</details>
+${categories}${fullArchive}
 </div>`;
 }
 

@@ -142,7 +142,7 @@ const person = { '@type': 'Person', '@id': `${site.url}#amira`, name: site.name,
 const pages = [
   { file: 'art.html', title: 'Art & Photography', description: 'Photography by Amira Abdelfadil, a filmmaker and visual artist based in Cairo.', content: visualPage() },
   { file: 'about.html', title: 'About', description: 'About Cairo-based filmmaker, photographer, writer, and visual artist Amira Abdelfadil.', content: aboutPage(), structured: person },
-  { file: 'writing.html', title: 'Writing', description: writingIntro[0], content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">${writingIntro[0]}</p>${writingSection(writingArchives)}</section>`, structured: { '@type': 'ItemList', itemListElement: writingArchives.flatMap(group => group.articles).map(([title, url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
+  { file: 'writing.html', title: 'Writing', description: writingIntro[0], content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">${writingIntro[0]}</p>${writingSection({ archives: writingArchives })}</section>`, structured: { '@type': 'ItemList', itemListElement: writingArchives.flatMap(group => group.articles).map(([title, url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
   ...contactAndCollaborationPages,
   ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, crew: true, trailer: Boolean(film.trailer), content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
 ];
@@ -200,7 +200,7 @@ const outputs = pages.map(page => [page.file, render(page)]);
 for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
   const source = readFileSync(join(root, file), 'utf8');
   outputs.push([file, homepageCrew(homepageTrailers(source, films, arabic), films, arabic)
-    .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingSection(writingArchives, arabic).replace(/^/gm, '        ')}\n        ${end}`)]);
+    .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingSection({ arabic }).replace(/^/gm, '        ')}\n        ${end}`)]);
 }
 outputs.push(['sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[site.url, address('ar/'), ...pages.map(page => address(page.file))].map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`]);
 outputs.push(['robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}sitemap.xml\n`]);
