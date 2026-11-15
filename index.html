@@ -12,11 +12,13 @@
   <link rel="alternate" hreflang="en" href="./">
   <link rel="alternate" hreflang="ar" href="ar/">
   <link rel="stylesheet" href="home.css?v=collaborations">
+  <link rel="stylesheet" href="portrait.css?v=days-1">
   <link rel="stylesheet" href="trailer.css">
   <link rel="stylesheet" href="crew.css?v=f2820b8b3daa">
   <link rel="stylesheet" href="writing.css?v=60ee204f25a0">
   <script src="trailer.js" defer></script>
   <script src="home.js?v=collaborations" defer></script>
+  <script src="portrait.js?v=days-1" defer></script>
   <title>Amira Abdelfadil — Film & Art</title>
 </head>
 <body>
@@ -263,6 +265,54 @@
         </div>
         <img class="about-portrait" src="assets/amira-portrait.jpg" alt="Amira holding a camera" width="540" height="720" loading="lazy">
       </div>
+
+      <!-- portrait-experience:start -->
+      <div class="portrait-experience" id="portrait" aria-labelledby="portrait-heading">
+        <div class="portrait-head">
+          <div><p class="eyebrow">An intimate portrait · أيام مع أميرة</p><h3 id="portrait-heading">Beyond the <em>frame.</em></h3></div>
+          <p>A closer glimpse of Amira through conversations, little questions, and the quiet moments between them.</p>
+        </div>
+        <div class="portrait-feature">
+          <div class="portrait-title-card" aria-label="أيام مع أميرة">
+            <span class="portrait-arabic" lang="ar" dir="rtl">أيام مع أميرة</span>
+            <span class="portrait-credit" lang="ar" dir="rtl">كتابة وإخراج أميرة عبد الفضيل</span>
+            <div class="portrait-filmstrip" dir="ltr"><span>AMIRA ABDELFADIL</span><span>01 / 03</span></div>
+          </div>
+          <div class="portrait-summary">
+            <p class="eyebrow">Days with Amira · Selected footage</p>
+            <h4>A story in the smaller moments.</h4><p>From a question about the future to a pause by the river. An invitation to meet the person behind the work.</p>
+            <div class="portrait-actions">
+              <button type="button" class="portrait-play" data-portrait-play="youtube">Watch on YouTube <span aria-hidden="true">↗</span></button>
+              <button type="button" class="portrait-play portrait-secondary" data-portrait-play="tiktok">A moment on TikTok <span aria-hidden="true">↗</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="portrait-moments">
+          <div class="portrait-moments-head"><h4>A portrait in fragments</h4><p>Choose a moment to explore its story.</p></div>
+          <div class="portrait-moments-grid">
+            <div class="portrait-tabs" role="tablist" aria-label="A portrait in fragments">
+          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-question" data-portrait-moment="question" aria-controls="portrait-moment-panel" aria-selected="true" tabindex="0">
+            <span class="portrait-number">01</span><span><strong>The future</strong><small>A question about five years ahead</small></span><span class="portrait-length" dir="ltr">00:31</span>
+          </button>
+          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-conversation" data-portrait-moment="conversation" aria-controls="portrait-moment-panel" aria-selected="false" tabindex="-1">
+            <span class="portrait-number">02</span><span><strong>The conversation</strong><small>An intimate, candid close-up</small></span><span class="portrait-length" dir="ltr">00:24</span>
+          </button>
+          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-riverside" data-portrait-moment="riverside" aria-controls="portrait-moment-panel" aria-selected="false" tabindex="-1">
+            <span class="portrait-number">03</span><span><strong>The river</strong><small>A quiet view beyond the balcony</small></span><span class="portrait-length" dir="ltr">00:24</span>
+          </button>
+            </div>
+            <div class="portrait-scene" role="tabpanel" id="portrait-moment-panel" tabindex="0" aria-labelledby="portrait-tab-question">
+              <p class="eyebrow">From the portrait · <span data-moment-number>01</span></p>
+              <h5 data-moment-title>Looking ahead</h5>
+              <p data-moment-desc>A quiet question about the next five years.</p>
+              <p class="portrait-quote" lang="ar" dir="rtl" data-moment-quote>«شايفة نفسك فين كمان خمس سنين؟»</p>
+              <div class="portrait-scene-bottom"><span>Selected moment</span><span data-moment-time dir="ltr">00:31</span></div>
+            </div>
+          </div>
+        </div>
+        <p class="portrait-source-note">The published videos play through their original platforms. The uploaded short excerpts are represented here as editorial chapters until their files are hosted on the site.</p>
+      </div>
+      <!-- portrait-experience:end -->
     </section>
   </main>
 
@@ -278,6 +328,13 @@
     </div>
     <div class="footer-base eyebrow"><span>Amira Abdelfadil <span class="mid-dot">·</span> Cairo, Egypt</span><a href="#top">Back to top <span aria-hidden="true">↑</span></a></div>
   </footer>
+
+
+  <dialog class="portrait-modal" aria-label="Video player">
+    <div class="portrait-modal-bar"><span data-portrait-modal-title>Amira Abdelfadil</span><button type="button" data-portrait-close>Close ✕</button></div>
+    <div class="portrait-player" data-provider="youtube"></div>
+    <a data-portrait-external href="https://youtu.be/1vrU0HedW4M" target="_blank" rel="noopener noreferrer">Watch on original platform ↗</a>
+  </dialog>
 
   <dialog class="project-dialog" aria-labelledby="project-title">
     <div class="dialog-bar eyebrow"><span>Selected films <span class="dialog-count"></span></span><button type="button" class="icon-circle" data-close aria-label="Close film details"><svg class="icon"><use href="#close-icon"/></svg></button></div>
