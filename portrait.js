@@ -73,7 +73,7 @@
     titleCard.append(still);
     titleCard.classList.add('has-original-art');
   });
-  still.src = mediaBase + 'portrait-title.png';
+  still.src = mediaBase + 'portrait-chosen-lettering.svg';
 
   // Only expose the complete uploaded film if its optimized source is available.
   fetch(mediaBase+'portrait-feature.mp4',{method:'HEAD'}).then(response=>{
