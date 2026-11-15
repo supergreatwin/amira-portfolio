@@ -62,51 +62,18 @@
   nativeClip.addEventListener('loadedmetadata',() => { nativeClip.hidden = false; });
   nativeClip.addEventListener('error',() => { nativeClip.hidden = true; });
 
-  // Enhance the editorial title with the supplied hand-drawn cards when hosted.
+  // Use a single PNG title, retaining the text fallback until it loads.
   const titleCard = experience.querySelector('.portrait-title-card');
-  function addArtwork(filename,klass) {
-    const artwork = document.createElement('img');
-    artwork.src = mediaBase + filename;
-    artwork.alt = '';
-    artwork.className = 'portrait-title-art ' + klass;
-    artwork.loading = 'lazy';
-    artwork.hidden = true;
-    artwork.addEventListener('load',()=>{
-      artwork.hidden = klass !== 'portrait-art-primary';
-      if(klass === 'portrait-art-primary') titleCard.classList.add('has-original-art');
-    });
-    titleCard.prepend(artwork);
-  }
-  const primaryArt = addArtwork('portrait-title.webp','portrait-art-primary');
-  const creditArt = addArtwork('portrait-credits.webp','portrait-art-secondary');
-  creditArt.hidden = true;
-  // Hold each original card clearly without crossfading or overlapping handwriting.
-  let showCredits = false;
-  setInterval(() => {
-    if(!primaryArt.naturalWidth || !creditArt.naturalWidth) return;
-    showCredits = !showCredits;
-    primaryArt.hidden = showCredits;
-    creditArt.hidden = !showCredits;
-  }, 8000);
-  const opening = document.createElement('video');
-  opening.className = 'portrait-opening-video';
-  opening.src = mediaBase + 'portrait-opening.mp4';
-  opening.muted = true;
-  opening.loop = true;
-  opening.playsInline = true;
-  opening.preload = 'none';
-  opening.hidden = true;
-  opening.addEventListener('loadeddata',() => {
-    opening.hidden = false;
-    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches) opening.play().catch(()=>{});
+  const still = new Image();
+  still.className = 'portrait-static-art';
+  still.alt = arabic ? 'أيام مع أميرة' : 'Days with Amira';
+  still.decoding = 'async';
+  still.loading = 'lazy';
+  still.addEventListener('load', () => {
+    titleCard.append(still);
+    titleCard.classList.add('has-original-art');
   });
-  titleCard.append(opening);
-  if('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries=>{
-      if(entries.some(e=>e.isIntersecting)) {opening.preload='metadata';observer.disconnect();}
-    },{rootMargin:'250px'});
-    observer.observe(titleCard);
-  } else opening.preload='metadata';
+  still.src = mediaBase + 'portrait-title.png';
 
   // Only expose the complete uploaded film if its optimized source is available.
   fetch(mediaBase+'portrait-feature.mp4',{method:'HEAD'}).then(response=>{
