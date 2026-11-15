@@ -193,6 +193,7 @@ function render(page) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f8f4ec">
+  <script src="${prefix}theme-init.js"></script>
   <title>${escape(title)}</title>
   <meta name="description" content="${escape(page.description)}">
   <link rel="canonical" href="${url}">
@@ -206,6 +207,8 @@ function render(page) {
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="${prefix}${stylesheet}">${page.trailer ? `\n  <link rel="stylesheet" href="${versioned('trailer.css')}">` : ''}${page.crew ? `\n  <link rel="stylesheet" href="${versioned('crew.css')}">` : ''}
   ${page.file === 'writing.html' ? `<link rel="stylesheet" href="${versioned('writing.css')}">\n  ` : ''}${page.photography ? `<link rel="stylesheet" href="${prefix}${versioned('photography.css')}">\n  ` : ''}<script src="${prefix}${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
+  <link rel="stylesheet" href="${prefix}theme.css?v=1">
+  <script src="${prefix}theme.js?v=1" defer></script>
   ${page.structured ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>` : ''}
 </head>
 <body id="top">
