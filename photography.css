@@ -44,6 +44,14 @@
   object-fit: cover;
 }
 
+.photography-grid--landscape {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.photography-grid--landscape img {
+  aspect-ratio: auto;
+}
+
 @media (max-width: 860px) {
   .photography-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));

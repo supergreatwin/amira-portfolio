@@ -128,11 +128,13 @@ function visualPage(arabic) {
 
 function collectionPage(title, photos, arabic) {
   const back = arabic ? 'الفن والتصوير' : 'Art &amp; Photography';
+  const [, width, height] = photos[0];
+  const layout = width > height ? ' photography-grid--landscape' : '';
   const prefix = arabic ? '../' : '';
   return `<section class="shell section inner-page" aria-labelledby="collection-title">
     <a class="line-link back-link" href="art.html">${icon(arabic ? 'arrow-right' : 'arrow-left')} ${back}</a>
-    <h1 id="collection-title">${title}</h1>
-    <div class="photography-grid">${photos.map((asset, index) => image(asset, { prefix, priority: index === 0 })).join('\n    ')}</div>
+    <h1 id="collection-title">${escape(title)}</h1>
+    <div class="photography-grid${layout}">${photos.map((asset, index) => image(asset, { prefix, priority: index === 0 })).join('\n    ')}</div>
   </section>`;
 }
 
