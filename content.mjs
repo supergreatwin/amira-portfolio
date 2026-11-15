@@ -20,7 +20,7 @@ export const locales = {
   ar: {
     lang: 'ar', dir: 'rtl', ogLocale: 'ar_EG',
     navigation: [
-      ['الرئيسية', '#top'], ['الأفلام', '#work'], ['الفن والتصوير', '#art'],
+      ['الرئيسية', '#top'], ['الأفلام', '#work'], ['الفن والتصوير', 'art.html'],
       ['كتابات', '#writing'], ['التعاونات', 'collaborations.html'], ['نبذة', '#about'], ['تواصل', 'contact.html'],
     ],
   },

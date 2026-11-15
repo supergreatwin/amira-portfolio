@@ -3,6 +3,7 @@ import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { collaborations, films, locales, site } from './content.mjs';
+import { italyPhotos } from './photos.mjs';
 import { collaborationItems, featuredEssays, filmCrew, homepageCrew, homepageTrailers, trailerPlayer, writingIntro, writingSection } from './sections.mjs';
 
 const root = fileURLToPath(new URL('./', import.meta.url));
@@ -70,28 +71,29 @@ function footer(page, arabic) {
   </div></footer>`;
 }
 
-function image(asset, { priority = false, sizes = '(max-width: 640px) 100vw, 50vw' } = {}) {
+function image(asset, { priority = false, sizes = '(max-width: 640px) 100vw, 50vw', prefix = '' } = {}) {
   const [file, width, height, alt] = asset;
   const src = `assets/${file.endsWith('.webp') ? 'optimized/' : ''}${file}`;
   const webp = file.replace(/\.jpg$/, '.webp');
   const smallSource = 'assets/optimized/';
   const thumbnail = webp.replace('.webp', '-480.webp');
   const hasWebp = file.endsWith('.jpg') && existsSync(join(root, smallSource, webp)) && existsSync(join(root, smallSource, thumbnail));
-  return `<picture>${hasWebp ? `<source type="image/webp" srcset="${smallSource}${thumbnail} 480w, ${smallSource}${webp} ${width}w" sizes="${escape(sizes)}">` : ''}<img src="${src}" width="${width}" height="${height}" alt="${escape(alt)}" ${priority ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'}></picture>`;
+  return `<picture>${hasWebp ? `<source type="image/webp" srcset="${prefix}${smallSource}${thumbnail} 480w, ${prefix}${smallSource}${webp} ${width}w" sizes="${escape(sizes)}">` : ''}<img src="${prefix}${src}" width="${width}" height="${height}" alt="${escape(alt)}" ${priority ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'}></picture>`;
 }
 
-function galleryItem(asset, caption, group, settings, className = '') {
+function galleryItem(asset, caption, group, settings = {}, className = '') {
   const [file, width, height, alt] = asset;
-  const href = `assets/${file.endsWith('.webp') ? 'optimized/' : ''}${file}`;
-  return `<figure${className ? ` class="${className}"` : ''}><a class="image-link" href="${href}" data-lightbox="${group}" data-caption="${escape(caption)}" data-width="${width}" data-height="${height}" aria-label="Enlarge image: ${escape(alt)}">${image(asset, settings)}<span class="image-expand">${icon('expand-icon')}</span></a><figcaption>${escape(caption)}</figcaption></figure>`;
+  const href = `${settings.prefix ?? ''}assets/${file.endsWith('.webp') ? 'optimized/' : ''}${file}`;
+  const label = settings.arabic ? 'تكبير الصورة' : 'Enlarge image';
+  return `<figure${className ? ` class="${className}"` : ''}><a class="image-link" href="${href}" data-lightbox="${group}" data-caption="${escape(caption)}" data-width="${width}" data-height="${height}" aria-label="${label}: ${escape(alt)}">${image(asset, settings)}<span class="image-expand">${icon('expand-icon')}</span></a>${caption ? `<figcaption>${escape(caption)}</figcaption>` : ''}</figure>`;
 }
 
 const contactCTA = `<a class="pill" href="contact.html">Contact Amira ${icon('arrow-right')}</a>`;
 const portrait = ['amira-portrait.jpg', 540, 720, 'Amira holding a camera'];
 const hero = ['mamina-02.jpg', 1344, 709, 'Two women talk on a balcony overlooking Cairo'];
-const lightbox = `<dialog class="lightbox" aria-labelledby="lightbox-title">
-  <div class="lightbox-toolbar"><h2 id="lightbox-title">Image viewer</h2><p class="lightbox-count" aria-live="polite"></p><button class="round-button" type="button" data-close aria-label="Close image viewer">${icon('close-icon')}</button></div>
-  <div class="lightbox-stage"><button class="round-button" type="button" data-step="-1" aria-label="Previous image">${icon('arrow-left')}</button><figure><img alt="" draggable="false"><figcaption></figcaption></figure><button class="round-button" type="button" data-step="1" aria-label="Next image">${icon('arrow-right')}</button></div>
+const lightbox = (arabic, photography) => `<dialog class="lightbox${photography ? ' photography-lightbox' : ''}" aria-labelledby="lightbox-title">
+  <div class="lightbox-toolbar"><h2 id="lightbox-title">${arabic ? 'عارض الصور' : 'Image viewer'}</h2><p class="lightbox-count" aria-live="polite"></p><button class="round-button" type="button" data-close aria-label="${arabic ? 'إغلاق عارض الصور' : 'Close image viewer'}">${icon('close-icon')}</button></div>
+  <div class="lightbox-stage"><button class="round-button" type="button" data-step="-1" aria-label="${arabic ? 'الصورة السابقة' : 'Previous image'}">${icon('arrow-left')}</button><figure><img alt="" draggable="false"><figcaption></figcaption></figure><button class="round-button" type="button" data-step="1" aria-label="${arabic ? 'الصورة التالية' : 'Next image'}">${icon('arrow-right')}</button></div>
 </dialog>`;
 
 function filmPage(film, index) {
@@ -109,8 +111,25 @@ function filmPage(film, index) {
   </article>`;
 }
 
-function visualPage() {
-  return `<section class="shell section inner-page"><h1>Art &amp; <em>Photography</em></h1><p class="section-intro">A showcase of Amira’s Photography</p><div class="actions">${external(site.socials.find(profile => profile.id === 'instagram').url, 'View Amira’s visual diary on Instagram', 'pill')}</div></section>`;
+function visualPage(arabic) {
+  const heading = arabic ? 'الفن و<em>التصوير</em>' : 'Art &amp; <em>Photography</em>';
+  const intro = arabic ? 'مختارات من أعمال أميرة في التصوير الفوتوغرافي' : 'A showcase of Amira’s Photography';
+  const instagram = arabic ? 'يوميات أميرة البصرية على إنستغرام' : 'View Amira’s visual diary on Instagram';
+  const cover = italyPhotos(arabic)[0];
+  return `<section class="shell section inner-page"><h1>${heading}</h1><p class="section-intro">${intro}</p>
+    <a class="photography-collection" href="italy.html">${image(cover, { priority: true, prefix: arabic ? '../' : '' })}<span>${arabic ? 'إيطاليا' : 'Italy'} ${icon(arabic ? 'arrow-left' : 'arrow-right')}</span></a>
+    <div class="actions">${external(site.socials.find(profile => profile.id === 'instagram').url, instagram, 'pill')}</div></section>`;
+}
+
+function italyPage(arabic) {
+  const name = arabic ? 'إيطاليا' : 'Italy';
+  const back = arabic ? 'الفن والتصوير' : 'Art &amp; Photography';
+  const prefix = arabic ? '../' : '';
+  return `<section class="shell section inner-page italy-page" aria-labelledby="italy-title">
+    <a class="line-link back-link" href="art.html">${icon(arabic ? 'arrow-right' : 'arrow-left')} ${back}</a>
+    <h1 id="italy-title">${name}</h1>
+    <div class="photography-grid">${italyPhotos(arabic).map((asset, index) => galleryItem(asset, '', 'italy', { prefix, arabic, priority: index === 0 })).join('\n    ')}</div>
+  </section>`;
 }
 
 function aboutPage() {
@@ -138,8 +157,16 @@ const contactAndCollaborationPages = [false, true].flatMap(arabic => {
 });
 
 const person = { '@type': 'Person', '@id': `${site.url}#amira`, name: site.name, url: site.url, image: `${site.url}assets/amira-portrait.jpg`, jobTitle: 'Filmmaker and visual artist', sameAs: site.socials.map(profile => profile.url) };
+const photographyPages = [false, true].flatMap(arabic => {
+  const prefix = arabic ? 'ar/' : '';
+  const [image, , , imageAlt] = italyPhotos(arabic)[0];
+  return [
+    { file: `${prefix}art.html`, title: arabic ? 'الفن والتصوير' : 'Art & Photography', description: arabic ? 'أعمال أميرة عبد الفضيل في التصوير الفوتوغرافي.' : 'Photography by Amira Abdelfadil.', image, imageAlt, photography: true, content: visualPage(arabic) },
+    { file: `${prefix}italy.html`, title: arabic ? 'إيطاليا' : 'Italy', description: arabic ? 'إيطاليا بعدسة أميرة عبد الفضيل.' : 'Italy, a photography series by Amira Abdelfadil.', image, imageAlt, photography: true, content: italyPage(arabic) },
+  ];
+});
 const pages = [
-  { file: 'art.html', title: 'Art & Photography', description: 'Photography by Amira Abdelfadil, a filmmaker and visual artist based in Cairo.', content: visualPage() },
+  ...photographyPages,
   { file: 'about.html', title: 'About', description: 'About Cairo-based filmmaker, photographer, writer, and visual artist Amira Abdelfadil.', content: aboutPage(), structured: person },
   { file: 'writing.html', title: 'Writing', description: writingIntro[0], content: `<section class="shell section inner-page"><h1>Beyond the <em>frame</em></h1><p class="section-intro">${writingIntro[0]}</p>${writingSection()}</section>`, structured: { '@type': 'ItemList', itemListElement: featuredEssays.flatMap(group => group.articles).map(([title, , url], index) => ({ '@type': 'ListItem', position: index + 1, item: { '@type': 'Article', headline: title, url } })) } },
   ...contactAndCollaborationPages,
@@ -149,7 +176,7 @@ const pages = [
 const address = file => new URL(file, site.url).href;
 const arabicPage = file => {
   if (file.startsWith('film-')) return `ar/#project-${file.slice(5, -5)}`;
-  if (file === 'contact.html' || file === 'collaborations.html') return `ar/${file}`;
+  if (['contact.html', 'collaborations.html', 'art.html', 'italy.html'].includes(file)) return `ar/${file}`;
   return `ar/#${file.slice(0, -5)}`;
 };
 
@@ -175,10 +202,10 @@ function render(page) {
   <meta property="og:title" content="${escape(title)}">
   <meta property="og:description" content="${escape(page.description)}">
   <meta property="og:image" content="${site.url}assets/${page.image ?? 'mamina-02.jpg'}">
-  <meta property="og:image:alt" content="${escape(page.image ? `${page.title} poster` : hero[3])}">
+  <meta property="og:image:alt" content="${escape(page.imageAlt ?? (page.image ? `${page.title} poster` : hero[3]))}">
   <meta name="twitter:card" content="summary_large_image">
   <link rel="stylesheet" href="${prefix}${stylesheet}">${page.trailer ? `\n  <link rel="stylesheet" href="${versioned('trailer.css')}">` : ''}${page.crew ? `\n  <link rel="stylesheet" href="${versioned('crew.css')}">` : ''}
-  ${page.file === 'writing.html' ? `<link rel="stylesheet" href="${versioned('writing.css')}">\n  ` : ''}<script src="${prefix}${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
+  ${page.file === 'writing.html' ? `<link rel="stylesheet" href="${versioned('writing.css')}">\n  ` : ''}${page.photography ? `<link rel="stylesheet" href="${prefix}${versioned('photography.css')}">\n  ` : ''}<script src="${prefix}${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
   ${page.structured ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>` : ''}
 </head>
 <body id="top">
@@ -189,7 +216,7 @@ function render(page) {
   ${page.content}
   </main>
   ${footer(current, arabic)}
-  ${lightbox}
+  ${lightbox(page.photography && arabic, page.photography)}
 </body>
 </html>
 `;
