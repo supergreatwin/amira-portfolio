@@ -1,6 +1,6 @@
 .photography-collections {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 16rem));
+  grid-template-columns: repeat(5, minmax(0, 16rem));
   gap: clamp(.75rem, 2vw, 1.5rem);
   margin-block: 2rem;
 }
