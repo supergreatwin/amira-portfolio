@@ -29,12 +29,11 @@ const symbols = `<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hi
   <symbol id="close-icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
   <symbol id="expand-icon" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5M4 15v5h5m11-5v5h-5"/></symbol>
   <symbol id="instagram" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle class="icon-fill" cx="17.4" cy="6.7" r="1"/></symbol>
-  <symbol id="tiktok" viewBox="0 0 24 24"><path class="icon-fill" d="M14 2h3c.4 2.3 1.8 3.7 4 4v3.2c-1.5 0-2.8-.4-4-1.2v7.1a6 6 0 1 1-6-6v3.2a2.9 2.9 0 1 0 2.9 2.8z"/></symbol>
   <symbol id="linkedin" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 10v7m4 0v-7m0 3a2.5 2.5 0 0 1 5 0v4"/><circle class="icon-fill" cx="8" cy="7" r=".9"/></symbol>
 </svg>`;
 
 function socialProfiles(arabic) {
-  const labels = { instagram: 'يوميات بصرية', tiktok: 'من الكواليس', linkedin: 'تواصل مهني' };
+  const labels = { instagram: 'يوميات بصرية', linkedin: 'تواصل مهني' };
   return `<ul class="social-profiles" aria-label="${arabic ? 'الحسابات الرسمية' : 'Official social profiles'}">${site.socials.map(profile => `<li><a href="${escape(profile.url)}" ${outbound}>${icon(profile.id)}<span><strong>${profile.name}</strong><span>${escape(profile.profile)}</span><small>${arabic ? labels[profile.id] : profile.label}</small></span>${icon('arrow-external')}</a></li>`).join('')}</ul>`;
 }
 

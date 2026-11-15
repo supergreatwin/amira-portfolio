@@ -5,7 +5,6 @@ export const site = {
   description: 'Films, visual work, and writing by Amira Abdelfadil, an Egyptian filmmaker, photographer, and multidisciplinary artist based in Cairo.',
   socials: [
     { id: 'instagram', name: 'Instagram', profile: '@amiraabdelfadil', label: 'Visual Diary', url: 'https://www.instagram.com/amiraabdelfadil/' },
-    { id: 'tiktok', name: 'TikTok', profile: '@byamiramero', label: 'Behind the Frames', url: 'https://www.tiktok.com/@byamiramero?lang=en-GB' },
     { id: 'linkedin', name: 'LinkedIn', profile: 'Amira Abdelfadil', label: 'Professional Connections', url: 'https://www.linkedin.com/in/amira-a-4a9b73113/' },
   ],
 };
@@ -27,6 +26,9 @@ export const locales = {
   },
 };
 
+const productionPartners = 'IMS, Nazra Films, Goethe Institute, Red Star';
+const productionPartnersAr = 'آي إم إس، نظرة فيلمز، معهد غوته، وريد ستار';
+
 export const films = [
   {
     id: 'sweet-and-salty', title: 'Sweet & Salty', posterWidth: 636, seconds: 2483,
@@ -45,8 +47,8 @@ export const films = [
     id: 'street-x-food', title: 'Street X Food', posterWidth: 707, seconds: 348,
     excerpt: 'A glimpse into Cairo’s vibrant street life through its street vendors, cooks, and the people who gather around their meals.',
     synopsis: 'Street X Food is a glimpse into Cairo’s vibrant street life, where food pulses like a heartbeat. Through its street vendors, cooks, and the people who gather around their meals, the film captures the flavours, energy, and everyday connections of a city shaped by resilience and community.',
-    credits: [['Directed by', 'Amira Abdel-Fadil']],
-    creditsAr: [['الإخراج', 'أميرة عبد الفضيل']],
+    credits: [['Director', 'Amira Abdel-Fadil'], ['Production', productionPartners]],
+    creditsAr: [['الإخراج', 'أميرة عبد الفضيل'], ['الإنتاج', productionPartnersAr]],
     stills: [
       ['street-x-food-01.jpg', 1120, 573, 'A pan of food at a street food stand'],
       ['street-x-food-02.jpg', 1120, 571, 'Two men seated in a market street'],
@@ -73,8 +75,8 @@ export const films = [
     trailer: { youtubeId: '9-ksBDgAwFk', titleAr: 'مامينا' },
     excerpt: 'After losing her grandmother, Amira returns to the memories they made together in her kitchen.',
     synopsis: 'Amira, a young woman deeply attached to her grandmother, is struggling to cope with her loss. Their bond was nurtured in her grandmother’s kitchen through cooking and sharing meals together. Now, without her grandmother’s abundant love, Amira feels lost and misses her terribly. As she grieves and searches for love in those around her, including her mother, and within herself, she begins to uncover what might be the key to moving forward despite the pain.',
-    credits: [['Director', 'Amira Abdel-Fadil'], ['Production', 'IMS, Nazra']],
-    creditsAr: [['الإخراج', 'أميرة عبد الفضيل'], ['الإنتاج', 'آي إم إس، نظرة']],
+    credits: [['Director', 'Amira Abdel-Fadil'], ['Production', productionPartners]],
+    creditsAr: [['الإخراج', 'أميرة عبد الفضيل'], ['الإنتاج', productionPartnersAr]],
     stills: [
       ['mamina-01.jpg', 1120, 578, 'A pot and pan on a kitchen stove'],
       ['mamina-02.jpg', 1344, 709, 'Two women talk on a balcony overlooking Cairo'],
@@ -112,8 +114,8 @@ export const collaborations = [
   },
   {
     title: 'Mamina', titleAr: 'مامينا',
-    description: 'Produced by IMS Nazra, with Menna Ahmed on cinematography, Hisham Abdelrazek on editing, and Mohab Ezz on sound.',
-    descriptionAr: 'من إنتاج آي إم إس ونظرة، وتصوير منّة أحمد، ومونتاج هشام عبد الرازق، وتصميم ومزج الصوت لمهاب عز.',
+    description: 'Production: IMS, Nazra Films, Goethe Institute, and Red Star. Cinematography by Menna Ahmed, editing by Hisham Abdelrazek, and sound by Mohab Ezz.',
+    descriptionAr: 'الإنتاج: آي إم إس، ونظرة فيلمز، ومعهد غوته، وريد ستار. تصوير منّة أحمد، ومونتاج هشام عبد الرازق، وتصميم ومزج الصوت لمهاب عز.',
   },
   {
     title: 'A Double-Edged Sword', titleAr: 'سيف ذو حدين',
