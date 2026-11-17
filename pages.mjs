@@ -10,31 +10,10 @@ if (production.protocol !== 'https:' || production.href !== `${production.origin
   throw new Error('PORTFOLIO_SITE_URL must be an HTTPS site origin with no path');
 }
 
-const googleTagManager = `<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WRGP2P7L"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-</script>`;
-
-// Enforce one copy of the requested Google tag on every deployed HTML page.
-// Standalone Google ownership files are handled separately and remain plain text.
-function withGoogleTagManager(html) {
-  const head = /<head(?:\s[^>]*)?>/i;
-  if (!head.test(html)) throw new Error('Cannot inject Google Tag Manager: missing <head>');
-  const gtmScript = /<script\b[^>]*\bsrc=["']https:\/\/www\.googletagmanager\.com\/gtm\.js\?id=GTM-WRGP2P7L["'][^>]*><\/script>/gi;
-  const existingScripts = html.match(gtmScript) || [];
-  if (existingScripts.length > 1) throw new Error('Duplicate Google Tag Manager scripts detected');
-  if (existingScripts.length === 1) return html;
-  if (html.includes('GTM-WRGP2P7L')) {
-    throw new Error('GTM-WRGP2P7L is referenced but its script is missing');
-  }
-  const updated = html.replace(head, match => match + '\n' + googleTagManager);
-  if ((updated.match(gtmScript) || []).length !== 1) {
-    throw new Error('Google Tag Manager injection verification failed');
-  }
-  return updated;
-}
+const isPrimary = production.href === site.url;
+const measurementId = 'G-B9BKV0JKJ8';
+const redirects = [];
+const verificationFile = /^google[a-z0-9]+\.html$/i;
 
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist);
@@ -45,20 +24,25 @@ for (const directory of ['', 'ar']) {
   for (const file of files.filter(name => /\.(?:html|css|js)$/.test(name) || ['robots.txt', 'sitemap.xml'].includes(name))) {
     const path = join(directory, file);
     const source = await readFile(join(root, path), 'utf8');
-    const content = source.replaceAll(site.url, production.href).replace(
-      /https:\/\/[^/\s"<>]+\/(?:ar\/)?[a-z0-9-]+\.html(?=[#?"<>\s]|$)/g,
-      url => url.startsWith(production.href) ? url.slice(0, -5) : url,
-    );
     const output = join(dist, path);
     await mkdir(dirname(output), { recursive: true });
-    // Google's standalone verification file is plain text, not an HTML document.
-    // Preserve it verbatim so both Cloudflare deployment and Search Console verification work.
-    const isGoogleVerificationFile = /^google[a-z0-9]+\.html$/i.test(file);
-    await writeFile(output, file.endsWith('.html') && !isGoogleVerificationFile ? withGoogleTagManager(content) : content);
+    const isDocument = file.endsWith('.html') && !verificationFile.test(file);
+    if (isDocument && !isPrimary) {
+      const route = '/' + path.replace(/index\.html$/, '').replace(/\.html$/, '');
+      redirects.push(`${route} ${new URL(route, site.url).href} 301`);
+    }
+    const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
+      ? source.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
+      : source;
+    await writeFile(output, html);
   }
 }
 
-await writeFile(join(dist, '404.html'), withGoogleTagManager(`<!doctype html>
+if (redirects.length) {
+  await writeFile(join(dist, '_redirects'), redirects.join('\n') + '\n');
+}
+
+await writeFile(join(dist, '404.html'), `<!doctype html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -75,4 +59,4 @@ await writeFile(join(dist, '404.html'), withGoogleTagManager(`<!doctype html>
 </main>
 </body>
 </html>
-`));
+`);

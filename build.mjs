@@ -185,7 +185,13 @@ const pages = [
   ...films.map((film, index) => ({ file: filmPath(film), title: film.title, description: film.excerpt ?? `${film.title}, a film by Amira Abdel-Fadil. View the original poster, film stills, and production credits.`, image: `${film.id}-poster.jpg`, crew: true, trailer: Boolean(film.trailer), content: filmPage(film, index), structured: { '@type': 'Movie', name: film.title, ...(film.genre ? { genre: film.genre } : {}), ...(film.seconds ? { duration: `PT${Math.floor(film.seconds / 60)}M${film.seconds % 60}S` } : {}), image: `${site.url}assets/${film.id}-poster.jpg` } })),
 ];
 
-const address = file => new URL(file, site.url).href;
+const address = file => new URL(file.replace(/index\.html$/, '').replace(/\.html$/, ''), site.url).href;
+
+function alternateLinks(english, arabic) {
+  return [
+    ['en', english], ['ar', arabic], ['x-default', english],
+  ].map(([lang, file]) => `<link rel="alternate" hreflang="${lang}" href="${address(file)}">`).join('\n  ');
+}
 const arabicPage = file => {
   if (file.startsWith('film-')) return `ar/#project-${file.slice(5, -5)}`;
   if (pages.some(page => page.file === `ar/${file}`)) return `ar/${file}`;
@@ -198,6 +204,9 @@ function render(page) {
   const prefix = arabic ? '../' : '';
   const current = page.file.split('/').at(-1);
   const url = address(page.file);
+  const otherFile = arabic ? current : `ar/${page.file}`;
+  const translated = pages.some(candidate => candidate.file === otherFile);
+  const alternates = translated ? `\n  ${alternateLinks(current, `ar/${current}`)}` : '';
   const title = `${page.title} | ${arabic ? 'أميرة عبد الفضيل' : site.name}`;
   return `<!doctype html>
 <html lang="${locale.lang}" dir="${locale.dir}">
@@ -208,7 +217,7 @@ function render(page) {
   <script src="${prefix}theme-init.js"></script>
   <title>${escape(title)}</title>
   <meta name="description" content="${escape(page.description)}">
-  <link rel="canonical" href="${url}">
+  <link rel="canonical" href="${url}">${alternates}
   <meta property="og:type" content="website">
   <meta property="og:locale" content="${locale.ogLocale}">
   <meta property="og:url" content="${url}">
@@ -238,7 +247,19 @@ ${page.structured ? `  <script type="application/ld+json">${JSON.stringify({ '@c
 
 const outputs = pages.map(page => [page.file, render(page)]);
 for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
-  const source = readFileSync(join(root, file), 'utf8');
+  const source = readFileSync(join(root, file), 'utf8')
+    .replaceAll('https://supergreatwin.github.io/amira-portfolio/', site.url)
+    .replace(/^[ \t]*<link rel="alternate" hreflang="[^"]+"[^>]*>\n/gm, '')
+    .replace(/^[ \t]*<script type="application\/ld\+json">[^\n]*<\/script>\n/gm, '')
+    .replace(/<link rel="canonical"[^>]*>/, `<link rel="canonical" href="${address(file)}">\n  ${alternateLinks('index.html', 'ar/index.html')}`)
+    .replace(/\s*<\/head>/, () => {
+      const profile = {
+        '@context': 'https://schema.org', '@type': 'ProfilePage', url: address(file),
+        inLanguage: arabic ? 'ar' : 'en',
+        mainEntity: { ...person, '@id': site.url + '#amira', url: site.url },
+      };
+      return `\n  <script type="application/ld+json">${JSON.stringify(profile).replaceAll('<', '\\u003c')}</script>\n</head>`;
+    });
   outputs.push([file, homepageCrew(homepageTrailers(source, films, arabic), films, arabic)
     .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingSection({ arabic }).replace(/^/gm, '        ')}\n        ${end}`)]);
 }

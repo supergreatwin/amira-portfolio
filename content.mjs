@@ -1,7 +1,7 @@
 export const site = {
   name: 'Amira Abdelfadil',
   email: 'byamira01@gmail.com',
-  url: 'https://supergreatwin.github.io/amira-portfolio/',
+  url: 'https://amiraabdelfadil.pages.dev/',
   description: 'Films, visual work, and writing by Amira Abdelfadil, an Egyptian filmmaker, photographer, and multidisciplinary artist based in Cairo.',
   socials: [
     { id: 'instagram', name: 'Instagram', profile: '@amiraabdelfadil', label: 'Visual Diary', url: 'https://www.instagram.com/amiraabdelfadil/' },

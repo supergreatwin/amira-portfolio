@@ -6,7 +6,7 @@ A static portfolio with five film pages, a visual-work archive, biography, writi
 
 Open `index.html` directly, or run `python3 -m http.server 8286` in the repository root. GitHub Pages serves the root of `main` with `.nojekyll`. The generated HTML is checked in, so Pages does not need Node.js or a custom workflow. Assets and navigation use relative URLs. Sitemap and social preview URLs use the site address in `content.mjs`.
 
-Cloudflare Pages builds from `main` with the command below and serves `dist/`. The build copies the original media and rewrites metadata to the production Pages URL.
+Cloudflare Pages builds from `main` with the command below and serves `dist/`. The build copies the original media and applies the settings for that Cloudflare host.
 
 ```sh
 node build.mjs --check && PORTFOLIO_SITE_URL=https://amira-portfolio-ds4.pages.dev/ node pages.mjs
@@ -21,16 +21,8 @@ node build.mjs --check && PORTFOLIO_SITE_URL=https://amira-portfolio-ds4.pages.d
 
 The homepage uses the cream, beige, and espresso design with plum accents. Its film popups link to the corresponding standalone film pages.
 
-## Optional second Cloudflare Pages deployment
+## Production and mirrors
 
-To launch the same source under a **new, separate** Pages project while keeping `amira-portfolio-ds4.pages.dev` unchanged, create a new Cloudflare Pages project (Git integration) using:
+`https://amiraabdelfadil.pages.dev/` is the production URL for search and analytics. The two Cloudflare projects keep their existing `PORTFOLIO_SITE_URL` values. The older Pages host redirects public HTML routes to production. GitHub Pages keeps the relative site paths and serves cross-domain canonicals pointing to the corresponding production pages. The Google verification file is copied verbatim.
 
-- Project name: `amiraabdelfadil` (subject to Cloudflare availability)
-- Git repository: `supergreatwin/amira-portfolio`
-- Production branch: `main`
-- Framework preset: None
-- Root directory: `/`
-- Build command: `node build.mjs --check && PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs`
-- Build output directory: `dist`
-
-The `PORTFOLIO_SITE_URL` parameter rewrites GitHub Pages canonical and sitemap URLs to the new Cloudflare origin in the generated output. It does not alter the checked-in GitHub Pages source or the existing Cloudflare project's independent build settings. After deployment, validate the films, photos, English/Arabic pages, robots.txt, sitemap.xml, existing Google ownership file and Google Tag Manager. Do not delete the older Pages project until any desired redirects and Google Search Console migration are configured.
+The production build uses Amira’s GA4 stream after a visitor allows analytics. Visitors can open Analytics settings in the footer to change their choice. The site measures page views, outbound link domains, and email or phone link clicks. Preview builds and mirrors do not load the Google tag.

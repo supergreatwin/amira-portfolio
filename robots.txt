@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://supergreatwin.github.io/amira-portfolio/sitemap.xml
+Sitemap: https://amiraabdelfadil.pages.dev/sitemap.xml
