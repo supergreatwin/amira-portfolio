@@ -9,7 +9,7 @@ Open `index.html` directly, or run `python3 -m http.server 8286` in the reposito
 Cloudflare Pages builds from `main` with the command below and serves `dist/`. The build copies the original media and rewrites metadata to the production Pages URL.
 
 ```sh
-node build.mjs --check && PORTFOLIO_SITE_URL=https://amira-portfolio.pages.dev/ node pages.mjs
+node build.mjs --check && PORTFOLIO_SITE_URL=https://amira-portfolio-ds4.pages.dev/ node pages.mjs
 ```
 
 ## Update content
