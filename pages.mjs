@@ -19,11 +19,11 @@ const googleTagManager = `<script async src="https://www.googletagmanager.com/gt
 
 function withGoogleTagManager(html) {
   if (html.includes('GTM-WRGP2P7L')) return html;
-  if (!html.includes('</head>')) {
-    throw new Error('Cannot inject Google Tag Manager: missing </head>');
+  if (!/<head(?:\\s[^>]*)?>/i.test(html)) {
+    throw new Error('Cannot inject Google Tag Manager: missing <head>');
   }
-  return html.replace('</head>', `${googleTagManager}
-</head>`);
+  return html.replace(/<head(?:\\s[^>]*)?>/i, match => `${match}
+${googleTagManager}`);
 }
 
 await rm(dist, { recursive: true, force: true });
