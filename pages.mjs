@@ -10,6 +10,22 @@ if (production.protocol !== 'https:' || production.href !== `${production.origin
   throw new Error('PORTFOLIO_SITE_URL must be an HTTPS site origin with no path');
 }
 
+const googleTagManager = `<script async src="https://www.googletagmanager.com/gtm.js?id=GTM-WRGP2P7L"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+</script>`;
+
+function withGoogleTagManager(html) {
+  if (html.includes('GTM-WRGP2P7L')) return html;
+  if (!html.includes('</head>')) {
+    throw new Error('Cannot inject Google Tag Manager: missing </head>');
+  }
+  return html.replace('</head>', `${googleTagManager}
+</head>`);
+}
+
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist);
 await cp(join(root, 'assets'), join(dist, 'assets'), { recursive: true });
@@ -25,21 +41,25 @@ for (const directory of ['', 'ar']) {
     );
     const output = join(dist, path);
     await mkdir(dirname(output), { recursive: true });
-    await writeFile(output, content);
+    await writeFile(output, file.endsWith('.html') ? withGoogleTagManager(content) : content);
   }
 }
 
-await writeFile(join(dist, '404.html'), `<!doctype html>
+await writeFile(join(dist, '404.html'), withGoogleTagManager(`<!doctype html>
 <html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Page not found | Amira Abdelfadil</title>
 <link rel="stylesheet" href="/style.css">
+</head>
+<body>
 <main class="shell section inner-page">
   <h1>Page not found</h1>
   <p><a href="/">Back to Amira’s portfolio</a></p>
   <p lang="ar" dir="rtl"><a href="/ar/">العودة إلى أعمال أميرة</a></p>
 </main>
+</body>
 </html>
-`);
+`));
