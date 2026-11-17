@@ -19,7 +19,7 @@ const poster = film => [`${film.id}-poster.jpg`, film.posterWidth, 900, `${film.
 const runtime = seconds => [Math.floor(seconds / 60), seconds % 60].map(part => String(part).padStart(2, '0')).join(':');
 const meta = film => [film.genre, film.year, film.seconds && runtime(film.seconds)].filter(Boolean).join(' · ');
 const sectionTag = (number, label) => `<p class="section-tag"><span aria-hidden="true">${number}</span>${label}</p>`;
-const intro = '<p>Amira’s documentaries pay attention to familiar places and the routines that give them meaning. In <i>Mamina</i>, a grandmother’s kitchen holds the memory of a relationship. <i>Biophilia</i> looks outward, at how nature persists amid city life.</p>';
+const biography = '<p>Amira Abdel-Fadil has always been drawn to the things people carry quietly: a grandmother’s recipes, the green that grows between buildings, the small moments that hold a whole life. A filmmaker, writer and photographer from Cairo, she lets each story decide its own pace, and she is still learning to listen well enough to follow it.</p><p>Her path began in digital media, where her articles and edited videos reached audiences of more than a million. Event coordination, teaching and volunteering shaped her too, and she credits them with teaching her patience and care for the people on the other side of the lens.</p><p>Her documentaries have been recognized and screened at international festivals, and she is grateful for every audience that has stayed to watch. What she hopes to make, in the end, is not a film but a feeling: an invitation to look inward, and to step back into a world that feels a little closer than it seemed, a little more tender, and a little more open to everyone in it.</p>';
 
 const symbols = `<svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
   <symbol id="arrow-external" viewBox="0 0 24 24"><path d="M6 18 18 6M7 6h11v11"/></symbol>
@@ -139,7 +139,7 @@ function collectionPage(title, photos, arabic) {
 }
 
 function aboutPage() {
-  return `<section class="shell section inner-page editorial-grid about-page"><div>${sectionTag('01', 'Biography')}<p class="arabic-kicker" lang="ar" dir="rtl">أميرة عبد الفضيل</p><h1>About <em>Amira</em></h1><div class="prose"><p>Amira Abdel-Fadil is a Cairo-based filmmaker, photographer, writer, and visual artist. She studied broadcasting at October University for Modern Sciences and Arts.</p>${intro}<p>Her work spans directing, writing, producing, cinematography, editing, and sound. Outside her films she has worked in digital media, script development, event coordination, and education.</p></div><div class="actions">${contactCTA}</div></div><figure>${image(portrait, { priority: true })}<figcaption>Amira Abdelfadil · Portrait</figcaption></figure></section>`;
+  return `<section class="shell section inner-page editorial-grid about-page"><div>${sectionTag('01', 'Biography')}<p class="arabic-kicker" lang="ar" dir="rtl">أميرة عبد الفضيل</p><h1>About <em>Amira</em></h1><div class="prose">${biography}</div><div class="actions">${contactCTA}</div></div><figure>${image(portrait, { priority: true })}<figcaption>Amira Abdelfadil · Portrait</figcaption></figure></section>`;
 }
 
 function contactPage(arabic) {
@@ -221,8 +221,7 @@ function render(page) {
   ${page.file === 'writing.html' ? `<link rel="stylesheet" href="${versioned('writing.css')}">\n  ` : ''}${page.photography ? `<link rel="stylesheet" href="${prefix}${versioned('photography.css')}">\n  ` : ''}<script src="${prefix}${script}" defer></script>${page.trailer ? `\n  <script src="${versioned('trailer.js')}" defer></script>` : ''}
   <link rel="stylesheet" href="${prefix}theme.css?v=1">
   <script src="${prefix}theme.js?v=1" defer></script>
-  ${page.structured ? `<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>` : ''}
-</head>
+${page.structured ? `  <script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', url, ...page.structured }).replaceAll('<', '\\u003c')}</script>\n` : ''}</head>
 <body id="top">
   <a class="skip-link" href="#main">${arabic ? 'انتقل إلى المحتوى' : 'Skip to content'}</a>
   ${symbols}

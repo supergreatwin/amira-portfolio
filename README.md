@@ -6,6 +6,12 @@ A static portfolio with five film pages, a visual-work archive, biography, writi
 
 Open `index.html` directly, or run `python3 -m http.server 8286` in the repository root. GitHub Pages serves the root of `main` with `.nojekyll`. The generated HTML is checked in, so Pages does not need Node.js or a custom workflow. Assets and navigation use relative URLs. Sitemap and social preview URLs use the site address in `content.mjs`.
 
+Cloudflare Pages builds from `main` with the command below and serves `dist/`. The build copies the original media and rewrites metadata to the production Pages URL.
+
+```sh
+node build.mjs --check && PORTFOLIO_SITE_URL=https://amira-portfolio.pages.dev/ node pages.mjs
+```
+
 ## Update content
 
 - Edit film metadata, synopses, credits, stills, social links, or writing in `content.mjs`. Runtimes use whole seconds and appear only when verified. Label poster crops as poster details.
