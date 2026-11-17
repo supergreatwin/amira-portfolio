@@ -41,7 +41,10 @@ for (const directory of ['', 'ar']) {
     );
     const output = join(dist, path);
     await mkdir(dirname(output), { recursive: true });
-    await writeFile(output, file.endsWith('.html') ? withGoogleTagManager(content) : content);
+    // Google's standalone verification file is plain text, not an HTML document.
+    // Preserve it verbatim so both Cloudflare deployment and Search Console verification work.
+    const isGoogleVerificationFile = /^google[a-z0-9]+\.html$/i.test(file);
+    await writeFile(output, file.endsWith('.html') && !isGoogleVerificationFile ? withGoogleTagManager(content) : content);
   }
 }
 
