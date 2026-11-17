@@ -17,13 +17,23 @@ const googleTagManager = `<script async src="https://www.googletagmanager.com/gt
   gtag('js', new Date());
 </script>`;
 
+// Enforce one copy of the requested Google tag on every deployed HTML page.
+// Standalone Google ownership files are handled separately and remain plain text.
 function withGoogleTagManager(html) {
-  if (html.includes('GTM-WRGP2P7L')) return html;
-  if (!/<head(?:\s[^>]*)?>/i.test(html)) {
-    throw new Error('Cannot inject Google Tag Manager: missing <head>');
+  const head = /<head(?:\s[^>]*)?>/i;
+  if (!head.test(html)) throw new Error('Cannot inject Google Tag Manager: missing <head>');
+  const gtmScript = /<script\b[^>]*\bsrc=["']https:\/\/www\.googletagmanager\.com\/gtm\.js\?id=GTM-WRGP2P7L["'][^>]*><\/script>/gi;
+  const existingScripts = html.match(gtmScript) || [];
+  if (existingScripts.length > 1) throw new Error('Duplicate Google Tag Manager scripts detected');
+  if (existingScripts.length === 1) return html;
+  if (html.includes('GTM-WRGP2P7L')) {
+    throw new Error('GTM-WRGP2P7L is referenced but its script is missing');
   }
-  return html.replace(/<head(?:\s[^>]*)?>/i, match => `${match}
-${googleTagManager}`);
+  const updated = html.replace(head, match => match + '\n' + googleTagManager);
+  if ((updated.match(gtmScript) || []).length !== 1) {
+    throw new Error('Google Tag Manager injection verification failed');
+  }
+  return updated;
 }
 
 await rm(dist, { recursive: true, force: true });
