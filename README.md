@@ -20,3 +20,17 @@ node build.mjs --check && PORTFOLIO_SITE_URL=https://amira-portfolio-ds4.pages.d
 - English is the published locale. Arabic text uses explicit language and direction attributes. The locale definition holds document direction, navigation, and social metadata locale for future approved translations. Add translated page content and language links only when the complete copy has been reviewed.
 
 The homepage uses the cream, beige, and espresso design with plum accents. Its film popups link to the corresponding standalone film pages.
+
+## Optional second Cloudflare Pages deployment
+
+To launch the same source under a **new, separate** Pages project while keeping `amira-portfolio-ds4.pages.dev` unchanged, create a new Cloudflare Pages project (Git integration) using:
+
+- Project name: `amiraabdelfadil` (subject to Cloudflare availability)
+- Git repository: `supergreatwin/amira-portfolio`
+- Production branch: `main`
+- Framework preset: None
+- Root directory: `/`
+- Build command: `node build.mjs --check && PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs`
+- Build output directory: `dist`
+
+The `PORTFOLIO_SITE_URL` parameter rewrites GitHub Pages canonical and sitemap URLs to the new Cloudflare origin in the generated output. It does not alter the checked-in GitHub Pages source or the existing Cloudflare project's independent build settings. After deployment, validate the films, photos, English/Arabic pages, robots.txt, sitemap.xml, existing Google ownership file and Google Tag Manager. Do not delete the older Pages project until any desired redirects and Google Search Console migration are configured.
