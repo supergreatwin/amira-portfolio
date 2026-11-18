@@ -11,8 +11,9 @@ if (production.protocol !== 'https:' || production.href !== `${production.origin
 }
 
 const isPrimary = production.href === site.url;
+// Custom domains and Pages origins can share the same Cloudflare deployment.
+const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
-const redirects = [];
 const verificationFile = /^google[a-z0-9]+\.html$/i;
 
 await rm(dist, { recursive: true, force: true });
@@ -27,19 +28,16 @@ for (const directory of ['', 'ar']) {
     const output = join(dist, path);
     await mkdir(dirname(output), { recursive: true });
     const isDocument = file.endsWith('.html') && !verificationFile.test(file);
-    if (isDocument && !isPrimary) {
-      const route = '/' + path.replace(/index\.html$/, '').replace(/\.html$/, '');
-      redirects.push(`${route} ${new URL(route, site.url).href} 301`);
-    }
+    // No host-agnostic redirects: they would also affect custom-domain aliases.
     const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
       ? source.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
       : source;
-    await writeFile(output, html);
+    // Apply the branded canonical domain to public HTML and discovery files.
+    const seoOutput = isDocument || ['robots.txt', 'sitemap.xml'].includes(file)
+      ? html.replaceAll(site.url, searchCanonical)
+      : html;
+    await writeFile(output, seoOutput);
   }
-}
-
-if (redirects.length) {
-  await writeFile(join(dist, '_redirects'), redirects.join('\n') + '\n');
 }
 
 await writeFile(join(dist, '404.html'), `<!doctype html>
