@@ -1,0 +1,42 @@
+/* Amira Abdelfadil — Field Notes and Open Studio | complements style.css */
+.studio-header{position:sticky;top:0;z-index:20;background:var(--ivory);border-bottom:1px solid var(--line)}
+.studio-header-inner{width:min(100% - 2*var(--edge),84rem);margin:auto;min-height:4.25rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+.studio-name{font-weight:720;letter-spacing:-.045em;white-space:nowrap;font-size:1.03rem}
+.studio-nav{display:flex;flex-wrap:wrap;gap:clamp(.65rem,1.5vw,1.35rem);align-items:center}
+.studio-nav a,.studio-mobile a{font-size:.83rem;font-weight:550}
+.studio-nav a[aria-current="page"]{color:var(--burgundy);text-decoration:underline;text-underline-offset:.4rem}
+.studio-lang{color:var(--burgundy)}
+.studio-menu{display:none}
+.studio-shell{width:min(100% - 2*var(--edge),84rem);margin-inline:auto}
+.studio-hero{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,.85fr);align-items:center;gap:clamp(2rem,6vw,6rem);padding-block:clamp(3.5rem,7vw,7.5rem)}
+.studio-kicker{font-size:.76rem;font-weight:720;letter-spacing:.14em;text-transform:uppercase;color:var(--burgundy);margin-bottom:1.4rem}
+.studio-hero h1{font-size:clamp(3.1rem,7.1vw,7.4rem);font-weight:650;line-height:.99;letter-spacing:-.068em;max-width:11ch}
+.studio-hero h1 em{color:var(--burgundy);font-style:normal}
+.studio-hero-intro{color:var(--muted);font-size:clamp(1.03rem,2vw,1.26rem);line-height:1.7;max-width:48ch;margin-top:1.5rem}
+.studio-image{margin:0}
+.studio-image img{width:100%;height:clamp(19rem,34vw,30rem);object-fit:cover;border:1px solid var(--line)}
+.studio-image figcaption{margin-top:.65rem;font-size:.73rem;color:var(--muted)}
+.studio-section{padding-block:clamp(3.5rem,7vw,7rem);border-top:1px solid var(--line)}
+.studio-section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:3rem;align-items:start;margin-bottom:2.5rem}
+.studio-section h2{font-size:clamp(2.2rem,4.9vw,5rem);letter-spacing:-.06em;line-height:1.04;font-weight:650}
+.studio-section-head p{font-size:1.05rem;line-height:1.8;color:var(--muted);max-width:55ch}
+.studio-embed-wrap{background:#fffcf6;border:1px solid var(--line);padding:clamp(.85rem,3vw,2.8rem);max-width:57rem;margin-inline:auto}
+.studio-embed-wrap iframe{display:block;width:100%;border:0}
+.studio-fallback{font-size:.82rem;color:var(--muted);text-align:center;margin-top:1rem}
+.studio-fallback a{color:var(--burgundy);text-decoration:underline;text-underline-offset:.2rem}
+.studio-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.2rem}
+.studio-card{display:flex;flex-direction:column;align-items:start;min-height:17rem;padding:clamp(1.5rem,3vw,2.5rem);background:var(--latte);border:1px solid var(--line);transition:transform .2s}
+.studio-card:hover{transform:translateY(-3px)}
+.studio-card small{color:var(--burgundy);font-size:.75rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700}
+.studio-card h3{font-size:clamp(1.8rem,3vw,2.8rem);letter-spacing:-.055em;margin-top:1.25rem}
+.studio-card p{color:var(--muted);line-height:1.65;margin-top:.8rem}
+.studio-card a{display:inline-flex;gap:.4rem;margin-top:auto;padding-top:1.4rem;color:var(--burgundy);font-weight:700;font-size:.91rem}
+.studio-note{font-size:.84rem;color:var(--muted);line-height:1.75;max-width:70ch;margin-top:1.3rem}
+.studio-back{display:inline-block;color:var(--burgundy);margin-top:2.5rem;font-size:.85rem;font-weight:650}
+.studio-footer{border-top:1px solid var(--line);padding:2.2rem 0 3rem;color:var(--muted);font-size:.85rem}
+.studio-footer-inner{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.studio-footer a{color:var(--burgundy)}
+html[dir=rtl] .studio-hero h1{letter-spacing:-.03em;line-height:1.25}
+html[dir=rtl] .studio-section h2,html[dir=rtl] .studio-card h3{letter-spacing:-.02em;line-height:1.35}
+@media(max-width:1080px){.studio-nav{display:none}.studio-menu{display:block;position:relative}.studio-menu summary{cursor:pointer;list-style:none;border:1px solid var(--line);padding:.45rem .8rem;color:var(--burgundy)}.studio-menu summary::-webkit-details-marker{display:none}.studio-mobile{position:absolute;inset-inline-end:0;top:100%;min-width:15rem;padding:1rem;background:var(--ivory);border:1px solid var(--line);display:grid;gap:1rem;box-shadow:0 12px 32px #29242022}}
+@media(max-width:720px){.studio-hero,.studio-section-head{grid-template-columns:1fr}.studio-hero{padding-block:3rem;gap:2.2rem}.studio-hero h1{max-width:14ch}.studio-image img{height:17rem}.studio-cards{grid-template-columns:1fr}.studio-card{min-height:14rem}.studio-section-head{gap:.8rem}.studio-footer-inner{align-items:start;flex-direction:column}}
