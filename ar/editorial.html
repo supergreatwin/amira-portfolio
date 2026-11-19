@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="ar" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
+<title>المكتب التحريري — أميرة عبد الفضيل</title>
+<link rel="stylesheet" href="../editorial.css"></head>
+<body data-locale="ar">
+<header class="ed-header"><div class="ed-width ed-top"><a class="ed-logo" href="../index.html">amira abdelfadil</a><nav class="ed-links" aria-label="Navigation">
+<a href="../">الموقع</a><a href="journal.html">الكتابات المنشورة</a><a href="../editorial.html">English</a></nav></div></header>
+<main class="ed-width"><section class="ed-hero"><span class="ed-eyebrow">الاستوديو · النشر</span><h1>المكتب التحريري</h1><p class="ed-description">مساحة خاصة لإدارة كتابات أميرة وأخبارها ومشروعاتها باللغتين العربية والإنجليزية.</p></section>
+<p class="ed-status" id="ed-message" role="status" aria-live="polite"></p>
+<section class="ed-panel" id="ed-auth">
+<h2>الدخول إلى الاستوديو</h2>
+<p class="ed-muted">الحساب المخصص لإدارة هذا الموقع: <strong>byamira01@gmail.com</strong></p>
+<form id="ed-auth-form">
+<div class="ed-field"><label for="ed-email">البريد الإلكتروني</label><input id="ed-email" type="email" value="byamira01@gmail.com" autocomplete="username" readonly required></div>
+<div class="ed-field"><label for="ed-password">كلمة المرور</label><input id="ed-password" type="password" minlength="12" autocomplete="current-password" required></div>
+<div class="ed-actions"><button class="ed-button" type="submit">دخول</button><button class="ed-button alt" type="button" id="ed-signup">إنشاء حساب لأول مرة</button><button class="ed-button ghost" type="button" id="ed-forgot">نسيت كلمة المرور</button></div></form>
+<div class="ed-notice">سيتم منح صلاحية الإدارة تلقائيًا بعد تأكيد البريد الإلكتروني من Supabase. لا يمكن للآخرين الدخول إلى لوحة التحرير.</div>
+<form id="ed-recover-form" hidden><h3>تعيين كلمة مرور جديدة</h3><div class="ed-field"><label for="ed-new-password">كلمة المرور الجديدة</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><button class="ed-button" type="submit">حفظ كلمة المرور</button></form>
+</section>
+<section class="ed-panel" id="ed-dashboard" hidden>
+<div class="ed-workspace-header"><div><span class="ed-eyebrow">إدارة المحتوى</span><h2>المقالات والمشروعات</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><button id="ed-new" type="button" class="ed-button alt">مقال جديد</button><button id="ed-refresh" type="button" class="ed-button ghost">تحديث</button><button id="ed-logout" type="button" class="ed-button ghost">خروج</button></div></div>
+<div class="ed-workspace"><aside class="ed-sidebar"><h3>المحفوظات</h3><p class="ed-muted">المسودات خاصة؛ المنشور فقط متاح للزوار.</p><ul id="ed-list" class="ed-list"></ul></aside>
+<form class="ed-editor" id="ed-editor"><h3 id="ed-edit-title">إنشاء نص جديد</h3>
+<div class="ed-grid"><div class="ed-field"><label for="ed-title-en">English title</label><input id="ed-title-en" maxlength="220" required></div><div class="ed-field"><label for="ed-title-ar">العنوان بالعربية</label><input id="ed-title-ar" maxlength="220" dir="rtl"></div></div>
+<div class="ed-grid"><div class="ed-field"><label for="ed-slug">الرابط المختصر بالإنجليزية</label><input id="ed-slug" pattern="[a-z0-9]+(-[a-z0-9]+)*" required placeholder="an-example-title"></div><div class="ed-field"><label for="ed-section">القسم</label><select id="ed-section"><option value="journal">Journal</option><option value="essay">Essay</option><option value="film">Film</option><option value="photography">Photography</option><option value="news">News</option><option value="collaboration">Collaboration</option></select></div></div>
+<div class="ed-grid"><div class="ed-field"><label for="ed-excerpt-en">English excerpt</label><textarea id="ed-excerpt-en" rows="3"></textarea></div><div class="ed-field"><label for="ed-excerpt-ar">ملخص بالعربية</label><textarea id="ed-excerpt-ar" rows="3" dir="rtl"></textarea></div></div>
+<div class="ed-grid"><div class="ed-field"><label for="ed-body-en">English text</label><textarea id="ed-body-en" class="ed-body" required></textarea></div><div class="ed-field"><label for="ed-body-ar">النص العربي</label><textarea id="ed-body-ar" class="ed-body" dir="rtl"></textarea></div></div>
+<div class="ed-field"><label for="ed-cover">رابط صورة أصلية (اختياري)</label><input type="text" id="ed-cover" placeholder="/assets/amira-portrait.jpg"></div>
+<label class="ed-check"><input type="checkbox" id="ed-featured"> مميز</label>
+<p class="ed-muted" id="ed-edit-status"></p>
+<div class="ed-actions"><button class="ed-button alt" type="button" data-save="draft">حفظ مسودة</button><button class="ed-button ghost" type="button" data-save="in_review">إرسال للمراجعة</button><button class="ed-button" type="button" data-save="published">نشر</button><button class="ed-button ghost" type="button" data-save="archived">أرشفة</button></div>
+<a class="ed-preview-link" id="ed-public-link" href="journal.html" target="_blank" rel="noopener">عرض المقالات المنشورة</a>
+</form></div>
+</section>
+</main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · استوديو التحرير · <a href="../">العودة للموقع</a></div></footer>
+<script type="module" src="../editorial.js"></script>
+</body></html>
