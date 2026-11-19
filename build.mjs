@@ -258,7 +258,13 @@ for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
         inLanguage: arabic ? 'ar' : 'en',
         mainEntity: { ...person, '@id': site.url + '#amira', url: site.url },
       };
-      return `\n  <script type="application/ld+json">${JSON.stringify(profile).replaceAll('<', '\\u003c')}</script>\n</head>`;
+      const website = {
+        '@context': 'https://schema.org', '@type': 'WebSite',
+        '@id': site.url + '#website', name: site.name,
+        alternateName: 'Amira Abdel-Fadil', url: site.url,
+        inLanguage: ['en', 'ar'],
+      };
+      return `\n  <script type="application/ld+json">${JSON.stringify(profile).replaceAll('<', '\\u003c')}</script>\n  <script type="application/ld+json">${JSON.stringify(website).replaceAll('<', '\\u003c')}</script>\n</head>`;
     });
   outputs.push([file, homepageCrew(homepageTrailers(source, films, arabic), films, arabic)
     .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingSection({ arabic }).replace(/^/gm, '        ')}\n        ${end}`)]);
