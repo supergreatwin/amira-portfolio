@@ -1,3 +1,15 @@
+// The former GitHub Pages mirror should send visitors to the branded domain.
+// This is host-scoped and does not run on the official Cloudflare site.
+if (location.hostname === 'supergreatwin.github.io' &&
+    location.pathname.startsWith('/amira-portfolio/')) {
+  const relative = location.pathname.slice('/amira-portfolio/'.length);
+  const canonicalPath = relative
+    .replace(/(^|\/)index\.html$/, '$1')
+    .replace(/\.html$/, '');
+  location.replace('https://amiraabdelfadil.com/' +
+    canonicalPath + location.search + location.hash);
+}
+
 const root = document.documentElement;
 const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
 const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)');
