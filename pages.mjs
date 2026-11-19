@@ -40,6 +40,11 @@ for (const directory of ['', 'ar']) {
   }
 }
 
+// Keep the Cloudflare Pages preview origin crawlable only on the official
+// custom domain. Cloudflare host-specific headers leave the custom domain alone.
+await writeFile(join(dist, '_headers'),
+  'https://amira-portfolio-ds4.pages.dev/*\\n  X-Robots-Tag: noindex\\n'.replaceAll('\\n', '\n'));
+
 await writeFile(join(dist, '404.html'), `<!doctype html>
 <html lang="en">
 <head>
