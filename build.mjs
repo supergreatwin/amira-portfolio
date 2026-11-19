@@ -269,7 +269,7 @@ for (const [file, arabic] of [['index.html', false], ['ar/index.html', true]]) {
   outputs.push([file, homepageCrew(homepageTrailers(source, films, arabic), films, arabic)
     .replace(/(<!-- writing-archives:start -->)[\s\S]*?(<!-- writing-archives:end -->)/, (_, start, end) => `${start}\n${writingSection({ arabic }).replace(/^/gm, '        ')}\n        ${end}`)]);
 }
-outputs.push(['sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[site.url, address('ar/'), ...pages.map(page => address(page.file))].map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`]);
+outputs.push(['sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${[site.url, address('ar/'), ...pages.map(page => address(page.file)), ...['notes.html', 'collaborate.html', 'pitch.html', 'ar/notes.html', 'ar/collaborate.html', 'ar/pitch.html'].map(address)].map(url => `  <url><loc>${url}</loc></url>`).join('\n')}\n</urlset>\n`]);
 outputs.push(['robots.txt', `User-agent: *\nAllow: /\nSitemap: ${site.url}sitemap.xml\n`]);
 
 for (const [file, contents] of outputs) {
