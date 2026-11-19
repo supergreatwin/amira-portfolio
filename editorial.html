@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" dir="ltr"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
+<title>Editorial Desk — Amira Abdelfadil</title>
+<link rel="stylesheet" href="editorial.css"></head>
+<body data-locale="en">
+<header class="ed-header"><div class="ed-width ed-top"><a class="ed-logo" href="index.html">amira abdelfadil</a><nav class="ed-links" aria-label="Navigation">
+<a href="./">Website</a><a href="journal.html">Published journal</a><a href="ar/editorial.html">العربية</a></nav></div></header>
+<main class="ed-width"><section class="ed-hero"><span class="ed-eyebrow">Private studio · Publishing</span><h1>Editorial Desk</h1><p class="ed-description">A private workspace for Amira's stories, films and announcements in English and Arabic.</p></section>
+<p class="ed-status" id="ed-message" role="status" aria-live="polite"></p>
+<section class="ed-panel" id="ed-auth">
+<h2>Enter the studio</h2>
+<p class="ed-muted">Designated administrator account: <strong>byamira01@gmail.com</strong></p>
+<form id="ed-auth-form">
+<div class="ed-field"><label for="ed-email">Email</label><input id="ed-email" type="email" value="byamira01@gmail.com" autocomplete="username" readonly required></div>
+<div class="ed-field"><label for="ed-password">Password</label><input id="ed-password" type="password" minlength="12" autocomplete="current-password" required></div>
+<div class="ed-actions"><button class="ed-button" type="submit">Sign in</button><button class="ed-button alt" type="button" id="ed-signup">Set up first-time access</button><button class="ed-button ghost" type="button" id="ed-forgot">Reset password</button></div></form>
+<div class="ed-notice">Administrator access is granted only after Supabase verifies ownership of the designated email address. An account alone does not grant editing permission.</div>
+<form id="ed-recover-form" hidden><h3>Choose a new password</h3><div class="ed-field"><label for="ed-new-password">New password</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><button class="ed-button" type="submit">Update password</button></form>
+</section>
+<section class="ed-panel" id="ed-dashboard" hidden>
+<div class="ed-workspace-header"><div><span class="ed-eyebrow">Content management</span><h2>Stories & Projects</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><button id="ed-new" type="button" class="ed-button alt">+ New entry</button><button id="ed-refresh" type="button" class="ed-button ghost">Refresh</button><button id="ed-logout" type="button" class="ed-button ghost">Sign out</button></div></div>
+<div class="ed-workspace"><aside class="ed-sidebar"><h3>Saved entries</h3><p class="ed-muted">Drafts stay private; only published entries are public.</p><ul id="ed-list" class="ed-list"></ul></aside>
+<form class="ed-editor" id="ed-editor"><h3 id="ed-edit-title">Create an entry</h3>
+<div class="ed-grid"><div class="ed-field"><label for="ed-title-en">English title</label><input id="ed-title-en" maxlength="220" required></div><div class="ed-field"><label for="ed-title-ar">العنوان بالعربية</label><input id="ed-title-ar" maxlength="220" dir="rtl"></div></div>
+<div class="ed-grid"><div class="ed-field"><label for="ed-slug">URL slug (English)</label><input id="ed-slug" pattern="[a-z0-9]+(-[a-z0-9]+)*" required placeholder="an-example-title"></div><div class="ed-field"><label for="ed-section">Section</label><select id="ed-section"><option value="journal">Journal</option><option value="essay">Essay</option><option value="film">Film</option><option value="photography">Photography</option><option value="news">News</option><option value="collaboration">Collaboration</option></select></div></div>
+<div class="ed-grid"><div class="ed-field"><label for="ed-excerpt-en">English excerpt</label><textarea id="ed-excerpt-en" rows="3"></textarea></div><div class="ed-field"><label for="ed-excerpt-ar">ملخص بالعربية</label><textarea id="ed-excerpt-ar" rows="3" dir="rtl"></textarea></div></div>
+<div class="ed-grid"><div class="ed-field"><label for="ed-body-en">English text</label><textarea id="ed-body-en" class="ed-body" required></textarea></div><div class="ed-field"><label for="ed-body-ar">النص العربي</label><textarea id="ed-body-ar" class="ed-body" dir="rtl"></textarea></div></div>
+<div class="ed-field"><label for="ed-cover">Original image URL (optional)</label><input type="text" id="ed-cover" placeholder="/assets/amira-portrait.jpg"></div>
+<label class="ed-check"><input type="checkbox" id="ed-featured"> Featured entry</label>
+<p class="ed-muted" id="ed-edit-status"></p>
+<div class="ed-actions"><button class="ed-button alt" type="button" data-save="draft">Save draft</button><button class="ed-button ghost" type="button" data-save="in_review">Request review</button><button class="ed-button" type="button" data-save="published">Publish</button><button class="ed-button ghost" type="button" data-save="archived">Archive</button></div>
+<a class="ed-preview-link" id="ed-public-link" href="journal.html" target="_blank" rel="noopener">View published journal</a>
+</form></div>
+</section>
+</main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · Editorial studio · <a href="./">Back to portfolio</a></div></footer>
+<script type="module" src="editorial.js"></script>
+</body></html>
