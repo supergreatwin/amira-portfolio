@@ -231,3 +231,16 @@ html[dir="rtl"] :is(.brand, h1, h2, h3) { letter-spacing: normal; }
  .about-page { align-items: stretch; }
  .about-page figure img { height: 100%; min-height: 28rem; }
 }
+
+
+/* Keep privacy controls separate from the educational announcement. */
+.analytics-dialog[open]:not(:modal) {
+  position: fixed;
+  inset: auto auto 1rem 1rem;
+  width: min(26rem, calc(100vw - 2rem));
+  margin: 0;
+  z-index: 1000;
+  border-radius: .2rem;
+  box-shadow: 0 14px 36px #21151b30;
+}
+.analytics-dialog .analytics-actions button { border-radius: .15rem; }
