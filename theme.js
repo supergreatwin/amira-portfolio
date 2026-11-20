@@ -37,3 +37,15 @@
       setTheme(event.matches ? 'dark' : 'light');
   });
 })();
+
+/* Load consent-gated analytics once wherever the shared theme is present. */
+(() => {
+  if (document.querySelector('script[data-amira-analytics]')) return;
+  const source = document.currentScript?.src;
+  if (!source) return;
+  const script = document.createElement('script');
+  script.src = new URL('analytics.js', source).href;
+  script.dataset.containerId = 'GTM-WRGP2P7L';
+  script.dataset.amiraAnalytics = '1';
+  document.head.append(script);
+})();
