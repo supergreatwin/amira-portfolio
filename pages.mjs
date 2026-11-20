@@ -19,6 +19,8 @@ const verificationFile = /^google[a-z0-9]+\.html$/i;
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist);
 await cp(join(root, 'assets'), join(dist, 'assets'), { recursive: true });
+// The Process is deliberately deployed as a staff-only Supabase-authenticated application.
+await cp(join(root, 'the-process'), join(dist, 'the-process'), { recursive: true });
 
 for (const directory of ['', 'ar']) {
   const files = await readdir(join(root, directory));
@@ -60,6 +62,11 @@ for (const directory of ['', 'ar']) {
 // custom domain. Cloudflare host-specific headers leave the custom domain alone.
 await writeFile(join(dist, '_headers'),
   'https://amira-portfolio-ds4.pages.dev/*\\n  X-Robots-Tag: noindex\\n'.replaceAll('\\n', '\n'));
+// Exclude private learning routes from indexing and shared caches.
+await writeFile(join(dist, '_headers'),
+  (await readFile(join(dist, '_headers'), 'utf8')) +
+  '/the-process/*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  '/education-studio.html\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n');
 
 await writeFile(join(dist, '404.html'), `<!doctype html>
 <html lang="en">
