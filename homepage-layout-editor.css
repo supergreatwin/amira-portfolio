@@ -1,0 +1,39 @@
+
+/* Homepage image layout editor — private Editorial Desk, matching Amira's palette. */
+.cms-home-work{display:block;padding:1.3rem 0 4rem}
+.cms-home-editor{max-width:1050px;margin:0 auto;border:1px solid var(--cms-line,#dfd5cb);background:var(--cms-paper,#fffcf7);padding:clamp(1rem,3vw,2.4rem)}
+.cms-home-editor h2{font:400 clamp(2rem,4vw,3.2rem)/1.05 Georgia,serif;letter-spacing:-.05em;margin:0 0 1.2rem}
+.cms-home-editor h3{font:400 1.6rem/1.1 Georgia,serif;margin:2rem 0 .8rem}
+.cms-home-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.4rem}
+.cms-home-options label{font-size:.8rem;font-weight:700;display:block;margin-bottom:.35rem}
+.cms-home-options select{width:100%;padding:.85rem;background:#fff;border:1px solid #d4c7bb;color:#292420}
+.cms-home-live-preview{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));aspect-ratio:16/9;width:100%;overflow:hidden;background:#292420;gap:0;margin:1.3rem 0;border:1px solid var(--cms-line,#dfd5cb)}
+.cms-home-live-preview figure{margin:0;min-width:0;min-height:0;overflow:hidden}
+.cms-home-live-preview img{width:100%;height:100%;object-fit:cover;display:block}
+.cms-home-live-preview[data-photo-count="1"]{grid-template-columns:1fr;grid-template-rows:1fr}
+.cms-home-live-preview[data-photo-layout="vertical"][data-photo-count="2"]{grid-template-columns:1fr 1fr;grid-template-rows:1fr}
+.cms-home-live-preview[data-photo-layout="vertical"][data-photo-count="3"]{grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:1fr}
+.cms-home-live-preview[data-photo-layout="vertical"][data-photo-count="4"]{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:1fr}
+.cms-home-live-preview[data-photo-layout="horizontal"][data-photo-count="2"]{grid-template-columns:1fr;grid-template-rows:repeat(2,minmax(0,1fr))}
+.cms-home-live-preview[data-photo-layout="horizontal"][data-photo-count="3"]{grid-template-columns:1fr;grid-template-rows:repeat(3,minmax(0,1fr))}
+.cms-home-live-preview[data-photo-layout="horizontal"][data-photo-count="4"]{grid-template-columns:1fr;grid-template-rows:repeat(4,minmax(0,1fr))}
+.cms-home-live-preview[data-photo-layout="grid"][data-photo-count="2"]{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:1fr}
+.cms-home-live-preview[data-photo-layout="grid"][data-photo-count="3"]{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr))}
+.cms-home-live-preview[data-photo-layout="grid"][data-photo-count="3"] figure:first-child{grid-row:span 2}
+.cms-home-photo-list{display:grid;gap:1rem}
+.cms-home-photo{border:1px solid var(--cms-line,#dfd5cb);padding:1rem;min-width:0}
+.cms-home-photo legend{color:var(--cms-plum,#743b49);font-size:.83rem;font-weight:700;padding:0 .4rem}
+.cms-home-photo-row{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(0,1.4fr);gap:1rem}
+.cms-home-thumb{width:100%;height:210px;object-fit:cover;cursor:zoom-in}
+.cms-home-photo-tools{display:grid;gap:.5rem;align-content:start;min-width:0}
+.cms-home-photo-tools label{font-size:.76rem;display:grid;gap:.24rem;min-width:0}
+.cms-home-photo-tools input[type=file]{font-size:.75rem;width:100%;max-width:100%;padding:.35rem;border:1px solid var(--cms-line,#dfd5cb)}
+.cms-home-photo-tools input[type=range]{width:100%;accent-color:var(--cms-plum,#743b49)}
+.cms-home-order{display:flex;gap:.5rem;flex-wrap:wrap}
+.cms-home-order button{font-size:.72rem}
+.cms-home-message.is-error{color:#a12e36}
+.cms-home-dialog{position:fixed;inset:0;width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;background:#000;border:0;margin:0;padding:0;overflow:hidden}
+.cms-home-dialog::backdrop{background:#000e}
+.cms-home-dialog .cms-home-live-preview{position:absolute;inset:0;width:100%;height:100%;margin:0;border:0;aspect-ratio:auto}
+.cms-home-close{position:absolute;z-index:3;right:1rem;top:1rem;border:1px solid #fff8;background:#1f1a1be8;color:#fff;padding:.7rem 1rem;cursor:pointer}
+@media(max-width:650px){.cms-home-options,.cms-home-photo-row{grid-template-columns:1fr}.cms-home-thumb{height:200px}.cms-home-editor{padding:1rem}.cms-home-live-preview{aspect-ratio:3/4}}
