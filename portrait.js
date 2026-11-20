@@ -18,7 +18,7 @@
   nativeClip.preload = 'metadata';
   nativeClip.hidden = true;
   nativeClip.setAttribute('aria-label',arabic?'المقطع الأصلي':'Original clip');
-  panel.querySelector('[data-moment-desc]').after(nativeClip);
+  panel.querySelector('.portrait-scene-media').append(nativeClip);
   let activeScene = '';
   function selectMoment(key, focus = false) {
     const moment = moments[key];
