@@ -38,7 +38,10 @@ for (const directory of ['', 'ar']) {
     const seoOutput = isDocument || ['robots.txt', 'sitemap.xml'].includes(file)
       ? html.replaceAll(site.url, searchCanonical)
       : html;
-    await writeFile(output, seoOutput);
+    // Do not surface the Editorial Desk link if routes have not been deployed.
+    const deployedOutput = educationRoutesEnabled ? seoOutput
+      : seoOutput.replace(/<a[^>]*data-education-editor[^>]*>.*?<\\/a>/gs,'');
+    await writeFile(output, deployedOutput);
   }
 }
 
