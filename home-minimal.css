@@ -21,8 +21,8 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .mobile-menu nav{position:absolute;right:16px;left:16px;top:65px;display:grid;gap:0;padding:15px 20px;background:var(--h-bg);border:1px solid var(--h-line)}
 .mobile-menu nav a{padding:12px 0;border-bottom:1px solid var(--h-line);font-size:14px}
 .mobile-menu nav a:last-child{border:0}
-.photo-hero{position:relative;min-height:calc(100svh - 65px);display:flex;align-items:center;justify-content:center;padding:clamp(18px,2vw,36px) 0;isolation:isolate;overflow:hidden}
-.photo-mosaic{position:relative;width:min(100%,calc(100svh - 115px),1040px);aspect-ratio:1/1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:0;overflow:hidden;background:var(--h-bg)}
+.photo-hero{position:relative;min-height:0;height:calc(100svh - 65px);height:calc(100dvh - 65px);display:flex;align-items:center;justify-content:center;padding:0;isolation:isolate;overflow:hidden}
+.photo-mosaic{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:0;overflow:hidden;background:var(--h-bg)}
 .photo-mosaic figure{margin:0;overflow:hidden;min-height:0;min-width:0}
 .photo-mosaic img{display:block;width:100%;height:100%;object-fit:cover}
 .photo-mosaic:after{position:absolute;content:"";inset:0;pointer-events:none;background:rgba(0,0,0,.24)}
@@ -30,7 +30,7 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .hero-eyebrow{color:#f8f4ec;font-weight:700;text-transform:uppercase;letter-spacing:.3em;font-size:clamp(9px,1.2vw,16px);text-shadow:0 2px 10px #000a;margin:0 0 clamp(15px,3vh,35px)}
 .hero-copy h1{font-size:clamp(37px,9.5vw,150px);letter-spacing:-.095em;line-height:1.02;font-weight:790;white-space:nowrap;color:var(--h-title);text-shadow:0 2px 24px #0008;margin:0;padding-right:.09em;transition:color .42s ease}
 .hero-deck{margin:clamp(16px,2.8vh,34px) 0 0;color:#f8f4ec;font-size:clamp(11px,1.5vw,21px);font-weight:430;letter-spacing:.025em;text-shadow:0 1px 13px #000c}
-.hero-down{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);z-index:4;font-size:12px;letter-spacing:.08em;color:var(--h-fg);text-transform:uppercase}
+.hero-down{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);z-index:4;font-size:12px;letter-spacing:.08em;color:#f8f4ec;text-shadow:0 2px 12px #000b;text-transform:uppercase}
 .home-content{width:min(1080px,calc(100% - clamp(36px,9vw,120px)));margin:auto}
 .selected{padding:clamp(80px,10vw,145px) 0 100px}
 .section-head{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:36px}
@@ -49,8 +49,8 @@ button,a{ -webkit-tap-highlight-color:transparent}
 .home-footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;padding:26px clamp(18px,3.6vw,62px);border-top:1px solid var(--h-line);font-size:12px;color:var(--h-muted)}
 .home-footer a{color:var(--h-accent)}
 :root[data-theme=dark] .photo-hero,:root[data-theme=dark] .selected,:root[data-theme=dark] .more-links,:root[data-theme=dark] .home-footer{background-color:#000}
-@media(max-width:800px){.main-nav,.nav-actions>a{display:none}.mobile-menu{display:block}.brand{font-size:16px}.photo-hero{min-height:calc(100svh - 65px);padding:28px 0}.photo-mosaic{width:100%;}.hero-copy h1{font-size:clamp(35px,8.65vw,75px)}.hero-eyebrow{letter-spacing:.18em;font-size:10px}.hero-deck{font-size:12px;max-width:32ch}.film-grid{gap:18px}.film-line{display:block}.film-line small{display:block;margin-top:4px}}
-@media(max-width:520px){.film-line strong{font-size:17px}.film-line small{font-size:10px}.home-content{width:calc(100% - 36px)}.section-head{align-items:start}.section-head>a{font-size:12px}.photo-hero{padding:15px 0}.hero-down{bottom:14px}}
+@media(max-width:800px){.main-nav,.nav-actions>a{display:none}.mobile-menu{display:block}.brand{font-size:16px}.photo-hero{min-height:0;padding:0}.photo-mosaic{width:100%;height:100%;}.hero-copy h1{font-size:clamp(35px,8.65vw,75px)}.hero-eyebrow{letter-spacing:.18em;font-size:10px}.hero-deck{font-size:12px;max-width:32ch}.film-grid{gap:18px}.film-line{display:block}.film-line small{display:block;margin-top:4px}}
+@media(max-width:520px){.film-line strong{font-size:17px}.film-line small{font-size:10px}.home-content{width:calc(100% - 36px)}.section-head{align-items:start}.section-head>a{font-size:12px}.photo-hero{padding:0}.hero-down{bottom:max(18px,env(safe-area-inset-bottom))}.selected{padding:52px 0 66px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.film-poster img,.home-topbar,.hero-copy h1{transition:none}}
 
 /* Featured documentary entrance: scroll-triggered, one-time, accessible. */
