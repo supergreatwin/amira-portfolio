@@ -141,3 +141,14 @@
 @media (prefers-reduced-motion:reduce) {
  .site-header .theme-toggle {transition:none!important}
 }
+
+/* Always show the reference cream header, including over the homepage mosaic. */
+html:root .site-header.site-header.site-header--home:not(.is-after-hero),
+html:root .site-header.site-header.site-header--home.is-after-hero {
+  background:var(--amira-header-bg)!important;
+  color:#fff!important;
+}
+html:root[data-theme="dark"] .site-header.site-header.site-header--home:not(.is-after-hero),
+html:root[data-theme="dark"] .site-header.site-header.site-header--home.is-after-hero {
+  background:#000!important;
+}

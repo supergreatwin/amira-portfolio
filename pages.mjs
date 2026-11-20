@@ -86,7 +86,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
       // The shared CSS loads after existing theme and layout rules.
       themedSource = themedSource.replace(/<\/head>/i,
-        '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261120" />\n</head>');
+        '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261120exact" />\n</head>');
     }
     const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
       ? themedSource.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
