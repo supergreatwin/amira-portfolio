@@ -22,6 +22,19 @@ jobs:
         run: node build.mjs --check
       - name: Build Cloudflare Pages output (stage 2)
         run: PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
+      - name: Verify staff-only educational application in production bundle
+        run: |
+          test -f dist/the-process/index.html
+          test -f dist/the-process/education.js
+          test -f dist/the-process/education.css
+          test -f dist/education-studio.html
+          test -f dist/education-core.js
+          test -f dist/education-studio.js
+          grep -q 'Private educational workspace' dist/the-process/index.html
+          grep -q 'education-studio.html' dist/editorial.html
+          grep -q 'education-studio.html' dist/ar/editorial.html
+          grep -q 'the-process' dist/_headers
+          ! grep -q 'id="student-auth"' dist/the-process/index.html
       - name: Ensure full-viewport homepage ships in dist
         run: |
           grep -q 'height:100dvh' dist/home-minimal.css
