@@ -22,6 +22,20 @@
   const legacy={ '#writing':'writing.html', '#about':'about.html', '#art':'art.html', '#contact':'contact.html' };
   if (legacy[location.hash]) location.replace(legacy[location.hash]);
   refreshPhotos();
+
+  /* The navigation overlays the photographs, then regains an opaque theme surface. */
+  const homeBar=document.querySelector('.home-topbar');
+  const homeHero=document.querySelector('.photo-hero');
+  if(homeBar && homeHero){
+    const updateBar=()=>{
+      const heroBottom=homeHero.getBoundingClientRect().bottom;
+      homeBar.classList.toggle('is-after-hero',heroBottom<=homeBar.offsetHeight);
+    };
+    updateBar();
+    window.addEventListener('scroll',updateBar,{passive:true});
+    window.addEventListener('resize',updateBar,{passive:true});
+  }
+
   document.querySelectorAll('.mobile-menu nav a').forEach(link=>link.addEventListener('click',()=>{
     const menu=document.querySelector('.mobile-menu');if(menu)menu.open=false;
   }));
