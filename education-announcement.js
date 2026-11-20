@@ -3,7 +3,7 @@
   const notice = document.querySelector('[data-education-announcement]');
   if (!notice) return;
   const close = notice.querySelector('[data-education-dismiss]');
-  const storageKey = 'amira-education-announcement-dismissed-v1';
+  const storageKey = 'amira-education-announcement-dismissed-v2';
   const dismissalDuration = 7 * 24 * 60 * 60 * 1000;
 
   try {
