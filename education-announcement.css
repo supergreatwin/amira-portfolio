@@ -1,0 +1,89 @@
+/* Homepage-only educational-content announcement. */
+.education-announcement {
+  position: fixed;
+  z-index: 12;
+  inset-inline-end: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  width: min(25.5rem, calc(100vw - 2rem));
+  max-height: min(75vh, 33rem);
+  overflow-y: auto;
+  padding: clamp(1.45rem, 3vw, 2rem);
+  border: 1px solid var(--line, rgba(41, 36, 32, .15));
+  border-radius: 1.1rem;
+  background: var(--surface, #fffcf7);
+  color: var(--text, #292420);
+  box-shadow: 0 20px 60px rgba(41, 36, 32, .18);
+  overscroll-behavior: contain;
+}
+.education-announcement[hidden] { display: none !important; }
+.education-announcement.is-visible { animation: education-entrance .38s cubic-bezier(.2,.75,.25,1) both; }
+.education-announcement__close {
+  position: absolute;
+  top: .85rem;
+  inset-inline-end: .85rem;
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid var(--line, rgba(41,36,32,.15));
+  border-radius: 50%;
+  background: transparent;
+  color: var(--text, #292420);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.education-announcement__close:hover { background: rgba(120,74,80,.1); }
+.education-announcement__label {
+  margin: 0 2rem 1rem 0;
+  color: var(--accent, #743b49);
+  font-size: .68rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+[dir="rtl"] .education-announcement__label { margin: 0 0 1rem 2rem; letter-spacing: 0; }
+.education-announcement__title {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.65rem, 3.5vw, 2rem);
+  font-weight: 400;
+  line-height: 1.14;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+[dir="rtl"] .education-announcement__title { font-family: Georgia, Tahoma, Arial, sans-serif; letter-spacing: 0; }
+.education-announcement__body {
+  margin: 1rem 0 1.5rem;
+  color: var(--muted, #62554a);
+  font-size: .95rem;
+  line-height: 1.65;
+}
+.education-announcement__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.75rem;
+  padding: .75rem 1.15rem;
+  border-radius: 999px;
+  background: var(--accent, #743b49);
+  color: #fff;
+  font-size: .9rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.education-announcement__cta:hover { background: var(--espresso, #292420); transform: translateY(-1px); }
+.education-announcement :focus-visible { outline: 2px solid var(--accent, #743b49); outline-offset: 4px; }
+@keyframes education-entrance {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 540px) {
+  .education-announcement { inset-inline-start: 1rem; inset-inline-end: 1rem; bottom: 1rem; width: auto; max-height: 68vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .education-announcement.is-visible { animation: none; }
+  .education-announcement__cta { transition: none; }
+}
