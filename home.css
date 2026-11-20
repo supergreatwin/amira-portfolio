@@ -425,3 +425,16 @@ html[dir=rtl] .notes-home h2{letter-spacing:-.015em;line-height:1.3}
 /* Make the principal email action readable on the plum footer. */
 .footer-links a[href^="mailto:"]{display:inline-flex;align-items:center;min-height:3.1rem;padding:.75rem 1.05rem;border:1px solid #f9d7e2;background:#f9d7e2;color:#4e1729;font-weight:720;text-decoration:none;border-radius:.15rem;overflow-wrap:anywhere}
 .footer-links a[href^="mailto:"]:hover,.footer-links a[href^="mailto:"]:focus-visible{background:#fff4f6;color:#4e1729;border-color:#fff4f6}
+
+
+/* Keep privacy controls separate from the educational announcement. */
+.analytics-dialog[open]:not(:modal) {
+  position: fixed;
+  inset: auto auto 1rem 1rem;
+  width: min(26rem, calc(100vw - 2rem));
+  margin: 0;
+  z-index: 1000;
+  border-radius: .2rem;
+  box-shadow: 0 14px 36px #21151b30;
+}
+.analytics-dialog .analytics-actions button { border-radius: .15rem; }
