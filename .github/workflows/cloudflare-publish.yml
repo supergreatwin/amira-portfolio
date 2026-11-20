@@ -1,8 +1,6 @@
 name: Publish Amira to Cloudflare (verified fallback)
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -39,6 +37,6 @@ jobs:
           if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
             echo "Cloudflare credentials not configured as CLOUDFLARE_API_TOKEN or CF_API_TOKEN."
             echo "No direct deploy attempted; existing Git integration remains unchanged."
-            exit 0
+            exit 1
           fi
           npx --yes wrangler@4 pages deploy dist --project-name=amiraabdelfadil --branch=main
