@@ -1,0 +1,38 @@
+/* New CMS films retain the same grid geometry and editorial art direction. */
+.film-card[data-cms-film] .film-image{overflow:hidden}
+.film-card[data-cms-film] .film-image img{width:100%;height:100%;object-fit:cover;object-position:center}
+.film-card[data-cms-film] .film-caption h3{overflow-wrap:anywhere}
+.cms-fullscreen-hero{position:relative;width:100%;height:min(100dvh,900px);background:#191617;overflow:hidden}
+.cms-fullscreen-hero img{width:100%;height:100%;object-fit:cover;display:block}
+.cms-fullscreen-hero:before{content:'';position:absolute;inset:40% 0 0;background:linear-gradient(transparent,#151011a8);z-index:1;pointer-events:none}
+.cms-hero-caption{position:absolute;z-index:2;left:clamp(1.4rem,5vw,6rem);right:clamp(1.4rem,5vw,6rem);bottom:clamp(2rem,5vw,5rem);color:#f8f4ec}
+.cms-hero-caption h1{font:400 clamp(3rem,8vw,8.5rem)/.94 Georgia,serif;letter-spacing:-.06em;max-width:15ch;margin:0 0 .8rem}
+.cms-hero-caption p{font-size:.74rem;text-transform:uppercase;letter-spacing:.15em;margin:0}
+.cms-page-content{width:min(100% - 2.5rem,78rem);margin:auto;padding:clamp(3rem,7vw,7rem) 0}
+.cms-page-intro{display:grid;grid-template-columns:1fr 2fr;gap:clamp(1.5rem,4vw,4rem);padding-bottom:2.5rem;border-bottom:1px solid #cbbeb2}
+.cms-page-intro h2{font:400 clamp(1.9rem,4vw,4.5rem)/1.1 Georgia,serif;letter-spacing:-.04em}
+.cms-page-intro p{font-size:clamp(1rem,1.8vw,1.22rem);line-height:1.85;max-width:64ch;white-space:pre-wrap}
+.cms-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(1.5rem,4vw,4rem);padding:3rem 0}
+.cms-credit-list{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+.cms-credit-list dt{font-size:.72rem;text-transform:uppercase;letter-spacing:.11em;color:var(--burgundy,#743b49)}
+.cms-credit-list dd{margin:.4rem 0 0;font-size:1rem}
+.cms-stills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(.7rem,2vw,1.7rem);padding-top:1.6rem}
+.cms-still{padding:0;background:transparent;border:0;text-align:left;cursor:zoom-in;min-width:0}
+.cms-still img{display:block;width:100%;height:clamp(220px,36vw,520px);object-fit:cover;background:#292420}
+.cms-still figcaption{font-size:.72rem;margin-top:.5rem;color:#655951}
+.cms-collection-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(.65rem,1.6vw,1.3rem);padding-top:1.6rem}
+.cms-collection-grid .cms-still img{height:clamp(230px,31vw,490px)}
+.cms-poster{max-width:350px;width:100%;height:auto;object-fit:contain}
+.cms-trailer{display:inline-block;font-size:.86rem;padding:.9rem 1.2rem;border:1px solid var(--burgundy,#743b49);color:var(--burgundy,#743b49);margin:1.4rem 0}
+.cms-overlay{position:fixed;inset:0;width:100vw;height:100dvh;max-width:none;max-height:none;margin:0;padding:0;border:0;background:#100e0f;color:white;overflow:hidden}
+.cms-overlay::backdrop{background:#000e}.cms-overlay-stage{position:absolute;inset:0;display:grid;place-items:center}
+.cms-overlay-stage img{display:block;width:100%;height:100%;object-fit:contain}
+.cms-overlay-stage video{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain}
+.cms-overlay-tools{position:absolute;z-index:4;right:clamp(12px,2.3vw,30px);top:clamp(10px,2.3vw,26px);display:flex;gap:.5rem}
+.cms-overlay button{font:600 .75rem system-ui,Arial,sans-serif;background:#211c1cd9;color:white;padding:.65rem .9rem;border:1px solid #ffffff80;cursor:pointer}
+.cms-overlay-info{position:absolute;z-index:3;left:1rem;bottom:1rem;color:#fff;background:#211c1cb6;padding:.6rem 1rem;font-size:.75rem;max-width:75ch}
+.cms-empty{color:#756960;margin:2rem 0}.cms-card-collection img{width:100%;height:100%;object-fit:cover}
+.cms-gallery-stage{background:#171315}
+.cms-photo-trigger{cursor:zoom-in}
+@media(max-width:750px){.cms-fullscreen-hero{height:77dvh}.cms-page-intro,.cms-detail-grid{grid-template-columns:1fr}.cms-stills{grid-template-columns:1fr}.cms-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.cms-still img{height:60vw}.cms-collection-grid .cms-still img{height:54vw}.cms-hero-caption h1{font-size:clamp(3.5rem,11vw,6rem)}}
+@media(max-width:420px){.cms-collection-grid{grid-template-columns:1fr}.cms-collection-grid .cms-still img{height:90vw}}
