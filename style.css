@@ -218,3 +218,16 @@ html[dir="rtl"] :is(.brand, h1, h2, h3) { letter-spacing: normal; }
 .analytics-dialog p { margin: .75rem 0; }
 .analytics-actions { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
 .analytics-actions button, .analytics-settings { padding: .45rem .75rem; font: inherit; color: #2d2023; background: #f8f4ec; border: 1px solid #67485a; border-radius: .25rem; cursor: pointer; }
+
+
+/* Shared editorial alignment and square-corner actions */
+.prose p, .section-intro, .about-page .prose p, .project-copy p, .contact-page p:not(.section-tag), .essay p { text-align: justify; text-justify: inter-word; hyphens: auto; }
+.pill { border-radius: .2rem; }
+.read-progress { display: none !important; }
+.project-poster img { display: block; width: 100%; aspect-ratio: 5 / 7; height: auto; object-fit: cover; border-radius: .25rem; }
+.about-page figure { width: 100%; max-width: none; justify-self: stretch; }
+.about-page figure img { width: 100%; height: auto; object-fit: cover; }
+@media (min-width: 721px) {
+ .about-page { align-items: stretch; }
+ .about-page figure img { height: 100%; min-height: 28rem; }
+}
