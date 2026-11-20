@@ -40,3 +40,10 @@ html[dir=rtl] .studio-hero h1{letter-spacing:-.03em;line-height:1.25}
 html[dir=rtl] .studio-section h2,html[dir=rtl] .studio-card h3{letter-spacing:-.02em;line-height:1.35}
 @media(max-width:1080px){.studio-nav{display:none}.studio-menu{display:block;position:relative}.studio-menu summary{cursor:pointer;list-style:none;border:1px solid var(--line);padding:.45rem .8rem;color:var(--burgundy)}.studio-menu summary::-webkit-details-marker{display:none}.studio-mobile{position:absolute;inset-inline-end:0;top:100%;min-width:15rem;padding:1rem;background:var(--ivory);border:1px solid var(--line);display:grid;gap:1rem;box-shadow:0 12px 32px #29242022}}
 @media(max-width:720px){.studio-hero,.studio-section-head{grid-template-columns:1fr}.studio-hero{padding-block:3rem;gap:2.2rem}.studio-hero h1{max-width:14ch}.studio-image img{height:17rem}.studio-cards{grid-template-columns:1fr}.studio-card{min-height:14rem}.studio-section-head{gap:.8rem}.studio-footer-inner{align-items:start;flex-direction:column}}
+
+/* Keep a working subscription path visible when third-party embeds are blocked. */
+.studio-embed-fallback{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:1rem 1.5rem;border-top:1px solid var(--line);padding-top:1.35rem;margin-top:1.35rem;text-align:center}
+.studio-embed-fallback p{font-size:.91rem;line-height:1.55;color:var(--muted);margin:0}
+.studio-embed-fallback a{display:inline-flex;align-items:center;gap:.75rem;background:var(--burgundy,#743b49);color:#fff;padding:.85rem 1.2rem;font-weight:650;text-decoration:none;min-height:2.75rem}
+.studio-embed-fallback a:hover,.studio-embed-fallback a:focus-visible{filter:brightness(1.12);outline-offset:3px}
+@media(max-width:600px){.studio-embed-fallback{flex-direction:column;gap:.75rem}}
