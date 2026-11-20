@@ -1,0 +1,31 @@
+name: Verify Cloudflare production build
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout production source
+        uses: actions/checkout@v4
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate generated pages (Cloudflare command, stage 1)
+        run: node build.mjs --check
+      - name: Build Cloudflare Pages output (stage 2)
+        run: PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
+      - name: Ensure full-viewport homepage ships in dist
+        run: |
+          grep -q 'height:100dvh' dist/home-minimal.css
+          grep -q 'margin-bottom:-65px' dist/home-minimal.css
+          grep -q 'home-minimal.css?v=20261120bleed' dist/index.html
+          grep -q 'home-minimal.js?v=20261120bleed' dist/index.html
+          grep -q 'is-after-hero' dist/home-minimal.js
