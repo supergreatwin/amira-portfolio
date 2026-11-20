@@ -31,7 +31,7 @@ const productionPartnersAr = 'آي إم إس، نظرة فيلمز، معهد غ
 
 export const films = [
   {
-    id: 'sweet-and-salty', title: 'Sweet & Salty', posterWidth: 636, seconds: 2483,
+    id: 'sweet-and-salty', title: 'Sweet & Salty', posterWidth: 636, genre: 'Collaborative documentary', year: 2025, seconds: 2483,
     excerpt: 'Two strangers in Cairo pursue dreams rooted in their love of food.',
     synopsis: 'From the heart of Cairo, Nabil and Somaya are strangers pursuing dreams rooted in their love of food. Though their paths are different, their stories echo one another. Each navigates the delicate space between ambition and circumstance, shaped by memory, sacrifice, and the people who surround them.',
     credits: [['Co-directed by', 'Amira Abdel-Fadil & Sarah El Halawany'], ['Production', 'Nazra Films, Goethe Institute, IMS, Red Star']],
@@ -44,7 +44,7 @@ export const films = [
     ],
   },
   {
-    id: 'street-x-food', title: 'Street X Food', posterWidth: 707, seconds: 348,
+    id: 'street-x-food', title: 'Street X Food', posterWidth: 707, genre: 'Short documentary', year: 2025, seconds: 348,
     excerpt: 'A glimpse into Cairo’s vibrant street life through its street vendors, cooks, and the people who gather around their meals.',
     synopsis: 'Street X Food is a glimpse into Cairo’s vibrant street life, where food pulses like a heartbeat. Through its street vendors, cooks, and the people who gather around their meals, the film captures the flavours, energy, and everyday connections of a city shaped by resilience and community.',
     credits: [['Director', 'Amira Abdel-Fadil'], ['Production', productionPartners]],
