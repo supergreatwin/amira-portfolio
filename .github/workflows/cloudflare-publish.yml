@@ -1,0 +1,44 @@
+name: Publish Amira to Cloudflare (verified fallback)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: amira-cloudflare-production-publish
+  cancel-in-progress: true
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v4
+      - name: Set up Node 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate the existing site
+        run: node build.mjs --check
+      - name: Produce the Cloudflare Pages distribution
+        run: PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
+      - name: Check that correct full-screen homepage is included
+        run: |
+          grep -q 'margin-bottom:-65px' dist/home-minimal.css
+          grep -q 'height:100dvh' dist/home-minimal.css
+          grep -q '20261120bleed' dist/index.html
+      - name: Deploy to existing Cloudflare Pages project if authorized
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: d610c41ba30796b2e67943f5635eeddc
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "Cloudflare credentials not configured as CLOUDFLARE_API_TOKEN or CF_API_TOKEN."
+            echo "No direct deploy attempted; existing Git integration remains unchanged."
+            exit 0
+          fi
+          npx --yes wrangler@4 pages deploy dist --project-name=amiraabdelfadil --branch=main
