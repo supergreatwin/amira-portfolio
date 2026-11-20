@@ -40,7 +40,7 @@ for (const directory of ['', 'ar']) {
       : html;
     // Do not surface the Editorial Desk link if routes have not been deployed.
     const deployedOutput = educationRoutesEnabled ? seoOutput
-      : seoOutput.replace(/<a[^>]*data-education-editor[^>]*>.*?<\\/a>/gs,'');
+      : seoOutput.replace(/<a[^>]*data-education-editor[^>]*>.*?<\/a>/gs,'');
     await writeFile(output, deployedOutput);
   }
 }
