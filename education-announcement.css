@@ -205,3 +205,9 @@
   .education-announcement.is-visible { animation: none; }
   .education-announcement__cta, .education-announcement__close { transition: none; }
 }
+
+
+/* Editorial rather than pill-shaped interactive treatment */
+.education-announcement { border-radius: .3rem; z-index: 60; }
+.education-announcement__cta, .education-announcement__cta-arrow, .education-announcement__close { border-radius: .15rem; }
+.education-announcement__body { text-align: justify; text-justify: inter-word; }
