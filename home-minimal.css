@@ -94,3 +94,12 @@ button,a{ -webkit-tap-highlight-color:transparent}
 :root .home-topbar .mobile-menu nav{color:var(--h-fg);background:var(--h-bg)}
 /* A subtle top scrim keeps navigation readable regardless of the editorial crop. */
 .photo-hero::before{content:"";position:absolute;inset:0 0 auto;height:115px;z-index:2;pointer-events:none;background:linear-gradient(to bottom,#0007,transparent)}
+
+/* Consistent full-bleed filmography artwork. The Biophilia poster's existing
+   cream margin is part of the image, so crop it in the listing only. */
+.film-grid .film-poster{display:block;width:100%;aspect-ratio:2/3;overflow:hidden;border:0;background:var(--h-bg)}
+.film-grid .film-poster img{display:block;width:100%;height:100%;object-fit:cover;object-position:center}
+.film-card--biophilia .film-poster img{transform:scale(1.045);transform-origin:50% 50%}
+.film-card--biophilia:hover .film-poster img{transform:scale(1.06)}
+:root[data-theme="dark"] .film-grid .film-poster{background:#000}
+@media(prefers-reduced-motion:reduce){.film-card--biophilia .film-poster img{transition:none}}
