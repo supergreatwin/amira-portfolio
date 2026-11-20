@@ -114,3 +114,49 @@
  .site-header .theme-toggle{width:39px!important;height:39px!important;min-width:39px!important}
 }
 @media(prefers-reduced-motion:reduce){.site-header.site-header{transition:none!important}}
+
+
+/* Dark-mode header. Light mode is intentionally identical to the restored design. */
+:root[data-theme="dark"] .site-header.site-header,
+:root[data-theme="dark"] .site-header.site-header.site-header--home,
+:root[data-theme="dark"] .site-header.site-header.site-header--home.is-after-hero {
+  background-color:#000!important;
+  background:#000!important;
+  color:#f8f4ec!important;
+  border:0!important;
+  border-bottom:1px solid #ffffff20!important;
+  box-shadow:none!important;
+}
+:root[data-theme="dark"] .site-header .site-header__brand,
+:root[data-theme="dark"] .site-header .site-header__center nav a,
+:root[data-theme="dark"] .site-header .site-header__shortcuts a {
+  color:#f8f4ec!important;
+  text-shadow:0 1px 7px #ffffff24!important;
+}
+:root[data-theme="dark"] .site-header .theme-toggle,
+:root[data-theme="dark"] .site-header.site-header--home:not(.is-after-hero) .theme-toggle {
+  background:#292929!important;
+  color:#f8f4ec!important;
+  border:1px solid #ffffff4d!important;
+  box-shadow:none!important;
+}
+:root[data-theme="dark"] .site-header .theme-toggle:hover,
+:root[data-theme="dark"] .site-header.site-header--home:not(.is-after-hero) .theme-toggle:hover {
+  background:#3b3b3b!important;
+  border-color:#ffffff80!important;
+}
+:root[data-theme="dark"] .site-header .theme-toggle:focus-visible {
+  outline:2px solid #f8f4ec!important;
+  outline-offset:3px!important;
+}
+:root[data-theme="dark"] .site-header .mobile-menu summary {
+  color:#f8f4ec!important;
+  background:#171717!important;
+  border-color:#ffffff66!important;
+}
+:root[data-theme="dark"] .site-header .mobile-menu nav {
+  color:#f8f4ec!important;
+  background:#090909!important;
+  border-color:#ffffff40!important;
+}
+:root[data-theme="dark"] .site-header .mobile-menu nav a {color:#f8f4ec!important}

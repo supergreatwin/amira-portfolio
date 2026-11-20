@@ -70,13 +70,13 @@ for (const directory of ['', 'ar', 'the-process']) {
     const prefix = directory ? '../' : '';
     let themedSource = source;
     if (isDocument) themedSource = themedSource
-      .replace(/theme\.css\?v=[a-zA-Z0-9]+/g, 'theme.css?v=20261120site')
+      .replace(/theme\.css\?v=[a-zA-Z0-9]+/g, 'theme.css?v=20261120dark')
       .replace(/theme\.js\?v=[a-zA-Z0-9]+/g, 'theme.js?v=20261120site');
     if (isDocument) {
       if (!themedSource.includes('theme-init.js'))
         themedSource = themedSource.replace(/<head>/i, '<head>\n<script src="' + prefix + 'theme-init.js"></script>');
       const themeResources = [
-        !themedSource.includes('theme.css') ? '<link rel="stylesheet" href="' + prefix + 'theme.css?v=20261120site">' : '',
+        !themedSource.includes('theme.css') ? '<link rel="stylesheet" href="' + prefix + 'theme.css?v=20261120dark">' : '',
         !themedSource.includes('theme.js') ? '<script src="' + prefix + 'theme.js?v=20261120site" defer></script>' : ''
       ].filter(Boolean).join('\n');
       if (themeResources) themedSource = themedSource.replace(/<\/head>/i, themeResources + '\n</head>');
@@ -86,7 +86,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
       // The shared CSS loads after existing theme and layout rules.
       themedSource = themedSource.replace(/<\/head>/i,
-        '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261120" />\n</head>');
+        '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261120dark" />\n</head>');
     }
     const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
       ? themedSource.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)

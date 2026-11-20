@@ -166,3 +166,55 @@
   .latte, .notes-home, .home-content, .home-footer,
   .studio-mobile, .theme-toggle {transition:none!important}
 }
+
+
+/* Complete pure-black dark palette for the private Editorial Desk,
+   educational classroom and content-management forms. Light mode untouched. */
+:root[data-theme="dark"] {
+  --edu-ivory:#000;
+  --edu-ink:#f8f4ec;
+  --edu-plum:#e0acb8;
+  --edu-latte:#101010;
+  --edu-line:#ffffff30;
+  --edu-muted:#cbbfb8;
+  --edu-paper:#0b0b0b;
+  --cms-ivory:#000;
+  --cms-ink:#f8f4ec;
+  --cms-plum:#e0acb8;
+  --cms-paper:#0b0b0b;
+  --cms-line:#ffffff30;
+  --cms-muted:#cbbfb8;
+}
+:root[data-theme="dark"] .edu-bar,
+:root[data-theme="dark"] .edu-footer {background:#000;color:#f8f4ec}
+:root[data-theme="dark"] :is(
+  .edu-panel,.edu-card,.edu-lesson,.edu-file,.edu-tiny-list button,
+  .cms-aside,.cms-editor>form,.cms-media-editor,.cms-home-editor,
+  .ed-editor,.ed-list button,.ed-notice
+) {
+  background:#0b0b0b;
+  color:#f8f4ec;
+  border-color:#ffffff30;
+}
+:root[data-theme="dark"] :is(
+  .edu-field input,.edu-field textarea,.edu-field select,
+  .ed-field input,.ed-field textarea,.ed-field select,
+  .cms-home-options select,.cms-home-photo-tools input[type=file],
+  .cms-media-editor input[type=file]
+) {
+  background:#101010;
+  color:#f8f4ec;
+  border-color:#ffffff55;
+}
+:root[data-theme="dark"] :is(
+  .edu-field input,.edu-field textarea,.ed-field input,.ed-field textarea
+)::placeholder {color:#b2a8a2;opacity:1}
+:root[data-theme="dark"] .edu-embed{background:#0b0b0b;border-color:#ffffff40}
+:root[data-theme="dark"] .edu-button{background:#e0acb8;color:#000!important;border-color:#e0acb8}
+:root[data-theme="dark"] .edu-button.alt{background:transparent;color:#e0acb8!important}
+:root[data-theme="dark"] .edu-button.ghost{background:transparent;color:#f8f4ec!important;border-color:#ffffff55}
+:root[data-theme="dark"] .ed-button:not(.alt):not(.ghost){background:#e0acb8;color:#000;border-color:#e0acb8}
+:root[data-theme="dark"] .ed-button.alt{color:#e0acb8}
+:root[data-theme="dark"] .ed-button.ghost{color:#f8f4ec}
+:root[data-theme="dark"] .edu-status.is-error,
+:root[data-theme="dark"] .cms-home-message.is-error {color:#ff9ea6}
