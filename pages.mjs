@@ -16,13 +16,48 @@ const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
 const verificationFile = /^google[a-z0-9]+\.html$/i;
 
+// One common navigation header for all public and private page templates.
+// The private educational pages keep their existing Supabase authorization.
+function sharedHeader(source, directory, filename) {
+  const prefix = directory ? '../' : '';
+  const arabic = directory === 'ar' || /<html[^>]*lang=["']ar/i.test(source);
+  const photoHome = !directory && filename === 'index.html' && source.includes('photo-mosaic');
+  const href = path => arabic ? path : prefix + path;
+  const safeActive = name => name === 'films' ? (/(^film-|^films)/.test(filename) || source.includes('data-cms-film'))
+    : name === 'photography' ? /^(art|italy|alexandria|west-el-balad|zamalek|between-stone-and-sea|collection)/.test(filename)
+    : name === 'writing' ? /^(writing|journal|notes)/.test(filename)
+    : name === 'about' ? filename === 'about.html' : false;
+  const navItems = arabic
+    ? [['films','الأفلام','index.html#work'],['photography','الفن والتصوير','art.html'],['writing','كتابات','index.html#writing'],['about','نبذة','index.html#about']]
+    : [['films','Films','films.html'],['photography','Art & Photography','art.html'],['writing','Writing','writing.html'],['about','About','about.html']];
+  const mainNav = navItems.map(([key,label,path]) =>
+    '<a href="'+href(path)+'"'+(safeActive(key)?' aria-current="page"':'')+'>'+label.replaceAll('&','&amp;')+'</a>').join('');
+  const alternate = arabic ? '../index.html' : (directory === 'the-process' ? '../ar/' : 'ar/');
+  const languageLabel = arabic ? 'English' : 'العربية';
+  const mobileNav = mainNav +
+    '<a href="'+href('notes.html')+'">'+(arabic?'رسائل أميرة':'Field Notes')+'</a>'+
+    '<a href="'+alternate+'">'+languageLabel+'</a>';
+  const brand = href('index.html');
+  return '<header class="site-header topbar home-topbar'+(photoHome?' site-header--home':'')+'">'+
+    '<div class="site-header__frame nav-inner">'+
+    '<a class="site-header__brand brand" href="'+brand+'" aria-label="Amira Abdelfadil — home">amira abdelfadil</a>'+
+    '<div class="site-header__center nav-panel" id="navigation-panel"><div><nav aria-label="Main navigation">'+mainNav+'</nav></div></div>'+
+    '<div class="site-header__utilities nav-actions">'+
+    '<nav class="site-header__shortcuts nav-shortcuts" aria-label="Resources and language">'+
+    '<a href="'+href('notes.html')+'">'+(arabic?'رسائل أميرة':'Field Notes')+'</a><a href="'+alternate+'" lang="'+(arabic?'en':'ar')+'">'+languageLabel+'</a></nav>'+
+    '<button type="button" class="menu-toggle" aria-controls="navigation-panel" aria-expanded="false" aria-label="Legacy menu" hidden></button>'+
+    '<details class="mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">'+mobileNav+'</nav></details>'+
+    '</div></div></header>';
+}
+
+
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist);
 await cp(join(root, 'assets'), join(dist, 'assets'), { recursive: true });
 // The Process is deliberately deployed as a staff-only Supabase-authenticated application.
 await cp(join(root, 'the-process'), join(dist, 'the-process'), { recursive: true });
 
-for (const directory of ['', 'ar']) {
+for (const directory of ['', 'ar', 'the-process']) {
   const files = await readdir(join(root, directory));
   for (const file of files.filter(name => /\.(?:html|css|js)$/.test(name) || ['robots.txt', 'sitemap.xml'].includes(name))) {
     const path = join(directory, file);
@@ -47,6 +82,12 @@ for (const directory of ['', 'ar']) {
       if (themeResources) themedSource = themedSource.replace(/<\/head>/i, themeResources + '\n</head>');
     }
     // No host-agnostic redirects: they would also affect custom-domain aliases.
+    if (isDocument && /<header\b[\s\S]*?<\/header>/i.test(themedSource)) {
+      themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
+      // The shared CSS loads after existing theme and layout rules.
+      themedSource = themedSource.replace(/<\/head>/i,
+        '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261120" />\n</head>');
+    }
     const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
       ? themedSource.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
       : themedSource;
