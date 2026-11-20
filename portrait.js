@@ -43,7 +43,6 @@
     const quote = panel.querySelector('[data-moment-quote]');
     quote.hidden = !moment.quote;
     quote.textContent = moment.quote ? '«' + moment.quote + '»' : '';
-    panel.querySelector('[data-moment-time]').textContent = moment.duration;
     panel.setAttribute('aria-labelledby',tabs.find(tab => tab.dataset.portraitMoment===key)?.id||'');
   }
   tabs.forEach((tab,index) => {
