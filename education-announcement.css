@@ -1,89 +1,207 @@
-/* Homepage-only educational-content announcement. */
+/* Amira Editorial Desk · film-inspired educational-content teaser. */
 .education-announcement {
   position: fixed;
   z-index: 12;
   inset-inline-end: clamp(1rem, 3vw, 2rem);
   bottom: clamp(1rem, 3vw, 2rem);
-  width: min(25.5rem, calc(100vw - 2rem));
-  max-height: min(75vh, 33rem);
+  width: min(28.5rem, calc(100vw - 2rem));
+  max-height: min(84vh, 46rem);
   overflow-y: auto;
-  padding: clamp(1.45rem, 3vw, 2rem);
-  border: 1px solid var(--line, rgba(41, 36, 32, .15));
-  border-radius: 1.1rem;
+  overscroll-behavior: contain;
+  border: 1px solid var(--line, rgba(41,36,32,.18));
+  border-radius: 1.05rem;
   background: var(--surface, #fffcf7);
   color: var(--text, #292420);
-  box-shadow: 0 20px 60px rgba(41, 36, 32, .18);
-  overscroll-behavior: contain;
+  box-shadow: 0 22px 66px rgba(41,36,32,.20), 6px 6px 0 rgba(120,74,80,.10);
+  isolation: isolate;
 }
 .education-announcement[hidden] { display: none !important; }
-.education-announcement.is-visible { animation: education-entrance .38s cubic-bezier(.2,.75,.25,1) both; }
+.education-announcement.is-visible { animation: education-entrance .42s cubic-bezier(.2,.75,.25,1) both; }
+.education-announcement__masthead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.65rem;
+  padding: .65rem 1.3rem .65rem 1.55rem;
+  border-bottom: 1px solid var(--line, rgba(41,36,32,.18));
+}
+.education-announcement__identity {
+  display: flex;
+  flex-direction: column;
+  gap: .05rem;
+  min-width: 0;
+}
+.education-announcement__brand {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: .91rem;
+  line-height: 1.5;
+  letter-spacing: -.035em;
+  font-weight: 600;
+}
+.education-announcement__department {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .58rem;
+  line-height: 1.4;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  color: var(--muted, #62554a);
+}
 .education-announcement__close {
-  position: absolute;
-  top: .85rem;
-  inset-inline-end: .85rem;
   display: grid;
   place-items: center;
-  width: 2rem;
-  height: 2rem;
+  flex: none;
+  width: 2.25rem;
+  height: 2.25rem;
   padding: 0;
-  border: 1px solid var(--line, rgba(41,36,32,.15));
+  border: 1px solid var(--line, rgba(41,36,32,.2));
   border-radius: 50%;
   background: transparent;
   color: var(--text, #292420);
   font-size: 1.4rem;
   line-height: 1;
   cursor: pointer;
+  transition: background .2s, transform .2s;
 }
-.education-announcement__close:hover { background: rgba(120,74,80,.1); }
-.education-announcement__label {
-  margin: 0 2rem 1rem 0;
-  color: var(--accent, #743b49);
-  font-size: .68rem;
-  font-weight: 700;
+.education-announcement__close:hover { background: var(--latte, #e9dcc9); transform: rotate(90deg); }
+.education-announcement__film {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 6.25rem;
+  padding: 1.15rem 1.7rem;
+  overflow: hidden;
+  background: #743b49;
+  color: #fff9f3;
+  border-bottom: 1px solid rgba(255,255,255,.23);
+}
+.education-announcement__film::before,
+.education-announcement__film::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  height: .43rem;
+  background: repeating-linear-gradient(90deg, #fff5e6 0 .86rem, transparent .86rem 1.6rem);
+  opacity: .8;
+}
+.education-announcement__film::before { top: .48rem; }
+.education-announcement__film::after { bottom: .48rem; }
+.education-announcement__film-inner { position: relative; z-index: 1; width: 100%; }
+.education-announcement__film-index {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: .38rem 0 .1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .65rem;
+  line-height: 1.5;
   letter-spacing: .16em;
   text-transform: uppercase;
+  opacity: .85;
 }
-[dir="rtl"] .education-announcement__label { margin: 0 0 1rem 2rem; letter-spacing: 0; }
-.education-announcement__title {
-  margin: 0;
+.education-announcement__film-title {
+  margin: .25rem 0;
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: clamp(1.65rem, 3.5vw, 2rem);
+  font-size: clamp(1.4rem, 3.8vw, 2.05rem);
+  line-height: 1.2;
+  font-style: italic;
   font-weight: 400;
-  line-height: 1.14;
-  letter-spacing: -.025em;
+  letter-spacing: -.04em;
+}
+.education-announcement__content { position: relative; padding: 1.55rem 1.8rem 1.45rem; }
+.education-announcement__label {
+  margin: 0 0 .85rem;
+  color: var(--accent, #743b49);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .67rem;
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+.education-announcement__title {
+  max-width: 12ch;
+  margin: 0 0 1rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(2rem, 4.9vw, 2.65rem);
+  line-height: 1.05;
+  font-weight: 400;
+  letter-spacing: -.052em;
   text-wrap: balance;
 }
-[dir="rtl"] .education-announcement__title { font-family: Georgia, Tahoma, Arial, sans-serif; letter-spacing: 0; }
+.education-announcement__title em { font-weight: 400; color: var(--accent, #743b49); }
 .education-announcement__body {
-  margin: 1rem 0 1.5rem;
-  color: var(--muted, #62554a);
-  font-size: .95rem;
+  max-width: 42ch;
+  margin: 0 0 1.35rem;
+  font-size: .91rem;
   line-height: 1.65;
+  color: var(--muted, #62554a);
 }
 .education-announcement__cta {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 2.75rem;
-  padding: .75rem 1.15rem;
-  border-radius: 999px;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: 3.15rem;
+  padding: .72rem .78rem .72rem 1.1rem;
+  border-radius: .4rem;
   background: var(--accent, #743b49);
-  color: #fff;
-  font-size: .9rem;
-  font-weight: 650;
+  color: var(--accent-text, #fff);
+  font-size: .88rem;
+  line-height: 1.35;
+  font-weight: 670;
   text-decoration: none;
-  transition: background .2s ease, transform .2s ease;
+  transition: background .22s, transform .22s;
 }
-.education-announcement__cta:hover { background: var(--espresso, #292420); transform: translateY(-1px); }
-.education-announcement :focus-visible { outline: 2px solid var(--accent, #743b49); outline-offset: 4px; }
+.education-announcement__cta-arrow {
+  display: grid;
+  place-items: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  flex: none;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 1rem;
+  line-height: 1;
+}
+.education-announcement__cta:hover { background: var(--espresso, #292420); transform: translateY(-2px); }
+.education-announcement__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.25rem;
+  padding: .85rem 1.8rem;
+  border-top: 1px dashed var(--line, rgba(41,36,32,.25));
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: .59rem;
+  line-height: 1.45;
+  letter-spacing: .04em;
+  color: var(--muted, #62554a);
+}
+.education-announcement :focus-visible { outline: 2px solid var(--accent, #743b49); outline-offset: 3px; }
+[dir='rtl'] .education-announcement__masthead { padding-inline: 1.55rem 1.3rem; }
+[dir='rtl'] .education-announcement__brand,
+[dir='rtl'] .education-announcement__film-title,
+[dir='rtl'] .education-announcement__title { font-family: Georgia, Tahoma, Arial, sans-serif; letter-spacing: 0; }
+[dir='rtl'] .education-announcement__department,
+[dir='rtl'] .education-announcement__film-index,
+[dir='rtl'] .education-announcement__label,
+[dir='rtl'] .education-announcement__footer { letter-spacing: 0; }
+[dir='rtl'] .education-announcement__title { max-width: 15ch; font-size: clamp(1.8rem, 4.5vw, 2.4rem); }
+[dir='rtl'] .education-announcement__cta { padding-inline: 1.1rem .78rem; }
 @keyframes education-entrance {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @media (max-width: 540px) {
-  .education-announcement { inset-inline-start: 1rem; inset-inline-end: 1rem; bottom: 1rem; width: auto; max-height: 68vh; }
+  .education-announcement { inset-inline-start: 1rem; inset-inline-end: 1rem; bottom: 1rem; width: auto; max-height: 75vh; }
+  .education-announcement__masthead { padding-inline: 1.15rem; }
+  .education-announcement__film { min-height: 5.6rem; padding-inline: 1.25rem; }
+  .education-announcement__content { padding: 1.2rem 1.25rem; }
+  .education-announcement__title { font-size: 2rem; }
+  .education-announcement__footer { padding-inline: 1.25rem; }
 }
 @media (prefers-reduced-motion: reduce) {
   .education-announcement.is-visible { animation: none; }
-  .education-announcement__cta { transition: none; }
+  .education-announcement__cta, .education-announcement__close { transition: none; }
 }
