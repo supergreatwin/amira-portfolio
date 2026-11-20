@@ -421,3 +421,7 @@ html[dir=rtl] .notes-home h2{letter-spacing:-.015em;line-height:1.3}
  .about-title, .about-copy, .about-portrait { grid-column: 1; }
  .about-portrait { grid-row: auto; height: auto; width: min(100%, 38rem); min-height: 0; aspect-ratio: 4 / 5; justify-self: start; }
 }
+
+/* Make the principal email action readable on the plum footer. */
+.footer-links a[href^="mailto:"]{display:inline-flex;align-items:center;min-height:3.1rem;padding:.75rem 1.05rem;border:1px solid #f9d7e2;background:#f9d7e2;color:#4e1729;font-weight:720;text-decoration:none;border-radius:.15rem;overflow-wrap:anywhere}
+.footer-links a[href^="mailto:"]:hover,.footer-links a[href^="mailto:"]:focus-visible{background:#fff4f6;color:#4e1729;border-color:#fff4f6}
