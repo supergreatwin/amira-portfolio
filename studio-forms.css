@@ -47,3 +47,23 @@ html[dir=rtl] .studio-section h2,html[dir=rtl] .studio-card h3{letter-spacing:-.
 .studio-embed-fallback a{display:inline-flex;align-items:center;gap:.75rem;background:var(--burgundy,#743b49);color:#fff;padding:.85rem 1.2rem;font-weight:650;text-decoration:none;min-height:2.75rem}
 .studio-embed-fallback a:hover,.studio-embed-fallback a:focus-visible{filter:brightness(1.12);outline-offset:3px}
 @media(max-width:600px){.studio-embed-fallback{flex-direction:column;gap:.75rem}}
+
+
+/* Branded Field Notes: compact alignment, visible subscription and stronger CTA contrast */
+.studio-hero-intro, .studio-section-head p, .studio-card p { text-align: justify; text-justify: inter-word; hyphens: auto; }
+.studio-section { padding-block: clamp(2.5rem, 5vw, 4.75rem); }
+.studio-section-head { gap: clamp(1.25rem, 4vw, 4rem); align-items: start; margin-bottom: clamp(1.25rem, 3vw, 2rem); }
+.studio-section-head p { max-width: none; }
+.studio-embed-wrap { box-sizing: border-box; width: min(100%, 54rem); max-width: none; background: var(--surface, #fffcf6); padding: clamp(1rem, 2.2vw, 1.75rem); border-radius: .2rem; }
+.studio-newsletter-frame { display: block; box-sizing: border-box; width: 100%; height: 310px; min-height: 280px; border: 0; background: #f8f4ec; }
+.studio-embed-fallback { margin-top: .5rem; padding-top: 1.15rem; gap: .75rem 1.2rem; }
+.studio-embed-fallback a { background: #743b49; color: #fff; border-radius: .15rem; text-decoration: none; }
+.studio-embed-fallback a:hover, .studio-embed-fallback a:focus-visible { background: #51212d; color: #fff; }
+.studio-footer-email { display: inline-flex; align-items: center; justify-content: space-between; gap: 1rem; padding: .8rem 1rem; border: 1px solid #743b49; background: #743b49; color: #fff !important; text-decoration: none; font-weight: 700; border-radius: .15rem; overflow-wrap: anywhere; }
+.studio-footer-email:hover, .studio-footer-email:focus-visible { background: #51212d; color: #fff !important; }
+@media (max-width: 720px) {
+ .studio-section-head { gap: .75rem; }
+ .studio-newsletter-frame { height: 385px; }
+ .studio-embed-fallback { align-items: stretch; }
+ .studio-embed-fallback a { justify-content: center; width: 100%; text-align: center; }
+}
