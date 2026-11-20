@@ -132,8 +132,13 @@ $('homepage-layout-form').onsubmit=async e=>{
     const payload=state.items.map((item,i)=>({
       slot:i+1,image_url:item.image_url,object_position:item.object_position,updated_at:new Date().toISOString()
     }));
-    const {error:photosError}=await cms.from('homepage_photos').upsert(payload,{onConflict:'slot'});
-    if(photosError)throw photosError;
+    // Slots 1–4 already exist and editorial RLS grants UPDATE, not INSERT.
+    for(const photo of payload){
+      const {data,error}=await cms.from('homepage_photos')
+        .update({image_url:photo.image_url,object_position:photo.object_position,updated_at:photo.updated_at})
+        .eq('slot',photo.slot).select('slot').single();
+      if(error||!data)throw error||Error('Could not save image '+photo.slot);
+    }
     const {error:layoutError}=await cms.from('homepage_photo_layout').update({
       image_count:state.count,layout:state.layout,updated_at:new Date().toISOString()
     }).eq('id',true);

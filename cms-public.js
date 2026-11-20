@@ -44,6 +44,8 @@ function addFilmCard(f,image,index){
   link.append(wrap,caption);card.append(link);return card;
 }
 async function films(){
+  // Preserve the explicitly selected two homepage features.
+  if(document.querySelector('.photo-mosaic'))return;
   const grid=document.querySelector('.film-grid');if(!grid)return;
   const {data,error}=await cms.from('cms_films').select('slug,title_en,title_ar,film_type,year,runtime_seconds,poster_path,status,published_at,sort_order').eq('status','published')
     .lte('published_at',new Date().toISOString()).order('sort_order').order('created_at');
@@ -86,12 +88,12 @@ async function sections(){
     switch(s.key){
       case 'homepage_hero':
         if(!isHome)continue;
-        heading=document.querySelector('#hero-title');
-        description=document.querySelector('.hero-intro');
-        photo=document.querySelector('.hero-visual img');break;
+        heading=document.querySelector('#hero-title')||document.querySelector('.hero-copy h1');
+        description=document.querySelector('.hero-intro')||document.querySelector('.hero-deck');
+        photo=document.querySelector('.hero-visual img')||document.querySelector('.photo-mosaic figure:first-child img');break;
       case 'homepage_intro':
         if(!isHome)continue;
-        description=document.querySelector('.hero-intro');break;
+        description=document.querySelector('.hero-intro')||document.querySelector('.hero-deck');break;
       case 'about_intro':
         if(isHome){
           heading=document.querySelector('#about h2');
@@ -113,7 +115,7 @@ async function sections(){
         break;
       case 'homepage_feature':
         if(!isHome)continue;
-        heading=document.querySelector('#field-notes h2');
+        heading=document.querySelector('#field-notes h2')||document.querySelector('.selected .section-head h2');
         description=document.querySelector('.notes-home-copy p');break;
     }
     if(heading&&h)setHeading(heading,h);
