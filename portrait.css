@@ -92,3 +92,13 @@ html[dir="rtl"] .portrait-tab[aria-selected="true"]{box-shadow:inset -3px 0 var(
   background: #171413;
 }
 .portrait-modal .portrait-player[data-provider="feature"] { max-width: none; aspect-ratio: 16 / 9; }
+
+
+/* Let the title own the whitespace; align the adjacent copy and simplify controls. */
+.portrait-head { display: block; }
+.portrait-head > div { max-width: 100%; }
+.portrait-feature { align-items: center; }
+.portrait-summary p:not(.eyebrow), .portrait-scene p:not(.eyebrow):not(.portrait-quote) { text-align: justify; text-justify: inter-word; hyphens: auto; }
+.portrait-actions .portrait-play, .portrait-modal-bar button { border-radius: .2rem; }
+.portrait-scene, .portrait-modal { border-radius: .35rem; }
+.portrait-native-clip { border-radius: .2rem; }
