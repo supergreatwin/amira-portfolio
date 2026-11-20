@@ -11,6 +11,8 @@ if (production.protocol !== 'https:' || production.href !== `${production.origin
 }
 
 const isPrimary = production.href === site.url;
+// Education static pages are excluded by default from ALL production builds.
+const educationRoutesEnabled = process.env.ENABLE_EDUCATION_ROUTES === 'true';
 // Custom domains and Pages origins can share the same Cloudflare deployment.
 const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
@@ -22,7 +24,7 @@ await cp(join(root, 'assets'), join(dist, 'assets'), { recursive: true });
 
 for (const directory of ['', 'ar']) {
   const files = await readdir(join(root, directory));
-  for (const file of files.filter(name => /\.(?:html|css|js)$/.test(name) || ['robots.txt', 'sitemap.xml'].includes(name))) {
+  for (const file of files.filter(name => (/\.(?:html|css|js)$/.test(name) || ['robots.txt', 'sitemap.xml'].includes(name)) && (educationRoutesEnabled || !['education-core.js','education-studio.html','education-studio.js'].includes(name)))) {
     const path = join(directory, file);
     const source = await readFile(join(root, path), 'utf8');
     const output = join(dist, path);
@@ -42,8 +44,14 @@ for (const directory of ['', 'ar']) {
 
 // Keep the Cloudflare Pages preview origin crawlable only on the official
 // custom domain. Cloudflare host-specific headers leave the custom domain alone.
+// Never copy private learning files: only the access-gated application shell.
+if (educationRoutesEnabled) {
+  await cp(join(root,'the-process'),join(dist,'the-process'),{recursive:true});
+}
 await writeFile(join(dist, '_headers'),
-  'https://amira-portfolio-ds4.pages.dev/*\\n  X-Robots-Tag: noindex\\n'.replaceAll('\\n', '\n'));
+  ('https://amira-portfolio-ds4.pages.dev/*\\n  X-Robots-Tag: noindex\\n' +
+   '/the-process/*\\n  X-Robots-Tag: noindex, nofollow\\n' +
+   '/education-studio*\\n  X-Robots-Tag: noindex, nofollow\\n').replaceAll('\\n', '\n'));
 
 await writeFile(join(dist, '404.html'), `<!doctype html>
 <html lang="en">
