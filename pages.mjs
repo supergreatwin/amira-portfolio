@@ -28,10 +28,26 @@ for (const directory of ['', 'ar']) {
     const output = join(dist, path);
     await mkdir(dirname(output), { recursive: true });
     const isDocument = file.endsWith('.html') && !verificationFile.test(file);
+    // Ensure every public and editorial page shares the same persistent theme.
+    // Only insert resources absent from the original page.
+    const prefix = directory ? '../' : '';
+    let themedSource = source;
+    if (isDocument) themedSource = themedSource
+      .replace(/theme\.css\?v=[a-zA-Z0-9]+/g, 'theme.css?v=20261120site')
+      .replace(/theme\.js\?v=[a-zA-Z0-9]+/g, 'theme.js?v=20261120site');
+    if (isDocument) {
+      if (!themedSource.includes('theme-init.js'))
+        themedSource = themedSource.replace(/<head>/i, '<head>\n<script src="' + prefix + 'theme-init.js"></script>');
+      const themeResources = [
+        !themedSource.includes('theme.css') ? '<link rel="stylesheet" href="' + prefix + 'theme.css?v=20261120site">' : '',
+        !themedSource.includes('theme.js') ? '<script src="' + prefix + 'theme.js?v=20261120site" defer></script>' : ''
+      ].filter(Boolean).join('\n');
+      if (themeResources) themedSource = themedSource.replace(/<\/head>/i, themeResources + '\n</head>');
+    }
     // No host-agnostic redirects: they would also affect custom-domain aliases.
     const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
-      ? source.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
-      : source;
+      ? themedSource.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
+      : themedSource;
     // Apply the branded canonical domain to public HTML and discovery files.
     const seoOutput = isDocument || ['robots.txt', 'sitemap.xml'].includes(file)
       ? html.replaceAll(site.url, searchCanonical)

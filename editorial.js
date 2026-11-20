@@ -190,3 +190,4 @@ db.auth.onAuthStateChange((event) => {
 });
 startNew();
 void refreshAuth();
+export { db };

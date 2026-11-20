@@ -103,3 +103,66 @@
 .theme-toggle .theme-moon { display: none; }
 :root[data-theme="dark"] .theme-toggle .theme-sun { display: none; }
 :root[data-theme="dark"] .theme-toggle .theme-moon { display: block; }
+
+
+/* Unified site-wide dark mode: pure black negative space, no color overlay on photographs. */
+:root[data-theme="dark"] {
+  --ivory:#000000;--espresso:#000000;--latte:#000000;--beige:#080808;
+  --surface:#000000;--text:#f8f4ec;--ink:#f8f4ec;--muted:#c9baae;
+  --plum:#e0acb8;--burgundy:#e0acb8;--accent:#e0acb8;--accent-text:#000;
+  --line:#f8f4ec2b;--paper:#000000;--clay:#e0acb8;
+}
+:root[data-theme="dark"] body,
+:root[data-theme="dark"] .home-topbar,
+:root[data-theme="dark"] .topbar,
+:root[data-theme="dark"] .topbar.scrolled,
+:root[data-theme="dark"] .studio-header,
+:root[data-theme="dark"] .ed-header,
+:root[data-theme="dark"] .ed-panel,
+:root[data-theme="dark"] .studio-embed-wrap,
+:root[data-theme="dark"] .studio-card,
+:root[data-theme="dark"] .studio-mobile,
+:root[data-theme="dark"] .studio-footer,
+:root[data-theme="dark"] .footer,
+:root[data-theme="dark"] .about,
+:root[data-theme="dark"] .latte,
+:root[data-theme="dark"] .notes-home,
+:root[data-theme="dark"] .home-content,
+:root[data-theme="dark"] .home-footer,
+:root[data-theme="dark"] .selected,
+:root[data-theme="dark"] .more-links {
+  background-color:#000000;
+  color:var(--text, #f8f4ec);
+}
+:root[data-theme="dark"] .ed-hero,
+:root[data-theme="dark"] .ed-hero h1 { color:#f8f4ec }
+:root[data-theme="dark"] .ed-muted,
+:root[data-theme="dark"] .ed-description {color:#c9baae}
+:root[data-theme="dark"] .ed-field input,
+:root[data-theme="dark"] .ed-field select,
+:root[data-theme="dark"] .ed-field textarea {
+  background:#080808;color:#f8f4ec;border-color:#f8f4ec44;
+}
+:root[data-theme="dark"] .ed-button.ghost { color:#f8f4ec }
+:root[data-theme="dark"] .studio-embed-wrap {background:#000000}
+:root[data-theme="dark"] .studio-header,
+:root[data-theme="dark"] .ed-header {border-color:var(--line)}
+:root[data-theme="dark"] .theme-toggle {background:#000;color:#e0acb8}
+:root[data-theme="dark"] .home-topbar {background:#000}
+:root[data-theme="dark"] .hero-copy h1 {color:#e0acb8}
+:root:not([data-theme="dark"]) .hero-copy h1 {color:#f8f4ec}
+@media (prefers-reduced-motion: no-preference) {
+  body, .topbar, .home-topbar, .studio-header, .ed-header, .ed-panel,
+  .studio-embed-wrap, .studio-card, .studio-footer, .footer, .about,
+  .latte, .notes-home, .home-content, .home-footer,
+  .studio-mobile, .theme-toggle, .ed-field input, .ed-field textarea,
+  .ed-field select {
+    transition:background-color .42s ease,color .42s ease,border-color .42s ease;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  body, .topbar, .home-topbar, .studio-header, .ed-header, .ed-panel,
+  .studio-embed-wrap, .studio-card, .studio-footer, .footer, .about,
+  .latte, .notes-home, .home-content, .home-footer,
+  .studio-mobile, .theme-toggle {transition:none!important}
+}
