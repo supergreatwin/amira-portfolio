@@ -24,11 +24,15 @@ jobs:
         run: node build.mjs --check
       - name: Produce the Cloudflare Pages distribution
         run: PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
-      - name: Check that correct full-screen homepage is included
+      - name: Check that matching responsive headers are included
         run: |
-          grep -q 'margin-bottom:-65px' dist/home-minimal.css
           grep -q 'height:100dvh' dist/home-minimal.css
-          grep -q '20261120bleed' dist/index.html
+          grep -q 'home-header-unified.css?v=2' dist/index.html
+          grep -q 'home-header-unified.css?v=2' dist/responsive.html
+          grep -q 'home-header-unified.css?v=2' dist/ar/responsive.html
+          grep -q 'home-header-unified.css?v=2' dist/ar/current.html
+          grep -q 'home-minimal.js?v=20261121stability' dist/index.html
+          ! grep -q 'site-header.css?v=' dist/responsive.html
       - name: Deploy to existing Cloudflare Pages project if authorized
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}
