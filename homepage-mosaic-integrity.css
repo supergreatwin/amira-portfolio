@@ -63,3 +63,37 @@
     .hero-down{bottom:max(22px,env(safe-area-inset-bottom))}
   }
 }
+
+
+/* iPhone Home Screen: status-bar overlay is not a stable CSS safe-area value
+   on every iOS release. Keep the photo behind it, but place header controls
+   below a guaranteed 52px clearance so they never hide under the clock. */
+@supports (padding-top:env(safe-area-inset-top)) {
+  @media (display-mode:standalone) and (max-width:800px) {
+    :root{
+      --amira-standalone-top:max(52px, env(safe-area-inset-top, 0px));
+    }
+    :root .home-topbar {
+      position:fixed!important;
+      top:0!important;right:0!important;left:0!important;
+      z-index:150!important;
+      visibility:visible!important;opacity:1!important;
+      height:calc(var(--amira-nav-height, 64px) + var(--amira-standalone-top))!important;
+      min-height:calc(var(--amira-nav-height, 64px) + var(--amira-standalone-top))!important;
+      padding-top:var(--amira-standalone-top)!important;
+      padding-bottom:0!important;
+      display:grid!important;
+      align-content:center;
+    }
+    :root .home-topbar .brand,
+    :root .home-topbar .nav-actions,
+    :root .home-topbar .theme-toggle,
+    :root .home-topbar .mobile-menu{
+      visibility:visible!important;
+      opacity:1!important;
+    }
+    :root .home-topbar .mobile-menu nav{
+      max-height:calc(100dvh - var(--amira-nav-height,64px) - var(--amira-standalone-top) - 20px);
+    }
+  }
+}
