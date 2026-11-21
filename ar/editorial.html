@@ -4,6 +4,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
 <title>المكتب التحريري — أميرة عبد الفضيل</title>
 <link rel="stylesheet" href="../editorial.css"><link rel="stylesheet" href="../site-design-editor.css">
+<link rel="stylesheet" href="../field-notes-admin.css?v=1">
 </head>
 <body data-locale="ar">
 <header class="ed-header"><div class="ed-width ed-top"><a class="ed-logo" href="../index.html">amira abdelfadil</a><nav class="ed-links" aria-label="Navigation">
@@ -32,6 +33,20 @@
   <p id="site-design-status" class="ed-muted site-design-status" role="status" aria-live="polite">جارٍ قراءة التصميم المنشور…</p>
   <div class="site-design-preview-links"><a class="ed-preview-link" href="responsive.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة الجديد ↗</a><a class="ed-preview-link" href="current.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة التصميم الأصلي ↗</a><a class="ed-preview-link" href="index.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة الكلاسيكي ↗</a><a class="ed-preview-link" href="./" target="_blank" rel="noopener noreferrer">فتح الموقع المنشور ↗</a></div>
 </section>
+<section class="ed-panel fn-admin" data-field-notes-admin hidden aria-labelledby="fn-admin-heading">
+  <span class="ed-eyebrow">Field Notes / Subscriber Desk</span>
+  <h2 id="fn-admin-heading">قائمة رسائل أميرة</h2>
+  <p class="ed-muted">هذه القائمة خاصة بالمكتب التحريري. هنا يمكن البحث عن المشتركين وتصدير القائمة وإلغاء الاشتراكات. لا توجد بيانات عامة.</p>
+  <div class="fn-admin-tools">
+    <div class="fn-admin-search"><label for="fn-admin-search">ابحثي بالبريد الإلكتروني</label><input id="fn-admin-search" type="search" autocomplete="off" placeholder="ابحثي عن مشترك" data-fn-admin-search></div>
+    <div class="fn-admin-filter"><label for="fn-admin-filter">عرض الحالة</label><select id="fn-admin-filter" data-fn-admin-filter><option value="all">الجميع</option><option value="subscribed">المشتركون</option><option value="unsubscribed">الملغون</option></select></div>
+    <button class="ed-button ghost" type="button" data-fn-admin-refresh>تحديث</button>
+    <button class="ed-button" type="button" data-fn-admin-export>تصدير CSV</button>
+  </div>
+  <p class="ed-status" role="status" aria-live="polite" data-fn-admin-status>جارٍ جلب المشتركين…</p>
+  <div class="fn-admin-table-wrap"><table><thead><tr><th scope="col">البريد</th><th scope="col">اللغة</th><th scope="col">الحالة</th><th scope="col">تاريخ التسجيل</th><th scope="col">إدارة</th></tr></thead><tbody data-fn-admin-body></tbody></table></div>
+  <div class="fn-admin-footer"><span class="ed-muted" data-fn-admin-count></span><div class="fn-admin-actions"><button class="ed-button ghost" type="button" data-fn-page-back>السابق</button><button class="ed-button ghost" type="button" data-fn-page-next>التالي</button></div></div>
+</section>
 <div class="ed-workspace"><aside class="ed-sidebar"><h3>المحفوظات</h3><p class="ed-muted">المسودات خاصة؛ المنشور فقط متاح للزوار.</p><ul id="ed-list" class="ed-list"></ul></aside>
 <form class="ed-editor" id="ed-editor"><h3 id="ed-edit-title">إنشاء نص جديد</h3>
 <div class="ed-grid"><div class="ed-field"><label for="ed-title-en">English title</label><input id="ed-title-en" maxlength="220" required></div><div class="ed-field"><label for="ed-title-ar">العنوان بالعربية</label><input id="ed-title-ar" maxlength="220" dir="rtl"></div></div>
@@ -48,4 +63,5 @@
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · استوديو التحرير · <a href="../">العودة للموقع</a></div></footer>
 <script type="module" src="../editorial.js?v=20261121authfix"></script><script type="module" src="../homepage-editor.js"></script>
 <script type="module" src="../site-design-editor.js?v=2"></script>
+<script type="module" src="../field-notes-admin.js?v=1"></script>
 </body></html>
