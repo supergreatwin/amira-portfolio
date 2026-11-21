@@ -35,10 +35,27 @@ jobs:
           grep -q 'education-studio.html' dist/ar/editorial.html
           grep -q 'the-process' dist/_headers
           ! grep -q 'id="student-auth"' dist/the-process/index.html
-      - name: Ensure full-viewport homepage ships in dist
+      - name: Verify stable bilingual full-viewport homepage headers in production output
         run: |
+          test -f dist/home-header-unified.css
+          test -f dist/responsive.html
+          test -f dist/ar/current.html
+          test -f dist/ar/responsive.html
           grep -q 'height:100dvh' dist/home-minimal.css
-          grep -q 'margin-bottom:-65px' dist/home-minimal.css
-          grep -q 'home-minimal.css?v=20261120bleed' dist/index.html
-          grep -q 'home-minimal.js?v=20261120bleed' dist/index.html
+          grep -q 'position:fixed' dist/home-header-unified.css
+          grep -q 'home-minimal.js?v=20261121stability' dist/index.html
           grep -q 'is-after-hero' dist/home-minimal.js
+          grep -q 'home-header-unified.css?v=2' dist/index.html
+          grep -q 'home-header-unified.css?v=2' dist/responsive.html
+          grep -q 'home-header-unified.css?v=2' dist/ar/current.html
+          grep -q 'home-header-unified.css?v=2' dist/ar/responsive.html
+          grep -q 'class="home-topbar"' dist/index.html
+          grep -q 'class="home-topbar"' dist/responsive.html
+          grep -q 'class="home-topbar"' dist/ar/current.html
+          grep -q 'class="home-topbar"' dist/ar/responsive.html
+          ! grep -q 'site-header.css?v=' dist/index.html
+          ! grep -q 'site-header.css?v=' dist/responsive.html
+          ! grep -q 'site-header.css?v=' dist/ar/current.html
+          ! grep -q 'site-header.css?v=' dist/ar/responsive.html
+          grep -q 'site-design-router.js?v=3' dist/index.html
+          grep -q 'amira-design-routing' dist/theme-init.js
