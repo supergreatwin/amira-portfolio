@@ -1,0 +1,80 @@
+/* Field Notes | stable responsive newsletter layout (EN + AR).
+   No beehiiv resize script: hosted embeds may impose a fixed iframe width.
+   Mobile/tablet use an accessible, first-party link to the hosted signup. */
+html,body{max-width:100%;overflow-x:clip}
+#main{min-width:0;max-width:100%}
+.studio-shell{
+ box-sizing:border-box;
+ width:min(calc(100% - 2*var(--edge)),84rem);
+ max-width:calc(100% - 2*var(--edge));
+ min-width:0;
+ margin-inline:auto;
+}
+.studio-hero,.studio-section,.studio-section-head,.studio-cards,
+.studio-hero>*,.studio-section-head>*,.studio-cards>*{min-width:0}
+.studio-hero{grid-template-columns:minmax(0,1.25fr) minmax(0,.85fr)}
+.studio-image,.studio-image img{max-width:100%;min-width:0}
+.studio-embed-wrap.studio-newsletter-embed{
+ width:min(100%,54rem);
+ max-width:100%;
+ min-width:0;
+ overflow:hidden;
+ box-sizing:border-box;
+ margin-inline:auto;
+}
+.studio-newsletter-frame{
+ display:block;
+ width:100%!important;
+ max-width:100%!important;
+ min-width:0!important;
+ height:395px!important;
+ min-height:395px!important;
+ border:0!important;
+ overflow:hidden;
+ background:transparent;
+}
+.studio-embed-fallback a{
+ display:inline-flex;
+ justify-content:center;
+ align-items:center;
+ min-height:48px;
+ max-width:100%;
+ white-space:normal;
+ overflow-wrap:break-word;
+}
+.studio-embed-fallback p{max-width:100%;overflow-wrap:break-word}
+@media(max-width:1000px){
+ /* Beehiiv's embedded form currently renders wider than tablet/mobile viewports.
+    Never render its fixed-width iframe on these screens. The hosted form is fully
+    functional via the public subscription link, with no horizontal overflow. */
+ .studio-newsletter-frame{display:none!important}
+ .studio-embed-wrap.studio-newsletter-embed{
+   width:min(100%,44rem);
+   max-width:100%;
+   padding:clamp(18px,4vw,32px);
+   border:1px solid var(--line);
+   overflow:visible;
+ }
+ .studio-embed-fallback{
+   display:flex;flex-direction:column;align-items:stretch;gap:12px;
+   border:0;margin:0;padding:0;
+   text-align:center;
+ }
+ .studio-embed-fallback p{font-size:1rem;line-height:1.65}
+ .studio-embed-fallback a{width:100%;min-height:52px}
+}
+@media(max-width:720px){
+ .studio-shell{width:calc(100% - 36px);max-width:calc(100% - 36px)}
+ .studio-hero,.studio-section-head{grid-template-columns:minmax(0,1fr)}
+ .studio-hero h1{font-size:clamp(2.7rem,12vw,4.5rem);line-height:1.15;overflow-wrap:anywhere}
+ .studio-hero-intro,.studio-section-head p{text-align:start;hyphens:none}
+ .studio-image img{height:auto;max-height:330px;aspect-ratio:1344/709;object-fit:cover}
+ .studio-newsletter-embed{margin-inline:0}
+ .studio-section h2{font-size:clamp(2rem,8.5vw,3.5rem)}
+ .studio-section{padding-block:clamp(30px,8vw,65px)}
+ .studio-cards{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:390px){
+ .studio-shell{width:calc(100% - 28px);max-width:calc(100% - 28px)}
+ .studio-hero h1{font-size:clamp(2.4rem,12vw,3.7rem)}
+}
