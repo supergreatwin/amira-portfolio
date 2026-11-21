@@ -13,7 +13,7 @@ const admin = createClient(PROJECT, SERVICE, {
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 function send(origin: string, status: number, payload: Record<string, unknown>) {
-  return new Response(JSON.stringify(payload), {
+  return new Response(status === 204 ? null : JSON.stringify(payload), {
     status,
     headers: {
       "Content-Type": "application/json; charset=utf-8",
