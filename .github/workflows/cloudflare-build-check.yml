@@ -59,6 +59,14 @@ jobs:
           ! grep -q 'subscribe-forms.beehiiv.com' dist/ar/responsive.html
           ! grep -q 'amiras-newsletter-beec8a' dist/notes.html
           ! grep -q 'amiras-newsletter-beec8a' dist/ar/notes.html
+      - name: Reject homepage gaps and padded new uploads
+        run: |
+          node --check dist/homepage-photo-guard.mjs
+          node --test tests/homepage-mosaic.test.mjs
+          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/index.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/responsive.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/ar/current.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/ar/responsive.html
       - name: Verify stable bilingual full-viewport homepage headers in production output
         run: |
           test -f dist/home-header-unified.css
