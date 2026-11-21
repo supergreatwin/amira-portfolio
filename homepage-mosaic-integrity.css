@@ -97,3 +97,70 @@
     }
   }
 }
+
+
+/* Reliable iOS-only Home Screen header. Apple's navigator.standalone is the
+   authoritative fallback when the display-mode media query fails. Keep the
+   photo at the very top of the screen; lift ONLY header controls below the
+   system clock/Dynamic Island rather than padding the entire page. */
+@media (max-width:800px) {
+  html.amira-ios-homeapp .home-topbar {
+    position:fixed!important;
+    top:max(52px, env(safe-area-inset-top, 0px))!important;
+    left:0!important;
+    right:0!important;
+    bottom:auto!important;
+    margin:0!important;
+    padding:0 var(--amira-nav-pad, 16px)!important;
+    width:100%!important;
+    height:var(--amira-nav-height, 64px)!important;
+    min-height:var(--amira-nav-height, 64px)!important;
+    z-index:99999!important;
+    display:grid!important;
+    align-items:center!important;
+    align-content:center!important;
+    visibility:visible!important;
+    opacity:1!important;
+    transform:none!important;
+    pointer-events:auto!important;
+  }
+  html.amira-ios-homeapp .home-topbar .brand,
+  html.amira-ios-homeapp .home-topbar .nav-actions,
+  html.amira-ios-homeapp .home-topbar .theme-toggle,
+  html.amira-ios-homeapp .home-topbar .mobile-menu {
+    display:revert;
+    visibility:visible!important;
+    opacity:1!important;
+    pointer-events:auto!important;
+  }
+  html.amira-ios-homeapp .home-topbar .brand {
+    display:block!important;
+    grid-column:1;
+  }
+  html.amira-ios-homeapp .home-topbar .nav-actions {
+    display:flex!important;
+    grid-column:2;
+    justify-self:end;
+  }
+  html.amira-ios-homeapp .home-topbar .theme-toggle {
+    display:inline-grid!important;
+  }
+  html.amira-ios-homeapp .home-topbar .mobile-menu {
+    display:block!important;
+  }
+  html.amira-ios-homeapp .home-topbar .mobile-menu nav {
+    max-height:calc(100dvh - 140px);
+  }
+  /* The announcement remains automatic, but leaves more of the artwork
+     visible on an installed iPhone Home Screen app. */
+  html.amira-ios-homeapp .education-announcement {
+    max-height:min(43dvh, 355px)!important;
+    bottom:max(12px, env(safe-area-inset-bottom, 0px))!important;
+    z-index:90!important;
+  }
+  html.amira-ios-homeapp .education-announcement__masthead {
+    position:sticky;
+    top:0;
+    z-index:4;
+  }
+}
