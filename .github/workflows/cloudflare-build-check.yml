@@ -35,6 +35,20 @@ jobs:
           grep -q 'education-studio.html' dist/ar/editorial.html
           grep -q 'the-process' dist/_headers
           ! grep -q 'id="student-auth"' dist/the-process/index.html
+
+      - name: Check bilingual Field Notes responsive signup
+        run: |
+          test -f dist/field-notes-responsive.css
+          test -f dist/notes.html
+          test -f dist/ar/notes.html
+          grep -q 'field-notes-responsive.css?v=20261121fix' dist/notes.html
+          grep -q 'field-notes-responsive.css?v=20261121fix' dist/ar/notes.html
+          grep -q 'subscribe-forms.beehiiv.com/0dfebbd9-9133-4e57-831c-4d1c786d1801' dist/notes.html
+          grep -q 'subscribe-forms.beehiiv.com/0dfebbd9-9133-4e57-831c-4d1c786d1801' dist/ar/notes.html
+          ! grep -q 'subscribe-forms.beehiiv.com/embed.js' dist/notes.html
+          ! grep -q 'subscribe-forms.beehiiv.com/embed.js' dist/ar/notes.html
+          grep -q '@media(max-width:1000px)' dist/field-notes-responsive.css
+          grep -q 'studio-newsletter-frame{display:none!important}' dist/field-notes-responsive.css
       - name: Verify stable bilingual full-viewport homepage headers in production output
         run: |
           test -f dist/home-header-unified.css
