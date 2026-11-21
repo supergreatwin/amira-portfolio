@@ -1,3 +1,16 @@
+
+/* Apple's Home Screen web app is not consistently identified by CSS
+   (display-mode:standalone) on recent iOS/WebKit versions. Detect with
+   navigator.standalone before first paint, without changing Safari tabs. */
+(() => {
+  const appleMobile = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  if (!appleMobile) return;
+  const standalone = navigator.standalone === true ||
+    (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  if (standalone) document.documentElement.classList.add('amira-ios-homeapp');
+})();
+
 /* Redirect the retired GitHub Pages mirror to Amira's canonical domain.
    Keep this in the shared startup script: both homepages and the
    standalone English/Arabic pages load it in <head>. Cloudflare Pages
