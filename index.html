@@ -21,6 +21,10 @@
 <script src="site-design-router.js?v=4" defer></script>
 <link rel="stylesheet" href="home-header-unified.css?v=2">
 <link rel="stylesheet" href="homepage-mosaic-integrity.css?v=20261121iosstandalone3">
+<link rel="stylesheet" href="responsive.css?v=1">
+<script src="responsive.js?v=1" defer></script>
+<link rel="stylesheet" href="field-notes-native.css?v=1">
+<script src="field-notes-native.js?v=1" defer></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -48,7 +52,16 @@
   <article class="film-card"><a href="film-street-x-food.html" aria-label="Explore Street X Food documentary"><div class="film-poster"><img src="assets/street-x-food-poster.jpg" alt="Street X Food official film poster" loading="lazy" width="707" height="900"></div><div class="film-line"><strong>Street X Food</strong><small>2025 · 05:48</small></div></a></article>
  </div>
 </section>
-<nav class="more-links home-content" aria-label="Explore more of Amira's work"><a href="art.html">Art &amp; Photography ↗</a><a href="writing.html">Writing ↗</a><a href="notes.html#newsletter">Field Notes &amp; Newsletter ↗</a></nav>
+<section id="about" class="rs-section" aria-labelledby="rs-about-heading">
+  <div class="rs-about-grid">
+    <div><p class="rs-kicker">04 / Biography</p><h2 id="rs-about-heading">About <em>Amira.</em></h2>
+      <div class="rs-about-body"><p>Amira Abdel-Fadil has always been drawn to the things people carry quietly: a grandmother’s recipes, the green that grows between buildings, the small moments that hold a whole life.</p><p>A filmmaker, writer and photographer from Cairo, she lets each story decide its own pace, and she is still learning to listen well enough to follow it.</p></div>
+      <a class="rs-link" href="about.html">Continue reading ↗</a>
+      <button class="rs-button secondary rs-about-subscribe" type="button" data-newsletter-open>Subscribe to Field Notes ↗</button>
+    </div>
+    <figure><img src="assets/amira-portrait.jpg" alt="Amira holding her camera" loading="lazy" width="540" height="720"><figcaption>Amira Abdelfadil · Cairo</figcaption></figure>
+  </div>
+</section>
 </main>
 <footer class="home-footer"><span>© Amira Abdelfadil · Cairo, Egypt</span><span><a href="contact.html">Contact</a> · <a href="https://www.instagram.com/amiraabdelfadil/" target="_blank" rel="noopener noreferrer">Instagram</a></span></footer>
 <aside class="education-announcement" data-education-announcement aria-labelledby="education-announcement-title" hidden>
@@ -56,4 +69,18 @@
 <div class="education-announcement__film" aria-hidden="true"><div class="education-announcement__film-inner"><div class="education-announcement__film-index"><span>Scene 01</span><span>In production</span></div><p class="education-announcement__film-title">Something's in the making.</p></div></div>
 <div class="education-announcement__content"><p class="education-announcement__label">Up next / educational content</p><h2 class="education-announcement__title" id="education-announcement-title">A new chapter in <em>learning.</em></h2><p class="education-announcement__body">Amira is preparing new educational content to share soon. Subscribe to Field Notes and be the first to know when it launches.</p><a class="education-announcement__cta" href="notes.html#newsletter"><span>Be the first to know</span><span class="education-announcement__cta-arrow" aria-hidden="true">↗</span></a></div><div class="education-announcement__footer"><span>From Amira's creative desk</span><span>No. 001 / coming soon</span></div>
 </aside>
+<dialog class="rs-dialog" id="rs-newsletter-dialog" aria-labelledby="rs-newsletter-title">
+<div class="rs-dialog-inner"><div class="rs-dialog-top"><strong class="brand">amira abdelfadil</strong><button class="rs-dialog-close" type="button" data-newsletter-close aria-label="Close newsletter dialog">×</button></div>
+<p class="rs-kicker" style="margin-top:25px">Letters from the creative desk</p><h2 id="rs-newsletter-title">Field Notes.</h2><p>Subscribe to an occasional letter from Amira about cinema, photography and stories worth telling.</p>
+<form class="fn-form" data-field-notes-form aria-label="Subscribe to Field Notes">
+  <label class="fn-label" for="fn-en-popup">Email address
+    <input class="fn-input" type="email" name="email" id="fn-en-popup" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
+  </label>
+  <div class="fn-trap" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+  <label class="fn-consent"><input type="checkbox" name="consent" value="yes" required><span>I agree to receive Field Notes emails from Amira. I can unsubscribe at any time.</span></label>
+  <button class="fn-submit" type="submit">Receive Field Notes <span aria-hidden="true">↗</span></button>
+  <p class="fn-feedback" role="status" aria-live="polite" data-field-notes-status hidden></p>
+</form>
+<p class="fn-privacy">Your email is used only for Field Notes. Subscriptions are managed within this website.</p></div></dialog>
+
 </body></html>
