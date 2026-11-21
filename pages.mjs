@@ -82,7 +82,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       if (themeResources) themedSource = themedSource.replace(/<\/head>/i, themeResources + '\n</head>');
     }
     // No host-agnostic redirects: they would also affect custom-domain aliases.
-    if (isDocument && /<header\b[\s\S]*?<\/header>/i.test(themedSource)) {
+    if (isDocument && file !== 'classic.html' && /<header\b[\s\S]*?<\/header>/i.test(themedSource)) {
       themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
       // The shared CSS loads after existing theme and layout rules.
       themedSource = themedSource.replace(/<\/head>/i,
