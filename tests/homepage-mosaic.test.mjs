@@ -48,10 +48,27 @@ for(const [path,prefix] of [
  assert.ok(html.includes('href="'+prefix+'homepage-mosaic-integrity.css?v=20261121iosstandalone3"'),path);
  for(let slot=1;slot<=4;slot++)assert.ok(html.includes('data-slot="'+slot+'"'),path+' missing tile '+slot);
  assert.equal((html.match(/data-slot="[1-4]"/g)||[]).length,4,path);
+ // Homepage content must remain exactly: photographic hero, selected films, About.
+ // Both existing modal experiences remain available outside the main content.
+ const main=html.match(/<main id="main">([\s\S]*?)<\/main>/)?.[1];
+ assert.ok(main,path+' missing main');
+ assert.equal((main.match(/<section\b/g)||[]).length,3,path+' unexpected homepage section');
+ assert.match(main,/class="photo-hero"/,path);
+ assert.match(main,/id="selected"/,path);
+ assert.match(main,/id="about"/,path);
+ assert.doesNotMatch(main,/id="(?:art|writing|notes)"/,path);
+ assert.equal((main.match(/class="film-card"/g)||[]).length,2,path);
+ assert.ok(html.includes('data-education-announcement'),path+' missing education popup');
+ assert.ok(html.includes('id="rs-newsletter-dialog"'),path+' missing newsletter popup');
+ assert.ok(html.includes('data-field-notes-form'),path+' missing native signup');
+ assert.ok(html.includes('data-newsletter-open'),path+' no popup launcher');
+ assert.ok(html.includes('home-minimal.js?v=20261121about'),path+' stale deep-link script');
+ assert.ok(html.includes('responsive.js?v=1'),path+' missing modal controller');
+ assert.doesNotMatch(html,/subscribe-forms\.beehiiv\.com/,path+' legacy third-party signup');
 }
 for(const path of ['dist/homepage-editor.js','dist/homepage-layout-editor.js']){
  const js=readFileSync(path,'utf8');
  assert.match(js,/from '.\/homepage-photo-guard\.mjs'/,path);
  assert.match(js,/await validateHomepagePhoto\(/,path);
 }
-console.log('PASS: 4-tile mosaic geometry, upload safeguards, bilingual iOS safe areas');
+console.log('PASS: Four-photo hero, two films, About and preserved bilingual popups across all layouts');
