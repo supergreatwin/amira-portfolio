@@ -16,3 +16,9 @@
 [dir=rtl] .site-design-row input::after{left:auto;right:3px}
 [dir=rtl] .site-design-row input:checked::after{transform:translateX(-1.48rem)}
 @media(max-width:540px){.site-design-row{padding:.9rem;gap:.75rem}.site-design-row input{width:3.45rem;flex-shrink:0}}
+
+/* Both reversible design choices have independent accessible switches. */
+.site-design-panel .site-design-row + .site-design-row{margin-top:.55rem}
+.site-design-preview-links{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem 1.5rem;margin-top:1.2rem}
+.site-design-preview-links .ed-preview-link{white-space:normal;font-size:.85rem}
+@media(max-width:540px){.site-design-preview-links{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}}
