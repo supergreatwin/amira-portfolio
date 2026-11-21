@@ -64,11 +64,15 @@ jobs:
           node --check dist/homepage-photo-guard.mjs
           node --test tests/homepage-mosaic.test.mjs
           grep -q 'max-height:min(52dvh,410px)' dist/education-announcement.css
+          grep -q 'navigator.standalone === true' dist/theme-init.js
+          grep -q 'html.amira-ios-homeapp .home-topbar' dist/homepage-mosaic-integrity.css
+          grep -q 'theme-init.js?v=4' dist/index.html
+          grep -q 'theme-init.js?v=4' dist/ar/responsive.html
           grep -q -- '--amira-standalone-top:max(52px' dist/homepage-mosaic-integrity.css
-          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/index.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/responsive.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/ar/current.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/ar/responsive.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/index.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/responsive.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/ar/current.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/ar/responsive.html
       - name: Verify stable bilingual full-viewport homepage headers in production output
         run: |
           test -f dist/home-header-unified.css
