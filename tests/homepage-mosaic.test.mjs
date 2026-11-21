@@ -27,6 +27,10 @@ assert.match(css,/transform:scale\(1\.27\)/);
 assert.match(css,/display-mode:standalone/);
 assert.match(css,/--amira-standalone-top:max\(52px/);
 assert.match(css,/visibility:visible!important/);
+assert.match(css,/html\.amira-ios-homeapp \.home-topbar/);
+const init=readFileSync('dist/theme-init.js','utf8');
+assert.match(init,/navigator\.standalone === true/);
+assert.match(init,/amira-ios-homeapp/);
 const popup=readFileSync('dist/education-announcement.css','utf8');
 assert.match(popup,/max-height:min\(52dvh,410px\)/);
 assert.match(popup,/education-announcement__masthead/);
@@ -37,10 +41,11 @@ for(const [path,prefix] of [
 ]){
  const html=readFileSync(path,'utf8');
  assert.match(html,/viewport-fit=cover/,path);
+ assert.ok(html.includes('theme-init.js?v=4'),path);
  assert.ok(html.includes('education-announcement.css?v=20261121compact'),path);
  assert.match(html,/apple-mobile-web-app-capable/,path);
  assert.match(html,/apple-mobile-web-app-status-bar-style" content="black-translucent"/,path);
- assert.ok(html.includes('href="'+prefix+'homepage-mosaic-integrity.css?v=20261121safenav2"'),path);
+ assert.ok(html.includes('href="'+prefix+'homepage-mosaic-integrity.css?v=20261121iosstandalone3"'),path);
  for(let slot=1;slot<=4;slot++)assert.ok(html.includes('data-slot="'+slot+'"'),path+' missing tile '+slot);
  assert.equal((html.match(/data-slot="[1-4]"/g)||[]).length,4,path);
 }
