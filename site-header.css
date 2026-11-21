@@ -160,3 +160,55 @@
   border-color:#ffffff40!important;
 }
 :root[data-theme="dark"] .site-header .mobile-menu nav a {color:#f8f4ec!important}
+
+/* Final navigation contract for all non-photographic inner pages.
+   Align dimensions and colors with home-header-unified.css; retain opaque
+   surfaces where there is no hero photograph underneath the navigation. */
+:root{--amira-header-h:72px}
+:root .site-header.site-header:not(.site-header--home){
+ height:72px!important;min-height:72px!important;
+ background:#f8f4ec!important;color:#292420!important;
+ border-bottom:1px solid #29242020!important;
+ box-shadow:0 5px 25px #29242019!important;
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+ direction:ltr!important
+}
+:root[data-theme=dark] .site-header.site-header:not(.site-header--home){
+ background:#000!important;color:#f8f4ec!important;
+ border-bottom:1px solid #f8f4ec2a!important;
+ box-shadow:0 5px 25px #0008!important
+}
+:root .site-header .site-header__frame{
+ padding-inline:clamp(18px,3.6vw,62px)!important;
+ gap:clamp(14px,2vw,30px)!important
+}
+:root .site-header .site-header__brand{
+ font-size:clamp(17px,1.35vw,21px)!important;letter-spacing:-.075em!important
+}
+:root .site-header .site-header__center nav{gap:clamp(17px,2vw,29px)!important}
+:root .site-header .site-header__center a,
+:root .site-header .site-header__shortcuts a{
+ font-size:clamp(11px,.93vw,13px)!important;font-weight:600!important;
+ color:inherit!important;text-shadow:none!important
+}
+:root .site-header .theme-toggle{
+ width:42px!important;height:42px!important;min-width:42px!important;
+ background:transparent!important;color:inherit!important;
+ border:1px solid currentColor!important;border-radius:50%!important;
+ box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important
+}
+:root .site-header .theme-toggle:hover{background:#7d4c5d20!important}
+:root[lang=ar] .site-header .site-header__center a{unicode-bidi:plaintext}
+@media(max-width:1120px){
+ :root .site-header .site-header__center{display:none!important}
+ :root .site-header .mobile-menu{display:block!important}
+ :root .site-header .site-header__frame{grid-template-columns:minmax(0,1fr) auto!important}
+ :root .site-header .site-header__utilities{grid-column:2!important}
+}
+@media(max-width:520px){
+ :root{--amira-header-h:64px}
+ :root .site-header.site-header:not(.site-header--home){height:64px!important;min-height:64px!important}
+ :root .site-header .site-header__frame{padding-inline:16px!important;gap:8px!important}
+ :root .site-header .site-header__brand{font-size:clamp(14px,4vw,17px)!important}
+ :root .site-header .theme-toggle{width:38px!important;height:38px!important;min-width:38px!important}
+}
