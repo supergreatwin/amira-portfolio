@@ -3,7 +3,7 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 export const cms = createClient(
   'https://tfarhghukyogaowjqykn.supabase.co',
   'sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS',
-  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}}
+  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
 );
 export const BUCKET='amira-site-content';
 export const $=id=>document.getElementById(id);
