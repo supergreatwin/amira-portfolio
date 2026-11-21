@@ -26,3 +26,16 @@
     ? selected : (systemDark ? 'dark' : 'light');
   document.documentElement.dataset.theme = theme;
 })();
+
+/* Do not paint a superseded design before the server-selected mode is known.
+   Applies only to homepage variants and self-clears if the network fails. */
+(()=>{
+ const supported=/^(?:\/|\/index\.html|\/responsive(?:\.html)?|\/classic(?:\.html)?|\/ar\/|\/ar\/index\.html|\/ar\/current(?:\.html)?|\/ar\/responsive(?:\.html)?)$/;
+ if(!['amiraabdelfadil.com','www.amiraabdelfadil.com'].includes(location.hostname)||
+    !supported.test(location.pathname)||new URLSearchParams(location.search).has('design-preview'))return;
+ const style=document.createElement('style');
+ style.textContent='html.amira-design-routing body{visibility:hidden!important}';
+ document.head.append(style);
+ document.documentElement.classList.add('amira-design-routing');
+ window.setTimeout(()=>document.documentElement.classList.remove('amira-design-routing'),1800);
+})();
