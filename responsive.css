@@ -1,0 +1,78 @@
+
+/* Amira — editorial responsive edition. This is a separate, reversible layout. */
+.rs-section{padding:clamp(64px,8vw,118px) max(24px,5vw);max-width:1390px;margin:auto}
+.rs-section-head{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:32px}
+.rs-kicker{font-size:11px;letter-spacing:.2em;color:var(--h-accent);text-transform:uppercase;font-weight:700;margin:0 0 14px}
+.rs-section h2{font-size:clamp(38px,6vw,84px);font-weight:690;letter-spacing:-.078em;line-height:1.01;margin:0}
+.rs-intro{max-width:53ch;font:italic clamp(16px,2vw,23px)/1.55 Georgia,serif;color:var(--h-muted)}
+.rs-section-head>a,.rs-link{font-size:13px;color:var(--h-accent);font-weight:650;white-space:nowrap}
+.rs-collection-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,2vw,28px)}
+.rs-collection{display:block;min-width:0}
+.rs-collection-frame{height:clamp(180px,34vw,380px);overflow:hidden;background:#a99b90}
+.rs-collection-frame img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s}
+.rs-collection:hover img,.rs-collection:focus-visible img{transform:scale(1.035)}
+.rs-collection-line{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-top:13px;font-weight:650;font-size:clamp(13px,1.4vw,17px)}
+.rs-writing-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:clamp(30px,8vw,140px);align-items:start}
+.rs-essay-list{list-style:none;padding:0;margin:0;border-top:1px solid var(--h-line)}
+.rs-essay-list li{border-bottom:1px solid var(--h-line)}
+.rs-essay-list a{display:flex;gap:18px;justify-content:space-between;align-items:center;padding:20px 0;font:clamp(17px,2vw,26px)/1.3 Georgia,serif}
+.rs-essay-list span{font:16px Arial,sans-serif;color:var(--h-accent)}
+.rs-about-grid{display:grid;grid-template-columns:1.1fr .75fr;gap:clamp(32px,7vw,110px);align-items:center}
+.rs-about-grid figure{margin:0}.rs-about-grid img{width:100%;height:auto;aspect-ratio:3/4;object-fit:cover;display:block}
+.rs-about-grid figcaption{font-size:11px;color:var(--h-muted);margin-top:8px}
+.rs-about-body{font:clamp(17px,2vw,23px)/1.68 Georgia,serif;max-width:62ch}
+.rs-about-body p{margin:0 0 20px}
+.rs-newsletter{background:var(--h-bg);border-top:1px solid var(--h-line)}
+.rs-news-inner{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:clamp(36px,6vw,100px)}
+.rs-news-visual{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.rs-news-action{display:flex;gap:10px;flex-wrap:wrap;margin:26px 0 12px}
+.rs-button{display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--h-accent);background:var(--h-accent);color:var(--h-bg);padding:14px 20px;font:600 13px/1.3 Arial,sans-serif;cursor:pointer;min-height:44px}
+.rs-button.secondary{color:var(--h-accent);background:transparent}
+.rs-news-action a{color:var(--h-accent)}
+.rs-open-studio{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;margin-top:36px}
+.rs-open-studio a{display:block;border-top:1px solid var(--h-line);padding:17px 0 10px}
+.rs-open-studio strong{display:block;font-size:20px;letter-spacing:-.03em;margin-bottom:8px}
+.rs-open-studio small{color:var(--h-muted);font-size:13px;line-height:1.5}
+.rs-dialog{border:1px solid var(--h-line);padding:0;width:min(560px,calc(100% - 28px));max-height:min(86dvh,760px);background:var(--h-bg);color:var(--h-fg);box-shadow:0 20px 100px #0006}
+.rs-dialog::backdrop{background:#000b}
+.rs-dialog-inner{padding:clamp(22px,5vw,45px)}
+.rs-dialog-top{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--h-line);padding-bottom:18px;gap:10px}
+.rs-dialog-close{border:1px solid var(--h-line);background:none;color:var(--h-fg);width:40px;height:40px;cursor:pointer;font-size:22px}
+.rs-dialog h2{font:italic clamp(32px,6vw,47px)/1.1 Georgia,serif;letter-spacing:-.05em;margin:26px 0 12px}
+.rs-dialog p{font:15px/1.6 Georgia,serif;color:var(--h-muted)}
+.rs-subscribe-frame{display:block;width:100%;height:270px;border:0;background:transparent;margin:25px 0 8px}
+.rs-dialog a{color:var(--h-accent);text-decoration:underline}
+.rs-newsletter-tip{font-size:12px;color:var(--h-muted)}
+.rs-header-cta{font-size:12px!important}
+.rs-footer-extra{display:flex;flex-wrap:wrap;gap:12px}
+.rs-section .film-grid{max-width:1120px;margin:auto}
+.rs-section.selected{padding-top:clamp(80px,9vw,135px)}
+/* Layout works in the real browser viewport (not just in the preview mockup). */
+@media(max-width:1080px){
+ .rs-collection-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .rs-collection-frame{height:auto;aspect-ratio:3/4}
+ .rs-writing-grid{gap:40px}
+ .main-nav{gap:14px}
+}
+@media(max-width:800px){
+ .rs-section{padding:64px 22px}
+ .rs-section-head{align-items:start;flex-direction:column;gap:14px}
+ .rs-writing-grid,.rs-about-grid,.rs-news-inner{grid-template-columns:1fr}
+ .rs-writing-grid{gap:20px}
+ .rs-about-grid figure{max-width:480px}
+ .rs-news-visual{max-height:300px}
+ .rs-header-cta{display:none!important}
+ .rs-section h2{font-size:clamp(38px,9vw,62px)}
+ .rs-open-studio{gap:18px}
+}
+@media(max-width:520px){
+ .rs-section{padding:56px 18px}
+ .rs-collection-grid{gap:16px 12px}
+ .rs-collection-line{font-size:13px}
+ .rs-open-studio{grid-template-columns:1fr;gap:10px}
+ .rs-about-body{font-size:17px}
+ .rs-essay-list a{font-size:17px}
+ .rs-news-action .rs-button{width:100%}
+ .rs-section .film-grid{gap:15px}
+}
+@media(prefers-reduced-motion:reduce){.rs-collection-frame img{transition:none}}
