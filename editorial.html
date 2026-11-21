@@ -4,6 +4,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
 <title>Editorial Desk — Amira Abdelfadil</title>
 <link rel="stylesheet" href="editorial.css"><link rel="stylesheet" href="site-design-editor.css">
+<link rel="stylesheet" href="field-notes-admin.css?v=1">
 </head>
 <body data-locale="en">
 <header class="ed-header"><div class="ed-width ed-top"><a class="ed-logo" href="index.html">amira abdelfadil</a><nav class="ed-links" aria-label="Navigation">
@@ -32,6 +33,20 @@
   <p id="site-design-status" class="ed-muted site-design-status" role="status" aria-live="polite">Checking published design…</p>
   <div class="site-design-preview-links"><a class="ed-preview-link" href="./responsive.html?design-preview=1" target="_blank" rel="noopener noreferrer">Preview responsive ↗</a><a class="ed-preview-link" href="./index.html?design-preview=1" target="_blank" rel="noopener noreferrer">Preview our original ↗</a><a class="ed-preview-link" href="./classic.html?design-preview=1" target="_blank" rel="noopener noreferrer">Preview classic ↗</a><a class="ed-preview-link" href="./" target="_blank" rel="noopener noreferrer">Open live homepage ↗</a></div>
 </section>
+<section class="ed-panel fn-admin" data-field-notes-admin hidden aria-labelledby="fn-admin-heading">
+  <span class="ed-eyebrow">Field Notes / Subscriber Desk</span>
+  <h2 id="fn-admin-heading">Field Notes Subscribers</h2>
+  <p class="ed-muted">A private subscriber list managed within the Editorial Desk. Search, export, and manage consent status without using an external newsletter dashboard.</p>
+  <div class="fn-admin-tools">
+    <div class="fn-admin-search"><label for="fn-admin-search">Search email</label><input id="fn-admin-search" type="search" autocomplete="off" placeholder="Find a subscriber" data-fn-admin-search></div>
+    <div class="fn-admin-filter"><label for="fn-admin-filter">Subscription status</label><select id="fn-admin-filter" data-fn-admin-filter><option value="all">All</option><option value="subscribed">Subscribed</option><option value="unsubscribed">Unsubscribed</option></select></div>
+    <button class="ed-button ghost" type="button" data-fn-admin-refresh>Refresh</button>
+    <button class="ed-button" type="button" data-fn-admin-export>Export CSV</button>
+  </div>
+  <p class="ed-status" role="status" aria-live="polite" data-fn-admin-status>Loading subscribers…</p>
+  <div class="fn-admin-table-wrap"><table><thead><tr><th scope="col">Email address</th><th scope="col">Language</th><th scope="col">Status</th><th scope="col">Subscribed</th><th scope="col">Manage</th></tr></thead><tbody data-fn-admin-body></tbody></table></div>
+  <div class="fn-admin-footer"><span class="ed-muted" data-fn-admin-count></span><div class="fn-admin-actions"><button class="ed-button ghost" type="button" data-fn-page-back>Previous</button><button class="ed-button ghost" type="button" data-fn-page-next>Next</button></div></div>
+</section>
 <div class="ed-workspace"><aside class="ed-sidebar"><h3>Saved entries</h3><p class="ed-muted">Drafts stay private; only published entries are public.</p><ul id="ed-list" class="ed-list"></ul></aside>
 <form class="ed-editor" id="ed-editor"><h3 id="ed-edit-title">Create an entry</h3>
 <div class="ed-grid"><div class="ed-field"><label for="ed-title-en">English title</label><input id="ed-title-en" maxlength="220" required></div><div class="ed-field"><label for="ed-title-ar">العنوان بالعربية</label><input id="ed-title-ar" maxlength="220" dir="rtl"></div></div>
@@ -48,4 +63,5 @@
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · Editorial studio · <a href="./">Back to portfolio</a></div></footer>
 <script type="module" src="editorial.js?v=20261121authfix"></script><script type="module" src="homepage-editor.js"></script>
 <script type="module" src="site-design-editor.js?v=2"></script>
+<script type="module" src="field-notes-admin.js?v=1"></script>
 </body></html>
