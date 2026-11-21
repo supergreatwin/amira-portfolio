@@ -1,4 +1,5 @@
 import {cms, isEditor} from './cms-core.js';
+import { validateHomepagePhoto } from './homepage-photo-guard.mjs';
 
 const STORAGE='homepage-photos';
 const $=id=>document.getElementById(id);
@@ -118,6 +119,7 @@ $('homepage-layout-form').onsubmit=async e=>{
     for(let i=0;i<state.items.length;i++){
       const item=state.items[i];if(!item.file)continue;
       const f=item.file;
+      await validateHomepagePhoto(f);
       const safe=String(f.name).replace(/[^a-zA-Z0-9_.-]/g,'-').slice(-80);
       const path='editorial/'+crypto.randomUUID()+'-'+safe;
       note('Uploading photo '+(i+1)+'...');
