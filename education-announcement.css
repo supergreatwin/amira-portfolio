@@ -211,3 +211,66 @@
 .education-announcement { border-radius: .3rem; z-index: 60; }
 .education-announcement__cta, .education-announcement__cta-arrow, .education-announcement__close { border-radius: .15rem; }
 .education-announcement__body { text-align: justify; text-justify: inter-word; }
+
+
+/* Compact announcement on iPhone. It remains automatic, readable and
+   dismissible, without covering most of the opening four-photo composition.
+   Both themes and Arabic share exactly the same responsive constraints. */
+@media (max-width:540px) {
+  .education-announcement {
+    inset-inline-start:12px!important;
+    inset-inline-end:12px!important;
+    bottom:max(12px,env(safe-area-inset-bottom,0px))!important;
+    width:auto!important;
+    max-width:none!important;
+    max-height:min(52dvh,410px)!important;
+    overflow-y:auto;
+    border-radius:4px;
+    overscroll-behavior:contain;
+  }
+  .education-announcement__masthead{
+    min-height:46px;
+    padding:7px 13px;
+    position:sticky;
+    top:0;
+    z-index:4;
+    background:var(--surface,#fffcf7);
+  }
+  .education-announcement__close{
+    width:36px;height:36px;min-width:36px;min-height:36px;
+  }
+  .education-announcement__film {
+    min-height:65px;
+    padding:12px 15px;
+  }
+  .education-announcement__film::before,
+  .education-announcement__film::after{height:4px}
+  .education-announcement__film-index{font-size:9px}
+  .education-announcement__film-title{font-size:clamp(21px,5.4vw,27px);margin:2px 0}
+  .education-announcement__content{padding:14px 17px 16px}
+  .education-announcement__label{margin-bottom:8px;font-size:10px}
+  .education-announcement__title{
+    font-size:clamp(26px,7vw,33px);
+    line-height:1.08;
+    margin-bottom:9px;
+    max-width:none;
+  }
+  .education-announcement__body{
+    font-size:12.5px;
+    line-height:1.45;
+    max-width:none;
+    margin-bottom:13px;
+    text-align:start;
+  }
+  .education-announcement__cta{
+    min-height:45px;
+    padding:8px 10px 8px 13px;
+    font-size:13px;
+  }
+  .education-announcement__cta-arrow{width:27px;height:27px}
+  .education-announcement__footer{padding:9px 15px;font-size:9px}
+}
+@media (max-width:390px) and (max-height:740px) {
+  .education-announcement{max-height:min(48dvh,330px)!important}
+  .education-announcement__footer{display:none}
+}
