@@ -1,5 +1,6 @@
 
 import { db } from './editorial.js';
+import { validateHomepagePhoto } from './homepage-photo-guard.mjs';
 const grid=document.getElementById('ed-photo-grid');
 if(grid){
  const isArabic=document.body.dataset.locale==='ar';
@@ -54,6 +55,7 @@ if(grid){
     const path='square-'+slot+'/'+crypto.randomUUID()+'.'+ext;
     btn.disabled=true;input.disabled=true;state.textContent=t('Uploading and publishing…','جارٍ رفع الصورة ونشرها…');
     try{
+      await validateHomepagePhoto(file);
       const {error:uploadError}=await db.storage.from('homepage-photos').upload(path,file,{contentType:file.type,cacheControl:'3600',upsert:false});
       if(uploadError)throw uploadError;
       const {data:publicData}=db.storage.from('homepage-photos').getPublicUrl(path);
