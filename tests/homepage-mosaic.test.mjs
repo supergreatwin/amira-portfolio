@@ -25,6 +25,11 @@ assert.match(css,/object-fit:cover!important/);
 assert.match(css,/img\[src\*="Pasted-21-11-2026-at-02\.35\.51\.png"\]/);
 assert.match(css,/transform:scale\(1\.27\)/);
 assert.match(css,/display-mode:standalone/);
+assert.match(css,/--amira-standalone-top:max\(52px/);
+assert.match(css,/visibility:visible!important/);
+const popup=readFileSync('dist/education-announcement.css','utf8');
+assert.match(popup,/max-height:min\(52dvh,410px\)/);
+assert.match(popup,/education-announcement__masthead/);
 assert.ok(existsSync('dist/homepage-photo-guard.mjs'));
 for(const [path,prefix] of [
  ['dist/index.html',''],['dist/responsive.html',''],
@@ -32,9 +37,10 @@ for(const [path,prefix] of [
 ]){
  const html=readFileSync(path,'utf8');
  assert.match(html,/viewport-fit=cover/,path);
+ assert.ok(html.includes('education-announcement.css?v=20261121compact'),path);
  assert.match(html,/apple-mobile-web-app-capable/,path);
  assert.match(html,/apple-mobile-web-app-status-bar-style" content="black-translucent"/,path);
- assert.ok(html.includes('href="'+prefix+'homepage-mosaic-integrity.css?v=20261121edgefix"'),path);
+ assert.ok(html.includes('href="'+prefix+'homepage-mosaic-integrity.css?v=20261121safenav2"'),path);
  for(let slot=1;slot<=4;slot++)assert.ok(html.includes('data-slot="'+slot+'"'),path+' missing tile '+slot);
  assert.equal((html.match(/data-slot="[1-4]"/g)||[]).length,4,path);
 }
