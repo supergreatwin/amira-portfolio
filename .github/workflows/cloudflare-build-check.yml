@@ -63,10 +63,12 @@ jobs:
         run: |
           node --check dist/homepage-photo-guard.mjs
           node --test tests/homepage-mosaic.test.mjs
-          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/index.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/responsive.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/ar/current.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121edgefix' dist/ar/responsive.html
+          grep -q 'max-height:min(52dvh,410px)' dist/education-announcement.css
+          grep -q -- '--amira-standalone-top:max(52px' dist/homepage-mosaic-integrity.css
+          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/index.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/responsive.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/ar/current.html
+          grep -q 'homepage-mosaic-integrity.css?v=20261121safenav2' dist/ar/responsive.html
       - name: Verify stable bilingual full-viewport homepage headers in production output
         run: |
           test -f dist/home-header-unified.css
