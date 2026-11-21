@@ -76,3 +76,7 @@
  .rs-section .film-grid{gap:15px}
 }
 @media(prefers-reduced-motion:reduce){.rs-collection-frame img{transition:none}}
+
+/* The About section can open the existing native Field Notes popup without adding a separate homepage section. */
+.rs-about-subscribe{display:flex;width:fit-content;max-width:100%;margin-top:18px}
+@media(max-width:520px){.rs-about-subscribe{width:100%;white-space:normal}}
