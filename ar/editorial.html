@@ -12,11 +12,11 @@
 <p class="ed-status" id="ed-message" role="status" aria-live="polite"></p>
 <section class="ed-panel" id="ed-auth">
 <h2>الدخول إلى الاستوديو</h2>
-<p class="ed-muted">الحساب المخصص لإدارة هذا الموقع: <strong>byamira01@gmail.com</strong></p>
+<p class="ed-muted">سجّلي الدخول بحسابك المصرّح له في المكتب التحريري.</p>
 <form id="ed-auth-form">
-<div class="ed-field"><label for="ed-email">البريد الإلكتروني</label><input id="ed-email" type="email" value="byamira01@gmail.com" autocomplete="username" readonly required></div>
-<div class="ed-field"><label for="ed-password">كلمة المرور</label><input id="ed-password" type="password" minlength="12" autocomplete="current-password" required></div>
-<div class="ed-actions"><button class="ed-button" type="submit">دخول</button><button class="ed-button alt" type="button" id="ed-signup">إنشاء حساب لأول مرة</button><button class="ed-button ghost" type="button" id="ed-forgot">نسيت كلمة المرور</button></div></form>
+<div class="ed-field"><label for="ed-email">البريد الإلكتروني</label><input id="ed-email" type="email" placeholder="البريد الإلكتروني" autocomplete="username" maxlength="254" required></div>
+<div class="ed-field"><label for="ed-password">كلمة المرور</label><input id="ed-password" type="password" autocomplete="current-password" required></div>
+<div class="ed-actions"><button class="ed-button" type="submit">دخول</button><button class="ed-button ghost" type="button" id="ed-forgot">نسيت كلمة المرور</button></div></form>
 <div class="ed-notice">سيتم منح صلاحية الإدارة تلقائيًا بعد تأكيد البريد الإلكتروني من Supabase. لا يمكن للآخرين الدخول إلى لوحة التحرير.</div>
 <form id="ed-recover-form" hidden><h3>تعيين كلمة مرور جديدة</h3><div class="ed-field"><label for="ed-new-password">كلمة المرور الجديدة</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><button class="ed-button" type="submit">حفظ كلمة المرور</button></form>
 </section>
@@ -44,6 +44,6 @@
 </form></div>
 <section class="ed-home-photos" aria-labelledby="ed-photos-title"><div class="ed-workspace-header"><div><span class="ed-eyebrow">صور الصفحة الرئيسية</span><h2 id="ed-photos-title">صور المربعات الأربعة</h2><p class="ed-muted">ارفعي صورة أصلية لكل مربع في شبكة الصور. الحد الأقصى ٦ ميجابايت لكل صورة.</p></div></div><p id="ed-photo-message" class="ed-status" role="status" aria-live="polite"></p><div id="ed-photo-grid" class="ed-photo-grid"></div></section></section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · استوديو التحرير · <a href="../">العودة للموقع</a></div></footer>
-<script type="module" src="../editorial.js?v=20261121reset"></script><script type="module" src="../homepage-editor.js"></script>
+<script type="module" src="../editorial.js?v=20261121authfix"></script><script type="module" src="../homepage-editor.js"></script>
 <script type="module" src="../site-design-editor.js"></script>
 </body></html>
