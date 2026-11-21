@@ -1,9 +1,8 @@
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.1/+esm';
+import { cms as db } from './cms-core.js';
 
 const PROJECT_URL = 'https://tfarhghukyogaowjqykn.supabase.co';
 const PUBLISHABLE_KEY = 'sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS';
-const ADMIN_EMAIL = 'byamira01@gmail.com';
-const db = createClient(PROJECT_URL, PUBLISHABLE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
+const activeEmail = () => $('ed-email').value.trim().toLowerCase();
 const $ = id => document.getElementById(id);
 const ar = document.body.dataset.locale === 'ar';
 const msg = (en, arabic) => ar ? arabic : en;
@@ -82,7 +81,7 @@ async function refreshAuth() {
   const role = user.app_metadata?.editorial_role;
   if (role !== 'admin' && role !== 'editor') {
     showGuest();
-    notice(msg('This email has no editorial access yet. Confirm your email using the Supabase message, then sign in again. Contact the site owner if access is still pending.', 'لا تملك هذه الجلسة صلاحية التحرير بعد. أكّدي البريد عبر رسالة Supabase ثم ادخلي مجددًا.'), true);
+    notice(msg('This account does not have Editorial Desk access. Contact the site administrator.', 'هذا الحساب غير مُصرّح له بالدخول إلى المكتب التحريري. تواصلي مع مديرة الموقع.'), true);
     return;
   }
   state.user = user;
@@ -141,23 +140,37 @@ $('ed-slug').addEventListener('input', () => { $('ed-slug').dataset.manual = '1'
 $('ed-new').addEventListener('click', () => { delete $('ed-slug').dataset.manual; startNew(); });
 $('ed-refresh').addEventListener('click', loadEntries);
 document.querySelectorAll('button[data-save]').forEach(button => button.addEventListener('click', () => saveEntry(button.dataset.save)));
+let signInPending = false;
 $('ed-auth-form').addEventListener('submit', async event => {
   event.preventDefault();
+  if (signInPending) return;
+  const email = activeEmail();
   const password = $('ed-password').value;
-  if (!password) return;
+  if (!email || !password) return;
+  signInPending = true;
+  const submit = $('ed-auth-form').querySelector('button[type="submit"]');
+  submit.disabled = true;
   notice(msg('Signing in…', 'جارٍ تسجيل الدخول…'));
-  const { error } = await db.auth.signInWithPassword({ email: ADMIN_EMAIL, password });
-  if (error) notice(error.message, true);
-  else await refreshAuth();
-});
-$('ed-signup').addEventListener('click', async () => {
-  const password = $('ed-password').value;
-  if (password.length < 12) { notice(msg('Choose a password with at least 12 characters.', 'اختاري كلمة مرور تتكون من ١٢ حرفًا على الأقل.'), true); return; }
-  notice(msg('Creating your account…', 'جارٍ إنشاء الحساب…'));
-  const redirect = 'https://amiraabdelfadil.com/' + (ar ? 'ar/editorial.html' : 'editorial.html');
-  const { error } = await db.auth.signUp({ email: ADMIN_EMAIL, password, options: { emailRedirectTo: redirect } });
-  if (error) notice(error.message, true);
-  else notice(msg('Check byamira01@gmail.com for the email verification link. After verification, return here and sign in.', 'افتحي بريد byamira01@gmail.com لتأكيد الحساب عبر الرابط المرسل، ثم عودي لتسجيل الدخول.'));
+  try {
+    const { error } = await db.auth.signInWithPassword({ email, password });
+    if (error) {
+      if (error.code === 'invalid_credentials') {
+        notice(msg('Incorrect email or password. Check your account email or use Reset password.', 'البريد الإلكتروني أو كلمة المرور غير صحيحة. تحققي من البريد أو استخدمي إعادة تعيين كلمة المرور.'), true);
+      } else if (error.code === 'over_request_rate_limit') {
+        notice(msg('Too many sign-in attempts. Please try again later.', 'محاولات تسجيل دخول كثيرة. يُرجى المحاولة لاحقًا.'), true);
+      } else {
+        notice(error.message, true);
+      }
+      return;
+    }
+    $('ed-password').value = '';
+    await refreshAuth();
+  } catch {
+    notice(msg('Could not sign in. Check your connection and try again.', 'تعذر تسجيل الدخول. تحققي من الاتصال وحاولي مجددًا.'), true);
+  } finally {
+    signInPending = false;
+    submit.disabled = false;
+  }
 });
 // UI cooldown improves feedback; the actual limits are enforced on the server.
 const RESET_COOLDOWN_MS = 60_000;
@@ -182,6 +195,8 @@ refreshResetButton();
 setInterval(refreshResetButton, 1000);
 resetButton.addEventListener('click', async () => {
   if (resetPending || resetCooldownRemaining() > 0) return;
+  if (!$('ed-email').reportValidity()) return;
+  const email = activeEmail();
   resetPending = true;
   try { localStorage.setItem(RESET_COOLDOWN_KEY, String(Date.now())); } catch {}
   refreshResetButton();
@@ -191,7 +206,7 @@ resetButton.addEventListener('click', async () => {
     const response = await fetch(PROJECT_URL + '/functions/v1/request-password-reset', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', apikey: PUBLISHABLE_KEY },
-      body: JSON.stringify({ email: ADMIN_EMAIL, locale: ar ? 'ar' : 'en' })
+      body: JSON.stringify({ email, locale: ar ? 'ar' : 'en' })
     });
     if (!response.ok) throw new Error('Password reset request unavailable');
     notice(msg('If the account exists, a password reset email will be sent if the request is eligible.',
@@ -225,7 +240,7 @@ db.auth.onAuthStateChange((event) => {
     $('ed-dashboard').hidden = true;
     notice(msg('Set a new password below.', 'عيّني كلمة مرور جديدة أدناه.'));
   } else if (!recoveryMode && ['SIGNED_IN', 'TOKEN_REFRESHED', 'SIGNED_OUT', 'USER_UPDATED'].includes(event)) {
-    setTimeout(() => { void refreshAuth(); }, 0);
+    setTimeout(() => { if (!recoveryMode) void refreshAuth(); }, 0);
   }
 });
 startNew();
