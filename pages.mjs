@@ -16,7 +16,7 @@ const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
 const verificationFile = /^google[a-z0-9]+\.html$/i;
 
-// One common navigation header for all public and private page templates.
+// Common header for inner pages; preserve deliberately authored photographic home headers.
 // The private educational pages keep their existing Supabase authorization.
 function sharedHeader(source, directory, filename) {
   const prefix = directory ? '../' : '';
@@ -81,8 +81,18 @@ for (const directory of ['', 'ar', 'the-process']) {
       ].filter(Boolean).join('\n');
       if (themeResources) themedSource = themedSource.replace(/<\/head>/i, themeResources + '\n</head>');
     }
+    // Preserve the single authored photographic header on all four current homepages.
+    // Replacing it with the generic sharedHeader caused opaque/unequal EN/AR headers
+    // and overrode the viewport-specific home-header-unified.css rules.
+    const photographicHome = isDocument && ['', 'ar'].includes(directory) &&
+      ['index.html', 'responsive.html', 'current.html'].includes(file) &&
+      themedSource.includes('class="photo-mosaic"');
+    // The old Arabic landing page is the classic Arabic design: preserve it too.
+    const classicArabicHome = isDocument && directory === 'ar' && file === 'index.html' &&
+      !photographicHome;
     // No host-agnostic redirects: they would also affect custom-domain aliases.
-    if (isDocument && file !== 'classic.html' && /<header\b[\s\S]*?<\/header>/i.test(themedSource)) {
+    if (isDocument && file !== 'classic.html' && !photographicHome && !classicArabicHome &&
+        /<header\b[\s\S]*?<\/header>/i.test(themedSource)) {
       themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
       // The shared CSS loads after existing theme and layout rules.
       themedSource = themedSource.replace(/<\/head>/i,
