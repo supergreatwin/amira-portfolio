@@ -25,10 +25,12 @@
 <section class="ed-panel site-design-panel" data-site-design-control hidden aria-labelledby="site-design-heading">
   <p class="ed-eyebrow">التصميم والتخطيط</p>
   <h2 id="site-design-heading">تصميم الموقع</h2>
-  <p class="ed-muted">بدّلي بين الصفحة الرئيسية الحالية ذات الصور الأربع والتصميم التحريري السابق. التغيير محفوظ للموقع كله ويمكن الرجوع عنه في أي وقت.</p>
-  <label class="site-design-row" for="site-design-classic"><span><strong>استخدام التصميم السابق</strong><small>التصميم الكلاسيكي · قبل تحديث 20 نوفمبر</small></span><input id="site-design-classic" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
+  <p class="ed-muted">بدّلي بين التصميم المتجاوب الجديد والتصميم الأصلي ذي الصور الأربع والتصميم التحريري الكلاسيكي. الاختيار ينطبق على كل زوار الموقع ويمكن الرجوع عنه في أي وقت.</p>
+  <label class="site-design-row" for="site-design-responsive"><span><strong>تفعيل الموقع المتجاوب الجديد</strong><small>الأفلام والتصوير والكتابات ورسائل أميرة في تصميم واحد مناسب لكل الشاشات</small></span><input id="site-design-responsive" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
+  <label class="site-design-row" for="site-design-classic"><span><strong>التصميم التحريري الكلاسيكي السابق</strong><small>التصميم الأقدم · قبل تحديث ٢٠ نوفمبر</small></span><input id="site-design-classic" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
+  <p class="ed-muted">أغلقي المفتاحين للعودة إلى تصميمنا الأصلي ذي الصور الأربع في كامل الشاشة.</p>
   <p id="site-design-status" class="ed-muted site-design-status" role="status" aria-live="polite">جارٍ قراءة التصميم المنشور…</p>
-  <a class="ed-preview-link" href="../" target="_blank" rel="noopener noreferrer">افتحي الصفحة الرئيسية المنشورة ↗</a>
+  <div class="site-design-preview-links"><a class="ed-preview-link" href="../ar/responsive.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة الجديد ↗</a><a class="ed-preview-link" href="../index.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة التصميم الأصلي ↗</a><a class="ed-preview-link" href="../classic.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة الكلاسيكي ↗</a><a class="ed-preview-link" href="../" target="_blank" rel="noopener noreferrer">فتح الموقع المنشور ↗</a></div>
 </section>
 <div class="ed-workspace"><aside class="ed-sidebar"><h3>المحفوظات</h3><p class="ed-muted">المسودات خاصة؛ المنشور فقط متاح للزوار.</p><ul id="ed-list" class="ed-list"></ul></aside>
 <form class="ed-editor" id="ed-editor"><h3 id="ed-edit-title">إنشاء نص جديد</h3>
@@ -45,5 +47,5 @@
 <section class="ed-home-photos" aria-labelledby="ed-photos-title"><div class="ed-workspace-header"><div><span class="ed-eyebrow">صور الصفحة الرئيسية</span><h2 id="ed-photos-title">صور المربعات الأربعة</h2><p class="ed-muted">ارفعي صورة أصلية لكل مربع في شبكة الصور. الحد الأقصى ٦ ميجابايت لكل صورة.</p></div></div><p id="ed-photo-message" class="ed-status" role="status" aria-live="polite"></p><div id="ed-photo-grid" class="ed-photo-grid"></div></section></section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · استوديو التحرير · <a href="../">العودة للموقع</a></div></footer>
 <script type="module" src="../editorial.js?v=20261121authfix"></script><script type="module" src="../homepage-editor.js"></script>
-<script type="module" src="../site-design-editor.js"></script>
+<script type="module" src="../site-design-editor.js?v=2"></script>
 </body></html>
