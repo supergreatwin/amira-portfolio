@@ -57,5 +57,8 @@ jobs:
           ! grep -q 'site-header.css?v=' dist/responsive.html
           ! grep -q 'site-header.css?v=' dist/ar/current.html
           ! grep -q 'site-header.css?v=' dist/ar/responsive.html
-          grep -q 'site-design-router.js?v=3' dist/index.html
+          grep -q 'site-design-router.js?v=4' dist/index.html
+          grep -q 'site-design-router.js?v=4' dist/responsive.html
+          grep -q 'site-design-router.js?v=4' dist/ar/responsive.html
+          grep -q 'const normalized=p=>' dist/site-design-router.js
           grep -q 'amira-design-routing' dist/theme-init.js
