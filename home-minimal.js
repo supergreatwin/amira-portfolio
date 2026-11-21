@@ -60,7 +60,7 @@
   // Deep links on the responsive homepage are actual page sections.
   // Retired legacy anchors only redirect from the simpler four-photo version.
   const legacy={'#writing':'writing.html','#about':'about.html','#art':'art.html','#contact':'contact.html'};
-  if(!document.getElementById('writing')&&legacy[location.hash]){
+  if(legacy[location.hash]&&!document.getElementById(location.hash.slice(1))){
     const prefix=document.documentElement.lang==='ar'?'../':'';
     location.replace(prefix+legacy[location.hash]);
   }
