@@ -159,10 +159,50 @@ $('ed-signup').addEventListener('click', async () => {
   if (error) notice(error.message, true);
   else notice(msg('Check byamira01@gmail.com for the email verification link. After verification, return here and sign in.', 'افتحي بريد byamira01@gmail.com لتأكيد الحساب عبر الرابط المرسل، ثم عودي لتسجيل الدخول.'));
 });
-$('ed-forgot').addEventListener('click', async () => {
-  const redirectTo = 'https://amiraabdelfadil.com/' + (ar ? 'ar/editorial.html' : 'editorial.html');
-  const { error } = await db.auth.resetPasswordForEmail(ADMIN_EMAIL, { redirectTo });
-  notice(error ? error.message : msg('If the account exists, the password reset email has been requested.', 'إذا كان الحساب موجودًا، فقد طُلب إرسال رسالة إعادة تعيين كلمة المرور.'), !!error);
+// UI cooldown improves feedback; the actual limits are enforced on the server.
+const RESET_COOLDOWN_MS = 60_000;
+const RESET_COOLDOWN_KEY = 'amira-editorial-password-reset-at';
+let resetPending = false;
+const resetButton = $('ed-forgot');
+const resetOriginalLabel = resetButton.textContent;
+function resetCooldownRemaining() {
+  try {
+    const lastRequest = Number(localStorage.getItem(RESET_COOLDOWN_KEY)) || 0;
+    return Math.max(0, Math.ceil((lastRequest + RESET_COOLDOWN_MS - Date.now()) / 1000));
+  } catch { return 0; }
+}
+function refreshResetButton() {
+  const remaining = resetCooldownRemaining();
+  resetButton.disabled = resetPending || remaining > 0;
+  resetButton.textContent = remaining > 0
+    ? msg('Try again in ' + remaining + 's', 'حاولي مجددًا بعد ' + remaining + ' ثانية')
+    : (resetPending ? msg('Requesting…', 'جارٍ الطلب…') : resetOriginalLabel);
+}
+refreshResetButton();
+setInterval(refreshResetButton, 1000);
+resetButton.addEventListener('click', async () => {
+  if (resetPending || resetCooldownRemaining() > 0) return;
+  resetPending = true;
+  try { localStorage.setItem(RESET_COOLDOWN_KEY, String(Date.now())); } catch {}
+  refreshResetButton();
+  try {
+    // The browser never calls Auth's recover endpoint directly. The public
+    // Edge Function enforces hourly IP/account quotas and masks Auth errors.
+    const response = await fetch(PROJECT_URL + '/functions/v1/request-password-reset', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', apikey: PUBLISHABLE_KEY },
+      body: JSON.stringify({ email: ADMIN_EMAIL, locale: ar ? 'ar' : 'en' })
+    });
+    if (!response.ok) throw new Error('Password reset request unavailable');
+    notice(msg('If the account exists, a password reset email will be sent if the request is eligible.',
+      'إذا كان الحساب موجودًا وكان الطلب مسموحًا، ستُرسل رسالة إعادة تعيين كلمة المرور.'));
+  } catch {
+    notice(msg('Unable to request a reset right now. Please try again later.',
+      'تعذّر طلب إعادة تعيين كلمة المرور حاليًا. يُرجى المحاولة لاحقًا.'), true);
+  } finally {
+    resetPending = false;
+    refreshResetButton();
+  }
 });
 $('ed-recover-form').addEventListener('submit', async event => {
   event.preventDefault();
