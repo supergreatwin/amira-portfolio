@@ -59,7 +59,7 @@ await cp(join(root, 'the-process'), join(dist, 'the-process'), { recursive: true
 
 for (const directory of ['', 'ar', 'the-process']) {
   const files = await readdir(join(root, directory));
-  for (const file of files.filter(name => /\.(?:html|css|js)$/.test(name) || ['robots.txt', 'sitemap.xml'].includes(name))) {
+  for (const file of files.filter(name => /\.(?:html|css|js)$/.test(name) || ['homepage-photo-guard.mjs', 'robots.txt', 'sitemap.xml'].includes(name))) {
     const path = join(directory, file);
     const source = await readFile(join(root, path), 'utf8');
     const output = join(dist, path);
