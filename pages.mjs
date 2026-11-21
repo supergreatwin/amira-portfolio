@@ -28,7 +28,7 @@ function sharedHeader(source, directory, filename) {
     : name === 'writing' ? /^(writing|journal|notes)/.test(filename)
     : name === 'about' ? filename === 'about.html' : false;
   const navItems = arabic
-    ? [['films','الأفلام','index.html#work'],['photography','الفن والتصوير','art.html'],['writing','كتابات','index.html#writing'],['about','نبذة','index.html#about']]
+    ? [['films','الأفلام','index.html#work'],['photography','الفن والتصوير','art.html'],['writing','كتابات','../writing.html'],['about','نبذة','../about.html']]
     : [['films','Films','films.html'],['photography','Art & Photography','art.html'],['writing','Writing','writing.html'],['about','About','about.html']];
   const mainNav = navItems.map(([key,label,path]) =>
     '<a href="'+href(path)+'"'+(safeActive(key)?' aria-current="page"':'')+'>'+label.replaceAll('&','&amp;')+'</a>').join('');
@@ -96,7 +96,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
       // The shared CSS loads after existing theme and layout rules.
       themedSource = themedSource.replace(/<\/head>/i,
-        '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261120dark" />\n</head>');
+        '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261121unified" />\n</head>');
     }
     const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
       ? themedSource.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
