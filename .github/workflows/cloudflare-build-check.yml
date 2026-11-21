@@ -81,7 +81,7 @@ jobs:
           test -f dist/ar/responsive.html
           grep -q 'height:100dvh' dist/home-minimal.css
           grep -q 'position:fixed' dist/home-header-unified.css
-          grep -q 'home-minimal.js?v=20261121stability' dist/index.html
+          grep -q 'home-minimal.js?v=20261121about' dist/index.html
           grep -q 'is-after-hero' dist/home-minimal.js
           grep -q 'home-header-unified.css?v=2' dist/index.html
           grep -q 'home-header-unified.css?v=2' dist/responsive.html
