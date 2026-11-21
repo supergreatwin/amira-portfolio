@@ -1,0 +1,15 @@
+.fn-admin{margin:2rem 0 3rem!important;max-width:none!important}
+.fn-admin .fn-admin-tools{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin:18px 0}
+.fn-admin .fn-admin-search{display:grid;gap:5px;min-width:min(250px,100%);flex:1}
+.fn-admin .fn-admin-search label,.fn-admin .fn-admin-filter label{font-size:12px;font-weight:700}
+.fn-admin .fn-admin-search input,.fn-admin .fn-admin-filter select{width:100%;min-height:43px;padding:10px;border:1px solid #cabdb0;background:#fff;color:#292420}
+.fn-admin .fn-admin-filter{display:grid;gap:5px;min-width:min(160px,100%)}
+.fn-admin .fn-admin-table-wrap{overflow-x:auto;max-width:100%;border:1px solid #ddd2c6}
+.fn-admin table{width:100%;min-width:600px;border-collapse:collapse;font-size:13px;text-align:start}
+.fn-admin th,.fn-admin td{padding:12px;text-align:start;border-bottom:1px solid #e5dad0}
+.fn-admin th{background:#f3ece5;font-size:12px}
+.fn-admin tr:last-child td{border-bottom:0}
+.fn-admin .fn-admin-footer{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-top:16px}
+.fn-admin .fn-admin-actions{display:flex;gap:10px;flex-wrap:wrap}
+.fn-admin [data-fn-admin-status].is-error{color:#a32a34}
+@media(max-width:640px){.fn-admin .fn-admin-tools{display:grid;grid-template-columns:1fr}.fn-admin .fn-admin-footer{align-items:start;flex-direction:column}}
