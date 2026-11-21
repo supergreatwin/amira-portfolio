@@ -23,12 +23,14 @@
 <section class="ed-panel" id="ed-dashboard" hidden>
 <div class="ed-workspace-header"><div><span class="ed-eyebrow">Content management</span><h2>Stories & Projects</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><a class="ed-button alt" href="education-studio.html">Education Studio — private courses, lessons & files ↗</a><a class="ed-button alt" href="content-studio.html">Films, Photos & Homepage ↗</a><button id="ed-new" type="button" class="ed-button alt">+ New entry</button><button id="ed-refresh" type="button" class="ed-button ghost">Refresh</button><button id="ed-logout" type="button" class="ed-button ghost">Sign out</button></div></div>
 <section class="ed-panel site-design-panel" data-site-design-control hidden aria-labelledby="site-design-heading">
-  <p class="ed-eyebrow">Design & layout</p>
+  <p class="ed-eyebrow">Design &amp; layout</p>
   <h2 id="site-design-heading">Website design</h2>
-  <p class="ed-muted">Switch between the current full-screen, four-photo homepage and the previous editorial homepage. Changes go live immediately and are reversible.</p>
-  <label class="site-design-row" for="site-design-classic"><span><strong>Use previous editorial design</strong><small>Classic layout · before the 20 November redesign</small></span><input id="site-design-classic" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
+  <p class="ed-muted">Switch the public homepage between the new responsive portfolio, our original four-photo design and the older classic layout. Your choice is saved for all visitors and is reversible.</p>
+  <label class="site-design-row" for="site-design-responsive"><span><strong>New responsive website</strong><small>Films, photography, writing, About and live Field Notes signup in one adaptive layout</small></span><input id="site-design-responsive" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
+  <label class="site-design-row" for="site-design-classic"><span><strong>Previous classic editorial design</strong><small>Older portfolio layout · before 20 November</small></span><input id="site-design-classic" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
+  <p class="ed-muted">Turn both switches off to return to our original full-screen, four-photo homepage.</p>
   <p id="site-design-status" class="ed-muted site-design-status" role="status" aria-live="polite">Checking published design…</p>
-  <a class="ed-preview-link" href="./" target="_blank" rel="noopener noreferrer">Open live homepage ↗</a>
+  <div class="site-design-preview-links"><a class="ed-preview-link" href="./responsive.html?design-preview=1" target="_blank" rel="noopener noreferrer">Preview responsive ↗</a><a class="ed-preview-link" href="./index.html?design-preview=1" target="_blank" rel="noopener noreferrer">Preview our original ↗</a><a class="ed-preview-link" href="./classic.html?design-preview=1" target="_blank" rel="noopener noreferrer">Preview classic ↗</a><a class="ed-preview-link" href="./" target="_blank" rel="noopener noreferrer">Open live homepage ↗</a></div>
 </section>
 <div class="ed-workspace"><aside class="ed-sidebar"><h3>Saved entries</h3><p class="ed-muted">Drafts stay private; only published entries are public.</p><ul id="ed-list" class="ed-list"></ul></aside>
 <form class="ed-editor" id="ed-editor"><h3 id="ed-edit-title">Create an entry</h3>
@@ -45,5 +47,5 @@
 <section class="ed-home-photos" aria-labelledby="ed-photos-title"><div class="ed-workspace-header"><div><span class="ed-eyebrow">Homepage image controls</span><h2 id="ed-photos-title">Homepage Photos</h2><p class="ed-muted">Upload original photographs to any of the four squares. JPG, PNG or WebP, up to 6 MB each.</p></div></div><p id="ed-photo-message" class="ed-status" role="status" aria-live="polite"></p><div id="ed-photo-grid" class="ed-photo-grid"></div></section></section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · Editorial studio · <a href="./">Back to portfolio</a></div></footer>
 <script type="module" src="editorial.js?v=20261121authfix"></script><script type="module" src="homepage-editor.js"></script>
-<script type="module" src="site-design-editor.js"></script>
+<script type="module" src="site-design-editor.js?v=2"></script>
 </body></html>
