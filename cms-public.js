@@ -1,7 +1,7 @@
 import { cms, node, signedMedia } from './cms-core.js';
 
 const isArabic = /^\/ar(?:\/|$)/.test(location.pathname);
-const isHome = /(?:\/|\/index\.html)$/.test(location.pathname);
+const isHome = /(?:\/|\/(?:index|classic)\.html|\/classic)$/.test(location.pathname);
 const filmHref = slug => (isArabic ? '/ar/film.html?slug=' : '/film.html?slug=') + encodeURIComponent(slug);
 const galleryHref = slug => (isArabic ? '/ar/collection.html?slug=' : '/collection.html?slug=') + encodeURIComponent(slug);
 const CMS_ORIGIN = 'https://amiraabdelfadil.com/';

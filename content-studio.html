@@ -3,6 +3,7 @@
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
 <title>Content & Films — Amira Editorial Desk</title>
 <link rel="stylesheet" href="editorial.css"><link rel="stylesheet" href="content-studio.css"><link rel="stylesheet" href="homepage-layout-editor.css">
+<link rel="stylesheet" href="site-design-editor.css">
 </head><body>
 <header class="ed-header"><div class="ed-width ed-top"><a class="ed-logo" href="index.html">amira abdelfadil</a><nav class="ed-links"><a href="editorial.html">Editorial Desk</a><a href="index.html">Website ↗</a></nav></div></header>
 <main class="ed-width"><section class="ed-hero"><p class="ed-eyebrow">Amira's studio / publishing</p><h1>Content &amp; Films.</h1><p class="ed-description">Create films, curate photography and art, write site copy, and upload only original or licensed imagery. The site updates when entries are published.</p></section>
@@ -10,6 +11,14 @@
 <section id="cms-locked" class="ed-panel"><h2>Private editorial workspace</h2><p class="ed-muted">Sign in through Amira's Editorial Desk with an approved administrator or editor account.</p><a class="ed-button" href="editorial.html">Open Editorial Desk</a></section>
 <section id="cms-main" hidden>
 <div class="cms-toolbar"><div><span class="ed-eyebrow">Authenticated / <span id="cms-account"></span></span></div><div class="ed-actions"><button id="cms-refresh" type="button" class="ed-button alt">Refresh content</button><button id="cms-signout" type="button" class="ed-button ghost">Sign out</button></div></div>
+<section class="ed-panel site-design-panel" data-site-design-control hidden aria-labelledby="site-design-heading">
+  <p class="ed-eyebrow">Design & layout</p>
+  <h2 id="site-design-heading">Website design</h2>
+  <p class="ed-muted">Switch between the current full-screen, four-photo homepage and the previous editorial homepage. Changes go live immediately and are reversible.</p>
+  <label class="site-design-row" for="site-design-classic"><span><strong>Use previous editorial design</strong><small>Classic layout · before the 20 November redesign</small></span><input id="site-design-classic" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
+  <p id="site-design-status" class="ed-muted site-design-status" role="status" aria-live="polite">Checking published design…</p>
+  <a class="ed-preview-link" href="./" target="_blank" rel="noopener noreferrer">Open live homepage ↗</a>
+</section>
 <div class="cms-nav" role="tablist" aria-label="Content types"><button data-cms-tab="homepage" type="button">Homepage Images</button><button data-cms-tab="films" class="active" type="button">Films</button><button data-cms-tab="galleries" type="button">Photography & Art</button><button data-cms-tab="sections" type="button">Page Sections</button><a href="editorial.html" class="cms-tab-link">Writing, news & collaborations ↗</a></div>
 <div class="cms-work" data-cms-pane="homepage" hidden>
 <aside class="cms-aside">
@@ -85,4 +94,5 @@
 <dialog id="cms-fullscreen" class="cms-fullscreen" aria-label="Full-screen image preview"><button type="button" id="cms-close-preview" aria-label="Close image" class="cms-close">Close ✕</button><img id="cms-fullscreen-image" alt="Full-screen media preview"></dialog>
 <dialog id="homepage-preview-dialog" class="cms-home-dialog" aria-label="Full-screen homepage arrangement preview"></dialog>
 <script type="module" src="content-studio.js"></script>
-<script type="module" src="homepage-layout-editor.js"></script></body></html>
+<script type="module" src="homepage-layout-editor.js"></script><script type="module" src="site-design-editor.js"></script>
+</body></html>
