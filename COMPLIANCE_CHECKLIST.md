@@ -12,13 +12,12 @@ Last reviewed: 22 November 2026. Owner approval and jurisdiction-specific legal 
 - Basic Cloudflare Pages headers: `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`, `X-Frame-Options`, and CSP `frame-ancestors`. These are build configuration changes and require a live response-header check.
 - Regression test in `tests/legal-privacy.test.mjs`; GitHub Action runs it on every push to main.
 
-## Verified existing backend baseline (22 November 2026)
+## Backend baseline (review periodically)
 
-- The Amira Supabase project has RLS enabled for all 24 public tables, but individual policies still require adversarial user/role testing.
-- The educational launch flag was false.
-- `amira-education-private` and `amira-site-content` storage buckets were private, and `homepage-photos` was public.
-- Server-side Edge Functions were active for password-reset quotas and Field Notes signup.
-- Supabase Security Advisor reported leaked-password protection disabled; the connected organization is on the Free plan, and Supabase currently restricts this protection to Pro and above. Do not describe it as enabled.
+- Keep Row Level Security enabled and test effective per-user access, not only advisory notices.
+- Keep unpublished education files in private storage with approved-role restrictions.
+- Maintain abuse limits and neutral responses for account recovery and newsletter signups.
+- Review Supabase Auth password protections against the capabilities of the current plan.
 
 ## Before treating the site as legally approved
 
@@ -46,7 +45,7 @@ Last reviewed: 22 November 2026. Owner approval and jurisdiction-specific legal 
 ## Security work still requiring privileged platform configuration or testing
 
 - [ ] Enable MFA for all editors/administrators and on Cloudflare, GitHub, and Supabase owner accounts.
-- [ ] Configure stronger Supabase Auth password requirements in dashboard. Leaked-password detection is unavailable on the current Free plan.
+- [ ] Configure stronger Supabase Auth password requirements in dashboard. Check availability of compromised-password screening against the current subscription plan.
 - [ ] Perform real authorization tests for anonymous, unauthorized logged-in, editor, admin, unapproved learner, and approved learner sessions. RLS-on alone is insufficient.
 - [ ] Verify password-reset email throttling and abuse resistance from independent clients, not only the website UI. Review Supabase native Auth quotas.
 - [ ] Inspect Cloudflare WAF/rate limiting, DNSSEC, email authentication (SPF, DKIM, DMARC), access logs, and domain redirects.
