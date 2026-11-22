@@ -49,6 +49,12 @@ test('Cloudflare build includes privacy links, controls, and hardening headers',
     assert.match(html, /class="legal-links"/);
     assert.match(html, /data-privacy-settings/);
   }
+  for (const path of ['pitch.html','collaborate.html','ar/pitch.html','ar/collaborate.html']) {
+    const html = deployed(path);
+    assert.doesNotMatch(html, /<script\\s+async\\s+src="https:\\/\\/tally\\.so\\/widgets\\/embed\\.js"/);
+    assert.match(html, /data-tally-src=/);
+  }
+  assert.match(source('privacy-controls.js'), /Load Tally form/);
   const headers = deployed('_headers');
   assert.match(headers, /X-Content-Type-Options:\s*nosniff/);
   assert.match(headers, /Content-Security-Policy:\s*frame-ancestors/);
