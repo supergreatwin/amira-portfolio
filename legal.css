@@ -47,3 +47,11 @@
 :root[data-theme="dark"] .amira-privacy-primary{background:#e6d6c8;color:#292521;border-color:#e6d6c8}
 @media(max-width:520px){.amira-privacy-banner{padding:14px}.amira-privacy-actions{justify-content:stretch}.amira-privacy-actions button{flex:1 1 110px}.legal-main{width:calc(100% - 2rem)}.legal-main table{display:block;overflow-x:auto}.legal-links{gap:.35rem .8rem}}
 @media(prefers-reduced-motion:reduce){.amira-privacy-banner,.amira-privacy-dialog{animation:none;transition:none}}
+
+/* Third-party forms: click-to-load disclosure, without changing the surrounding layout. */
+.amira-embed-consent{padding:clamp(1.5rem,5vw,3.2rem);border:1px solid color-mix(in srgb,currentColor 25%,transparent);background:color-mix(in srgb,currentColor 4%,transparent);text-align:center;margin:1rem 0 1.3rem}
+.amira-embed-consent strong{display:block;font-size:1.08rem}
+.amira-embed-consent p{font-size:.9rem;line-height:1.7;margin:.75rem auto 1.2rem;max-width:60ch}
+.amira-embed-consent button,.legal-settings-button{font:inherit;cursor:pointer;border:1px solid currentColor;background:transparent;color:inherit;padding:.7rem 1.15rem;min-height:44px}
+.amira-embed-consent button:focus-visible,.legal-settings-button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+iframe[data-tally-src][hidden]{display:none!important}
