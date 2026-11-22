@@ -117,7 +117,8 @@ for (const directory of ['', 'ar', 'the-process']) {
         : html.replace(/<\/body>/i, legalLinks + '</body>');
       const legalStyles = html.includes('legal.css') ? '' :
         '<link rel="stylesheet" href="' + prefix + 'legal.css?v=20261122" />\n';
-      const analyticsId = isPrimary && process.env.CF_PAGES_BRANCH === 'main' ? measurementId : '';
+      // Restrict tag activation by runtime hostname; Cloudflare's pages.dev build also serves the custom domain.
+      const analyticsId = measurementId;
       const controls = '<script defer src="' + prefix +
         'privacy-controls.js?v=20261122" data-measurement-id="' + analyticsId + '"></script>\n';
       html = html.replace(/<\/head>/i, legalStyles + controls + '</head>');
