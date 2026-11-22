@@ -1,0 +1,49 @@
+/* Amira legal pages and consent interface — responsive and light/dark compatible. */
+.legal-links{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:.55rem 1rem;padding:.65rem 1.1rem;font-size:.78rem;line-height:1.6;border-top:1px solid color-mix(in srgb,currentColor 16%,transparent);opacity:.89}
+.legal-links a,.legal-links button{color:inherit;text-decoration:underline;text-underline-offset:3px;background:none;border:0;padding:2px;cursor:pointer;font:inherit}
+.legal-links a:focus-visible,.legal-links button:focus-visible,.amira-privacy-actions button:focus-visible{outline:2px solid currentColor;outline-offset:3px}
+.legal-main{width:min(780px,calc(100% - 3rem));margin:clamp(2rem,6vw,5rem) auto 6rem;line-height:1.8;color:var(--text,var(--ink,#2c2825))}
+.legal-main h1{font-size:clamp(2rem,4.8vw,3.65rem);letter-spacing:-.035em;line-height:1.16;margin:0 0 1rem}
+.legal-main h2{font-size:clamp(1.25rem,2.2vw,1.6rem);line-height:1.35;margin:2.25rem 0 .6rem}
+.legal-main h3{font-size:1.05rem;margin:1.7rem 0 .45rem}
+.legal-main p,.legal-main li{font-size:.98rem;max-width:76ch}
+.legal-main p{margin:.6rem 0 1.15rem}
+.legal-main ul{padding-inline-start:1.35rem}
+.legal-main .legal-kicker{font-size:.75rem;letter-spacing:.13em;text-transform:uppercase;opacity:.65}
+.legal-main .legal-updated{font-size:.86rem;opacity:.75;margin-bottom:1.65rem}
+.legal-main a{text-decoration:underline;text-underline-offset:3px;color:inherit}
+.legal-main .legal-note{border-inline-start:3px solid currentColor;padding:.45rem 1rem;margin:2rem 0;opacity:.9;background:color-mix(in srgb,currentColor 5%,transparent)}
+.legal-main table{width:100%;border-collapse:collapse;font-size:.9rem;line-height:1.5}
+.legal-main th,.legal-main td{text-align:start;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);padding:.75rem .6rem;vertical-align:top}
+.legal-main th{font-weight:650}
+.legal-main .legal-actions{display:flex;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.legal-main .legal-actions a{border:1px solid currentColor;padding:.55rem .9rem;text-decoration:none}
+.amira-privacy-banner,.amira-privacy-dialog{box-sizing:border-box;color:#292521;font-family:inherit}
+.amira-privacy-banner *,.amira-privacy-dialog *{box-sizing:border-box}
+.amira-privacy-banner{position:fixed;z-index:2147483000;bottom:max(16px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);width:min(710px,calc(100% - 26px));background:#f8f4ed;color:#292521;border:1px solid #c8b9ab;box-shadow:0 10px 45px #18120c3b;border-radius:12px;padding:16px 18px}
+.amira-privacy-banner[hidden]{display:none!important}
+.amira-privacy-banner strong{display:block;font-size:.97rem;font-weight:700;letter-spacing:.01em}
+.amira-privacy-banner p{font-size:.87rem;line-height:1.55;margin:.35rem 0 .85rem;max-width:none}
+.amira-privacy-actions{display:flex;gap:9px;flex-wrap:wrap;justify-content:flex-end;align-items:center}
+.amira-privacy-actions button{font:inherit;font-size:.83rem;font-weight:650;line-height:1.25;cursor:pointer;border-radius:5px;padding:.65rem .8rem;min-height:39px;border:1px solid #383129}
+.amira-privacy-secondary{background:transparent;color:#292521}
+.amira-privacy-primary{background:#392e31;color:#fff}
+.amira-privacy-dialog{background:#f8f4ed;color:#292521;border:1px solid #b9a9a0;border-radius:12px;padding:0;max-width:520px;width:calc(100% - 32px);box-shadow:0 24px 70px #0006}
+.amira-privacy-dialog::backdrop{background:rgba(12,10,9,.52)}
+.amira-privacy-panel{padding:clamp(20px,4vw,30px)}
+.amira-privacy-panel h2{font-size:1.55rem;line-height:1.3;margin:0 0 .75rem}
+.amira-privacy-panel>p{font-size:.9rem;line-height:1.6;margin:0 0 1.4rem}
+.amira-privacy-panel>a{display:inline-block;color:inherit;text-decoration:underline;text-underline-offset:3px;font-size:.85rem;margin:.85rem 0 1.2rem}
+.amira-privacy-option{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-top:1px solid #d6cac0;cursor:pointer}
+.amira-privacy-option input{margin-top:4px;width:18px;height:18px;accent-color:#513b42;flex:none}
+.amira-privacy-option span{display:block}
+.amira-privacy-option strong{display:block;font-size:.95rem}
+.amira-privacy-option small{display:block;line-height:1.55;font-size:.8rem;margin-top:4px}
+[dir="rtl"] .amira-privacy-actions{justify-content:flex-start}
+:root[data-theme="dark"] .legal-main{color:var(--text,#f6eee5)}
+:root[data-theme="dark"] .amira-privacy-banner,:root[data-theme="dark"] .amira-privacy-dialog{background:#272325;color:#f4e9df;border-color:#64585e}
+:root[data-theme="dark"] .amira-privacy-option{border-color:#54494d}
+:root[data-theme="dark"] .amira-privacy-secondary{background:transparent;color:#f4e9df;border-color:#cfc1bd}
+:root[data-theme="dark"] .amira-privacy-primary{background:#e6d6c8;color:#292521;border-color:#e6d6c8}
+@media(max-width:520px){.amira-privacy-banner{padding:14px}.amira-privacy-actions{justify-content:stretch}.amira-privacy-actions button{flex:1 1 110px}.legal-main{width:calc(100% - 2rem)}.legal-main table{display:block;overflow-x:auto}.legal-links{gap:.35rem .8rem}}
+@media(prefers-reduced-motion:reduce){.amira-privacy-banner,.amira-privacy-dialog{animation:none;transition:none}}
