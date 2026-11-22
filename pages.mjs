@@ -102,6 +102,11 @@ for (const directory of ['', 'ar', 'the-process']) {
     // GA4 is only initialized on the canonical production domain after opt-in.
     let html = themedSource;
     if (isDocument) {
+      // Tally iframe elements are lazy and rendered after user action.
+      // Remove eagerly loaded third-party widget code to prevent pre-interaction requests.
+      html = html.replace(/<script\s+async\s+src=["']https:\/\/tally\.so\/widgets\/embed\.js["']><\/script>/gi, '');
+    }
+    if (isDocument) {
       const isArabic = directory === 'ar' || /<html[^>]*lang=["']ar/i.test(themedSource);
       const labels = isArabic
         ? [['privacy','الخصوصية'],['terms','الشروط'],['cookies','ملفات الارتباط']]
