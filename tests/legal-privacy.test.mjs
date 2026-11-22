@@ -51,7 +51,7 @@ test('Cloudflare build includes privacy links, controls, and hardening headers',
   }
   for (const path of ['pitch.html','collaborate.html','ar/pitch.html','ar/collaborate.html']) {
     const html = deployed(path);
-    assert.doesNotMatch(html, /<script\\s+async\\s+src="https:\\/\\/tally\\.so\\/widgets\\/embed\\.js"/);
+    assert.ok(!html.includes('src="https://tally.so/widgets/embed.js"'), 'Tally must not auto-load: ' + path);
     assert.match(html, /data-tally-src=/);
   }
   assert.match(source('privacy-controls.js'), /Load Tally form/);
