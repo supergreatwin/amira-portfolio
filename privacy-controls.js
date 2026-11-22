@@ -182,7 +182,7 @@
       makeButton(L.save, () => save(optional.checked), 'amira-privacy-primary')
     );
     bannerActions.append(
-      makeButton(L.deny, reject, 'amira-privacy-secondary'),
+      makeButton(L.deny, reject, 'amira-privacy-primary'),
       makeButton(L.customize, openSettings, 'amira-privacy-secondary'),
       makeButton(L.accept, accept, 'amira-privacy-primary')
     );
@@ -191,8 +191,11 @@
     banner.append(bannerText, bannerActions);
     document.body.append(dialog, banner);
     banner.hidden = preference !== null;
-    document.querySelectorAll('.legal-privacy-settings, [data-privacy-settings]').forEach(button => {
-      button.addEventListener('click', openSettings);
+    // Delegation also supports the site's dynamic layout variants.
+    document.addEventListener('click', event => {
+      const control = event.target instanceof Element
+        ? event.target.closest('[data-privacy-settings]') : null;
+      if (control) { event.preventDefault(); openSettings(); }
     });
     if (preference === true) loadAnalytics();
   });
