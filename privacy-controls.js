@@ -108,6 +108,34 @@
       a.textContent = L.privacy;
       item.append(document.createTextNode(' · '), a);
     });
+    // Tally forms are intentionally not loaded on initial page view.
+    // Visitors choose to open third-party content, with a direct-link fallback.
+    document.querySelectorAll('iframe[data-tally-src]:not([src])').forEach(frame => {
+      let target;
+      try {
+        target = new URL(frame.dataset.tallySrc);
+        if (target.protocol !== 'https:' || target.hostname !== 'tally.so' || !target.pathname.startsWith('/embed/')) return;
+      } catch { return; }
+      frame.hidden = true;
+      const prompt = document.createElement('div');
+      prompt.className = 'amira-embed-consent';
+      const heading = document.createElement('strong');
+      heading.textContent = ar ? 'عرض النموذج الخارجي' : 'Load the external form';
+      const explanation = document.createElement('p');
+      explanation.textContent = ar
+        ? 'تُقدّم Tally هذا النموذج. عند فتحه، يتصل المتصفح بخوادم Tally وقد تُعالَج بيانات تقنية وفق سياسة خصوصيتها.'
+        : 'This form is provided by Tally. Loading it connects your browser to Tally, which may process technical data under its privacy policy.';
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = ar ? 'فتح نموذج Tally' : 'Load Tally form';
+      button.addEventListener('click', () => {
+        frame.src = target.href;
+        frame.hidden = false;
+        prompt.remove();
+      });
+      prompt.append(heading, explanation, button);
+      frame.before(prompt);
+    });
     const dialog = document.createElement('dialog');
     dialog.className = 'amira-privacy-dialog';
     dialog.setAttribute('aria-label', L.title);
