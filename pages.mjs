@@ -98,9 +98,30 @@ for (const directory of ['', 'ar', 'the-process']) {
       themedSource = themedSource.replace(/<\/head>/i,
         '<link rel="stylesheet" href="' + prefix + 'site-header.css?v=20261121unified" />\n</head>');
     }
-    const html = isDocument && isPrimary && process.env.CF_PAGES_BRANCH === 'main'
-      ? themedSource.replace(/<\/head>/i, `<script defer src="/analytics.js" data-measurement-id="${measurementId}"></script>\n</head>`)
-      : themedSource;
+    // Legal notices and cookie settings are available on every page and in both languages.
+    // GA4 is only initialized on the canonical production domain after opt-in.
+    let html = themedSource;
+    if (isDocument) {
+      const isArabic = directory === 'ar' || /<html[^>]*lang=["']ar/i.test(themedSource);
+      const labels = isArabic
+        ? [['privacy','الخصوصية'],['terms','الشروط'],['cookies','ملفات الارتباط']]
+        : [['privacy','Privacy'],['terms','Terms'],['cookies','Cookies']];
+      const legalPath = name => directory === 'ar' ? name + '.html' : prefix + name + '.html';
+      const legalLinks = '<nav class="legal-links" aria-label="' +
+        (isArabic ? 'المعلومات القانونية' : 'Legal information') + '">' +
+        labels.map(([slug,label]) => '<a href="' + legalPath(slug) + '">' + label + '</a>').join('') +
+        '<button type="button" class="legal-privacy-settings" data-privacy-settings>' +
+        (isArabic ? 'إعدادات الخصوصية' : 'Privacy settings') + '</button></nav>';
+      html = /<\/footer>/i.test(html)
+        ? html.replace(/<\/footer>/i, legalLinks + '</footer>')
+        : html.replace(/<\/body>/i, legalLinks + '</body>');
+      const legalStyles = html.includes('legal.css') ? '' :
+        '<link rel="stylesheet" href="' + prefix + 'legal.css?v=20261122" />\n';
+      const analyticsId = isPrimary && process.env.CF_PAGES_BRANCH === 'main' ? measurementId : '';
+      const controls = '<script defer src="' + prefix +
+        'privacy-controls.js?v=20261122" data-measurement-id="' + analyticsId + '"></script>\n';
+      html = html.replace(/<\/head>/i, legalStyles + controls + '</head>');
+    }
     // Apply the branded canonical domain to public HTML and discovery files.
     const seoOutput = isDocument || ['robots.txt', 'sitemap.xml'].includes(file)
       ? html.replaceAll(site.url, searchCanonical)
@@ -112,7 +133,13 @@ for (const directory of ['', 'ar', 'the-process']) {
 // Keep the Cloudflare Pages preview origin crawlable only on the official
 // custom domain. Cloudflare host-specific headers leave the custom domain alone.
 await writeFile(join(dist, '_headers'),
-  'https://amira-portfolio-ds4.pages.dev/*\\n  X-Robots-Tag: noindex\\n'.replaceAll('\\n', '\n'));
+  ('/*\\n' +
+  '  X-Content-Type-Options: nosniff\\n' +
+  '  Referrer-Policy: strict-origin-when-cross-origin\\n' +
+  '  Permissions-Policy: camera=(), microphone=(), geolocation=()\\n' +
+  '  X-Frame-Options: SAMEORIGIN\\n' +
+  "  Content-Security-Policy: frame-ancestors 'self'\\n" +
+  'https://amira-portfolio-ds4.pages.dev/*\\n  X-Robots-Tag: noindex\\n').replaceAll('\\n', '\n'));
 // Exclude private learning routes from indexing and shared caches.
 await writeFile(join(dist, '_headers'),
   (await readFile(join(dist, '_headers'), 'utf8')) +
