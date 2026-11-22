@@ -22,6 +22,12 @@ jobs:
         run: node build.mjs --check
       - name: Build Cloudflare Pages output (stage 2)
         run: PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
+      - name: Verify privacy, bilingual legal notices, and browser protection
+        run: |
+          node --check privacy-controls.js
+          node --check theme.js
+          node --check pages.mjs
+          node --test tests/legal-privacy.test.mjs
       - name: Verify staff-only educational application in production bundle
         run: |
           test -f dist/the-process/index.html
