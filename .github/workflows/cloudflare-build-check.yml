@@ -94,6 +94,7 @@ jobs:
           test -f dist/endorsements.html
           grep -q 'amira-more-menu' dist/films.html
           grep -q 'amira-more-menu' dist/art.html
+          grep -q 'legacy-menu-adapter' dist/art.html
           grep -q 'amira-more-menu' dist/writing.html
           grep -q 'amira-more-menu' dist/collaborations.html
           grep -q 'amira-more-menu' dist/screenings.html

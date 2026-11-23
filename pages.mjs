@@ -38,6 +38,7 @@ function sharedHeader(source, directory, filename) {
     '<div class="site-header__center nav-panel"><div><nav aria-label="Primary navigation">'+direct+'</nav></div></div>'+
     '<div class="site-header__utilities nav-actions"><nav class="site-header__shortcuts nav-shortcuts" aria-label="Language">'+
     '<a href="'+alternate+'" lang="'+(arabic?'en':'ar')+'">'+(arabic?'English':'العربية')+'</a></nav>'+
+    '<button class="menu-toggle legacy-menu-adapter" type="button" aria-controls="navigation-panel" aria-expanded="false" aria-label="Legacy navigation adapter" hidden></button>'+ 
     '<details class="mobile-menu amira-more-menu"><summary aria-label="'+(arabic?'فتح قائمة الصفحات':'Open more pages')+'">'+mark+'</summary>'+
     '<nav aria-label="More pages">'+dropdown+'</nav></details></div></div></header>';
 }
