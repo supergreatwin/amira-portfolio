@@ -47,10 +47,10 @@
 .process-button:hover{filter:brightness(1.14)}
 .process-button--outline{color:var(--process-ink)!important;background:transparent;border-color:var(--process-line)}
 .process-button--light{background:var(--process-paper);border-color:var(--process-paper);color:var(--process-ink)!important;white-space:nowrap}
-.process-hero-photo{margin:0;position:relative;align-self:center;min-width:0;padding-right:clamp(0rem,2vw,1.7rem)}
-.process-hero-photo img{display:block;width:100%;aspect-ratio:1.05/1;object-fit:cover;object-position:center 45%;background:var(--process-sand);border-radius:2px}
+.process-hero-photo{margin:0;position:relative;align-self:center;min-width:0;padding-right:0}
+.process-hero-photo img{display:block;width:100%;height:auto;aspect-ratio:1.05/1;object-fit:cover;object-position:58% 48%;background:var(--process-sand);border-radius:0}
 .process-hero-photo figcaption{position:absolute;bottom:.9rem;left:1.4rem;font-size:.57rem;font-weight:700;color:white;letter-spacing:.15em;text-shadow:0 1px 5px #000a}
-.process-photo-side{position:absolute;top:.4rem;right:0;writing-mode:vertical-rl;font-size:.59rem;letter-spacing:.19em;color:var(--process-muted)}
+.process-photo-side{position:absolute;top:1rem;right:1rem;writing-mode:vertical-rl;font-size:.59rem;letter-spacing:.19em;color:#fff;text-shadow:0 1px 5px #000a}
 .process-photo-note{position:absolute;bottom:-2rem;right:-1rem;width:min(55%,265px);padding:1.4rem 1.45rem;background:var(--process-paper);box-shadow:0 14px 45px #00000013;transform:rotate(-1deg)}
 .process-photo-note em{font-family:Georgia,serif;display:block;font-size:clamp(1.3rem,2vw,1.85rem);line-height:1.1;letter-spacing:-.04em;color:var(--process-ink)}
 .process-photo-note span{display:block;color:var(--process-muted);font-size:.73rem;line-height:1.6;margin-top:.55rem}
@@ -193,4 +193,21 @@ html[data-theme="dark"] .process-lesson-detail .edu-article{color:#f5efed}
  .process-stage-card{min-height:0}
  .process-header-inner{gap:.3rem!important}
 }
+/* The Process: justify all long-form prose without stretching headlines or controls. */
+.process-page main p:not(.process-kicker):not(.edu-status),
+.process-page main .process-photo-note span,
+.process-page main .edu-article p,
+.process-page main .process-archive-card__summary,
+.process-page main .process-feedback-card p {
+  text-align:justify;
+  text-align-last:left;
+  text-justify:inter-word;
+  hyphens:auto;
+  overflow-wrap:break-word;
+}
+/* Crisp editorial geometry for every CTA and interactive control. */
+.process-page :is(button,.process-button,.process-collaborate,.process-small-button,.process-collection-list .edu-card,.process-archive-card,.process-mobile-menu nav,.process-hero-photo img,.process-photo-note){
+  border-radius:0!important;
+}
+.process-page .process-topbar .theme-toggle{border-radius:0!important}
 @media(prefers-reduced-motion:reduce){.process-archive-card,.process-main-nav a{transition:none}}
