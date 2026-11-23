@@ -264,3 +264,14 @@ html[lang=ar] .site-header.site-header .amira-more-menu[open]>nav>a{letter-spaci
 @media(prefers-reduced-motion:reduce){
  ::view-transition-old(root),::view-transition-new(root){animation-duration:0s!important}
 }
+
+/* Less initial animation latency and fallback for browsers without cross-document View Transitions. */
+.classic-live .hero-content > *{animation-duration:.28s!important;animation-delay:0s!important}
+.classic-live .hero-media{animation-duration:.36s!important}
+@supports not (view-transition-name: root){
+ body:not([data-locale]) > main{animation:amira-page-in .16s ease-out both}
+}
+@media(prefers-reduced-motion:reduce){
+ .classic-live .hero-content > *,.classic-live .hero-media,
+ body:not([data-locale]) > main{animation:none!important}
+}
