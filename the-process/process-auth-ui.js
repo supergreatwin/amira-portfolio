@@ -182,7 +182,11 @@ function setup(){
     }
   });
   processDb.auth.onAuthStateChange((event)=>{
-    if(event==='PASSWORD_RECOVERY')queueMicrotask(()=>mode('password'));
+    if(event==='PASSWORD_RECOVERY')queueMicrotask(()=>{
+      $('process-auth-screen').hidden=false;
+      $('main').hidden=true;
+      mode('password');
+    });
   });
 }
 export async function mountProcessAuth(callback){
@@ -193,7 +197,7 @@ export async function mountProcessAuth(callback){
   else mode('signin');
   try{
     const id=await identifyProcess();
-    if(id.approved)await approved();
+    if(id.approved && !recoveryRequested)await approved();
     else if(id.user && !recoveryRequested){
       mode('claim');
       message('This account needs an invitation before it can enter The Process.');
