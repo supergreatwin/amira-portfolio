@@ -1,9 +1,19 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.1/+esm';
 
+const isEditorialRecoveryCallback = (() => {
+  if (typeof location === 'undefined') return false;
+  if (!/(?:^|\/)(?:ar\/)?editorial(?:\.html)?$/.test(location.pathname)) return false;
+  const fragments = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const search = new URLSearchParams(location.search);
+  let pending = false;
+  try { pending = sessionStorage.getItem('amira-editorial-recovery-pending-v2') === '1'; } catch {}
+  return pending || search.get('reset') === '1' || fragments.get('type') === 'recovery';
+})();
+
 export const cms = createClient(
   'https://tfarhghukyogaowjqykn.supabase.co',
   'sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS',
-  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
+  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:!isEditorialRecoveryCallback}}
 );
 export const BUCKET='amira-site-content';
 export const $=id=>document.getElementById(id);
