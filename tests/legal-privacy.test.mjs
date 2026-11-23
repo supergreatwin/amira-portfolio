@@ -46,7 +46,7 @@ test('Cloudflare build includes privacy links, controls, and hardening headers',
     const html = deployed(path);
     assert.match(html, /privacy-controls\.js/);
     assert.match(html, /legal\.css/);
-    assert.match(html, /class="legal-links"/);
+    assert.match(html, /class="[^"]*\blegal-links\b[^"]*"/);
     assert.match(html, /data-privacy-settings/);
   }
   for (const path of ['pitch.html','collaborate.html','ar/pitch.html','ar/collaborate.html']) {

@@ -279,6 +279,9 @@ const checkOnly = process.argv.includes('--check');
 for (const [file, contents] of outputs) {
   const destination = join(root, file);
   if (!checkOnly) {
+    // Approved, hand-authored pages are the source of truth. Never regenerate
+    // them from the retired layout templates below.
+    if (file.endsWith('.html') && existsSync(destination) && readFileSync(destination, 'utf8').includes('data-approved-classic')) continue;
     writeFileSync(destination, contents);
     continue;
   }
@@ -293,7 +296,7 @@ for (const [file, contents] of outputs) {
     process.exitCode = 1;
   }
   const film = films.find(item => filmPath(item) === file);
-  if (film && !current.includes(`class="film-meta">${meta(film)}</p>`)) {
+  if (film && (!/class="[^"]*\bfilm-meta\b[^"]*"/.test(current) || !current.includes(`>${meta(film)}</p>`))) {
     console.error(`Documentary metadata out of sync: ${file}`);
     process.exitCode = 1;
   }

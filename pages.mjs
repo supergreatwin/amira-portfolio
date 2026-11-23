@@ -2,6 +2,7 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site } from './content.mjs';
+import { createHash } from 'node:crypto';
 
 const root = fileURLToPath(new URL('./', import.meta.url));
 const dist = join(root, 'dist');
@@ -15,6 +16,8 @@ const isPrimary = production.href === site.url;
 const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
 const verificationFile = /^google[a-z0-9]+\.html$/i;
+const approvedShell = JSON.parse(await readFile(join(root, 'approved-shell.json'), 'utf8'));
+const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','approved-classic.js','theme-init.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
 
 // Common header for inner pages; preserve deliberately authored photographic home headers.
 // The private educational pages keep their existing Supabase authorization.
@@ -127,6 +130,32 @@ for (const directory of ['', 'ar', 'the-process']) {
         html = html.replace(/<\/head>/i, '<link rel="stylesheet" href="' + prefix + 'site-refinement.css?v=20261123production"></head>');
       if (!html.includes('site-refinement.js'))
         html = html.replace(/<\/body>/i, '<script defer src="' + prefix + 'site-refinement.js?v=20261123production"></script></body>');
+    }
+    // Use the exact approved shell on every public page. Original gallery content,
+    // signed-media integrations and authenticated editorial applications are retained.
+    if (isDocument && directory !== 'the-process' && /<main\b/i.test(html)) {
+      const ar = directory === 'ar';
+      const approved = html.includes('data-approved-classic');
+      const key = (ar ? 'ar/' : '') + file;
+      const newHeader = approvedShell.headers[key] || approvedShell.headers[(ar?'ar/':'')+'art.html'];
+      html = html.replace(/<header\b[\s\S]*?<\/header>/i,newHeader);
+      html = html.replace(/<footer\b[\s\S]*?<\/footer>/i,approvedShell.footers[ar?'ar':'en']);
+      // Old scripts owned a competing header, theme or design mode.
+      html = html.replace(/<script\b[^>]*src=["'][^"']*(?:\/|^)(?:home|site|theme|site-refinement|site-design-router|education-announcement)\.js[^"']*["'][^>]*><\/script>/gi,'');
+      html = html.replace(/<script\b[^>]*src=["'](?:\.\.\/)?(?:home|site|theme|site-refinement|site-design-router|education-announcement)\.js[^"']*["'][^>]*><\/script>/gi,'');
+      html = html.replace(/<link\b[^>]*href=["'][^"']*(?:site-header|site-refinement|education-announcement)\.css[^"']*["'][^>]*>/gi,'');
+      if (!approved) {
+        html = html.replace(/<body([^>]*)>/i,'<body$1><div id="canvas" dir="'+(ar?'rtl':'ltr')+'">');
+        html = html.replace(/<\/body>/i,'</div></body>');
+        html = html.replace(/<\/body>/i,'<dialog id="filmImageViewer" aria-label="Original image viewer"><div class="viewer-bar"><strong>Original photograph</strong><button type="button" data-viewer-close aria-label="Close photograph">Close ×</button></div><img id="filmViewerPhoto" alt=""><p id="filmViewerCaption"></p></dialog></body>');
+      }
+      if (approved) html=html.replace(/<link\b[^>]*href=["'][^"']*theme\.css[^"']*["'][^>]*>/gi,'');
+      if (!html.includes('rel="icon"')) html=html.replace(/<\/head>/i,'<link rel="icon" href="'+prefix+'assets/portrait-title.webp" type="image/webp"></head>');
+      // Last stylesheet is authoritative; content hashes invalidate stale edge caches.
+      html = html.replace(/<link\b[^>]*href=["'][^"']*approved-classic\.css[^"']*["'][^>]*>/gi,'');
+      html = html.replace(/<\/head>/i,'<link rel="stylesheet" href="'+prefix+'approved-classic.css?v='+assetRevisions['approved-classic.css']+'"></head>');
+      if (!html.includes('approved-classic.js')) html=html.replace(/<\/body>/i,'<script defer src="'+prefix+'approved-classic.js"></script></body>');
+      for (const [asset,hash] of Object.entries(assetRevisions)) html=html.replaceAll(asset+'"',asset+'?v='+hash+'"');
     }
     // Apply the branded canonical domain to public HTML and discovery files.
     const seoOutput = isDocument || ['robots.txt', 'sitemap.xml'].includes(file)

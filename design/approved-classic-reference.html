@@ -1,0 +1,1279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Amira Abdelfadil | Classic Homepage — Corrected Review Prototype</title>
+<meta name="description" content="Interactive design-only prototype for the revised Amira classic portfolio.">
+<style>
+:root{--paper:#f8f5ef;--ink:#23201f;--muted:#625a55;--wine:#794856;--border:#d8cfc9;--soft:#e9dfe0;--panel:#f2eeea;--mast:#f7f4ef;--focus:#8f5065;--btn:#2c2227;}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:var(--ink);background:#e4dedb;font:400 15px/1.58 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--focus);outline-offset:3px}
+/* Demo-only controls: never part of the real public website. */
+.demo-toolbar{position:sticky;top:0;z-index:100;background:#292326;color:#f8f5ef;display:flex;align-items:center;justify-content:space-between;gap:13px;padding:9px clamp(12px,2.4vw,30px);font-size:12px;box-shadow:0 6px 15px #0002}
+.demo-toolbar strong{font-weight:800;letter-spacing:.035em}.demo-toolbar small{color:#d8d2d4;font-size:11px}.demo-controls{display:flex;align-items:center;gap:7px;flex-wrap:wrap}.demo-controls button{border:1px solid #8d8186;background:transparent;color:inherit;padding:8px 10px;border-radius:2px;font-size:12px;line-height:1.1;white-space:nowrap}.demo-controls button.active{background:#fbf2f1;color:#292326;border-color:#fbf2f1}.demo-controls button:hover{border-color:#fff}
+#canvas{background:var(--paper);color:var(--ink);margin:auto;max-width:1800px;min-height:calc(100vh - 51px);box-shadow:0 6px 32px #29232612;display:flex;flex-direction:column;transition:background .2s,color .2s,max-width .2s;position:relative}#canvas.dark{--paper:#080808;--ink:#eee8e6;--muted:#c7bdbb;--wine:#dbb2be;--border:#353132;--soft:#271d20;--panel:#181616;--mast:#080808;--focus:#e6b6c2;--btn:#ded3d2}#canvas.mobile{max-width:390px;min-height:730px}#canvas.mobile .site-header{padding:12px 18px}#canvas.mobile .header-aux{display:none}#canvas.mobile .brand{font-size:19px}#canvas.mobile .content{width:calc(100% - 36px)}#canvas.mobile .hero-split,#canvas.mobile .about-grid,#canvas.mobile .film-grid,#canvas.mobile .film-detail-grid{grid-template-columns:1fr}#canvas.mobile .hero{padding:25px 0 57px}#canvas.mobile .hero-title{font-size:64px}#canvas.mobile .hero-media{margin-top:2px}#canvas.mobile .hero-media img{aspect-ratio:1.03}#canvas.mobile .footer-inner{flex-direction:column;align-items:flex-start}#canvas.mobile .footer-legal{gap:13px}#canvas.mobile .about-grid .portrait{max-height:none}#canvas.mobile .page-head h1{font-size:48px}#canvas.mobile .film-grid{gap:25px}#canvas.mobile .film-card img{height:240px}#canvas.mobile .hero-still-credit{font-size:11px}#canvas.mobile .site-header .menu-label{display:none}#canvas.mobile .modal-inner{padding:15px}
+.site-header{width:100%;min-height:80px;padding:14px clamp(22px,5vw,72px);display:flex;gap:16px;align-items:center;justify-content:space-between;position:relative;z-index:40;background:var(--paper)}.brand{font-weight:900;letter-spacing:-.08em;font-size:clamp(22px,2.1vw,30px);line-height:1.05;border:0;background:transparent;color:var(--ink);padding:8px 1px;white-space:nowrap;text-shadow:2px 3px 7px rgba(19,14,16,.29)}.brand .wine{color:var(--wine)}#canvas.dark .brand{text-shadow:2px 3px 9px #b1a3a36b}.header-right{display:flex;align-items:center;gap:8px}.header-aux{font-size:12px;font-weight:800;letter-spacing:.01em;border:0;background:transparent;color:var(--ink);padding:9px 12px;text-shadow:1px 2px 5px #0003}.header-aux:hover,.nav-popover a:hover{color:var(--wine)}.icon-button{border:1px solid var(--border);background:transparent;color:var(--ink);width:40px;height:40px;display:grid;place-items:center;border-radius:50%;font-size:19px}.icon-button:hover{background:var(--soft)}.menu-toggle{display:flex;gap:10px;align-items:center;border:1px solid var(--border);padding:10px 11px 10px 13px;background:transparent;color:var(--ink);font-size:12px;text-transform:uppercase;font-weight:750;letter-spacing:.055em;text-shadow:1px 2px 4px #0003;min-height:40px}.menu-toggle:hover{background:var(--soft)}.hamburger{display:grid;gap:4px;width:22px}.hamburger b{height:2px;background:currentColor;width:22px;display:block;transition:transform .2s,opacity .2s}.menu-toggle[aria-expanded="true"] .hamburger b:first-child{transform:translateY(6px) rotate(45deg)}.menu-toggle[aria-expanded="true"] .hamburger b:nth-child(2){opacity:0}.menu-toggle[aria-expanded="true"] .hamburger b:last-child{transform:translateY(-6px) rotate(-45deg)}
+.nav-popover{position:absolute;right:clamp(18px,5vw,72px);top:calc(100% - 3px);width:min(420px,calc(100vw - 35px));padding:9px 24px 18px;box-shadow:0 22px 35px #0002;border:1px solid var(--border);background:var(--paper);display:none;z-index:41}.nav-popover.open{display:block}.nav-popover a{display:flex;align-items:center;justify-content:space-between;padding:13px 1px;border-bottom:1px solid var(--border);font-size:20px;font-weight:800;letter-spacing:-.045em;text-shadow:1px 2px 3px #0002}.nav-popover a::after{content:'↗';font-size:16px;font-weight:450}.nav-popover .nav-foot{padding:13px 0 0;display:flex;justify-content:space-between;color:var(--muted);font-size:11px}.nav-popover a[aria-current="page"]{color:var(--wine)}
+.site-main{flex:1}.page{display:none}.page.active{display:block}.content{width:min(1230px,calc(100% - clamp(46px,10vw,150px)));margin:0 auto}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.135em;font-weight:750;color:var(--wine);margin:0 0 13px}.hero{padding:45px 0 82px;border-top:1px solid var(--border)}.hero-split{display:grid;grid-template-columns:1fr 1.15fr;gap:clamp(20px,4vw,62px);align-items:center}.hero-title{font-size:clamp(58px,7vw,108px);font-weight:850;letter-spacing:-.085em;line-height:.91;margin:13px 0 22px;overflow-wrap:anywhere}.hero-title em,.page-head em,.about-title em{font-style:normal;color:var(--wine)}.lead{font-size:clamp(14px,1.4vw,19px);max-width:36ch;color:var(--muted);line-height:1.64}.hero-cta{margin-top:24px;display:flex;gap:9px;flex-wrap:wrap}.outlined{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--wine);background:transparent;color:var(--wine);padding:11px 13px;font-weight:750;font-size:12px;min-height:42px}.outlined:hover{background:var(--soft)}.filled{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--wine);background:var(--wine);color:#fff;padding:11px 13px;font-weight:750;font-size:12px;min-height:42px}.filled:hover{filter:brightness(.9)}.hero-media{margin:0;min-width:0;width:100%;display:grid;grid-template-columns:minmax(0,1fr);gap:0}.hero-media img{display:block;width:100%;aspect-ratio:1.7;object-fit:cover;background:var(--soft)}.hero-still-credit{width:100%;margin:0;padding:10px 0 0;border:0;font-size:12px;color:var(--muted);text-align:left!important;letter-spacing:0;line-height:1.35}
+.section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:28px}.section-head h2{font-size:clamp(30px,4vw,54px);margin:0;letter-spacing:-.065em;line-height:1.06}.mini-link{font-size:12px;font-weight:750;color:var(--wine)}.section-block{padding:29px 0 84px;border-top:1px solid var(--border)}.film-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}.film-card{min-width:0}.film-card a:hover .film-card-title{color:var(--wine)}.film-card img{width:100%;height:clamp(250px,30vw,450px);object-fit:cover;object-position:center 35%;display:block;background:var(--panel)}.film-card-foot{display:flex;justify-content:space-between;gap:14px;align-items:baseline;padding-top:14px}.film-card-title{font-size:22px;font-weight:820;letter-spacing:-.05em}.film-card-year{font-size:12px;color:var(--muted)}.about-section{padding:24px 0 80px;border-top:1px solid var(--border)}.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,4vw,55px);align-items:start}.about-grid>div,.about-grid>figure{margin:0;min-width:0;align-self:start}.about-title{font-size:clamp(49px,5.4vw,77px);margin:0 0 18px;letter-spacing:-.075em;line-height:1.02}.arabic-kicker{color:var(--wine);font-size:15px;margin:0 0 8px}.about-grid .portrait{width:100%;display:block;aspect-ratio:.86;object-fit:cover;object-position:center top}.about-grid figcaption{font-size:12px;padding:9px 0;color:var(--muted);text-align:left!important}.prose{font-size:15px;line-height:1.8;color:var(--muted);hyphens:auto;overflow-wrap:anywhere}.prose p{margin:0 0 17px;text-align:justify;text-justify:inter-word}.page-head{padding:43px 0 27px;border-top:1px solid var(--border)}.page-head h1{font-size:clamp(47px,6vw,86px);line-height:1;letter-spacing:-.075em;margin:0 0 20px}.page-head p{max-width:760px;text-align:justify;text-justify:inter-word;line-height:1.72;color:var(--muted)}
+.essays{padding-bottom:70px}.essay-label{display:inline-block;color:#f7eef2;background:#794856;padding:3px 7px;font-size:20px;font-weight:850;letter-spacing:-.05em;margin:18px 0 13px}.essay-link{border-top:1px solid var(--border);padding:21px 0;display:flex;justify-content:space-between;align-items:center;gap:17px;font-size:clamp(19px,2.4vw,31px);font-weight:800;line-height:1.3;letter-spacing:-.035em}.essay-link:hover{color:var(--wine)}.essay-link span:last-child{font-size:24px;font-weight:400}.essay-group{margin:0 0 17px}.still-example{padding:12px 0 65px}.still-block{width:min(100%,840px);margin:0 auto 40px;display:grid;grid-template-columns:1fr;gap:0}.still-block img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;object-position:center}.still-block figcaption{padding-top:12px;text-align:left!important;max-width:none!important;margin:0!important;color:var(--muted);font-size:13px;line-height:1.5}.still-copy{width:min(100%,840px);margin:0 auto}.guide-tag{color:var(--wine);font-size:11px;text-transform:uppercase;letter-spacing:.08em;font-weight:750}.still-example .prose{margin-top:10px}
+.forms-section{padding:16px 0 70px}.form-buttons{display:flex;flex-wrap:wrap;gap:12px;padding:12px 0 31px}.form-actions-title{font-size:24px;font-weight:760;letter-spacing:-.04em;margin:0 0 8px}.form-muted{font-size:13px;color:var(--muted);max-width:650px}.simple-section{min-height:450px;padding:26px 0 70px}.contact-details{display:flex;align-items:flex-start;gap:14px;flex-wrap:wrap}.contact-details a{border-bottom:1px solid var(--wine);color:var(--wine)}
+.site-footer{border-top:1px solid var(--border);margin-top:auto}.footer-inner{padding:17px 0;display:flex;align-items:center;justify-content:space-between;gap:12px 24px;flex-wrap:wrap}.footer-sign{color:var(--muted);font-size:12px}.footer-legal{display:flex;gap:17px;flex-wrap:wrap;align-items:center}.footer-legal button,.footer-legal a{font-size:12px;color:var(--muted);border:0;background:transparent;padding:0;text-decoration:underline;text-underline-offset:3px}.footer-legal button:hover,.footer-legal a:hover{color:var(--wine)}.scroll-top{position:fixed;z-index:31;right:25px;bottom:21px;color:var(--paper);background:var(--ink);padding:11px 15px;border:1px solid var(--border);box-shadow:0 7px 20px #0004;font-size:12px;opacity:0;pointer-events:none;transform:translateY(7px);transition:.2s}.scroll-top.show{opacity:1;pointer-events:auto;transform:none}
+/* Demo editorial view is separate from the public navigation, behind prototype-only controls. */
+.ed-wrap{padding:25px 0 60px}.ed-header{padding:4px 0 28px}.ed-header h1{font-size:clamp(34px,5vw,60px);letter-spacing:-.06em;line-height:1.1;margin:8px 0}.ed-note{font-size:13px;color:var(--muted);margin:8px 0;max-width:740px}.ed-panel{border:1px solid var(--border);background:var(--panel);padding:clamp(17px,3vw,30px);margin-bottom:18px}.ed-panel h2{margin:3px 0 15px;font-size:25px;letter-spacing:-.045em}.editor-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}.ed-field{margin:0 0 17px}.ed-field label{display:block;font-size:12px;font-weight:780;margin:0 0 6px}.ed-field select,.ed-field input:not([type="file"]),.ed-field textarea{color:var(--ink);background:var(--paper);border:1px solid var(--border);width:100%;min-height:40px;padding:10px 11px;border-radius:0}.ed-field textarea{height:72px;resize:vertical}.ed-preview-image{width:100%;aspect-ratio:1.65;object-fit:cover;display:block;background:var(--soft)}.ed-preview-credit{width:100%;margin-top:7px;color:var(--muted);font-size:12px}.ed-sub{font-size:11px;color:var(--muted);margin:4px 0 13px}.range-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ed-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:19px}.ed-status{color:var(--wine);font-size:12px;font-weight:700;min-height:18px;margin:10px 0 0}.ed-preview-rule{border-bottom:1px solid var(--border);padding-bottom:14px;margin-bottom:13px}.ed-checkbox{display:flex;gap:10px;align-items:flex-start;margin:6px 0 13px;color:var(--muted);font-size:12px}.ed-checkbox input{margin-top:3px}.ed-callout{font-size:12px;border-left:2px solid var(--wine);padding:8px 0 8px 11px;color:var(--muted);line-height:1.6;background:transparent}.preview-mobile-mock{max-width:220px;margin:12px 0 4px;border:7px solid #30282a;border-radius:20px;overflow:hidden;background:var(--paper)}.preview-mobile-mock img{display:block;width:100%;aspect-ratio:1.02;object-fit:cover}.preview-mobile-mock p{margin:0;padding:7px;font-size:10px;color:var(--muted)}.ed-toolbar-tabs{display:flex;gap:0;border-bottom:1px solid var(--border);margin:14px 0 23px}.ed-toolbar-tabs button{padding:12px 17px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--muted);font-weight:750}.ed-toolbar-tabs button.selected{border-bottom-color:var(--wine);color:var(--ink)}
+.modal{width:min(660px,calc(100vw - 24px));max-height:min(88vh,960px);padding:0;border:1px solid var(--border);background:var(--paper);color:var(--ink);box-shadow:0 26px 100px #0005}.modal::backdrop{background:rgba(15,11,13,.69);backdrop-filter:blur(3px)}.modal-inner{padding:23px}.modal-top{display:flex;align-items:start;justify-content:space-between;gap:16px;margin-bottom:9px}.modal-top h2{font-size:26px;letter-spacing:-.05em;line-height:1.1;margin:0}.modal-top button{background:transparent;border:1px solid var(--border);color:var(--ink);font-size:24px;line-height:1;width:38px;height:38px}.modal iframe{border:0;width:100%;height:min(61vh,650px);display:block;background:var(--panel)}.modal .hint{font-size:12px;color:var(--muted);margin:9px 0}.modal .pill-link{border:1px solid var(--wine);padding:8px 12px;font-size:12px;color:var(--wine)}.modal iframe[hidden]{display:none}
+#canvas[dir="rtl"] .hero-still-credit,#canvas[dir="rtl"] .still-block figcaption{text-align:right!important}#canvas[dir="rtl"] .hero-split,#canvas[dir="rtl"] .about-grid{direction:rtl}#canvas[dir="rtl"] .prose p{text-align:justify}#canvas[dir="rtl"] .site-header .brand{direction:ltr}#canvas[dir="rtl"] .nav-popover{left:22px;right:auto}#canvas[dir="rtl"] .site-footer{direction:rtl}
+@media(max-width:800px){.demo-toolbar{align-items:flex-start;flex-direction:column;gap:5px}.site-header{padding:15px 20px}.header-aux{display:none}.hero-split,.about-grid,.film-detail-grid,.editor-grid{grid-template-columns:1fr}.hero{padding:30px 0 62px}.hero-media img{aspect-ratio:1.25}.hero-title{font-size:70px}.about-grid .portrait{aspect-ratio:1.09}.film-grid{gap:15px}.film-card img{height:260px}.footer-inner{align-items:flex-start;flex-direction:column}.form-buttons{gap:10px}.content{width:calc(100% - 42px)}}
+@media(max-width:520px){.brand{font-size:20px}.menu-label{display:none}.site-header{min-height:67px}.header-right{gap:6px}.icon-button{height:37px;width:37px}.menu-toggle{height:37px;min-height:37px;padding:8px}.hero-title{font-size:59px}.page-head h1{font-size:51px}.film-card img{height:210px}.film-grid{grid-template-columns:1fr}.section-block{padding-bottom:60px}.essay-link{font-size:19px}.ed-panel{padding:17px}.range-pair{grid-template-columns:1fr}.footer-legal{gap:12px}.modal .hint{font-size:11px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* Image-integrity correction (prototype v2): always display Amira's source assets untouched. */
+#canvas img, #canvas.mobile img, #canvas.dark img {filter:none!important;mix-blend-mode:normal!important;opacity:1!important;}
+#canvas .hero-media img,#canvas.mobile .hero-media img,
+#canvas .still-block img,#canvas.mobile .still-block img,
+#canvas .about-grid .portrait,#canvas.mobile .about-grid .portrait,
+#canvas .film-card img,#canvas.mobile .film-card img {
+  aspect-ratio:auto!important;height:auto!important;max-height:none!important;
+  object-fit:contain!important;object-position:center center!important;
+  image-rendering:auto!important;transform:none!important;
+}
+#canvas .hero-media, #canvas .hero-still-credit, #canvas .still-block,
+#canvas .still-block figcaption {min-width:0;max-width:100%;}
+#canvas .about-grid>figure {margin:0;align-self:start;}
+#canvas .about-grid>div {align-self:start;}
+#canvas .hero-still-credit,#canvas .still-block figcaption {text-align:start!important;}
+
+
+/* CORRECTIONS: exact classic homepage composition, adapted from the actual classic source. */
+#canvas{--paper:#f8f4ec;--ink:#292420;--muted:#62554a;--wine:#743b49;--border:#29242026;--soft:#e9dcc9;--panel:#fffcf7}
+#canvas.dark{--paper:#000;--ink:#f8f4ec;--muted:#c9baae;--wine:#e0acb8;--border:#f8f4ec2b;--soft:#171414;--panel:#080808}
+#canvas .site-header{min-height:56px;padding:7px clamp(20px,4.5vw,72px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:40}
+#canvas .brand{font-size:clamp(16px,1.4vw,20px);font-weight:800;letter-spacing:-.06em;text-shadow:2px 3px 6px #0003;line-height:1.2}
+#canvas.dark .brand{text-shadow:2px 2px 5px #d0b2be45}
+#canvas .header-right{gap:10px}
+#canvas .header-aux{display:inline-flex;font-size:13px;font-weight:630;color:var(--ink);text-shadow:none;border-right:1px solid var(--border);padding-right:18px}
+#canvas .menu-toggle{border-radius:50%;width:42px;height:42px;padding:0;justify-content:center;min-height:42px}
+#canvas .menu-toggle .menu-label{display:none}
+#canvas .nav-popover a{font-size:19px;font-weight:690;text-shadow:1px 2px 4px #0002}
+#canvas #page-home .hero.classic-original{width:100%;padding:clamp(30px,2.4vw,39px) clamp(20px,4.5vw,72px) 0;border-top:0;text-align:center}
+#canvas #page-home .hero-content{margin:0 auto clamp(30px,2.4vw,39px)}
+#canvas #page-home .hero-kicker{font-size:12px;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:var(--wine);line-height:1.4}
+#canvas #page-home .hero-kicker span{margin:0 .3rem}
+#canvas #page-home .hero-title{color:var(--ink);margin:7px auto 13px;font-size:min(8.15vw,120px);font-weight:690;line-height:.98;letter-spacing:-.062em;word-spacing:.035em;white-space:nowrap;overflow-wrap:normal}
+#canvas #page-home .hero-intro{color:var(--muted);max-width:34ch;font-size:clamp(17px,2vw,25px);font-weight:530;line-height:1.35;letter-spacing:-.023em;margin:0 auto;text-wrap:balance;text-align:center}
+#canvas #page-home .hero-cta{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin:24px auto 0}
+#canvas #page-home .hero-cta .filled,#canvas #page-home .hero-cta .outlined{border-radius:5px;min-height:46px;font-size:14px;font-weight:620;padding:10px 18px;letter-spacing:-.015em}
+#canvas #page-home .hero-media{position:relative;isolation:isolate;overflow:hidden;width:min(100%,1312px);height:clamp(335px,40vw,545px);margin:0 auto;border-radius:clamp(18px,2.3vw,30px);background:#292420;display:block}
+#canvas #page-home .hero-media img{width:100%;height:100%;aspect-ratio:auto;object-fit:cover;object-position:53% 57%;filter:none!important;transform:none!important;border-radius:0;display:block}
+#canvas #page-home .hero-still-credit{position:absolute;right:14px;bottom:14px;left:auto;top:auto;width:auto;background:#292420;color:#f8f4ec;padding:5px 11px;font-size:11px;font-weight:500;border-radius:100px;text-align:center!important}
+#canvas #page-home .hero-still-credit[hidden]{display:none}
+/* Essays: use normal unhighlighted labels; give each title one consistent weight and ink color. */
+#canvas .essay-label{background:none!important;color:var(--wine)!important;padding:0 0 6px!important;border-bottom:1px solid var(--wine);font-size:17px;font-weight:620;letter-spacing:-.02em}
+#canvas .essay-link{font-weight:630;color:var(--ink);letter-spacing:-.03em}
+#canvas .essay-link:hover{color:var(--wine)}
+#canvas .essay-link:not(:hover) span:first-child{color:inherit}
+/* Readable prose only: keep headings, captions and buttons aligned naturally. */
+#canvas .prose p,#canvas .page-head p{font-weight:400;text-align:justify;text-justify:inter-word}
+#canvas .about-grid{align-items:start}
+#canvas .about-grid>div,#canvas .about-grid>figure{align-self:start}
+#canvas .about-grid .portrait{filter:none!important;transform:none!important}
+#canvas .still-block img{filter:none!important;transform:none!important}
+#canvas .site-footer{border-top:1px solid var(--border)}
+#canvas .footer-inner{gap:15px}
+#canvas.mobile{width:390px!important;min-width:0!important;max-width:390px!important;overflow:hidden!important;flex:0 0 auto!important}
+/* Responsive reproduces the same hierarchy instead of a new visual system. */
+@media(max-width:800px){
+ #canvas #page-home .hero.classic-original{padding:46px 21px 0}
+ #canvas #page-home .hero-title{font-size:clamp(44px,8.2vw,72px);white-space:normal}
+ #canvas #page-home .hero-media{height:clamp(300px,60vw,460px)}
+ #canvas #page-home .hero-content{margin-bottom:39px}
+ #canvas #page-home .hero-intro{font-size:18px}
+ #canvas .site-header{padding:8px 20px}
+ #canvas .header-aux{display:inline-flex}
+}
+#canvas.mobile #page-home .hero.classic-original{padding:44px 18px 0}
+#canvas.mobile #page-home .hero-title{font-size:clamp(42px,11vw,60px);line-height:1.02;white-space:normal}
+#canvas.mobile #page-home .hero-media{height:315px;border-radius:18px}
+#canvas.mobile #page-home .hero-media img{aspect-ratio:auto;height:100%}
+#canvas.mobile #page-home .hero-intro{font-size:17px}
+#canvas.mobile .section-head{flex-wrap:wrap;align-items:start}
+#canvas.mobile .section-head h2{font-size:35px;overflow-wrap:break-word}
+#canvas.mobile .mini-link{margin:0 0 4px}
+#canvas.mobile .film-grid{grid-template-columns:1fr}
+#canvas.mobile #page-home .hero-content{margin-bottom:35px}
+#canvas.mobile .site-header{padding:8px 14px}
+#canvas.mobile .brand{font-size:17px}
+#canvas.mobile .header-aux{display:inline-flex;font-size:11px;padding:8px 5px}
+#canvas.mobile .header-right{gap:4px}
+#canvas.mobile .icon-button{width:34px;height:34px}
+#canvas.mobile .menu-toggle{height:34px;width:34px;min-height:34px}
+@media(max-width:450px){#canvas:not(.mobile) .brand{font-size:16px}#canvas:not(.mobile) .header-aux{font-size:11px;padding:6px 4px}#canvas:not(.mobile) .header-right{gap:3px}}
+
+
+/* Responsive: use the existing classic design at all device widths. */
+html,body{max-width:100%;overflow-x:clip}
+#canvas{width:100%;min-width:0}
+#canvas .site-main,#canvas .page,#canvas .content,#canvas .film-card,#canvas .about-grid>*,#canvas .editor-grid>*{min-width:0}
+#canvas .essay-link span:first-child{overflow-wrap:anywhere;min-width:0}
+#canvas #page-home .hero-media img{width:100%;height:100%!important;object-fit:cover!important;object-position:53% 57%!important}
+#canvas .about-grid .portrait,#canvas .still-block img{width:100%;height:auto!important;object-fit:contain!important}
+#canvas .nav-popover{max-height:min(75dvh,620px);overflow-y:auto}
+#canvas .ed-panel,#canvas .ed-field,#canvas .ed-preview-rule{min-width:0;max-width:100%}
+#canvas .ed-preview-image,#canvas .preview-mobile-mock img{max-width:100%;height:auto}
+#canvas.mobile{width:min(390px,100%)!important;max-width:min(390px,100%)!important}
+#canvas.mobile .nav-popover{left:12px!important;right:12px!important;width:auto!important}
+#canvas.mobile .editor-grid{grid-template-columns:1fr}
+#canvas[dir=rtl]{font-family:Tahoma,"Segoe UI",Arial,sans-serif}
+#canvas[dir=rtl] .eyebrow{letter-spacing:0}
+#canvas[dir=rtl] .hero-title,#canvas[dir=rtl] .page-head h1,#canvas[dir=rtl] .about-title{letter-spacing:-.035em;line-height:1.13}
+#canvas[dir=rtl] .nav-popover a,#canvas[dir=rtl] .essay-link{letter-spacing:0}
+#canvas[dir=rtl] .prose,#canvas[dir=rtl] .page-head p{hyphens:none}
+#canvas[dir=rtl] .header-right,#canvas[dir=rtl] .brand{direction:ltr}
+#canvas[dir=rtl] .footer-inner{direction:rtl}
+#canvas[dir=rtl] #page-home .hero-content{text-align:center}
+#canvas[dir=rtl] #page-home .hero-title{white-space:normal}
+@media(max-width:1040px){
+ #canvas .content{width:calc(100% - 64px)}
+ #canvas .editor-grid{gap:22px}
+ #canvas .page-head h1{font-size:clamp(41px,6vw,78px)}
+}
+@media(max-width:800px){
+ #canvas .hero-split,#canvas .about-grid,#canvas .film-detail-grid,#canvas .editor-grid{grid-template-columns:1fr}
+ #canvas .content{width:calc(100% - 42px)}
+ #canvas .film-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #canvas .section-head{flex-wrap:wrap}
+ #canvas .nav-popover{right:16px;max-width:calc(100% - 32px)}
+ #canvas .about-grid .portrait{max-width:540px}
+}
+@media(max-width:600px){
+ .demo-toolbar{flex-direction:column;align-items:stretch;gap:7px}
+ .demo-controls{gap:5px}.demo-controls button{font-size:11px;padding:7px 8px}
+ #canvas .site-header{min-height:60px;padding:8px 12px;gap:7px}
+ #canvas .brand{font-size:clamp(15px,4vw,19px)}
+ #canvas .header-right{gap:4px}
+ #canvas .header-aux{font-size:11px;padding:6px 4px}
+ #canvas .icon-button,#canvas .menu-toggle{width:36px;height:36px;min-width:36px;min-height:36px}
+ #canvas .content{width:calc(100% - 34px)}
+ #canvas #page-home .hero.classic-original{padding:38px 13px 0}
+ #canvas #page-home .hero-title{font-size:clamp(38px,10.3vw,58px);white-space:normal;line-height:1.03}
+ #canvas #page-home .hero-intro{font-size:clamp(16px,4.5vw,19px)}
+ #canvas #page-home .hero-content{margin-bottom:28px}
+ #canvas #page-home .hero-media{height:clamp(280px,72vw,375px);border-radius:18px}
+ #canvas .film-grid{grid-template-columns:1fr;gap:22px}
+ #canvas .film-card img{height:auto;aspect-ratio:5/4;object-fit:contain}
+ #canvas .hero-cta .filled,#canvas .hero-cta .outlined{font-size:12px;min-height:42px;padding:9px 12px}
+ #canvas .essay-link{font-size:clamp(18px,5vw,24px);gap:10px}
+ #canvas .about-title{font-size:clamp(39px,12vw,54px)}
+ #canvas .section-block{padding-bottom:52px}
+ #canvas .footer-inner{gap:10px;padding:15px 0}
+ #canvas .footer-legal{gap:10px}
+ #canvas .ed-panel{padding:16px}
+ #canvas .range-pair{grid-template-columns:1fr}
+ #canvas .modal-inner{padding:14px}
+}
+@media(max-width:360px){
+ #canvas .brand{font-size:14px}
+ #canvas .header-aux{font-size:10px;padding:3px}
+ #canvas .site-header{padding:7px 9px}
+ #canvas #page-home .hero-title{font-size:clamp(36px,10.5vw,43px)}
+ #canvas .footer-legal a,#canvas .footer-legal button{font-size:11px}
+}
+
+/* Arabic name is translated in both the main heading and the wordmark.
+   Keep original imagery untouched; locale changes text only. */
+#canvas[dir="rtl"] .site-header .brand{
+ direction:rtl; unicode-bidi:plaintext; letter-spacing:0; font-family:Tahoma,Arial,sans-serif;
+ font-weight:760; line-height:1.5; white-space:nowrap;
+}
+#canvas[dir="rtl"] #page-home .hero-title{
+ font-family:Tahoma,Arial,sans-serif; direction:rtl; unicode-bidi:plaintext;
+ letter-spacing:0; word-spacing:normal; font-weight:730; line-height:1.35;
+ font-size:clamp(44px,6.7vw,98px); max-width:100%; white-space:normal;
+ overflow-wrap:normal;
+}
+@media(max-width:600px){
+ #canvas[dir="rtl"] #page-home .hero-title{font-size:clamp(38px,9.2vw,56px);line-height:1.38}
+ #canvas[dir="rtl"] .site-header .brand{font-size:clamp(15px,3.7vw,19px)}
+}
+@media(max-width:360px){
+ #canvas[dir="rtl"] #page-home .hero-title{font-size:clamp(34px,9.1vw,40px)}
+}
+#canvas.mobile[dir="rtl"] #page-home .hero-title{font-size:clamp(37px,10vw,48px)}
+
+/* Original full filmography showcase: five untouched posters, responsive grid. */
+#canvas .showcase-section{padding-top:clamp(36px,5vw,65px)}
+#canvas .showcase-section .section-head{margin-bottom:26px}
+#canvas .showcase-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:clamp(9px,1.4vw,18px);align-items:start}
+#canvas .showcase-card{min-width:0}
+#canvas .showcase-open{width:100%;border:0;background:transparent;color:var(--ink);display:flex;flex-direction:column;align-items:stretch;padding:0;text-align:start;cursor:pointer}
+#canvas .showcase-open:hover .showcase-name,#canvas .showcase-open:focus-visible .showcase-name{color:var(--wine)}
+#canvas .showcase-open:focus-visible{outline:2px solid var(--wine);outline-offset:4px}
+#canvas .showcase-poster{display:block;aspect-ratio:5/7;overflow:hidden;background:var(--panel);border:1px solid var(--border);border-radius:clamp(8px,1.2vw,16px)}
+#canvas .showcase-poster img{width:100%;height:100%;object-fit:contain;object-position:center;display:block;filter:none!important;transform:none!important}
+#canvas .showcase-meta{font-size:clamp(10px,.82vw,12px);line-height:1.55;color:var(--muted);font-weight:500;padding:12px 0 0}
+#canvas .showcase-name{display:flex;gap:8px;justify-content:space-between;align-items:start;font-size:clamp(15px,1.5vw,22px);font-weight:680;line-height:1.14;letter-spacing:-.035em;padding:5px 0 10px;min-width:0;transition:color .2s}
+#canvas .showcase-arrow{font-size:18px;font-weight:400;flex:none}
+#canvas[dir=rtl] .showcase-name{letter-spacing:0}
+.film-dialog{width:min(1120px,calc(100% - 34px));max-width:calc(100% - 34px);max-height:calc(100dvh - 34px);margin:auto;background:var(--film-dialog-paper,#f8f4ec);color:#292420;border:1px solid #c7b9b0;padding:0;box-shadow:0 20px 65px #0008;overflow-y:auto}
+.film-dialog::backdrop{background:rgba(15,11,11,.77)}
+.film-dialog-layout{padding:clamp(18px,3.5vw,46px)}
+.film-dialog-bar{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #ccbfc0;padding-bottom:12px;margin-bottom:26px}
+.film-dialog-bar .eyebrow{color:#784a50;margin:0}
+.film-close{background:none;border:1px solid #c4b9b5;border-radius:50%;width:38px;height:38px;font-size:27px;cursor:pointer}
+.film-dialog-columns{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);align-items:start;gap:clamp(20px,4vw,52px)}
+.film-dialog-poster{margin:0}.film-dialog-poster img{display:block;width:100%;height:auto;object-fit:contain;background:#e5dfdb}
+.film-dialog-body h2{margin:0 0 5px;font-size:clamp(30px,4vw,56px);letter-spacing:-.045em;line-height:1.1}
+#filmDialogMeta{margin:0 0 25px;color:#6b5c5d;font-size:13px}
+.film-dialog-body h3,.film-stills-heading h3{font-size:18px;margin:21px 0 8px;color:#784a50}
+#filmDialogSynopsis{font-size:15px;line-height:1.8;text-align:justify;text-justify:inter-word;margin:0 0 19px}
+.film-credits{border-top:1px solid #ccbfc0;padding-top:11px;font-size:13px;line-height:1.7}
+.film-credits p{margin:7px 0}.film-credits strong{color:#784a50}
+.film-stills-heading{margin-top:32px;border-top:1px solid #ccbfc0;padding-top:7px}
+.film-still-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.film-still-grid img{width:100%;height:auto;display:block;filter:none!important;transform:none!important}
+.film-still-grid figure{margin:0;min-width:0}.film-still-grid figcaption{font-size:12px;color:#6b5c5d;padding:6px 0}
+.film-trailer-button{border:1px solid #784a50;background:#784a50;color:white;padding:10px 17px;cursor:pointer;font-weight:650;margin-top:13px}
+.film-trailer-frame{margin-top:12px;aspect-ratio:16/9}.film-trailer-frame iframe{width:100%;height:100%;border:0}
+@media(max-width:1100px){#canvas .showcase-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){#canvas .showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.film-dialog-columns{grid-template-columns:1fr}.film-dialog-poster{max-width:280px}.film-dialog-body h2{font-size:34px}}
+@media(max-width:470px){#canvas .showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}#canvas .showcase-name{font-size:17px}#canvas .showcase-meta{font-size:10px}.film-still-grid{grid-template-columns:1fr}}
+#canvas.mobile .showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#canvas.mobile .showcase-name{font-size:16px}
+@media(max-width:350px){#canvas .showcase-grid{grid-template-columns:1fr}}
+
+/* Editorial rule: essay categories and original published article titles stay English
+   in both English and Arabic layouts. The surrounding UI remains localized. */
+#page-writing .essays { direction:ltr; text-align:left; unicode-bidi:isolate; }
+#page-writing .essays .essay-group,
+#page-writing .essays .essay-link { direction:ltr; text-align:left; }
+#page-writing .essays .essay-link span:last-child { margin-inline-start:auto; }
+
+/* Restored collaborations and a new endorsements page: classic typography, not new art. */
+#canvas .collab-head,#canvas .endorsements-head {padding-bottom:clamp(22px,3vw,42px)}
+#canvas .collab-content,#canvas .endorsements-content{padding-top:10px;padding-bottom:clamp(48px,6vw,95px)}
+#canvas .collab-subhead{padding:24px 0 14px;color:var(--wine);border-top:1px solid var(--border)}
+#canvas .collab-film-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2vw,30px);margin-bottom:clamp(28px,5vw,60px)}
+#canvas .collab-card{min-width:0;display:flex;flex-direction:column}
+#canvas .collab-card img{display:block;width:100%;height:auto;aspect-ratio:2/3;object-fit:contain;background:var(--soft);border:1px solid var(--border);border-radius:12px}
+#canvas .collab-card h2{font-size:clamp(20px,1.7vw,26px);line-height:1.12;letter-spacing:-.045em;margin:14px 0 10px}
+#canvas .collab-card p{font-size:clamp(13px,1.07vw,15px);line-height:1.62;color:var(--muted);text-align:justify;text-justify:inter-word;margin:0 0 6px}
+#canvas .collab-list{border-bottom:1px solid var(--border)}
+#canvas .collab-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:18px;padding:20px 0;border-top:1px solid var(--border);align-items:start}
+#canvas .collab-row h3{margin:0;font-size:clamp(18px,1.6vw,23px);line-height:1.3;letter-spacing:-.04em}
+#canvas .collab-row p{margin:0;color:var(--muted);line-height:1.62;text-align:justify}
+#canvas .collab-cta{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;padding-top:26px}
+#canvas .collab-cta p{font-size:18px;font-weight:600}
+#canvas .endorsements-content{min-height:clamp(300px,43vh,470px);display:flex;align-items:center;justify-content:center}
+#canvas .endorsements-empty{text-align:center;max-width:660px;width:100%;padding:clamp(40px,8vw,95px) 18px}
+#canvas .endorsements-empty h2{font-size:clamp(24px,3.1vw,41px);letter-spacing:-.055em;font-weight:680;margin:0 0 16px}
+#canvas .endorsements-empty p{margin:0 auto;max-width:520px;color:var(--muted);line-height:1.65}
+#canvas .empty-rule{display:block;width:58px;height:2px;background:var(--wine);margin:0 auto 23px}
+#canvas .home-collaborations{padding-block:clamp(42px,6vw,78px);border-top:1px solid var(--border)}
+#canvas .home-collaborations .section-head{display:flex;align-items:end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:19px}
+#canvas .home-collaborations h2{font-size:clamp(37px,5vw,70px);letter-spacing:-.07em;line-height:1.08;margin:5px 0 0}
+#canvas .home-collab-rows{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+#canvas .home-collab-rows>div{padding:19px 0;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+#canvas .home-collab-rows strong{font-size:clamp(18px,2vw,24px);letter-spacing:-.04em}
+#canvas .home-collab-rows span{font-size:14px;line-height:1.6;color:var(--muted)}
+/* Contact must not crop headings or leave artificial 450px spacers. */
+#canvas #page-contact .simple-section{min-height:0;padding-top:18px;padding-bottom:clamp(54px,7vw,100px)}
+#canvas #page-contact .page-head{max-width:none;min-width:0;padding-top:clamp(34px,6vw,75px)}
+#canvas #page-contact h1{max-width:100%;overflow-wrap:normal}
+#canvas #page-contact .form-buttons{max-width:100%}
+#canvas #page-contact .form-buttons button{max-width:100%;white-space:normal}
+#canvas #page-contact .page-head p{max-width:780px}
+#canvas .page{min-width:0}
+@media(max-width:900px){
+#canvas .collab-film-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+#canvas .home-collab-rows{grid-template-columns:1fr 1fr}
+}
+@media(max-width:620px){
+#canvas .collab-row{grid-template-columns:1fr;gap:7px;padding:18px 0}
+#canvas .home-collab-rows{grid-template-columns:1fr;gap:0}
+#canvas .home-collaborations .section-head{align-items:flex-start;flex-direction:column}
+#canvas .collab-content,#canvas .endorsements-content{padding-bottom:50px}
+}
+@media(max-width:430px){
+#canvas .collab-film-grid{grid-template-columns:1fr 1fr;gap:14px}
+#canvas .collab-card h2{font-size:18px}
+#canvas .collab-card p{font-size:12px}
+#canvas .collab-card img{border-radius:8px}
+}
+#canvas.mobile .collab-film-grid{grid-template-columns:1fr 1fr;gap:12px}
+#canvas.mobile .collab-card h2{font-size:17px}
+#canvas.mobile .collab-card p{font-size:12px}
+#canvas.mobile .collab-row{grid-template-columns:1fr;gap:7px}
+#canvas.mobile .home-collab-rows{grid-template-columns:1fr}
+#canvas.mobile .home-collaborations .section-head{flex-direction:column;align-items:flex-start}
+#canvas.mobile #page-contact .page-head h1{font-size:clamp(36px,10vw,48px)}
+#canvas[dir="rtl"] .collab-card p,#canvas[dir="rtl"] .collab-row p{text-align:justify}
+
+/* Filmography — same five original posters, full-page film presentations only on Documentaries page. */
+#canvas .original-film-details{padding-top:clamp(24px,4.5vw,75px);padding-bottom:clamp(60px,7vw,100px)}
+#canvas .documentary-intro{font-size:clamp(17px,1.65vw,23px);line-height:1.55;border-top:1px solid var(--border);padding:25px 0 32px;color:var(--muted)}
+#canvas .full-film{padding:clamp(55px,7vw,105px) 0;border-top:1px solid var(--border);scroll-margin-top:24px}
+#canvas .full-film-top{display:grid;grid-template-columns:minmax(0,.77fr) minmax(0,1.4fr);gap:clamp(24px,5vw,85px);align-items:start}
+#canvas .full-film-poster{margin:0;width:100%;min-width:0}
+#canvas .full-film-poster img{display:block;width:100%;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;filter:none!important;border-radius:8px}
+#canvas .full-film-name{margin:7px 0 10px;font-size:clamp(38px,5.5vw,78px);line-height:1.02;letter-spacing:-.075em;overflow-wrap:anywhere}
+#canvas .full-film-subtitle{font-size:14px;color:var(--muted);margin-bottom:27px}
+#canvas .full-film-copy h3{font-size:18px;color:var(--wine);margin:24px 0 11px}
+#canvas .full-film-copy p{line-height:1.8;text-align:justify;text-justify:inter-word;margin:0 0 14px;color:var(--muted)}
+#canvas .full-film-copy .full-credit{font-size:14px;margin:8px 0}
+#canvas .full-film-copy .full-credit strong{color:var(--ink)}
+#canvas .full-film-stills-head{padding:30px 0 13px;border-top:1px solid var(--border);margin-top:48px;display:flex;gap:10px;align-items:baseline;justify-content:space-between}
+#canvas .full-film-stills-head h3{font-size:clamp(20px,2.5vw,31px);margin:0;letter-spacing:-.04em}
+#canvas .full-film-stills-head span{font-size:12px;color:var(--muted)}
+#canvas .full-film-stills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,2vw,30px)}
+#canvas .full-film-stills figure{margin:0;min-width:0;display:flex;flex-direction:column;gap:0;align-items:stretch}
+#canvas .full-film-stills img{display:block;width:100%;height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;filter:none!important}
+#canvas .full-film-stills figcaption{border-bottom:1px solid var(--border);padding:10px 0 13px;font-size:12px;color:var(--muted);text-align:start}
+#canvas .full-film-actions{margin-top:25px;display:flex;flex-wrap:wrap;align-items:center;gap:13px}
+#canvas .full-film-actions button{border:1px solid var(--wine);color:var(--wine);background:transparent;padding:12px 18px;font-weight:700;cursor:pointer}
+#canvas .full-film-actions button:hover{background:var(--wine);color:var(--paper)}
+#canvas .inline-trailer{width:min(770px,100%);margin-top:14px}
+#canvas .inline-trailer iframe{display:block;width:100%;aspect-ratio:16/9;border:0}
+#canvas #page-films .showcase-open{text-align:start}
+#canvas #page-films .showcase-open .showcase-arrow{font-size:15px}
+/* Collaboration posters adopt the original image's natural aspect ratio instead of distorting into a 2/3 box. */
+#canvas .collab-film-grid{align-items:start}
+#canvas .collab-card img,#canvas.mobile .collab-card img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center center!important;background:transparent!important;border:0!important;border-radius:0!important;filter:none!important;transform:none!important}
+#canvas .collab-card{min-width:0;overflow:visible!important}
+#canvas .archive-list{padding-bottom:clamp(80px,10vw,130px)}
+#canvas .archive-entry{display:grid;grid-template-columns:minmax(125px,.35fr) minmax(0,1fr);gap:clamp(22px,4.8vw,78px);padding:clamp(28px,4.1vw,55px) 0;border-top:1px solid var(--border)}
+#canvas .archive-entry:last-child{border-bottom:1px solid var(--border)}
+#canvas .archive-date{font-size:clamp(34px,4vw,55px);font-weight:750;letter-spacing:-.055em;line-height:1.05;color:var(--wine)}
+#canvas .archive-date span{display:block;margin-top:9px;font-size:11px;letter-spacing:.12em;font-weight:650;color:var(--muted)}
+#canvas .archive-tag{font-size:11px;letter-spacing:.12em;font-weight:750;color:var(--wine);margin:0 0 12px;text-transform:uppercase}
+#canvas .archive-entry h2,#canvas .award-feature h2,#canvas .education-feature h2{font-size:clamp(24px,3vw,43px);font-weight:720;letter-spacing:-.055em;line-height:1.13;margin:0 0 14px}
+#canvas .archive-entry p,#canvas .award-feature p,#canvas .education-feature p{font-size:clamp(15px,1.4vw,18px);line-height:1.74;color:var(--muted);margin:0 0 18px;text-align:justify;text-justify:inter-word}
+#canvas .archive-entry a,#canvas .award-feature a,#canvas .education-feature a{display:inline-flex;border-bottom:1px solid var(--wine);color:var(--wine);font-size:13px;font-weight:700;padding-bottom:4px;text-decoration:none}
+#canvas .award-feature{border-top:1px solid var(--border);padding:clamp(30px,5vw,75px) 0;display:grid;grid-template-columns:minmax(100px,.3fr) minmax(0,1fr);gap:clamp(20px,5vw,70px)}
+#canvas .award-year{font-size:clamp(36px,4.5vw,63px);font-weight:750;color:var(--wine);letter-spacing:-.05em}
+#canvas .award-feature .fact-note{font-size:13px;color:var(--wine);font-weight:700}
+#canvas[dir=rtl] .full-film-name{letter-spacing:0}
+@media(max-width:750px){
+ #canvas .full-film-top{grid-template-columns:1fr}
+ #canvas .full-film-poster{max-width:430px;margin-inline:auto}
+ #canvas .full-film-stills{grid-template-columns:1fr}
+ #canvas .archive-entry,#canvas .award-feature{grid-template-columns:1fr;gap:12px}
+ #canvas .archive-list{padding-bottom:60px}
+ #canvas .archive-date{font-size:30px}
+}
+#canvas.mobile .full-film-top,#canvas.mobile .archive-entry,#canvas.mobile .award-feature{grid-template-columns:1fr}
+#canvas.mobile .full-film-stills{grid-template-columns:1fr}
+#canvas.mobile .archive-list{padding-bottom:60px}
+
+#canvas .collab-poster-frame{width:100%;aspect-ratio:var(--native);height:auto;min-height:0;position:relative;margin:0;overflow:hidden;background:var(--soft);border:1px solid var(--border);border-radius:8px}
+#canvas .collab-card .collab-poster-frame img{width:100%!important;height:100%!important;object-fit:contain!important;aspect-ratio:var(--native)!important;display:block!important;object-position:center center!important;border:0!important;border-radius:0!important;background:transparent!important}
+
+/* Standalone documentary pages: faithful structure from the existing live film templates. */
+#canvas .film-index-note{color:var(--muted);font-size:13px;padding:18px 0 90px}
+#canvas .film-page-shell{padding:clamp(20px,3vw,42px) 0 clamp(56px,8vw,100px)}
+#canvas .film-page-back{border:0;background:transparent;color:var(--wine);font-weight:650;font-size:13px;padding:10px 0;display:inline-flex;align-items:center;gap:9px;text-align:start}
+#canvas .film-page-heading{margin:clamp(18px,3vw,38px) 0 clamp(20px,3vw,40px)}
+#canvas .film-page-heading h1{margin:6px 0 12px;font-size:clamp(45px,7vw,96px);font-weight:730;line-height:1.02;letter-spacing:-.075em;overflow-wrap:break-word}
+#canvas .film-page-heading .film-page-meta{margin:0;font-size:14px;color:var(--muted)}
+#canvas .film-page-hero{margin:0 0 clamp(34px,5vw,68px);width:100%;min-width:0}
+#canvas .film-page-hero img{display:block;width:100%;height:auto;max-height:690px;object-fit:contain;object-position:center;background:var(--panel);filter:none!important;transform:none!important}
+#canvas .film-page-hero figcaption{padding:12px 0 0;font-size:12px;color:var(--muted);text-align:start;line-height:1.45}
+#canvas .film-page-body{display:grid;grid-template-columns:minmax(220px,.67fr) minmax(0,1.45fr);align-items:start;gap:clamp(26px,6vw,92px);margin-bottom:clamp(44px,7vw,95px)}
+#canvas .film-page-poster{margin:0;min-width:0;max-width:370px}
+#canvas .film-page-poster img{width:100%;height:auto!important;aspect-ratio:auto!important;object-fit:contain!important;display:block;filter:none!important;transform:none!important}
+#canvas .film-page-poster figcaption{font-size:12px;color:var(--muted);padding:10px 0}
+#canvas .film-page-credits{padding:14px 0;margin:0;border-top:1px solid var(--border);display:grid;gap:9px}
+#canvas .film-page-credits div{display:grid;gap:2px}
+#canvas .film-page-credits dt{color:var(--wine);font-size:12px;font-weight:750}
+#canvas .film-page-credits dd{margin:0;font-size:13px;color:var(--muted);line-height:1.65}
+#canvas .film-page-copy{min-width:0}
+#canvas .film-page-copy h2{font-size:clamp(25px,3vw,43px);letter-spacing:-.06em;margin:0 0 19px}
+#canvas .film-page-copy p{font-size:clamp(15px,1.25vw,17px);line-height:1.85;color:var(--muted);margin:0;text-align:justify;text-justify:inter-word;hyphens:auto}
+#canvas .film-page-trailer{padding:8px 0 25px}
+#canvas .film-page-trailer button{padding:11px 17px;background:var(--wine);color:var(--paper);border:1px solid var(--wine);font-weight:750}
+#canvas .film-page-trailer .film-trailer-frame{max-width:780px;margin-top:15px}
+#canvas .film-page-gallery{border-top:1px solid var(--border);padding-top:24px;margin-top:clamp(10px,3vw,30px)}
+#canvas .film-page-gallery h2{font-size:clamp(30px,4vw,48px);letter-spacing:-.065em;margin:0 0 20px}
+#canvas .film-page-stills{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(15px,2.5vw,31px);align-items:start}
+#canvas .film-page-stills figure{margin:0;min-width:0}
+#canvas .film-page-stills button{position:relative;display:block;border:0;background:transparent;width:100%;text-align:start;padding:0;cursor:zoom-in}
+#canvas .film-page-stills img{display:block;width:100%;height:auto;object-fit:contain;filter:none!important;transform:none!important}
+#canvas .film-page-stills .expand-icon{position:absolute;bottom:8px;right:8px;font-size:18px;background:var(--paper);color:var(--ink);border:1px solid var(--border);padding:4px 8px}
+#canvas .film-page-stills figcaption{font-size:12px;line-height:1.4;color:var(--muted);margin:8px 0 0;text-align:start}
+#canvas .film-page-related{border-top:1px solid var(--border);padding-top:20px;margin-top:clamp(55px,8vw,110px);display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,4vw,65px)}
+#canvas .film-page-related button{border:0;background:none;color:var(--ink);padding:0;text-align:start;min-width:0;display:flex;flex-direction:column;gap:7px}
+#canvas .film-page-related button:last-child{text-align:end;align-items:flex-end}
+#canvas .film-page-related small{font-size:13px;color:var(--wine)}
+#canvas .film-page-related strong{font-size:clamp(21px,3vw,40px);line-height:1.12;letter-spacing:-.045em;overflow-wrap:break-word}
+#canvas .film-page-related button:hover strong{color:var(--wine)}
+#canvas[dir=rtl] .film-page-heading h1,#canvas[dir=rtl] .film-page-related strong{letter-spacing:0}
+#canvas.mobile .film-page-body{grid-template-columns:1fr;gap:26px}
+#canvas.mobile .film-page-poster{max-width:245px}
+#canvas.mobile .film-page-stills{grid-template-columns:1fr}
+#canvas.mobile .film-page-heading h1{font-size:47px}
+#canvas.mobile .film-page-related strong{font-size:21px}
+#filmImageViewer{width:min(1100px,95vw);max-height:95dvh;margin:auto;padding:0;background:#141213;color:#fff;border:1px solid #8b7c7c;overflow:auto}
+#filmImageViewer::backdrop{background:rgba(0,0,0,.87)}
+#filmImageViewer .viewer-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 16px}
+#filmImageViewer button{background:transparent;border:1px solid #b6abab;color:white;padding:7px 10px}
+#filmImageViewer img{max-width:100%;max-height:calc(95dvh - 95px);width:auto;height:auto;display:block;object-fit:contain;margin:auto;filter:none!important}
+#filmImageViewer p{font-size:12px;color:#ded5cf;padding:10px 16px;margin:0}
+@media(max-width:850px){#canvas .film-page-body{grid-template-columns:minmax(170px,.75fr) minmax(0,1.25fr);gap:22px}#canvas .film-page-stills{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:580px){#canvas .film-page-body{grid-template-columns:1fr}#canvas .film-page-poster{max-width:245px}#canvas .film-page-stills{grid-template-columns:1fr}#canvas .film-page-related strong{font-size:22px}#canvas .film-page-heading h1{font-size:clamp(38px,11vw,55px)}}
+
+
+/* 23 Nov 2026 / review-only: shared editorial alignment and equal photo frames. */
+#canvas .archive-entry,
+#canvas .award-feature {
+  display: grid;
+  grid-template-columns: clamp(104px, 12vw, 154px) minmax(0, 1fr);
+  gap: clamp(18px, 3vw, 42px);
+  align-items: start;
+}
+#canvas .archive-entry > :last-child,
+#canvas .award-feature > :last-child { min-width: 0; align-self: start; }
+#canvas .archive-date,
+#canvas .award-year {
+  display: block;
+  align-self: start;
+  justify-self: start;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  text-align: start;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+#canvas .archive-entry .archive-tag,
+#canvas .award-feature .archive-tag {
+  margin-block: 0 12px;
+  text-align: start;
+}
+#canvas .archive-entry p,
+#canvas .award-feature p { margin-inline: 0; }
+#canvas .archive-entry a,
+#canvas .award-feature a {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-height: 32px;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0;
+  text-align: start;
+  white-space: normal;
+}
+#canvas .archive-entry > :last-child,
+#canvas .award-feature > :last-child { text-align: start; }
+#canvas .archive-date span { white-space: nowrap; }
+#canvas .collab-row { align-items: start; }
+#canvas .collab-row > * { min-width: 0; margin-block-start: 0; }
+#canvas .collab-cta { display: flex; justify-content: flex-start; align-items: center; gap: 15px 25px; }
+#canvas .collab-cta p { flex: 0 1 auto; margin: 0; }
+#canvas .collab-cta button { flex: 0 0 auto; }
+#canvas .form-buttons { display: flex; justify-content: flex-start; align-items: center; gap: 12px; flex-wrap: wrap; }
+#canvas .form-buttons button { margin: 0; text-align: center; }
+#canvas .page-head, #canvas .forms-section, #canvas .simple-section { min-width: 0; }
+#canvas .page-head h1 { max-width: 100%; overflow-wrap: break-word; }
+/* Every still occupies an identical frame. `contain` preserves the entire original,
+   without altering file pixels or cropping a photograph to a forced ratio. */
+#canvas .film-page-stills,
+#canvas .full-film-stills,
+.film-still-grid {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: clamp(14px, 2vw, 26px);
+  align-items: stretch;
+}
+#canvas .film-page-stills figure,
+#canvas .full-film-stills figure,
+.film-still-grid figure {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  align-self: stretch;
+  margin: 0;
+}
+#canvas .film-page-stills button {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+#canvas .film-page-stills button img,
+#canvas .full-film-stills figure img,
+.film-still-grid figure img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  max-width: 100% !important;
+  max-height: 100% !important;
+  aspect-ratio: 16 / 10 !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--panel) !important;
+  filter: none !important;
+  transform: none !important;
+}
+#canvas .full-film-stills figure img,
+.film-still-grid figure img { flex: 0 0 auto; border: 1px solid var(--border) !important; }
+#canvas .film-page-stills figcaption,
+#canvas .full-film-stills figcaption,
+.film-still-grid figcaption {
+  width: 100%;
+  min-height: 37px;
+  margin: 0;
+  padding: 10px 0 5px;
+  text-align: start;
+  line-height: 1.45;
+  color: var(--muted);
+  align-self: stretch;
+}
+#canvas[dir=rtl] .archive-date,
+#canvas[dir=rtl] .award-year,
+#canvas[dir=rtl] .archive-entry > :last-child,
+#canvas[dir=rtl] .award-feature > :last-child { text-align: start; }
+@media (max-width: 750px) {
+  #canvas .archive-entry,
+  #canvas .award-feature {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  #canvas .archive-date,
+  #canvas .award-year { justify-self: start; font-size: clamp(27px,7vw,35px); }
+  #canvas .archive-date span { display: inline; margin-inline-start: 9px; font-size: 10px; }
+}
+@media (max-width: 580px) {
+  #canvas .film-page-stills,
+  #canvas .full-film-stills,
+  .film-still-grid { grid-template-columns: 1fr; }
+  #canvas .film-page-stills figure,
+  #canvas .full-film-stills figure,
+  .film-still-grid figure { width: 100%; }
+  #canvas .collab-cta { flex-direction: column; align-items: flex-start; }
+}
+#canvas.mobile .archive-entry,
+#canvas.mobile .award-feature { grid-template-columns: 1fr; gap: 16px; }
+#canvas.mobile .archive-date,
+#canvas.mobile .award-year { justify-self: start; font-size: 30px; }
+#canvas.mobile .film-page-stills,
+#canvas.mobile .full-film-stills,
+#canvas.mobile .film-still-grid { grid-template-columns: 1fr; }
+#canvas.mobile .collab-cta { flex-direction: column; align-items: flex-start; }
+
+
+/* 2026-11-23: reference-grounded screenings and awards; aligned date and actions. */
+#canvas .archive-entry,#canvas .award-feature{align-items:start!important;}
+#canvas .archive-entry .archive-info,#canvas .award-feature .award-info{min-width:0;align-self:start;text-align:start;}
+#canvas .archive-entry .archive-date,#canvas .award-feature .award-year{align-self:start;justify-self:start;text-align:start;}
+#canvas .archive-entry .archive-tag,#canvas .award-feature .archive-tag{margin-top:0!important;text-align:start;}
+#canvas .archive-entry .archive-info a,#canvas .award-feature .award-info a{align-self:flex-start;}
+#canvas .award-year{font-size:clamp(25px,3.9vw,56px);overflow-wrap:anywhere;}
+#canvas .archive-info h2,#canvas .award-info h2{overflow-wrap:break-word;}
+@media(max-width:760px){#canvas .archive-entry,#canvas .award-feature{grid-template-columns:1fr!important;gap:13px!important}}
+
+
+/* Consistent cinematic crops: each still has an equal visible frame.
+   These are display-only crops. Source file pixels are never modified.
+   Visitors can still open the original image from the dedicated film pages. */
+#canvas .film-page-stills,
+#canvas .full-film-stills,
+#canvas .film-still-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(14px,2vw,26px);
+  row-gap:clamp(20px,2.2vw,30px);
+  align-items:stretch;
+}
+#canvas .film-page-stills figure,
+#canvas .full-film-stills figure,
+#canvas .film-still-grid figure {
+  min-width:0;
+  width:100%;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  align-self:stretch;
+}
+#canvas .film-page-stills figure > button {
+  display:block;
+  position:relative;
+  width:100%;
+  aspect-ratio:16/10;
+  height:auto;
+  min-height:0;
+  padding:0;
+  overflow:hidden;
+  border:0;
+  border-radius:0;
+  background:var(--panel);
+}
+#canvas .film-page-stills figure > button > img {
+  position:absolute;
+  inset:0;
+}
+#canvas .film-page-stills figure > button > img,
+#canvas .full-film-stills figure > img,
+#canvas .film-still-grid figure > img {
+  display:block !important;
+  width:100% !important;
+  height:auto !important;
+  aspect-ratio:16/10 !important;
+  object-fit:cover !important;
+  object-position:50% 50% !important;
+  max-width:none !important;
+  max-height:none !important;
+  filter:none !important;
+  transform:none !important;
+  background:var(--panel);
+  border:0 !important;
+  border-radius:0 !important;
+}
+#canvas .film-page-stills figure > button > img {
+  height:100% !important;
+}
+#canvas .film-page-stills figcaption,
+#canvas .full-film-stills figcaption,
+#canvas .film-still-grid figcaption {
+  margin:0;
+  padding:9px 0 0;
+  min-height:0;
+  width:100%;
+  border:none;
+  text-align:start;
+  align-self:stretch;
+  line-height:1.45;
+}
+@media(max-width:650px) {
+  #canvas .film-page-stills,
+  #canvas .full-film-stills,
+  #canvas .film-still-grid { grid-template-columns:1fr; }
+}
+#canvas.mobile .film-page-stills,
+#canvas.mobile .full-film-stills,
+#canvas.mobile .film-still-grid { grid-template-columns:1fr; }
+
+
+/* Same 16:10 crop treatment inside the homepage film popups. */
+#filmDialog .film-still-grid {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(14px,2vw,26px);
+  row-gap:clamp(20px,2.2vw,30px);
+  align-items:stretch;
+}
+#filmDialog .film-still-grid figure {margin:0;min-width:0;display:flex;flex-direction:column;}
+#filmDialog .film-still-grid figure > img {
+  display:block!important;
+  width:100%!important;
+  height:auto!important;
+  aspect-ratio:16/10!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  filter:none!important;
+  transform:none!important;
+  border:none!important;
+  border-radius:0!important;
+}
+#filmDialog .film-still-grid figcaption {
+  margin:0;
+  padding:9px 0 0;
+  line-height:1.45;
+  min-height:0;
+  align-self:stretch;
+}
+@media(max-width:650px) {#filmDialog .film-still-grid {grid-template-columns:1fr;}}
+
+
+/* Review change: one identical visual frame and one common text baseline for every film. */
+#canvas .showcase-grid {
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+#canvas .showcase-card {
+  min-width: 0;
+  height: 100%;
+}
+#canvas .showcase-open {
+  box-sizing: border-box;
+  height: 100%;
+  min-width: 0;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  align-items: stretch;
+}
+#canvas .showcase-poster {
+  display: block;
+  width: 100%;
+  aspect-ratio: 5 / 7;
+  height: auto;
+  overflow: hidden;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+#canvas .showcase-poster > img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  filter: none !important;
+  transform: none !important;
+}
+#canvas .showcase-meta {
+  align-self: start;
+  min-height: 4em;
+  margin: 0;
+}
+#canvas .showcase-name {
+  align-self: end;
+  height: calc(2 * 1.14em + 16px);
+  min-height: 0;
+  margin: 0;
+  padding: 5px 0 10px;
+}
+#canvas .showcase-name .showcase-arrow { align-self: start; }
+/* Open Studio consists only of a title and the two existing working buttons. */
+#canvas #page-notes .forms-section { padding-bottom: clamp(32px, 5vw, 70px); }
+#canvas #page-notes .form-buttons { padding: 12px 0 0; }
+@media (max-width: 1100px) {
+  #canvas .showcase-name { height: calc(3 * 1.14em + 16px); }
+}
+@media (max-width: 720px) {
+  #canvas .showcase-meta { min-height: 4.9em; }
+}
+
+
+/* Review update: editorial publication credit aligned beside its short label. */
+#canvas .writing-publications{
+  display:grid;grid-template-columns:minmax(145px, 220px) minmax(0,1fr);
+  gap:clamp(18px,3vw,48px);padding-top:0;padding-bottom:clamp(28px,4vw,50px);
+  align-items:start;color:var(--ink);unicode-bidi:isolate;
+}
+#canvas .writing-collection-label{
+  margin:0;font-size:clamp(15px,1.45vw,19px);line-height:1.55;
+  color:var(--wine);font-weight:600;text-align:start;
+}
+#canvas .writing-collection-credit{
+  margin:0;max-width:840px;font-size:clamp(16px,1.7vw,22px);
+  font-weight:400;line-height:1.65;text-align:start;color:var(--muted);
+}
+@media(max-width:650px){
+  #canvas .writing-publications{grid-template-columns:1fr;gap:6px;padding-bottom:30px}
+}
+#canvas.mobile .writing-publications{grid-template-columns:1fr;gap:6px;padding-bottom:30px}
+
+/* Centered, bilingual announcement shown on EACH entry to Collaborations. */
+.collab-announcement{
+  position:fixed;inset:0;margin:auto;width:min(610px,calc(100vw - 32px));
+  max-height:min(92dvh,760px);padding:0;overflow:auto;
+  border:1px solid #c9b8b7;border-radius:4px;
+  background:#f8f5ef;color:#292420;box-shadow:0 28px 90px #0007;
+}
+.collab-announcement::backdrop{background:#181217ae;backdrop-filter:blur(3px)}
+.collab-announcement *{box-sizing:border-box}
+.collab-announcement .announcement-top{
+  display:flex;align-items:center;justify-content:space-between;gap:16px;
+  border-bottom:1px solid #dbcaca;padding:17px clamp(20px,4vw,34px);
+}
+.collab-announcement .announcement-mark{
+  font-size:13px;font-weight:900;letter-spacing:-.055em;color:#292420;
+  text-transform:lowercase;
+}
+.collab-announcement .announcement-close-icon{
+  display:grid;place-items:center;flex:none;width:38px;height:38px;
+  background:transparent;border:1px solid #c3aeb4;border-radius:2px;
+  color:#744454;font-size:24px;line-height:1;cursor:pointer;
+}
+.collab-announcement .announcement-main{padding:clamp(26px,5vw,43px) clamp(20px,5vw,38px) 16px}
+.collab-announcement .announcement-eyebrow{
+  margin:0 0 11px;letter-spacing:.16em;text-transform:uppercase;
+  font-size:11px;font-weight:750;color:#744454;
+}
+.collab-announcement .announcement-title{
+  margin:0;font-weight:780;font-size:clamp(32px,5vw,51px);
+  letter-spacing:-.065em;line-height:1.08;color:#292420;
+}
+.collab-announcement .announcement-title span{color:#794856}
+.collab-announcement .announcement-intro{
+  margin:17px 0 20px;max-width:50ch;font-size:15px;line-height:1.65;
+  color:#625a55;
+}
+.collab-announcement .announcement-list{border-top:1px solid #dbcaca;margin-top:23px}
+.collab-announcement .announcement-item{
+  display:grid;grid-template-columns:38px minmax(0,1fr);
+  gap:15px;align-items:start;padding:19px 0;border-bottom:1px solid #dbcaca;
+}
+.collab-announcement .announcement-num{font-size:12px;letter-spacing:.12em;color:#794856;font-weight:750;padding-top:5px}
+.collab-announcement .announcement-item h3{margin:0;font-size:clamp(19px,3vw,25px);font-weight:700;line-height:1.23;letter-spacing:-.04em;overflow-wrap:anywhere}
+.collab-announcement .announcement-item p{margin:5px 0 0;font-size:13px;color:#625a55}
+.collab-announcement .announcement-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:14px;padding:18px clamp(20px,5vw,38px) 24px;
+}
+.collab-announcement .announcement-footnote{margin:0;font-size:12px;color:#756a64}
+.collab-announcement .announcement-dismiss{
+  border:1px solid #794856;background:#794856;color:#fff7f2;
+  border-radius:2px;padding:10px 23px;font-size:13px;font-weight:700;cursor:pointer;
+}
+.collab-announcement .announcement-dismiss:hover,
+.collab-announcement .announcement-close-icon:hover{filter:brightness(.9)}
+.collab-announcement[dir="rtl"] .announcement-eyebrow{letter-spacing:0}
+.collab-announcement[dir="rtl"] .announcement-mark{direction:ltr}
+@media(max-width:450px){
+  .collab-announcement .announcement-top{padding:11px 18px}
+  .collab-announcement .announcement-main{padding:24px 20px 12px}
+  .collab-announcement .announcement-bottom{padding:17px 20px 20px}
+  .collab-announcement .announcement-item{padding:16px 0}
+}
+@media(prefers-reduced-motion:reduce){
+  .collab-announcement::backdrop{backdrop-filter:none}
+}
+
+
+/* Classic direct navigation: only the three user-selected destinations stay visible
+   in the header. All other destinations remain available in the hamburger menu. */
+#canvas .site-header{gap:clamp(8px,1.55vw,22px)}
+#canvas .site-header > .brand{flex:0 1 auto}
+#canvas .header-primary-links{display:flex;align-items:center;justify-content:center;
+  flex:1 1 auto;gap:clamp(4px,.85vw,14px);min-width:0}
+#canvas .header-primary-links a{display:inline-flex;align-items:center;justify-content:center;
+  min-height:40px;padding:8px clamp(7px,1vw,16px);white-space:nowrap;
+  color:var(--ink);font-size:clamp(11px,1.1vw,14px);font-weight:580;
+  letter-spacing:-.012em;border-bottom:2px solid transparent;
+  text-decoration:none;transition:color .18s,border-color .18s}
+#canvas .header-primary-links a:hover,
+#canvas .header-primary-links a[aria-current="page"]{color:var(--wine);border-bottom-color:var(--wine)}
+#canvas .header-right{flex:0 0 auto}
+#canvas .nav-popover a.menu-mobile-section{display:none}
+@media(max-width:1050px){
+  #canvas .header-primary-links{display:none}
+  #canvas .nav-popover a.menu-mobile-section{display:flex}
+}
+/* The user-controlled mobile simulator follows true phone navigation rules. */
+#canvas.mobile .header-primary-links{display:none}
+#canvas.mobile .nav-popover a.menu-mobile-section{display:flex}
+#canvas[dir="rtl"] .header-primary-links a{letter-spacing:0}
+
+</style>
+<style id="collab-equal-poster-frames">
+
+/* Collaborations: match the already-approved documentary poster system.
+   Visual cropping occurs only inside the frame; source assets are untouched. */
+#canvas #page-collaborations .collab-film-grid {
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+#canvas #page-collaborations .collab-film-grid > .collab-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  align-self: stretch;
+  height: 100%;
+}
+#canvas #page-collaborations .collab-card .collab-poster-frame {
+  display: block;
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 5 / 7 !important;
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--soft);
+}
+#canvas #page-collaborations .collab-card .collab-poster-frame > img {
+  position: absolute !important;
+  inset: 0 !important;
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: auto !important;
+  object-fit: cover !important;
+  object-position: center center !important;
+  border: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  filter: none !important;
+  transform: none !important;
+}
+#canvas #page-collaborations .collab-card .collab-card-copy {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-width: 0;
+  padding-top: 14px;
+}
+#canvas #page-collaborations .collab-card .collab-card-copy h2 {
+  margin: 0 0 10px;
+  line-height: 1.15;
+  min-height: 2.3em;
+  overflow-wrap: break-word;
+}
+#canvas #page-collaborations .collab-card .collab-card-copy p {
+  margin: 0 0 6px;
+}
+@media (max-width: 560px) {
+  #canvas #page-collaborations .collab-card .collab-card-copy h2 {
+    min-height: 3.45em;
+  }
+}
+#canvas.mobile #page-collaborations .collab-card .collab-card-copy h2 {
+  min-height: 3.45em;
+}
+</style>
+</head>
+<body>
+<div class="demo-toolbar" role="group" aria-label="Prototype controls—not part of public site">
+ <div><strong>AMIRA · CLASSIC HOMEPAGE · DESIGN REVIEW</strong> <small>— prototype controls only · nothing is published</small></div>
+ <div class="demo-controls"><button type="button" data-demo="public" class="active" aria-pressed="true">Public preview</button><button type="button" data-demo="editor" aria-pressed="false">Editorial Desk preview</button><button type="button" id="deviceBtn" aria-pressed="false">Mobile preview</button><button type="button" id="langBtn" aria-pressed="false">العربية</button><button type="button" id="modeBtn" aria-pressed="false">Dark mode</button></div>
+</div>
+<div id="canvas">
+<header class="site-header">
+ <button type="button" class="brand" data-page="home" aria-label="Amira Abdelfadil home">amira abdelfadil</button>
+ <nav class="header-primary-links" aria-label="Featured sections">
+  <a href="#films" data-page="films" data-tr="films">Films</a>
+  <a href="#art" data-page="art" data-tr="art">Art &amp; Photography</a>
+  <a href="#writing" data-page="writing" data-tr="writing">Writing</a>
+ </nav>
+ <div class="header-right">
+  <button type="button" class="header-aux" id="headerLangBtn" aria-label="Switch language">العربية</button>
+  <button type="button" class="icon-button" id="themeIcon" aria-label="Toggle light and dark mode" title="Light / dark">☼</button>
+  <button type="button" class="menu-toggle" id="menuToggle" aria-expanded="false" aria-controls="siteMenu"><span class="menu-label">Menu</span><span class="hamburger" aria-hidden="true"><b></b><b></b><b></b></span></button>
+ </div>
+ <nav class="nav-popover" id="siteMenu" aria-label="Site navigation">
+  <a href="#home" data-page="home" data-tr="home">Home</a><a class="menu-mobile-section" href="#films" data-page="films" data-tr="films">Films</a><a class="menu-mobile-section" href="#art" data-page="art" data-tr="art">Art &amp; Photography</a><a class="menu-mobile-section" href="#writing" data-page="writing" data-tr="writing">Writing</a><a href="#notes" data-page="notes" data-tr="notes">Notebook</a><a href="#collaborations" data-page="collaborations" data-tr="collaborations">Collaborations</a><a href="#endorsements" data-page="endorsements" data-tr="endorsements">Endorsements</a><a data-page="screenings" data-tr="screenings" href="#screenings">Screenings &amp; Exhibitions</a><a data-page="awards" data-tr="awards" href="#awards">Awards</a><a href="#about" data-page="about" data-tr="about">About</a><a href="#contact" data-page="contact" data-tr="contact">Contact</a>
+  <div class="nav-foot"><span>Film · Photography · Writing</span><span>© Amira Abdelfadil</span></div>
+ </nav>
+</header>
+<main class="site-main" id="main">
+ <section id="page-home" class="page active">
+  <div class="hero classic-original" aria-labelledby="heroTitle">
+    <div class="hero-content">
+      <p class="eyebrow hero-kicker">Film &amp; art <span aria-hidden="true">·</span> Cairo, Egypt</p>
+      <h1 class="hero-title" id="heroTitle">Amira Abdelfadil</h1>
+      <p class="hero-intro">Egyptian filmmaker &amp; multidisciplinary artist</p>
+      <div class="hero-cta"><button type="button" class="filled" data-page="films">Explore documentaries ↓</button><button type="button" class="outlined" data-page="about">About Amira →</button></div>
+    </div>
+    <figure class="hero-media"><img id="liveStill" src="https://amiraabdelfadil.com/assets/mamina-02.jpg" alt="Two women talk on a balcony overlooking Cairo" width="1344" height="709"><figcaption class="hero-still-credit" id="liveCaption">Still from <i>Mamina</i></figcaption></figure>
+  </div>
+  <section class="content section-block showcase-section" aria-labelledby="filmsHomeTitle"><div class="section-head"><div><p class="eyebrow">Documentary filmography</p><h2 id="filmsHomeTitle">Documentary <em>filmography.</em></h2></div></div><div class="showcase-grid"><article class="showcase-card"><button type="button" class="showcase-open" data-film="sweet-and-salty" aria-label="Explore Sweet &amp; Salty film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/sweet-and-salty-poster.jpg" loading="lazy" alt="Original Sweet &amp; Salty film poster"></span><span class="showcase-meta">Collaborative documentary · 2025 · 41:23</span><span class="showcase-name">Sweet &amp; Salty<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="street-x-food" aria-label="Explore Street X Food film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/street-x-food-poster.jpg" loading="lazy" alt="Original Street X Food film poster"></span><span class="showcase-meta">Short documentary · 2025 · 05:48</span><span class="showcase-name">Street X Food<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="biophilia" aria-label="Explore Biophilia film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/biophilia-poster.jpg" loading="lazy" alt="Original Biophilia film poster"></span><span class="showcase-meta">Collaborative documentary · 2023 · 29:53</span><span class="showcase-name">Biophilia<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="mamina" aria-label="Explore Mamina film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/mamina-poster.jpg" loading="lazy" alt="Original Mamina film poster"></span><span class="showcase-meta">Short documentary · 2025 · 14:45</span><span class="showcase-name">Mamina<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="double-edged-sword" aria-label="Explore A Double-Edged Sword film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/double-edged-sword-poster.jpg" loading="lazy" alt="Original A Double-Edged Sword film poster"></span><span class="showcase-meta">Short documentary · 2023 · 13:15</span><span class="showcase-name">A Double-Edged Sword<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article></div></section>
+  <section class="content about-section" aria-labelledby="homeAboutTitle"><div class="about-grid"><div><p class="eyebrow">01 / Biography</p><p class="arabic-kicker" lang="ar">أميرة عبد الفضيل</p><h2 class="about-title" id="homeAboutTitle">About <em>Amira.</em></h2><div class="prose"><p>Amira Abdel-Fadil has always been drawn to the things people carry quietly: a grandmother’s recipes, the green that grows between buildings, the small moments that hold a whole life.</p><p>A filmmaker, writer and photographer from Cairo, she lets each story decide its own pace, and she is still learning to listen well enough to follow it.</p></div><button type="button" data-page="about" class="outlined">Continue reading ↗</button></div><figure><img class="portrait" src="https://amiraabdelfadil.com/assets/amira-portrait.jpg" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://supergreatwin.github.io/amira-portfolio/assets/amira-portrait.jpg';}" alt="Original unedited photograph of Amira holding a camera"><figcaption>Amira Abdelfadil · Cairo</figcaption></figure></div></section>
+  
+<section class="content home-collaborations" aria-labelledby="homeCollabTitle"><div class="section-head"><div><p class="eyebrow">CREATIVE WORK TOGETHER</p><h2 id="homeCollabTitle">Collaborations.</h2></div><button class="outlined" data-page="collaborations" type="button">Explore collaborations ↗</button></div>
+  <div class="home-collab-rows"><div><strong>Sweet &amp; Salty</strong><span>Co-directed with Sarah El Halawany</span></div><div><strong>Biophilia</strong><span>Co-directed with Rama Abdi and Kateřina Sivoková</span></div><div><strong>ByAmirah</strong><span>Creative development and storytelling</span></div></div></section>
+ </section>
+ <section id="page-about" class="page"><div class="content about-grid" style="padding-top:35px;padding-bottom:76px;border-top:1px solid var(--border)"><div><p class="eyebrow">01 / Biography</p><p class="arabic-kicker" lang="ar">أميرة عبد الفضيل</p><h1 class="about-title">About <em>Amira.</em></h1><div class="prose"><p>Amira Abdel-Fadil has always been drawn to the things people carry quietly: a grandmother’s recipes, the green that grows between buildings, the small moments that hold a whole life. A filmmaker, writer and photographer from Cairo, she lets each story decide its own pace, and she is still learning to listen well enough to follow it.</p><p>Her path began in digital media, where her articles and edited videos reached audiences of more than a million. Event coordination, teaching and volunteering shaped her too, and she credits them with teaching her patience and care for the people on the other side of the lens.</p><p>Her documentaries have been recognized and screened at international festivals, and she is grateful for every audience that has stayed to watch. What she hopes to make, in the end, is not a film but a feeling: an invitation to look inward, and to step back into a world that feels a little closer than it seemed, a little more tender, and a little more open to everyone in it.</p></div><button class="outlined" type="button" data-page="contact">Contact Amira ↗</button></div><figure style="margin:0"><img class="portrait" style="display:block;width:100%;height:auto" src="https://amiraabdelfadil.com/assets/amira-portrait.jpg" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://supergreatwin.github.io/amira-portfolio/assets/amira-portrait.jpg';}" alt="Original unedited photograph of Amira holding a camera"><figcaption style="font-size:12px;color:var(--muted);text-align:left;padding-top:9px">Amira Abdelfadil · Portrait</figcaption></figure></div></section>
+ <section id="page-writing" class="page"><div class="content page-head"><p class="eyebrow">Essays / Writing</p><h1>Writing.</h1></div><div class="content writing-publications" lang="en" dir="ltr">
+  <p class="writing-collection-label">A collection of:</p>
+  <p class="writing-collection-credit">Amira’s work has been featured in MovieWeb, Meer, Collective World, and Thought Catalog, reaching over 1 million readers</p>
+</div>
+<div class="content essays" lang="en" dir="ltr"><div class="essay-group"><span class="essay-label">Personal essays</span><a class="essay-link" href="https://thought.is/the-beauty-of-capturing-memories/" target="_blank" rel="noopener noreferrer">The Beauty of Capturing Memories <span>↗</span></a><a class="essay-link" href="https://thought.is/maybe-one-day-ill-write-a-masterpiece/" target="_blank" rel="noopener noreferrer">Maybe One Day I’ll Write a Masterpiece <span>↗</span></a></div><div class="essay-group"><span class="essay-label">Essays on art and culture</span><a class="essay-link" href="https://movieweb.com/the-danger-of-romantic-movies-in-how-we-perceive-love/" target="_blank" rel="noopener noreferrer">Romance Movies Have Affected How We Perceive Love <span>↗</span></a><a class="essay-link" href="https://movieweb.com/the-best-documentaries-about-racism/" target="_blank" rel="noopener noreferrer">The 11 All-Time Best Documentaries About Racism <span>↗</span></a><a class="essay-link" href="https://movieweb.com/blue-lock-life-lessons-we-can-learn/" target="_blank" rel="noopener noreferrer">Blue Lock: 11 Life Lessons We All Can Learn from the Popular Soccer Anime TV Show <span>↗</span></a></div></div></section>
+ <section id="page-notes" class="page"><div class="content page-head"><p class="eyebrow">Letters from the creative desk</p><h1>Note<em>book.</em></h1><p>Fragments from the creative process: cinema, people, places, and the quieter stories that stay with us. An occasional letter from Amira.</p></div><div class="content forms-section"><h2 class="form-actions-title">Open Studio</h2><div class="form-buttons"><button type="button" class="filled" data-form="collab">Send a collaboration enquiry ↗</button><button type="button" class="outlined" data-form="pitch">Pitch a story ↗</button></div></div></section>
+ <section id="page-film-detail" class="page" aria-label="Individual documentary page">
+   <div class="content" id="dedicatedFilmHost" aria-live="polite"></div>
+ </section>
+ <section id="page-films" class="page"><div class="content page-head"><p class="eyebrow">Filmography</p><h1>Documentary <em>filmography.</em></h1></div><div class="content section-block showcase-section"><div class="showcase-grid"><article class="showcase-card"><button type="button" class="showcase-open" data-film="sweet-and-salty" aria-label="Explore Sweet &amp; Salty film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/sweet-and-salty-poster.jpg" loading="lazy" alt="Original Sweet &amp; Salty film poster"></span><span class="showcase-meta">Collaborative documentary · 2025 · 41:23</span><span class="showcase-name">Sweet &amp; Salty<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="street-x-food" aria-label="Explore Street X Food film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/street-x-food-poster.jpg" loading="lazy" alt="Original Street X Food film poster"></span><span class="showcase-meta">Short documentary · 2025 · 05:48</span><span class="showcase-name">Street X Food<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="biophilia" aria-label="Explore Biophilia film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/biophilia-poster.jpg" loading="lazy" alt="Original Biophilia film poster"></span><span class="showcase-meta">Collaborative documentary · 2023 · 29:53</span><span class="showcase-name">Biophilia<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="mamina" aria-label="Explore Mamina film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/mamina-poster.jpg" loading="lazy" alt="Original Mamina film poster"></span><span class="showcase-meta">Short documentary · 2025 · 14:45</span><span class="showcase-name">Mamina<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article><article class="showcase-card"><button type="button" class="showcase-open" data-film="double-edged-sword" aria-label="Explore A Double-Edged Sword film details"><span class="showcase-poster"><img src="https://amiraabdelfadil.com/assets/double-edged-sword-poster.jpg" loading="lazy" alt="Original A Double-Edged Sword film poster"></span><span class="showcase-meta">Short documentary · 2023 · 13:15</span><span class="showcase-name">A Double-Edged Sword<span class="showcase-arrow" aria-hidden="true">↗</span></span></button></article></div><p class="content film-index-note" id="filmIndexInstruction">Select a documentary to open its dedicated full-page presentation.</p></div></section>
+ <section id="page-art" class="page"><div class="content page-head"><p class="eyebrow">Art and photography</p><h1>Art &amp; <em>Photography.</em></h1><p>Gallery layouts retain the classic site styling, the same header, and the same footer. No duplicate navigation appears at the bottom.</p></div><div class="content simple-section"><p class="prose">The photographic galleries and collections remain part of the full website. This limited design preview demonstrates their shared navigation and footer, not their editorial media inventory.</p></div></section>
+ <section class="page" id="page-collaborations">
+<div class="content page-head collab-head"><p class="eyebrow">SELECTED WORK / SHARED PRACTICE</p><h1>Collaborations.</h1><p>Films, creative projects and the people who helped bring them to life.</p></div>
+<div class="content collab-content"><p class="eyebrow collab-subhead">FILM COLLABORATIONS</p><div class="collab-film-grid"><article class="collab-card">
+<figure class="collab-poster-frame"><img alt="Original poster: Sweet &amp; Salty" height="900" loading="lazy" src="https://amiraabdelfadil.com/assets/sweet-and-salty-poster.jpg" width="636"/></figure>
+<div class="collab-card-copy"><h2>Sweet &amp; Salty</h2><p>Co-directed by Amira Abdel-Fadil with Sarah El Halawany.</p><p>Production: Nazra Films, Goethe Institute, IMS and Red Star.</p></div>
+</article>
+<article class="collab-card">
+<figure class="collab-poster-frame"><img alt="Original poster: Biophilia" height="900" loading="lazy" src="https://amiraabdelfadil.com/assets/biophilia-poster.jpg" width="607"/></figure>
+<div class="collab-card-copy"><h2>Biophilia</h2><p>Co-directed with Rama Abdi and Kateřina Sivoková.</p><p>Production: Duemila30 Productions.</p></div>
+</article>
+<article class="collab-card">
+<figure class="collab-poster-frame"><img alt="Original poster: Mamina" height="900" loading="lazy" src="https://amiraabdelfadil.com/assets/mamina-poster.jpg" width="637"/></figure>
+<div class="collab-card-copy"><h2>Mamina</h2><p>Directed by Amira Abdel-Fadil. Cinematography: Menna Ahmed.</p><p>Editing: Hisham Abdelrazek. Sound: Mohab Ezz. Production: IMS, Nazra Films, Goethe Institute and Red Star.</p></div>
+</article>
+<article class="collab-card">
+<figure class="collab-poster-frame"><img alt="Original poster: A Double-Edged Sword" height="900" loading="lazy" src="https://amiraabdelfadil.com/assets/double-edged-sword-poster.jpg" width="636"/></figure>
+<div class="collab-card-copy"><h2>A Double-Edged Sword</h2><p>Co-written with Magda Baraka, who also appears in the film.</p><p>Sound design and mixing: Khaled Saleh.</p></div>
+</article></div>
+<p class="eyebrow collab-subhead">OTHER COLLABORATIONS</p><div class="collab-list"><div class="collab-row"><h3>Outside the Frame</h3><p>Played Raghda in the short film.</p></div>
+<div class="collab-row"><h3>Netsharek</h3><p>Edited and refined a food-management project for students at the University of Hull and the Arab Academy for Science, Technology and Maritime Transport.</p></div>
+<div class="collab-row"><h3>ByAmirah</h3><p>Creative development, film marketing, research and behind-the-scenes content with Abdelrahman Mohamed.</p></div>
+<div class="collab-row"><h3>Ismailia International Film Festival for Documentaries and Shorts</h3><p>Served as general coordinator.</p></div>
+<div class="collab-row"><h3>Editorial contributions</h3><p>Featured in MovieWeb, Meer, Collective World, and Thought Catalog.</p></div></div>
+<div class="collab-cta"><p>Have a project in mind?</p><button class="outlined" data-page="contact" type="button">Contact Amira ↗</button></div>
+</div>
+</section>
+<section class="page" id="page-endorsements">
+  <div class="content page-head endorsements-head"><p class="eyebrow">VOICES &amp; EXPERIENCES</p><h1>Endorsements.</h1><p>Reflections from people Amira has worked with.</p></div>
+  <div class="content endorsements-content"><div class="endorsements-empty"><span class="empty-rule" aria-hidden="true"></span><h2>Endorsements are coming soon.</h2><p>This page will feature genuine, attributed feedback once it has been received and approved for publication.</p></div></div>
+</section>
+ <section id="page-contact" class="page"><div class="content page-head"><p class="eyebrow">Contact</p><h1>Get in <em>touch.</em></h1><p>Let’s collaborate on stories worth telling.</p></div><div class="content simple-section"><p class="prose">For proposals, enquiries or collaborations, use the in-page form below.</p><div class="form-buttons"><button type="button" class="filled" data-form="collab">Collaboration enquiry ↗</button><button type="button" class="outlined" data-form="pitch">Submit a story idea ↗</button></div></div></section>
+ <section id="page-editor" class="page"><div class="content ed-wrap"><div class="ed-header"><p class="eyebrow">Private editorial workspace · Design-only preview</p><h1>Classic homepage · Featured still</h1><p class="ed-note">This demo is accessible through the black prototype toolbar only. It is not linked from the public navigation and does not publish or change anything in the actual Editorial Desk.</p></div>
+  <div class="ed-panel"><h2>Homepage media controls</h2><div class="ed-toolbar-tabs"><button type="button" class="selected">Classic hero still</button><button type="button" id="fourPhotosBtn">Four-photo homepage (separate)</button></div><div class="editor-grid"><form id="stillEditor"><div class="ed-field"><label for="stillSelect">Select an existing film still</label><select id="stillSelect"><option value="mamina-02.jpg">Mamina · balcony still (current)</option><option value="mamina-01.jpg">Mamina · kitchen still</option><option value="mamina-03.jpg">Mamina · outdoor still</option><option value="mamina-04.jpg">Mamina · still 04</option><option value="street-x-food-01.jpg">Street X Food · still 01</option></select><p class="ed-sub">Existing original photographs only. The prototype never edits image pixels.</p></div><div class="ed-field"><label for="stillUpload">Or upload your own original photograph (preview only)</label><input type="file" id="stillUpload" accept="image/png,image/jpeg,image/webp"><p class="ed-sub">JPG, PNG or WebP · 6 MB maximum · file stays in this browser demo</p></div><div class="ed-field"><label for="altText">Accessible image description (alt text)</label><input type="text" id="altText" value="Two women talk on a balcony overlooking Cairo" maxlength="250"></div><div class="ed-field"><label for="captionText">Featured-still caption</label><input id="captionText" value="Still from Mamina" maxlength="160"></div><div class="range-pair"><div class="ed-field"><label for="cropX">Horizontal focus: <span id="xVal">50%</span></label><input type="range" min="0" max="100" value="50" id="cropX"></div><div class="ed-field"><label for="cropY">Vertical focus: <span id="yVal">50%</span></label><input type="range" min="0" max="100" value="50" id="cropY"></div></div><div class="ed-field"><label for="mobileStill">Mobile still (optional independent image)</label><select id="mobileStill"><option value="mamina-02-small.jpg">Mamina · mobile crop (current)</option><option value="same">Same as desktop still</option><option value="mamina-01.jpg">Mamina · kitchen still</option><option value="mamina-03.jpg">Mamina · outdoor still</option></select></div><label class="ed-checkbox"><input id="captionOn" type="checkbox" checked> Show the photo credit directly beneath the still, left aligned to the image</label><div class="ed-actions"><button type="button" class="filled" id="applyPreview">Apply to public preview</button><button type="button" class="outlined" id="resetPreview">Discard edits</button></div><p class="ed-status" id="editStatus" role="status">Original Mamina still loaded. Nothing is saved to the live website.</p></form><div><div class="ed-preview-rule"><p class="eyebrow">Desktop preview</p><img class="ed-preview-image" id="editorPreview" src="https://amiraabdelfadil.com/assets/mamina-02.jpg" alt="Current editorial still preview"><div class="ed-preview-credit" id="editorCaption">Still from <i>Mamina</i></div></div><p class="eyebrow">Mobile preview</p><div class="preview-mobile-mock"><img src="https://amiraabdelfadil.com/assets/mamina-02-small.jpg" id="mobilePreview" alt="Mobile still"><p>Featured still / mobile crop</p></div><p class="ed-callout">In production, this control belongs behind the existing authorized Editorial Desk login and must save desktop/mobile media, caption, crop and alt text as a distinct <strong>classic_home_hero</strong> record. The four-photo mosaic is not changed by this control.</p></div></div></div>
+ </div></section>
+
+<section class="page" id="page-screenings">
+<div class="content page-head"><p class="eyebrow">FILM FESTIVALS / PUBLIC PRESENTATIONS</p><h1>Screenings &amp; <em>exhibitions.</em></h1><p>Film screenings, festival appearances and exhibitions documented by programme listings.</p></div>
+<div class="content archive-list">
+<article class="archive-entry" data-evidence="external"><div class="archive-date">2026 <span><bdi dir="ltr">16 APR — 15 MAY</bdi></span></div><div class="archive-info"><p class="archive-tag">GROUP EXHIBITION · BROOKLYN, NEW YORK</p><h2>Creative Climate Award: Collective Power</h2><p>Biophilia · Human Impacts Institute. Amira Abdel-Fadil is listed as a participating artist with the film Biophilia. This is an exhibition listing, not an individual prize.</p><a href="https://www.humanimpactsinstitute.org/cca2026" target="_blank" rel="noopener noreferrer">Official exhibition programme ↗</a></div></article>
+<article class="archive-entry" data-evidence="external"><div class="archive-date">2025 <span><bdi dir="ltr">27 OCT</bdi></span></div><div class="archive-info"><p class="archive-tag">UNIVERSITY SCREENING · CAIRO, EGYPT</p><h2>World Development Information Day — MSA University</h2><p>Biophilia was screened at the Faculty of Mass Communication, October University for Modern Sciences and Arts, during an event devoted to development and environmental awareness.</p><a href="https://stage.msa.edu.eg/msa-faculty-of-mass-communication-celebrates-world-development-information-day/" target="_blank" rel="noopener noreferrer">University event coverage ↗</a></div></article>
+<article class="archive-entry" data-evidence="external"><div class="archive-date">2025 <span><bdi dir="ltr">15 AUG · 20:00–22:00</bdi></span></div><div class="archive-info"><p class="archive-tag">FILM FESTIVAL · POLAND</p><h2>BNP Paribas Green Film Festival — Biophilia</h2><p>Biophilia, co-directed by Amira Abdel-Fadil, Rama Abdi and Kateřina Sivoková, was included in the festival programme for a Cameral Stage screening with Polish and English subtitles.</p><a href="https://www.greenfestival.pl/wp-content/uploads/2025/08/Folder-ENG-2025_compressed.pdf" target="_blank" rel="noopener noreferrer">Festival programme ↗</a></div></article>
+<article class="archive-entry" data-evidence="external"><div class="archive-date">2025 <span><bdi dir="ltr">30 MAY</bdi></span></div><div class="archive-info"><p class="archive-tag">FILM FESTIVAL · CINEMA ZAWYA, CAIRO</p><h2>Manassat Film Festival — Mamina</h2><p>Mamina was featured in Manassat Film Festival’s 2025 Student Nonfiction programme. The programme credited Amira Abdel-Fadil.</p><a href="https://www.manassatfilmfestival.com/2025-films/mamina" target="_blank" rel="noopener noreferrer">Official festival listing ↗</a></div></article>
+<article class="archive-entry" data-evidence="external"><div class="archive-date">2024 <span><bdi dir="ltr">29 JUN</bdi></span></div><div class="archive-info"><p class="archive-tag">FESTIVAL SCREENING · MILAN, ITALY</p><h2>Duemila30 Festival at Nuovo Armenia — Biophilia</h2><p>Biophilia was screened ahead of Toxicily at Nuovo Armenia. The programme credited the three co-directors Amira Abdel-Fadil, Rama Abdi and Kateřina Sivoková.</p><a href="https://www.nuovoarmenia.it/evento/festival-duemila30/" target="_blank" rel="noopener noreferrer">Venue programme ↗</a></div></article>
+<article class="archive-entry" data-evidence="external"><div class="archive-date">2023 <span><bdi dir="ltr">27 MAY</bdi></span></div><div class="archive-info"><p class="archive-tag">FILM FESTIVAL · EGYPT</p><h2>Manassat Film Festival — A Double-Edged Sword</h2><p>A Double-Edged Sword appeared in Manassat’s 2023 film programme, credited to Amira Abdel-Fadil and Magda Baraka.</p><a href="https://www.manassatfilmfestival.com/2023-festival" target="_blank" rel="noopener noreferrer">Festival programme ↗</a></div></article>
+</div></section>
+<section class="page" id="page-awards">
+<div class="content page-head"><p class="eyebrow">FILM AWARDS / RECOGNITION</p><h1>Awards &amp; <em>distinctions.</em></h1><p>Recognition is credited to the film and its collaborators. Festival participation is documented separately under Screenings &amp; Exhibitions.</p></div>
+<div class="content archive-list">
+<article class="award-feature" data-evidence="external"><div class="award-year">2025</div><div class="award-info"><p class="archive-tag">FICIMAD · INTERNATIONAL INDEPENDENT FILM FESTIVAL OF MADRID</p><h2>Best Cinematography — Biophilia</h2><p>Official festival results credit David Všetička, Rama Abdi, Hazar Yazji, Amira Abdel-Fadil and Karim El-Mubarak as the film’s cinematography team.</p><p class="fact-note">Shared film and team award.</p><a href="https://ficimad.com/wp-content/uploads/2025/06/FICIMAD-AWARDS2025.pdf" target="_blank" rel="noopener noreferrer">Official 2025 awards list ↗</a></div></article>
+<article class="award-feature" data-evidence="external"><div class="award-year">DATE TBC</div><div class="award-info"><p class="archive-tag">BERLIN KIEZ FILM FESTIVAL · DOCUMENTARY FILM RECOGNITION</p><h2>Best Environment and Climate Short Film — Biophilia</h2><p>The 2026 CIRCLE Doc Accelerator biography of Biophilia co-director Rama Abdi states that the film won this category at Berlin Kiez Film Festival. The year has not been confirmed in that source.</p><p class="fact-note">Award to the collaborative film; year pending confirmation.</p><a href="https://www.doccircle.me/doc-accelerator/participants/2026" target="_blank" rel="noopener noreferrer">CIRCLE documentary filmmaker biography ↗</a></div></article>
+</div></section>
+</main>
+<footer class="site-footer"><div class="content footer-inner"><span class="footer-sign">© Amira Abdelfadil · Cairo, Egypt</span><div class="footer-legal"><a href="#privacy" data-legal="Privacy">Privacy</a><a href="#terms" data-legal="Terms">Terms</a><a href="#cookies" data-legal="Cookies">Cookies</a><button type="button" id="privacySettings">Privacy settings</button></div></div></footer>
+</div>
+<button type="button" class="scroll-top" id="scrollTop">Back to top ↑</button>
+<dialog class="film-dialog" id="filmDialog" aria-labelledby="filmDialogTitle">
+ <div class="film-dialog-layout">
+  <div class="film-dialog-bar"><span class="eyebrow" id="filmDialogKicker">Documentary filmography</span><button type="button" id="filmDialogClose" class="film-close" aria-label="Close film details">×</button></div>
+  <div class="film-dialog-columns"><figure class="film-dialog-poster"><img id="filmDialogPoster" alt="" loading="lazy"></figure>
+    <div class="film-dialog-body"><h2 id="filmDialogTitle"></h2><p id="filmDialogMeta"></p><h3 id="filmSynopsisLabel">Synopsis</h3><p id="filmDialogSynopsis"></p>
+    <div class="film-credits" id="filmDialogCredits"></div>
+    <div id="filmTrailerArea"></div></div></div>
+  <div class="film-stills-heading"><h3 id="filmStillsLabel">Film stills</h3></div><div class="film-still-grid" id="filmDialogStills"></div>
+ </div>
+</dialog>
+<dialog class="modal" id="tallyDialog" aria-labelledby="modalTitle"><div class="modal-inner"><div class="modal-top"><div><p class="eyebrow">Open Studio · Amira Abdelfadil</p><h2 id="modalTitle">Send an enquiry</h2></div><button type="button" id="modalClose" aria-label="Close form">×</button></div><p class="hint" id="modalDesc">The form loads within this website after you open it. Tally handles submitted information.</p><iframe id="tallyFrame" title="Amira submission form" referrerpolicy="strict-origin-when-cross-origin" loading="lazy" hidden></iframe><p class="hint">Closing this window returns you to the same page. A reliable internet connection is required for Tally.</p></div></dialog>
+<dialog class="modal" id="noticeDialog" aria-labelledby="noticeTitle"><div class="modal-inner"><div class="modal-top"><h2 id="noticeTitle">Prototype information</h2><button type="button" id="noticeClose" aria-label="Close information">×</button></div><p id="noticeBody">These features retain their original production routes. This review file only demonstrates shared visual styling.</p></div></dialog>
+<dialog id="filmImageViewer" aria-label="Original film still viewer"><div class="viewer-bar"><strong id="filmViewerName">Film still</strong><button id="filmViewerClose" type="button" aria-label="Close full-screen photograph">Close ✕</button></div><img id="filmViewerPhoto" src="" alt=""><p id="filmViewerCaption"></p></dialog>
+<dialog id="collabAnnouncement" class="collab-announcement" aria-labelledby="collabAnnouncementTitle" aria-describedby="collabAnnouncementIntro">
+  <div class="announcement-top">
+    <span class="announcement-mark">amira abdelfadil</span>
+    <button id="collabAnnouncementX" type="button" class="announcement-close-icon" aria-label="Close announcement">×</button>
+  </div>
+  <div class="announcement-main">
+    <p class="announcement-eyebrow" data-announcement-en="COMING SOON · COLLABORATIONS" data-announcement-ar="قريبًا · تعاونات جديدة">COMING SOON · COLLABORATIONS</p>
+    <h2 class="announcement-title" id="collabAnnouncementTitle" data-announcement-en="Stories in the <span>making.</span>" data-announcement-ar="حكايات <span>قيد التحضير.</span>">Stories in the <span>making.</span></h2>
+    <p id="collabAnnouncementIntro" class="announcement-intro" data-announcement-en="Two upcoming collaborations with Amira Abdel-Fadil." data-announcement-ar="تعاونان مرتقبان مع أميرة عبد الفضيل.">Two upcoming collaborations with Amira Abdel-Fadil.</p>
+    <div class="announcement-list">
+      <div class="announcement-item">
+        <span class="announcement-num">01</span>
+        <div><h3>Nausicaa Emotional Alchemy</h3><p data-announcement-en="Upcoming collaboration" data-announcement-ar="تعاون مرتقب">Upcoming collaboration</p></div>
+      </div>
+      <div class="announcement-item">
+        <span class="announcement-num">02</span>
+        <div><h3 data-announcement-en="UNICEF" data-announcement-ar="اليونيسف (UNICEF)">UNICEF</h3><p data-announcement-en="Upcoming collaboration" data-announcement-ar="تعاون مرتقب">Upcoming collaboration</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="announcement-bottom">
+    <p class="announcement-footnote" data-announcement-en="More details will be shared in due course." data-announcement-ar="سيتم الإعلان عن المزيد من التفاصيل في الوقت المناسب.">More details will be shared in due course.</p>
+    <button type="button" id="collabAnnouncementDismiss" class="announcement-dismiss" data-announcement-en="Close" data-announcement-ar="إغلاق">Close</button>
+  </div>
+</dialog>
+<script>
+(function(){
+'use strict';
+const root=document.getElementById('canvas'),pages=[...document.querySelectorAll('.page')],menu=document.getElementById('siteMenu'),toggle=document.getElementById('menuToggle');
+const assets='https://amiraabdelfadil.com/assets/';
+const still=document.getElementById('liveStill'),caption=document.getElementById('liveCaption'),editorStill=document.getElementById('editorPreview'),editorCaption=document.getElementById('editorCaption'),mobilePreview=document.getElementById('mobilePreview');
+const initial={src:assets+'mamina-02.jpg',mobile:assets+'mamina-02-small.jpg',alt:'Two women talk on a balcony overlooking Cairo',caption:'Still from Mamina',x:50,y:50,show:true};
+let draft={...initial},current='home',editorMode=false,ar=false,objectUrl=null;
+const announcementDialog=document.getElementById('collabAnnouncement');
+const announcementMs=12*60*1000;
+let announcementTimer=null;
+function updateAnnouncementLanguage(){
+  announcementDialog.setAttribute('dir',ar?'rtl':'ltr');
+  announcementDialog.setAttribute('lang',ar?'ar':'en');
+  announcementDialog.querySelectorAll('[data-announcement-en]').forEach(el=>{
+    const key=ar?'announcementAr':'announcementEn';
+    if(el.id==='collabAnnouncementTitle')el.innerHTML=el.dataset[key];
+    else el.textContent=el.dataset[key];
+  });
+  document.getElementById('collabAnnouncementX').setAttribute('aria-label',ar?'إغلاق الإعلان':'Close announcement');
+}
+function closeAnnouncement(){
+  if(announcementTimer!==null){clearTimeout(announcementTimer);announcementTimer=null;}
+  if(announcementDialog.open)announcementDialog.close();
+}
+function openAnnouncement(){
+  closeAnnouncement();
+  updateAnnouncementLanguage();
+  announcementDialog.showModal();
+  announcementTimer=setTimeout(closeAnnouncement,announcementMs);
+}
+announcementDialog.addEventListener('close',()=>{
+  if(announcementTimer!==null){clearTimeout(announcementTimer);announcementTimer=null;}
+});
+document.getElementById('collabAnnouncementX').addEventListener('click',closeAnnouncement);
+document.getElementById('collabAnnouncementDismiss').addEventListener('click',closeAnnouncement);
+announcementDialog.addEventListener('click',event=>{
+  if(event.target!==announcementDialog)return;
+  const r=announcementDialog.getBoundingClientRect();
+  if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)closeAnnouncement();
+});
+
+const pageAliases={home:'home',films:'films',art:'art',writing:'writing',notes:'notes',collaborations:'collaborations',endorsements:'endorsements',screenings:'screenings',awards:'awards',education:'screenings',about:'about',contact:'contact','film-detail':'film-detail',editor:'editor'};
+function setMenu(open){menu.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));}
+function go(page){page=pageAliases[page]||'home';if(page==='collaborations')openAnnouncement();else closeAnnouncement();current=page;pages.forEach(p=>p.classList.toggle('active',p.id==='page-'+page));setMenu(false);window.scrollTo({top:0,behavior:'auto'});document.querySelectorAll('#siteMenu a, .header-primary-links a').forEach(a=>{if(a.dataset.page===page)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});editorMode=page==='editor';document.querySelectorAll('[data-demo]').forEach(b=>{const active=b.dataset.demo===(editorMode?'editor':'public');b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});}
+function publicGo(page){go(page)};
+document.querySelectorAll('[data-page]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();publicGo(el.dataset.page)}));toggle.addEventListener('click',()=>setMenu(!menu.classList.contains('open')));
+document.addEventListener('click',e=>{if(!e.target.closest('.site-header'))setMenu(false)});document.addEventListener('keydown',e=>{if(e.key==='Escape')setMenu(false)});
+document.querySelectorAll('[data-demo]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.demo==='editor'?'editor':'home')));
+const device=document.getElementById('deviceBtn'),dark=document.getElementById('modeBtn'),themeIcon=document.getElementById('themeIcon'),lang=document.getElementById('langBtn');
+device.addEventListener('click',()=>{const v=root.classList.toggle('mobile');device.setAttribute('aria-pressed',String(v));device.classList.toggle('active',v);device.textContent=tr(v?'Desktop preview':'Mobile preview');syncDraft();});
+function darkToggle(){const v=root.classList.toggle('dark');dark.setAttribute('aria-pressed',String(v));dark.classList.toggle('active',v);dark.textContent=tr(v?'Light mode':'Dark mode');themeIcon.textContent=v?'☾':'☼'}
+dark.addEventListener('click',darkToggle);themeIcon.addEventListener('click',darkToggle);
+
+const uiTranslations = {"AMIRA · CLASSIC HOMEPAGE · DESIGN REVIEW":"أميرة · معاينة التصميم الكلاسيكي","— prototype controls only · nothing is published":"— أدوات المعاينة فقط · لم يتم نشر أي شيء","Public preview":"معاينة الموقع","Editorial Desk preview":"معاينة غرفة التحرير","Mobile preview":"معاينة الهاتف","Desktop preview":"معاينة الكمبيوتر","Dark mode":"الوضع الداكن","Light mode":"الوضع الفاتح","Menu":"القائمة","Film · Photography · Writing":"أفلام · تصوير · كتابة","Film & art":"السينما والفن","Cairo, Egypt":"القاهرة، مصر","Egyptian filmmaker & multidisciplinary artist":"صانعة أفلام وفنانة مصرية متعددة التخصصات","Explore documentaries ↓":"استكشف الأفلام الوثائقية ↓","About Amira →":"عن أميرة ←","Still from":"لقطة من","Still from Mamina":"لقطة من مامينا","Documentary filmography":"الأعمال الوثائقية","Selected":"مختارات من","documentaries.":"الأفلام الوثائقية.","All films ↗":"كل الأفلام ↗","01 / Biography":"٠١ / السيرة الذاتية","About":"عن","Amira.":"أميرة.","Amira Abdel-Fadil has always been drawn to the things people carry quietly: a grandmother’s recipes, the green that grows between buildings, the small moments that hold a whole life.":"لطالما انجذبت أميرة عبد الفضيل إلى الأشياء التي يحملها الناس في صمت: وصفات الجدات، والخضرة التي تنمو بين المباني، والتفاصيل الصغيرة التي تختصر حياة كاملة.","A filmmaker, writer and photographer from Cairo, she lets each story decide its own pace, and she is still learning to listen well enough to follow it.":"هي صانعة أفلام وكاتبة ومصوّرة فوتوغرافية من القاهرة؛ تترك لكل قصة إيقاعها الخاص، وتواصل تعلّم الإصغاء إليها.","Continue reading ↗":"اقرأ المزيد ↗","Amira Abdelfadil · Cairo":"أميرة عبد الفضيل · القاهرة","Amira Abdel-Fadil has always been drawn to the things people carry quietly: a grandmother’s recipes, the green that grows between buildings, the small moments that hold a whole life. A filmmaker, writer and photographer from Cairo, she lets each story decide its own pace, and she is still learning to listen well enough to follow it.":"لطالما انجذبت أميرة عبد الفضيل إلى الأشياء التي يحملها الناس بصمت: وصفات الجدات، والخضرة التي تنمو بين المباني، والتفاصيل الصغيرة التي تختصر حياة كاملة. وهي صانعة أفلام وكاتبة ومصوّرة من القاهرة؛ تترك لكل قصة إيقاعها الخاص، وتواصل تعلّم الإصغاء إليها.","Her path began in digital media, where her articles and edited videos reached audiences of more than a million. Event coordination, teaching and volunteering shaped her too, and she credits them with teaching her patience and care for the people on the other side of the lens.":"بدأت رحلتها في الإعلام الرقمي، حيث وصلت مقالاتها ومقاطع الفيديو التي حررتها إلى جمهور تجاوز المليون. كما أسهم تنظيم الفعاليات والتدريس والعمل التطوعي في تشكيل تجربتها، وتعليمها الصبر والاهتمام بمن يقف على الجانب الآخر من العدسة.","Contact Amira ↗":"تواصل مع أميرة ↗","Amira Abdelfadil · Portrait":"أميرة عبد الفضيل · صورة شخصية","Essays / Writing":"مقالات / كتابة","Writing.":"الكتابة.","Personal essays":"مقالات شخصية","The Beauty of Capturing Memories":"جمال توثيق الذكريات","Maybe One Day I’ll Write a Masterpiece":"ربما أكتب تحفة فنية ذات يوم","Essays on art and culture":"مقالات في الفن والثقافة","Romance Movies Have Affected How We Perceive Love":"كيف أثرت الأفلام الرومانسية في تصوّرنا للحب","The 11 All-Time Best Documentaries About Racism":"أفضل ١١ فيلمًا وثائقيًا عن العنصرية على مر الزمن","Blue Lock: 11 Life Lessons We All Can Learn from the Popular Soccer Anime TV Show":"بلو لوك: ١١ درسًا حياتيًا من مسلسل الأنمي الكروي الشهير","Letters from the creative desk":"رسائل من مساحة الإبداع","Note":"دفتر ","book.":"الملاحظات.","Fragments from the creative process: cinema, people, places, and the quieter stories that stay with us. An occasional letter from Amira.":"شذرات من العملية الإبداعية: السينما والناس والأماكن والحكايات الهادئة التي تبقى معنا. ورسالة بين حين وآخر من أميرة.","Open Studio":"مساحة مفتوحة","Select a request type to open the form directly on this website. The removed cards and external form pages are not needed in the public layout.":"اختر نوع الرسالة لفتح النموذج داخل الموقع مباشرة، دون الانتقال إلى صفحات خارجية.","Send a collaboration enquiry ↗":"أرسل طلب تعاون ↗","Pitch a story ↗":"اقترح قصة ↗","Forms appear in an in-page dialog, and Tally processes the submission. No redirect is required. The iframe loads only after the visitor selects a form.":"تظهر النماذج داخل نافذة في الموقع، وتتولى منصة Tally معالجة الطلبات. ولا يُحمّل النموذج إلا بعد اختياره.","Film / Mamina":"فيلم / مامينا","Film":"مشاهد","stills.":"من الفيلم.","The image and its caption share exactly the same container width and left edge.":"تظهر الصورة والتعليق الخاص بها داخل حاوية واحدة متساوية العرض والمحاذاة.","Shared image + caption grid":"محاذاة موحدة للصورة والتعليق","· Amira Abdelfadil":"· أميرة عبد الفضيل","Mamina reflects on family, memory, and everyday life through intimate encounters. Film stills, their captions, and supporting notes now follow a shared grid rather than separate margins.":"يتأمل فيلم «مامينا» العائلة والذاكرة والحياة اليومية عبر لقاءات حميمة. وتظهر لقطات الفيلم وتعليقاتها ضمن شبكة متناسقة.","Filmography":"الأعمال السينمائية","films.":"الأفلام.","Art and photography":"الفن والتصوير","Art &":"الفن و","Photography.":"التصوير.","Gallery layouts retain the classic site styling, the same header, and the same footer. No duplicate navigation appears at the bottom.":"تحافظ المعارض على تصميم الموقع الكلاسيكي، مع رأس وتذييل موحدين دون تنقل مكرر.","The photographic galleries and collections remain part of the full website. This limited design preview demonstrates their shared navigation and footer, not their editorial media inventory.":"تبقى مجموعات التصوير الفوتوغرافي جزءًا من الموقع الكامل. تعرض هذه المعاينة التنسيق المشترك، وليس الأرشيف البصري بالكامل.","Collaborations":"التعاون","Let's":"لنتعاون","collaborate.":"معًا.","Projects grounded in care, curiosity and visual storytelling.":"مشاريع تنطلق من الاهتمام والفضول والسرد البصري.","Open collaboration form ↗":"افتح نموذج التعاون ↗","Contact":"تواصل","Get in":"لنبقَ على","touch.":"تواصل.","Let’s collaborate on stories worth telling.":"لنتعاون في سرد حكايات تستحق أن تُروى.","For proposals, enquiries or collaborations, use the in-page form below.":"للمقترحات والاستفسارات والتعاون، استخدم النموذج المتاح داخل الموقع.","Collaboration enquiry ↗":"طلب تعاون ↗","Submit a story idea ↗":"أرسل فكرة قصة ↗","Private editorial workspace · Design-only preview":"مساحة تحرير خاصة · معاينة التصميم فقط","Classic homepage · Featured still":"الصفحة الكلاسيكية · الصورة البارزة","This demo is accessible through the black prototype toolbar only. It is not linked from the public navigation and does not publish or change anything in the actual Editorial Desk.":"تُفتح هذه المعاينة من شريط الأدوات العلوي فقط. ولا توجد روابط إليها في القائمة العامة، ولا تنشر أي تعديلات.","Homepage media controls":"التحكم في صور الصفحة الرئيسية","Classic hero still":"الصورة الرئيسية الكلاسيكية","Four-photo homepage (separate)":"الصفحة ذات الصور الأربع (مستقلة)","Select an existing film still":"اختر لقطة من فيلم","Mamina · balcony still (current)":"مامينا · لقطة الشرفة (الحالية)","Mamina · kitchen still":"مامينا · لقطة المطبخ","Mamina · outdoor still":"مامينا · لقطة خارجية","Mamina · still 04":"مامينا · اللقطة الرابعة","Street X Food · still 01":"ستريت إكس فود · اللقطة الأولى","Existing original photographs only. The prototype never edits image pixels.":"تُستخدم الصور الأصلية فقط؛ لا تُعدل هذه المعاينة بكسلات الصور.","Or upload your own original photograph (preview only)":"أو أضف صورتك الأصلية (للمعاينة فقط)","JPG, PNG or WebP · 6 MB maximum · file stays in this browser demo":"JPG أو PNG أو WebP · حد أقصى ٦ ميجابايت · الملف يبقى محليًا","Accessible image description (alt text)":"الوصف البديل للصورة (إمكانية الوصول)","Featured-still caption":"تعليق الصورة البارزة","Horizontal focus:":"التركيز الأفقي:","Vertical focus:":"التركيز الرأسي:","Mobile still (optional independent image)":"صورة الهاتف (اختيارية ومستقلة)","Mamina · mobile crop (current)":"مامينا · لقطة الهاتف (الحالية)","Same as desktop still":"استخدم صورة الكمبيوتر نفسها","Show the photo credit directly beneath the still, left aligned to the image":"أظهر تعليق الصورة بمحاذاة الحافة أسفل الصورة","Apply to public preview":"تطبيق على معاينة الموقع","Discard edits":"إلغاء التعديلات","Original Mamina still loaded. Nothing is saved to the live website.":"تم تحميل صورة مامينا الأصلية. لا يتم حفظ شيء في الموقع المباشر.","Featured still / mobile crop":"الصورة البارزة / عرض الهاتف","In production, this control belongs behind the existing authorized Editorial Desk login and must save desktop/mobile media, caption, crop and alt text as a distinct":"في الموقع الفعلي، ينبغي وضع هذه الأداة خلف تسجيل دخول غرفة التحرير، مع حفظ صور الهاتف والكمبيوتر والتعليق والوصف البديل ضمن سجل مستقل:","record. The four-photo mosaic is not changed by this control.":"ولا تؤثر هذه الأداة في شبكة الصور الأربع.","© Amira Abdelfadil · Cairo, Egypt":"© أميرة عبد الفضيل · القاهرة، مصر","Privacy":"الخصوصية","Terms":"الشروط","Cookies":"ملفات تعريف الارتباط","Privacy settings":"إعدادات الخصوصية","Back to top ↑":"العودة لأعلى ↑","Open Studio · Amira Abdelfadil":"مساحة مفتوحة · أميرة عبد الفضيل","Send an enquiry":"أرسل استفسارًا","The form loads within this website after you open it. Tally handles submitted information.":"يُحمّل النموذج داخل الموقع عند فتحه؛ وتتولى Tally معالجة البيانات المرسلة.","Closing this window returns you to the same page. A reliable internet connection is required for Tally.":"عند إغلاق النافذة تعود إلى الصفحة نفسها. تتطلب النماذج اتصالاً بالإنترنت.","Prototype information":"معلومات المعاينة","These features retain their original production routes. This review file only demonstrates shared visual styling.":"تحتفظ هذه الميزات بمساراتها الأصلية. تُظهر المعاينة التنسيق البصري المشترك فقط.","Changes appear in the preview only — not published.":"تظهر التغييرات في المعاينة فقط، ولا تُنشر.","Public preview updated locally. No website files or database records were changed.":"تم تحديث المعاينة محليًا دون تعديل ملفات الموقع أو قاعدة بياناته.","Original Mamina featured still restored in the preview.":"تمت استعادة صورة مامينا الأصلية في المعاينة.","Local file loaded for preview only. It is not uploaded or published.":"تم تحميل الملف محليًا للمعاينة فقط، دون رفعه أو نشره.","Choose a JPG, PNG or WebP under 6 MB.":"اختر JPG أو PNG أو WebP بحجم أقل من ٦ ميجابايت.","Separate four-photo editor":"محرر منفصل للصور الأربع","The original four-photo homepage editor remains a separate control. Editing the classic featured still will not change the four-photo mosaic, its crop values, or the live layout toggle.":"يبقى محرر الصور الأربع مستقلاً. لا يغير تعديل صورة الصفحة الكلاسيكية شبكة الصور الأربع أو الاقتصاص أو مبدل التصاميم.","Pitch a story":"اقترح قصة","Collaboration enquiry":"طلب تعاون","Close form":"أغلق النموذج","This is a standalone design prototype, not the production legal page. The published site must continue to serve its existing privacy, terms, cookies and consent controls.":"هذه معاينة مستقلة للتصميم وليست صفحة قانونية منشورة. يجب أن تظل الشروط والخصوصية والموافقة متاحة على الموقع الفعلي."};
+Object.assign(uiTranslations,{"Documentary": "الأفلام", "filmography.": "الوثائقية.", "Documentary filmography": "الأعمال الوثائقية", "Collaborative documentary · 2025 · 41:23": "فيلم وثائقي مشترك · ٢٠٢٥ · ٤١:٢٣", "Short documentary · 2025 · 05:48": "فيلم وثائقي قصير · ٢٠٢٥ · ٠٥:٤٨", "Collaborative documentary · 2023 · 29:53": "فيلم وثائقي مشترك · ٢٠٢٣ · ٢٩:٥٣", "Short documentary · 2025 · 14:45": "فيلم وثائقي قصير · ٢٠٢٥ · ١٤:٤٥", "Short documentary · 2023 · 13:15": "فيلم وثائقي قصير · ٢٠٢٣ · ١٣:١٥"});
+Object.assign(uiTranslations,{"SELECTED WORK / SHARED PRACTICE": "أعمال مختارة / تجارب مشتركة", "Collaborations.": "التعاون.", "Films, creative projects and the people who helped bring them to life.": "أفلام ومشروعات إبداعية والأشخاص الذين ساهموا في إنجازها.", "FILM COLLABORATIONS": "تعاونات سينمائية", "OTHER COLLABORATIONS": "تعاونات أخرى", "Co-directed by Amira Abdel-Fadil with Sarah El Halawany.": "إخراج مشترك بين أميرة عبد الفضيل وسارة الحلواني.", "Production: Nazra Films, Goethe Institute, IMS and Red Star.": "الإنتاج: نظرة فيلمز، ومعهد جوته، وIMS، وريد ستار.", "Co-directed with Rama Abdi and Kateřina Sivoková.": "إخراج مشترك مع راما عبدي وكاتيرينا سيفوكوفا.", "Production: Duemila30 Productions.": "الإنتاج: Duemila30 Productions.", "Directed by Amira Abdel-Fadil. Cinematography: Menna Ahmed.": "إخراج: أميرة عبد الفضيل. تصوير سينمائي: منة أحمد.", "Editing: Hisham Abdelrazek. Sound: Mohab Ezz. Production: IMS, Nazra Films, Goethe Institute and Red Star.": "مونتاج: هشام عبد الرازق. صوت: مهاب عز. الإنتاج: IMS، نظرة فيلمز، معهد جوته، وريد ستار.", "Co-written with Magda Baraka, who also appears in the film.": "كتابة مشتركة مع ماجدة بركة، التي تشارك أيضًا في الفيلم.", "Sound design and mixing: Khaled Saleh.": "تصميم ومكساج الصوت: خالد صالح.", "Outside the Frame": "خارج الإطار", "Played Raghda in the short film.": "جسّدت شخصية رغدة في الفيلم القصير.", "Netsharek": "نتشارك", "Edited and refined a food-management project for students at the University of Hull and the Arab Academy for Science, Technology and Maritime Transport.": "مونتاج وتطوير مشروع لإدارة الطعام لطلاب جامعة هال والأكاديمية العربية للعلوم والتكنولوجيا والنقل البحري.", "ByAmirah": "ByAmirah", "Creative development, film marketing, research and behind-the-scenes content with Abdelrahman Mohamed.": "تطوير إبداعي وتسويق أفلام وبحث ومحتوى من كواليس العمل بالتعاون مع عبد الرحمن محمد.", "Ismailia International Film Festival for Documentaries and Shorts": "مهرجان الإسماعيلية الدولي للأفلام التسجيلية والقصيرة", "Served as general coordinator.": "عملت منسقة عامة.", "Editorial contributions": "مساهمات تحريرية", "Contributed to MovieWeb, Thought Catalog, Collective World and Vertical Network.": "ساهمت في MovieWeb وThought Catalog وCollective World وVertical Network.", "Featured in MovieWeb, Meer, Collective World, and Thought Catalog.": "نُشرت أعمالها في MovieWeb وMeer وCollective World وThought Catalog.", "Have a project in mind?": "هل لديك مشروع ترغب في التعاون عليه؟", "Contact Amira ↗": "تواصل مع أميرة ↗", "VOICES & EXPERIENCES": "آراء وتجارب", "Endorsements.": "التزكيات.", "Reflections from people Amira has worked with.": "آراء من أشخاص عملوا مع أميرة.", "Endorsements are coming soon.": "قريبًا: تزكيات وآراء موثقة.", "This page will feature genuine, attributed feedback once it has been received and approved for publication.": "ستضم هذه الصفحة آراء حقيقية منسوبة إلى أصحابها بعد استلامها والموافقة على نشرها.", "CREATIVE WORK TOGETHER": "أعمال إبداعية مشتركة", "Explore collaborations ↗": "تصفح التعاونات ↗", "Co-directed with Sarah El Halawany": "إخراج مشترك مع سارة الحلواني", "Creative development and storytelling": "التطوير الإبداعي والسرد البصري"});
+const localizedNodes=[];
+const imgAltTranslations={
+ 'Two women talk on a balcony overlooking Cairo':'امرأتان تتحدثان على شرفة تطل على القاهرة',
+ 'Original unedited photograph of Amira holding a camera':'صورة أصلية لأميرة تحمل كاميرا',
+ 'Mamina poster':'ملصق فيلم مامينا',
+ 'Mamina documentary poster':'ملصق فيلم مامينا الوثائقي',
+ 'Street X Food documentary poster':'ملصق فيلم ستريت إكس فود الوثائقي',
+ 'Two women speaking on a balcony overlooking Cairo':'امرأتان تتحدثان في شرفة تطل على القاهرة'
+};
+Object.assign(imgAltTranslations,{"Original Sweet & Salty film poster": "الملصق الأصلي لفيلم حلو ومالح", "Original Street X Food film poster": "الملصق الأصلي لفيلم ستريت إكس فود", "Original Biophilia film poster": "الملصق الأصلي لفيلم بيوفيليا", "Original Mamina film poster": "الملصق الأصلي لفيلم مامينا", "Original A Double-Edged Sword film poster": "الملصق الأصلي لفيلم سلاح ذو حدين"});
+const recordedAlts=[];
+Object.assign(uiTranslations,{"FILM FESTIVALS / PUBLIC PRESENTATIONS": "المهرجانات السينمائية / العروض العامة", "Screenings &": "العروض و", "exhibitions.": "المعارض.", "A dated record of documented screenings, presentations and exhibitions of Amira's film work.": "سجل مؤرخ للعروض السينمائية والمعارض الموثقة التي شاركت فيها أعمال أميرة.", "GROUP EXHIBITION · BROOKLYN, NEW YORK": "معرض جماعي · بروكلين، نيويورك", "Creative Climate Award: Collective Power": "جائزة المناخ الإبداعية: القوة الجماعية", "Biophilia · Human Impacts Institute. Listed as a participating artist and film work; the exhibition title does not indicate an individual award.": "بيوفيليا · معهد هيومن إمباكتس. أُدرجت أميرة ضمن الفنانين المشاركين، واسم المعرض لا يعني حصولها على جائزة فردية.", "View exhibition listing ↗": "عرض قائمة المشاركين ↗", "UNIVERSITY SCREENING · CAIRO, EGYPT": "عرض جامعي · القاهرة، مصر", "World Development Information Day — MSA University": "اليوم العالمي للإعلام الإنمائي — جامعة MSA", "Screening of Biophilia at the Faculty of Mass Communication, October University for Modern Sciences and Arts.": "عرض فيلم بيوفيليا في كلية الإعلام بجامعة أكتوبر للعلوم الحديثة والآداب.", "University event coverage ↗": "تغطية الجامعة للفعالية ↗", "FILM FESTIVAL · CINEMA ZAWYA, CAIRO": "مهرجان سينمائي · سينما زاوية، القاهرة", "Manassat Film Festival — Mamina": "مهرجان منصات السينمائي — مامينا", "Mamina featured in the festival's 2025 Student Nonfiction programme.": "عُرض مامينا ضمن برنامج الأفلام الوثائقية الطلابية بمهرجان منصات ٢٠٢٥.", "Official film programme ↗": "البرنامج الرسمي للفيلم ↗", "FILM FESTIVAL · EGYPT": "مهرجان سينمائي · مصر", "Manassat Film Festival — A Double-Edged Sword": "مهرجان منصات السينمائي — سيف ذو حدين", "A Double-Edged Sword appeared in Manassat's 2023 student-documentary programme.": "شارك فيلم سيف ذو حدين في برنامج الأفلام الوثائقية الطلابية بمهرجان منصات ٢٠٢٣.", "Official programme entry ↗": "تفاصيل البرنامج الرسمي ↗", "VERIFIED RECOGNITION": "تكريمات موثقة", "Awards &": "الجوائز و", "distinctions.": "التميّز.", "Attributions are listed by film and by the complete credited team; selection is not presented as an individual award.": "تُعرض التكريمات بحسب الفيلم وبأسماء الفريق المُعتمدة كاملة، من دون نسبتها إلى أميرة وحدها.", "FICIMAD · INTERNATIONAL INDEPENDENT FILM FESTIVAL OF MADRID": "فيثيماد · مهرجان مدريد الدولي للسينما المستقلة", "Best Cinematography —": "أفضل تصوير سينمائي —", "The festival's published awards list credits the film and the cinematography team: David Všetička, Rama Abdi, Hazar Yazji, Amira Abdel-Fadil and Karim El-Mubarak.": "تضمّ القائمة الرسمية للمهرجان الفيلم وفريق التصوير: دافيد فشيتيتشكا، راما عبدي، هزار يازجي، أميرة عبد الفضيل، وكريم المبارك.", "A shared filmmaking credit, not a sole individual award.": "تكريم جماعي لفريق الفيلم، وليس جائزة فردية.", "Read the festival's official awards list ↗": "الاطلاع على قائمة الجوائز الرسمية ↗", "ACADEMIC BACKGROUND": "الخلفية الأكاديمية", "Education &": "التعليم و", "practice.": "الممارسة.", "A concise academic record, with links to published institutional references.": "نبذة عن الدراسة الأكاديمية مع روابط للمراجع المؤسسية المنشورة.", "CLASS OF 2023 · CAIRO, EGYPT": "دفعة ٢٠٢٣ · القاهرة، مصر", "October University for Modern Sciences and Arts (MSA)": "جامعة أكتوبر للعلوم الحديثة والآداب (MSA)", "Mass Media / Broadcasting": "الإعلام / الإذاعة والتلفزيون", "Bachelor's degree in mass media, with broadcasting studies. MSA University describes Amira as a Faculty of Mass Communication alumna from the Class of 2023; Manassat identifies her broadcasting degree.": "حاصلة على بكالوريوس في الإعلام مع دراسة الإذاعة والتلفزيون. تذكر جامعة MSA أميرة ضمن خريجي كلية الإعلام دفعة ٢٠٢٣، ويشير مهرجان منصات إلى تخصصها في الإذاعة والتلفزيون.", "MSA University reference ↗": "مرجع جامعة MSA ↗", "Film festival biography ↗": "السيرة المنشورة لدى المهرجان ↗", "Complete film presentation": "التفاصيل الكاملة للفيلم", "View full film ↓": "عرض الفيلم كاملًا ↓", "Full film details": "تفاصيل الفيلم الكاملة", "Return to film index ↑": "العودة إلى قائمة الأفلام ↑", "Original film stills": "صور أصلية من الفيلم", "Original production credits": "فريق الإنتاج الأصلي", "Watch trailer ▶": "مشاهدة إعلان الفيلم ▶", "All five documentaries appear in full on this page. Select a poster above to jump to its original artwork, credits, synopsis and stills.": "تظهر الأفلام الوثائقية الخمسة هنا بصفحات تفصيلية كاملة. اختر ملصقًا بالأعلى للانتقال إلى الصور الأصلية والاعتمادات والملخص.", "Each film opens as a popup on the homepage only.": "تُفتح تفاصيل الأفلام في نافذة منبثقة عند اختيارها من الصفحة الرئيسية فقط."});
+Object.assign(uiTranslations,{"Film screenings, festival appearances and exhibitions documented by programme listings.": "عروض الأفلام والمشاركات في المهرجانات والمعارض الموثقة في البرامج الرسمية.", "Official exhibition programme ↗": "البرنامج الرسمي للمعرض ↗", "Biophilia · Human Impacts Institute. Amira Abdel-Fadil is listed as a participating artist with the film Biophilia. This is an exhibition listing, not an individual prize.": "بيوفيليا · معهد التأثيرات البشرية. ترد أميرة عبد الفضيل ضمن الفنانين المشاركين بفيلم بيوفيليا. هذه مشاركة في معرض وليست جائزة فردية.", "Biophilia was screened at the Faculty of Mass Communication, October University for Modern Sciences and Arts, during an event devoted to development and environmental awareness.": "عُرض فيلم بيوفيليا بكلية الإعلام في جامعة أكتوبر للعلوم الحديثة والآداب خلال فعالية تناولت التنمية والوعي البيئي.", "University event coverage ↗": "تغطية الفعالية الجامعية ↗", "FILM FESTIVAL · POLAND": "مهرجان سينمائي · بولندا", "BNP Paribas Green Film Festival — Biophilia": "مهرجان بي إن بي باريبا للأفلام الخضراء — بيوفيليا", "Biophilia, co-directed by Amira Abdel-Fadil, Rama Abdi and Kateřina Sivoková, was included in the festival programme for a Cameral Stage screening with Polish and English subtitles.": "أُدرج فيلم بيوفيليا، من إخراج أميرة عبد الفضيل وراما عبدي وكاتيرينا سيفوكوفا، ضمن برنامج المهرجان لعرض في قاعة كاميرال مع ترجمة بولندية وإنجليزية.", "Festival programme ↗": "برنامج المهرجان ↗", "Mamina was featured in Manassat Film Festival’s 2025 Student Nonfiction programme. The programme credited Amira Abdel-Fadil.": "شارَك فيلم مامينا في قسم الأفلام الطلابية غير الروائية بمهرجان منصات ٢٠٢٥، وأورد البرنامج اسم أميرة عبد الفضيل.", "Official festival listing ↗": "الإدراج الرسمي بالمهرجان ↗", "FESTIVAL SCREENING · MILAN, ITALY": "عرض بمهرجان · ميلانو، إيطاليا", "Duemila30 Festival at Nuovo Armenia — Biophilia": "مهرجان دويميلا 30 في نوفو أرمينيا — بيوفيليا", "Biophilia was screened ahead of Toxicily at Nuovo Armenia. The programme credited the three co-directors Amira Abdel-Fadil, Rama Abdi and Kateřina Sivoková.": "عُرض فيلم بيوفيليا قبل فيلم Toxicily في نوفو أرمينيا، مع ذكر المخرجات المشاركات: أميرة عبد الفضيل وراما عبدي وكاتيرينا سيفوكوفا.", "Venue programme ↗": "برنامج مكان العرض ↗", "A Double-Edged Sword appeared in Manassat’s 2023 film programme, credited to Amira Abdel-Fadil and Magda Baraka.": "ظهر فيلم سيف ذو حدين ضمن برنامج مهرجان منصات ٢٠٢٣ باسم أميرة عبد الفضيل وماجدة بركة.", "Festival participation is documented separately under Screenings & Exhibitions.": "تُوثّق المشاركات بالمهرجانات بصورة منفصلة ضمن صفحة العروض والمعارض.", "FILM AWARDS / RECOGNITION": "جوائز الأفلام / تكريمات", "Recognition is credited to the film and its collaborators. Festival participation is documented separately under Screenings & Exhibitions.": "تُنسَب التكريمات إلى الفيلم والمتعاونين في إنجازه. أما المشاركة بالمهرجانات فتُذكر منفصلة في صفحة العروض والمعارض.", "Official festival results credit David Všetička, Rama Abdi, Hazar Yazji, Amira Abdel-Fadil and Karim El-Mubarak as the film’s cinematography team.": "تذكر النتائج الرسمية للمهرجان دافيد فيشتيتشكا وراما عبدي وهزار يازجي وأميرة عبد الفضيل وكريم المبارك ضمن فريق تصوير الفيلم.", "Shared film and team award.": "جائزة مشتركة للفيلم وفريقه.", "Official 2025 awards list ↗": "قائمة الجوائز الرسمية لعام ٢٠٢٥ ↗", "DATE TBC": "التاريخ غير مؤكّد", "BERLIN KIEZ FILM FESTIVAL · DOCUMENTARY FILM RECOGNITION": "مهرجان برلين كيتز · تكريم فيلم وثائقي", "Best Environment and Climate Short Film — Biophilia": "أفضل فيلم قصير عن البيئة والمناخ — بيوفيليا", "The 2026 CIRCLE Doc Accelerator biography of Biophilia co-director Rama Abdi states that the film won this category at Berlin Kiez Film Festival. The year has not been confirmed in that source.": "تذكر سيرة راما عبدي، المشاركة في إخراج بيوفيليا، المنشورة ضمن برنامج CIRCLE Doc Accelerator لعام ٢٠٢٦ أن الفيلم فاز بهذه الفئة في مهرجان برلين كيتز. ولم يُؤكَّد عام الجائزة في المصدر.", "Award to the collaborative film; year pending confirmation.": "تكريم للفيلم الجماعي؛ عام الجائزة بحاجة إلى تأكيد.", "CIRCLE documentary filmmaker biography ↗": "سيرة صانعة الأفلام في برنامج CIRCLE ↗"});
+function collectLocalizedNodes(){
+ const walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT);
+ while(walker.nextNode()){
+  const node=walker.currentNode, el=node.parentElement;
+  if(!el || el.closest('script,style,[data-tr],#langBtn,#headerLangBtn,#themeIcon,#deviceBtn,#modeBtn,#page-writing .essays'))continue;
+  const v=node.nodeValue.trim();
+  if(v && Object.prototype.hasOwnProperty.call(uiTranslations,v))localizedNodes.push({node,src:node.nodeValue,translation:uiTranslations[v]});
+ }
+ document.querySelectorAll('#canvas img').forEach(img=>{if(imgAltTranslations[img.alt])recordedAlts.push({img,en:img.alt,ar:imgAltTranslations[img.alt]});});
+}
+function tr(value){return ar?(uiTranslations[value]||value):value}
+function applyLocalizedNodes(){
+ document.documentElement.lang=ar?'ar':'en';document.getElementById('menuToggle').setAttribute('aria-label',ar?'القائمة':'Menu');
+ const siteName=ar?'أميرة عبد الفضيل':'Amira Abdelfadil';
+ document.getElementById('heroTitle').textContent=siteName;
+ const brandName=document.querySelector('.site-header .brand');
+ brandName.textContent=ar?'أميرة عبد الفضيل':'amira abdelfadil';
+ brandName.setAttribute('aria-label',ar?'أميرة عبد الفضيل، الرئيسية':'Amira Abdelfadil home');
+ document.title=ar?'أميرة عبد الفضيل | معاينة التصميم الكلاسيكي':'Amira Abdelfadil | Classic Homepage — Review Prototype';
+ localizedNodes.forEach(({node,src,translation})=>{if(!node.isConnected)return;let a=src.match(/^\s*/)[0],b=src.match(/\s*$/)[0];node.nodeValue=ar?a+translation+b:src;});
+ recordedAlts.forEach(({img,en,ar:arabic})=>{if(img.isConnected)img.alt=ar?arabic:en});
+ document.getElementById('modeBtn').textContent=tr(root.classList.contains('dark')?'Light mode':'Dark mode');
+ document.getElementById('deviceBtn').textContent=tr(root.classList.contains('mobile')?'Desktop preview':'Mobile preview');
+ if(draft.caption==='Still from Mamina'){caption.textContent=tr(draft.caption);editorCaption.textContent=tr(draft.caption)}
+}
+
+const arLabels={home:'الرئيسية',films:'الأفلام',art:'الفن والتصوير',writing:'الكتابة',notes:'دفتر الملاحظات',collaborations:'التعاون',endorsements:'التزكيات',screenings:'العروض والمعارض',awards:'الجوائز',education:'التعليم',about:'عن أميرة',contact:'تواصل'};
+function langToggle(){ar=!ar;root.setAttribute('dir',ar?'rtl':'ltr');lang.classList.toggle('active',ar);lang.setAttribute('aria-pressed',String(ar));lang.textContent=ar?'English':'العربية';document.getElementById('headerLangBtn').textContent=ar?'English':'العربية';document.querySelectorAll('[data-tr]').forEach(e=>{e.textContent=ar?arLabels[e.dataset.tr]||e.dataset.tr:({home:'Home',films:'Films',art:'Art & Photography',writing:'Writing',notes:'Notebook',collaborations:'Collaborations',endorsements:'Endorsements',screenings:'Screenings & Exhibitions',awards:'Awards',education:'Education',about:'About',contact:'Contact'})[e.dataset.tr]});applyLocalizedNodes();updateAnnouncementLanguage();document.getElementById('filmIndexInstruction').textContent=ar?'اختر أحد الأفلام لفتح صفحته المستقلة بكامل تفاصيلها.':'Select a documentary to open its dedicated full-page presentation.';if(current==='film-detail')renderDedicatedFilm(selectedFilmId);}
+lang.addEventListener('click',langToggle);document.getElementById('headerLangBtn').addEventListener('click',langToggle);
+const topButton=document.getElementById('scrollTop');window.addEventListener('scroll',()=>{topButton.classList.toggle('show',window.scrollY>900);},{passive:true});topButton.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+const dialog=document.getElementById('tallyDialog'),frame=document.getElementById('tallyFrame');const tallyUrls={collab:'https://tally.so/embed/yX4BdX?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1',pitch:'https://tally.so/embed/X5op2L?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1'};
+let trigger=null;function openForm(type){trigger=document.activeElement;document.getElementById('modalTitle').textContent=tr(type==='pitch'?'Pitch a story':'Collaboration enquiry');frame.title=type==='pitch'?'Story and film pitch':'Creative collaboration enquiry';frame.src=tallyUrls[type]||tallyUrls.collab;frame.hidden=false;dialog.showModal();}
+function closeForm(){dialog.close();frame.src='about:blank';frame.hidden=true;if(trigger&&trigger.focus)trigger.focus();}
+document.querySelectorAll('[data-form]').forEach(b=>b.addEventListener('click',()=>openForm(b.dataset.form)));document.getElementById('modalClose').addEventListener('click',closeForm);dialog.addEventListener('close',()=>{frame.src='about:blank';frame.hidden=true});dialog.addEventListener('click',e=>{if(e.target===dialog)closeForm()});
+const nd=document.getElementById('noticeDialog');document.getElementById('noticeClose').addEventListener('click',()=>nd.close());document.querySelectorAll('[data-legal],#privacySettings').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();document.getElementById('noticeTitle').textContent=tr(el.dataset.legal||'Privacy settings');document.getElementById('noticeBody').textContent='This is a standalone design prototype, not the production legal page. The published site must continue to serve its existing privacy, terms, cookies and consent controls.';nd.showModal()}));
+document.getElementById('fourPhotosBtn').addEventListener('click',()=>{document.getElementById('noticeTitle').textContent=tr('Separate four-photo editor');document.getElementById('noticeBody').textContent='The original four-photo homepage editor remains a separate control. Editing the classic featured still will not change the four-photo mosaic, its crop values, or the live layout toggle.';nd.showModal();});
+const sel=document.getElementById('stillSelect'),up=document.getElementById('stillUpload'),cap=document.getElementById('captionText'),alt=document.getElementById('altText'),x=document.getElementById('cropX'),y=document.getElementById('cropY'),mobile=document.getElementById('mobileStill'),show=document.getElementById('captionOn');
+function syncDraft(){let mobileSrc=draft.mobile;if(root.classList.contains('mobile'))still.src=mobileSrc;else still.src=draft.src;still.style.objectPosition=`${draft.x}% ${draft.y}%`;still.alt=draft.alt;caption.textContent=tr(draft.caption);caption.hidden=!draft.show;editorStill.src=draft.src;editorStill.alt=draft.alt;editorStill.style.objectPosition=`${draft.x}% ${draft.y}%`;editorCaption.textContent=tr(draft.caption);editorCaption.hidden=!draft.show;mobilePreview.src=mobileSrc;mobilePreview.style.objectPosition=`${draft.x}% ${draft.y}%`;}
+function editCurrent(){draft={src:sel.value==='custom'&&objectUrl?objectUrl:assets+sel.value,mobile:mobile.value==='same'?(sel.value==='custom'&&objectUrl?objectUrl:assets+sel.value):assets+mobile.value,alt:alt.value.trim()||'Featured film still',caption:cap.value.trim()||'Still from Mamina',x:Number(x.value),y:Number(y.value),show:show.checked};syncDraft();}
+[sel,cap,alt,x,y,mobile,show].forEach(el=>el.addEventListener('input',()=>{document.getElementById('xVal').textContent=x.value+'%';document.getElementById('yVal').textContent=y.value+'%';editCurrent();document.getElementById('editStatus').textContent=tr('Changes appear in the preview only — not published.');}));
+up.addEventListener('change',()=>{const file=up.files?.[0];if(!file)return;if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>6*1024*1024){document.getElementById('editStatus').textContent=tr('Choose a JPG, PNG or WebP under 6 MB.');up.value='';return;}if(objectUrl)URL.revokeObjectURL(objectUrl);objectUrl=URL.createObjectURL(file);if(!sel.querySelector('option[value="custom"]'))sel.add(new Option('Uploaded image · local preview','custom'));sel.value='custom';editCurrent();document.getElementById('editStatus').textContent=tr('Local file loaded for preview only. It is not uploaded or published.');});
+document.getElementById('applyPreview').addEventListener('click',()=>{editCurrent();document.getElementById('editStatus').textContent=tr('Public preview updated locally. No website files or database records were changed.');go('home');});
+document.getElementById('resetPreview').addEventListener('click',()=>{draft={...initial};sel.value='mamina-02.jpg';up.value='';cap.value=initial.caption;alt.value=initial.alt;x.value=initial.x;y.value=initial.y;mobile.value='mamina-02-small.jpg';show.checked=true;document.getElementById('xVal').textContent='50%';document.getElementById('yVal').textContent='50%';syncDraft();document.getElementById('editStatus').textContent=tr('Original Mamina featured still restored in the preview.');});
+
+const filmCatalog=[{"id": "sweet-and-salty", "title": "Sweet & Salty", "title_ar": "حلو ومالح", "poster": "sweet-and-salty-poster.jpg", "year": "2025", "runtime": "41:23", "kind": "Collaborative documentary", "kind_ar": "فيلم وثائقي مشترك", "director": "Co-directed by", "director_ar": "إخراج مشترك", "names": "Amira Abdel-Fadil & Sarah El Halawany", "names_ar": "أميرة عبد الفضيل وسارة الحلاواني", "production": "Nazra Films, Goethe Institute, IMS, Red Star", "synopsis": "From the heart of Cairo, Nabil and Somaya are strangers pursuing dreams rooted in their love of food. Though their paths are different, their stories echo one another. Each navigates the delicate space between ambition and circumstance, shaped by memory, sacrifice, and the people who surround them.", "synopsis_ar": "في قلب القاهرة، يسعى نبيل وصومية، وهما شخصان لا يعرف أحدهما الآخر، لتحقيق حلمَين يجمعهما حب الطعام. ورغم اختلاف الطريقين، تتردد أصداء الحكايتين في ما بينهما. يخوض كل منهما المسافة بين الطموح والظروف، فيما تشكّل الذاكرة والتضحية والناس المحيطون به تفاصيل الرحلة.", "stills": ["sweet-and-salty-01.jpg", "sweet-and-salty-02.jpg", "sweet-and-salty-03.jpg", "sweet-and-salty-04.jpg"], "alts": ["Somaya laughing at a table", "A chocolate pastry with a pink candle", "A cook stirring a dish on the stovetop", "Nabil laughing at a night market"], "trailer": null}, {"id": "street-x-food", "title": "Street X Food", "title_ar": "ستريت إكس فود", "poster": "street-x-food-poster.jpg", "year": "2025", "runtime": "05:48", "kind": "Short documentary", "kind_ar": "فيلم وثائقي قصير", "director": "Director", "director_ar": "إخراج", "names": "Amira Abdel-Fadil", "names_ar": "أميرة عبد الفضيل", "production": "IMS, Nazra Films, Goethe Institute, Red Star", "synopsis": "Street X Food is a glimpse into Cairo’s vibrant street life, where food pulses like a heartbeat. Through its street vendors, cooks, and the people who gather around their meals, the film captures the flavours, energy, and everyday connections of a city shaped by resilience and community.", "synopsis_ar": "يقدّم «ستريت إكس فود» لمحة من حياة شوارع القاهرة النابضة، حيث يصبح الطعام نبضًا يوميًا للمدينة. ومن خلال الباعة والطهاة والناس الذين يجتمعون حول وجباتهم، يلتقط الفيلم النكهات والحركة والصلات الإنسانية التي تشكّل حياة مدينة تستمد قوتها من الصمود والجماعة.", "stills": ["street-x-food-01.jpg", "street-x-food-02.jpg", "street-x-food-03.jpg", "street-x-food-04.jpg"], "alts": ["A pan of food at a street food stand", "Two men seated in a market street", "Birds perched along a steel structure against a blue sky", "The Nile and a palm-lined bank in daylight"], "trailer": null}, {"id": "biophilia", "title": "Biophilia", "title_ar": "بيوفيليا", "poster": "biophilia-poster.jpg", "year": "2023", "runtime": "29:53", "kind": "Collaborative documentary", "kind_ar": "فيلم وثائقي مشترك", "director": "Co-directors", "director_ar": "إخراج مشترك", "names": "Amira Abdel-Fadil, Rama Abdi, and Kateřina Sivoková", "names_ar": "أميرة عبد الفضيل، وراما عبدي، وكاتيرينا سيفوكوفا", "production": "Duemila30 Productions", "synopsis": "In this increasingly fast-paced world, especially in big urban cities, everything is becoming man-made, and we indulge and indulge. Every once in a while, if we’re lucky enough, we get to turn the volume down and be humbled by the greatest artist: nature. It has the ability to remind us of what is real and natural amidst the noise. This is an open invitation to embrace the beauty of nature in urban spaces, notice what it can be despite endless urbanization, and become one with it. While everything manufactured can seem like a feat of genius, nature, too, deserves to be celebrated and embraced.", "synopsis_ar": "في عالم تتسارع وتيرته، ولا سيما في المدن الكبرى، يزداد حضور ما يصنعه الإنسان في حياتنا. وأحيانًا، إذا حالفنا الحظ، نستطيع أن نُخفض ضجيج العالم ونصغي إلى الفنان الأعظم: الطبيعة. يقدّم الفيلم دعوة مفتوحة لرؤية جمال الطبيعة داخل المدينة، والاقتراب منها رغم التوسع العمراني المتواصل، والاحتفاء بما تمنحنا إياه من حقيقة وهدوء وحياة.", "stills": ["biophilia-01.jpg", "biophilia-02.jpg", "biophilia-03.jpg", "biophilia-04.jpg"], "alts": ["A tree and a green cart along an urban road", "A person in blue looking down a narrow city street", "A goat with a city in the distance", "Two people sitting among the branches of a tree"], "trailer": "2z-i75VBvSY"}, {"id": "mamina", "title": "Mamina", "title_ar": "مامينا", "poster": "mamina-poster.jpg", "year": "2025", "runtime": "14:45", "kind": "Short documentary", "kind_ar": "فيلم وثائقي قصير", "director": "Director", "director_ar": "إخراج", "names": "Amira Abdel-Fadil", "names_ar": "أميرة عبد الفضيل", "production": "IMS, Nazra Films, Goethe Institute, Red Star", "synopsis": "Amira, a young woman deeply attached to her grandmother, is struggling to cope with her loss. Their bond was nurtured in her grandmother’s kitchen through cooking and sharing meals together. Now, without her grandmother’s abundant love, Amira feels lost and misses her terribly. As she grieves and searches for love in those around her, including her mother, and within herself, she begins to uncover what might be the key to moving forward despite the pain.", "synopsis_ar": "تجد أميرة، وهي شابة ترتبط بجدتها بعلاقة عميقة، صعوبة في التعايش مع فقدانها. نشأت هذه الرابطة في مطبخ الجدة، بين إعداد الطعام والوجبات المشتركة. وبعد رحيلها، تفتقد أميرة حبها الغامر وتشعر بالتيه. وبين الحزن والبحث عن الحب لدى المحيطين بها، ومنهم والدتها، وفي داخلها أيضًا، تبدأ في اكتشاف ما قد يساعدها على مواصلة الحياة رغم الألم.", "stills": ["mamina-01.jpg", "mamina-02.jpg", "mamina-03.jpg", "mamina-04.jpg"], "alts": ["A pot and pan on a kitchen stove", "Two women talk on a balcony overlooking Cairo", "Two people in bright clothes lying in grass", "An old portrait of Amira’s grandmother wearing a headscarf"], "trailer": "9-ksBDgAwFk"}, {"id": "double-edged-sword", "title": "A Double-Edged Sword", "title_ar": "سلاح ذو حدين", "poster": "double-edged-sword-poster.jpg", "year": "2023", "runtime": "13:15", "kind": "Short documentary", "kind_ar": "فيلم وثائقي قصير", "director": "Director", "director_ar": "إخراج", "names": "Amira Abdel-Fadil", "names_ar": "أميرة عبد الفضيل", "production": "", "synopsis": "A short documentary about food waste in the food chain and its link to climate change and hunger.", "synopsis_ar": "فيلم وثائقي قصير يتناول هدر الطعام عبر سلسلة الغذاء وعلاقته بالتغير المناخي والجوع.", "stills": ["double-edged-sword-01.jpg", "double-edged-sword-02.jpg", "double-edged-sword-03.jpg", "double-edged-sword-04.jpg"], "alts": ["A person in a red shirt lying in grass", "A person working among rows of crops", "Cattle in a dry field", "A fire burning beside a field lined with palm trees"], "trailer": "LlEB9mEAB_Y"}];
+const filmDialog=document.getElementById('filmDialog');
+const filmDisplay={title:document.getElementById('filmDialogTitle'),meta:document.getElementById('filmDialogMeta'),poster:document.getElementById('filmDialogPoster'),synopsis:document.getElementById('filmDialogSynopsis'),credits:document.getElementById('filmDialogCredits'),stills:document.getElementById('filmDialogStills'),trailer:document.getElementById('filmTrailerArea')};
+let filmTrigger=null;
+function addFilmCredit(label,value){if(!value)return;const p=document.createElement('p');const b=document.createElement('strong');b.textContent=label+': ';p.append(b,document.createTextNode(value));filmDisplay.credits.append(p)}
+function openFilm(slug){
+ const f=filmCatalog.find(v=>v.id===slug);if(!f)return;
+ filmTrigger=document.activeElement;
+ filmDialog.setAttribute('dir',ar?'rtl':'ltr');
+ filmDialog.style.setProperty('--film-dialog-paper',root.classList.contains('dark')?'#f4efea':'#f8f4ec');
+ document.getElementById('filmDialogKicker').textContent=ar?'الأعمال الوثائقية':'Documentary filmography';
+ document.getElementById('filmSynopsisLabel').textContent=ar?'نبذة عن الفيلم':'Synopsis';
+ document.getElementById('filmStillsLabel').textContent=ar?'صور من الفيلم':'Film stills';
+ document.getElementById('filmDialogClose').setAttribute('aria-label',ar?'إغلاق تفاصيل الفيلم':'Close film details');
+ filmDisplay.title.textContent=ar?f.title_ar:f.title;
+ filmDisplay.meta.textContent=(ar?f.kind_ar:f.kind)+' · '+f.year+' · '+f.runtime;
+ filmDisplay.poster.src=assets+f.poster;
+ filmDisplay.poster.alt=(ar?'الملصق الأصلي لفيلم ':'Original poster for ')+(ar?f.title_ar:f.title);
+ filmDisplay.synopsis.textContent=ar?f.synopsis_ar:f.synopsis;
+ filmDisplay.credits.replaceChildren();
+ addFilmCredit(ar?f.director_ar:f.director,ar?f.names_ar:f.names);
+ addFilmCredit(ar?'الإنتاج':'Production',f.production);
+ filmDisplay.stills.replaceChildren();
+ f.stills.forEach((src,i)=>{const fig=document.createElement('figure');const img=document.createElement('img');img.loading='lazy';img.src=assets+src;img.alt=ar?('صورة رقم '+(i+1)+' من فيلم '+f.title_ar):f.alts[i];const cap=document.createElement('figcaption');cap.textContent=(ar?'من فيلم ':'Still from ')+(ar?f.title_ar:f.title);fig.append(img,cap);filmDisplay.stills.append(fig)});
+ filmDisplay.trailer.replaceChildren();
+ if(f.trailer){const btn=document.createElement('button');btn.type='button';btn.className='film-trailer-button';btn.textContent=ar?'شاهد الإعلان الرسمي للفيلم ▶':'Watch the film trailer ▶';btn.addEventListener('click',()=>{if(filmDisplay.trailer.querySelector('iframe'))return;const div=document.createElement('div');div.className='film-trailer-frame';const iframe=document.createElement('iframe');iframe.src='https://www.youtube-nocookie.com/embed/'+f.trailer;iframe.title=(ar?'إعلان فيلم ':'Trailer for ')+(ar?f.title_ar:f.title);iframe.referrerPolicy='strict-origin-when-cross-origin';iframe.allow='encrypted-media; picture-in-picture; fullscreen';iframe.allowFullscreen=true;iframe.loading='lazy';div.append(iframe);filmDisplay.trailer.append(div);btn.remove()});filmDisplay.trailer.append(btn)}
+ filmDialog.showModal();
+}
+document.querySelectorAll('#page-films [data-film]').forEach(button=>{const slug=button.dataset.film;button.removeAttribute('data-film');button.dataset.filmPage=slug;button.setAttribute('aria-label','View the dedicated film page');button.addEventListener('click',()=>openDedicatedFilm(slug))});
+document.querySelectorAll('[data-film]').forEach(button=>button.addEventListener('click',()=>openFilm(button.dataset.film)));
+document.getElementById('filmDialogClose').addEventListener('click',()=>filmDialog.close());
+filmDialog.addEventListener('click',e=>{if(e.target===filmDialog)filmDialog.close()});
+filmDialog.addEventListener('close',()=>{filmDisplay.trailer.replaceChildren();if(filmTrigger&&filmTrigger.isConnected)filmTrigger.focus()});
+
+// Fail gracefully if the production image host is unavailable in offline previews.
+for(const img of document.querySelectorAll('img'))img.addEventListener('error',()=>{if(img.dataset.fallback!=='1'){img.dataset.fallback='1';img.style.background='linear-gradient(145deg,#886770,#dcc9c6)';img.alt=img.alt+' (image loads with internet connection)';}});
+
+function makeNode(tag,className,text){const e=document.createElement(tag);if(className)e.className=className;if(text!==undefined&&text!==null)e.textContent=text;return e;}
+let selectedFilmId='mamina';
+const dedicatedHost=document.getElementById('dedicatedFilmHost');
+const filmViewer=document.getElementById('filmImageViewer');
+let lastOpenedImage=null;
+function openDedicatedFilm(id){
+ if(!filmCatalog.some(f=>f.id===id))return;
+ selectedFilmId=id;
+ renderDedicatedFilm(id);
+ go('film-detail');
+ document.title=(ar?filmCatalog.find(f=>f.id===id).title_ar:filmCatalog.find(f=>f.id===id).title)+' | Amira Abdelfadil';
+ document.querySelectorAll('#siteMenu a').forEach(a=>{if(a.dataset.page==='films')a.setAttribute('aria-current','page')});
+}
+function renderDedicatedFilm(id){
+ const film=filmCatalog.find(f=>f.id===id);if(!film)return;
+ const index=filmCatalog.indexOf(film), title=ar?film.title_ar:film.title;
+ dedicatedHost.replaceChildren();
+ const shell=makeNode('article','film-page-shell');
+ const back=makeNode('button','film-page-back',ar?'→ جميع الأفلام الوثائقية':'← All documentaries');back.type='button';back.addEventListener('click',()=>{go('films');document.title=ar?'الأفلام الوثائقية | أميرة عبد الفضيل':'Documentary films | Amira Abdelfadil'});shell.append(back);
+ const heading=makeNode('div','film-page-heading');
+ heading.append(makeNode('p','eyebrow',String(index+1).padStart(2,'0')+' / '+(ar?'وثائقي':'Documentary')));
+ heading.append(makeNode('h1','',title));heading.append(makeNode('p','film-page-meta',(ar?film.kind_ar:film.kind)+' · '+film.year+' · '+film.runtime));shell.append(heading);
+ const hero=makeNode('figure','film-page-hero');const heroImg=makeNode('img');heroImg.src=assets+film.stills[0];heroImg.alt=ar?('لقطة أصلية من فيلم '+title):film.alts[0];heroImg.loading='eager';hero.append(heroImg,makeNode('figcaption','',(ar?'لقطة من ':'Still from ')+title));shell.append(hero);
+ const body=makeNode('div','film-page-body'),left=makeNode('div','film-page-left');
+ const poster=makeNode('figure','film-page-poster'),pImg=makeNode('img');pImg.src=assets+film.poster;pImg.alt=ar?('ملصق فيلم '+title):('Original '+title+' poster');pImg.loading='lazy';poster.append(pImg,makeNode('figcaption','',(ar?'الملصق الأصلي · ':'Original poster · ')+title));left.append(poster);
+ const credits=makeNode('dl','film-page-credits');
+ function credit(label,value){const d=makeNode('div');d.append(makeNode('dt','',label),makeNode('dd','',value));credits.append(d)}
+ credit(ar?film.director_ar:film.director,ar?film.names_ar:film.names);credit(ar?'الإنتاج':'Production',film.production);left.append(credits);
+ const right=makeNode('div','film-page-copy');right.append(makeNode('h2','',ar?'نبذة عن الفيلم':'Synopsis'));right.append(makeNode('p','',ar?film.synopsis_ar:film.synopsis));
+ if(film.trailer){const wrap=makeNode('div','film-page-trailer');const button=makeNode('button','',ar?'مشاهدة الإعلان الترويجي ▶':'Watch trailer ▶');button.type='button';button.addEventListener('click',()=>{button.remove();const f=makeNode('div','film-trailer-frame'),iframe=makeNode('iframe');iframe.src='https://www.youtube-nocookie.com/embed/'+film.trailer;iframe.title=(ar?'الإعلان الترويجي لفيلم ':'Trailer for ')+title;iframe.allow='encrypted-media; picture-in-picture; fullscreen';iframe.allowFullscreen=true;iframe.loading='lazy';f.append(iframe);wrap.append(f)});wrap.append(button);right.append(wrap)}
+ body.append(left,right);shell.append(body);
+ const gallery=makeNode('section','film-page-gallery');gallery.append(makeNode('h2','',ar?'صور من الفيلم':'Film stills'));
+ const imgs=makeNode('div','film-page-stills');film.stills.forEach((name,i)=>{
+   const fig=makeNode('figure'),b=makeNode('button');b.type='button';b.setAttribute('aria-label',(ar?'تكبير لقطة ':'Enlarge still ')+(i+1));const photo=makeNode('img');photo.src=assets+name;photo.alt=ar?('لقطة رقم '+(i+1)+' من '+title):film.alts[i];photo.loading='lazy';b.append(photo,makeNode('span','expand-icon','⛶'));b.addEventListener('click',()=>{lastOpenedImage=b;document.getElementById('filmViewerName').textContent=title;const full=document.getElementById('filmViewerPhoto');full.src=photo.src;full.alt=photo.alt;document.getElementById('filmViewerCaption').textContent=(ar?'لقطة رقم ':'Film still ')+String(i+1).padStart(2,'0')+' · '+title;filmViewer.showModal()});fig.append(b,makeNode('figcaption','',(ar?'لقطة رقم ':'Film still ')+String(i+1).padStart(2,'0')+' · '+title));imgs.append(fig)
+ });gallery.append(imgs);shell.append(gallery);
+ const related=makeNode('nav','film-page-related');related.setAttribute('aria-label',ar?'أفلام أخرى':'Related films');
+ const prev=filmCatalog[(index+filmCatalog.length-1)%filmCatalog.length],next=filmCatalog[(index+1)%filmCatalog.length];
+ for (const [f,forward] of [[prev,false],[next,true]]){
+   const button=makeNode('button');button.type='button';button.append(makeNode('small','',forward?(ar?'الفيلم التالي ←':'Next film →'):(ar?'→ الفيلم السابق':'← Previous film')),makeNode('strong','',ar?f.title_ar:f.title));button.addEventListener('click',()=>openDedicatedFilm(f.id));related.append(button)
+ }shell.append(related);dedicatedHost.append(shell);
+}
+document.getElementById('filmViewerClose').addEventListener('click',()=>filmViewer.close());
+filmViewer.addEventListener('click',event=>{if(event.target===filmViewer)filmViewer.close()});
+filmViewer.addEventListener('close',()=>{document.getElementById('filmViewerPhoto').src='';if(lastOpenedImage?.isConnected)lastOpenedImage.focus()});
+go(window.location.hash.toLowerCase()==='#collaborations'?'collaborations':'home');syncDraft();collectLocalizedNodes();
+})();
+</script>
+
+
+
+</body>
+</html>
