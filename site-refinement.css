@@ -167,3 +167,36 @@ html[lang=ar] .site-header.site-header .site-header__center nav a{letter-spacing
   .site-header.site-header .site-header__shortcuts a{font-size:12px!important}
   .classic-live .topbar .nav-actions,.site-header.site-header .site-header__utilities{gap:6px!important}
 }
+
+
+/* Fallback markup support for directly served reference pages as well as generated pages. */
+.amira-unified-header.site-header{
+  position:sticky;top:0;z-index:200;display:block;
+  width:100%;min-height:70px;background:var(--ivory,#f8f4ec);color:var(--text,#292420);
+  border-bottom:1px solid #29242020;
+}
+.amira-unified-header.site-header .site-header__frame{
+  width:100%;min-height:70px;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:center;gap:clamp(12px,2vw,30px);
+  padding-inline:clamp(18px,3.6vw,62px);
+}
+.amira-unified-header.site-header .site-header__center nav{
+  display:flex;align-items:center;gap:clamp(14px,2vw,30px);
+}
+.amira-unified-header.site-header .site-header__brand{color:inherit;text-decoration:none;white-space:nowrap}
+.amira-unified-header.site-header .site-header__utilities{justify-self:end}
+.amira-unified-header.site-header .site-header__shortcuts a,
+.classic-live .topbar .language-link{
+  color:inherit!important;font-weight:800!important;
+  text-shadow:1px 2px 4px rgba(18,12,15,.22)!important;text-decoration:none;
+}
+.amira-unified-header.site-header .site-header__center a{text-decoration:none}
+:root[data-theme=dark] .amira-unified-header.site-header{background:#000;color:#f8f4ec}
+@media(max-width:1120px){
+  .amira-unified-header.site-header .site-header__frame{grid-template-columns:minmax(0,1fr) auto}
+  .amira-unified-header.site-header .site-header__center{display:none!important}
+}
+@media(max-width:520px){
+  .amira-unified-header.site-header .site-header__frame{padding-inline:16px}
+  .amira-unified-header.site-header .site-header__brand{font-size:clamp(14px,4vw,17px)}
+}
