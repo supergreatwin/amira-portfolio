@@ -1,0 +1,44 @@
+/* The Process — invitation-only account screen, matched to Amira's editorial style. */
+.process-auth-screen{min-height:calc(100svh - 88px);display:flex;align-items:center;padding:clamp(3rem,7vw,7rem) 0;background:var(--process-paper)}
+.process-auth-grid{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.9fr);gap:clamp(2.5rem,8vw,9rem);align-items:center}
+.process-auth-editorial h1{font:400 clamp(3.7rem,7vw,7rem)/1.04 Georgia,serif;letter-spacing:-.065em;margin:.5rem 0 2rem}
+.process-auth-editorial>p:not(.process-kicker){font-size:1.02rem;line-height:1.9;color:var(--process-muted);max-width:33rem;text-align:justify}
+.process-auth-footnote{margin-top:clamp(3rem,9vw,7rem);border-top:1px solid var(--process-line);padding-top:1.2rem;font-size:.62rem;letter-spacing:.15em;color:var(--process-plum);font-weight:750}
+.process-auth-paper{background:var(--edu-paper);border:1px solid var(--process-line);padding:clamp(1.25rem,3vw,2.6rem);width:100%;min-width:0}
+.process-auth-paper>.process-kicker{margin-bottom:1rem}
+.process-auth-tabs{display:flex;border-bottom:1px solid var(--process-line);gap:1.4rem;margin-bottom:1.1rem}
+.process-auth-tabs button{background:transparent;border:0;border-bottom:2px solid transparent;color:var(--process-muted);font-weight:700;font-size:.83rem;cursor:pointer;padding:.75rem .1rem;margin-bottom:-1px}
+.process-auth-tabs button.active{border-bottom-color:var(--process-plum);color:var(--process-plum)}
+.process-auth-form{display:grid;gap:.9rem}
+.process-auth-form h2{font:400 clamp(2rem,3vw,2.8rem)/1.1 Georgia,serif;letter-spacing:-.04em;margin:.5rem 0 0}
+.process-auth-form p{color:var(--process-muted);font-size:.87rem;line-height:1.65;margin:0 0 .5rem;text-align:justify}
+.process-auth-form label,.process-invite-form label,.process-invite-link-label{display:grid;gap:.38rem;font-size:.77rem;font-weight:700;color:var(--process-ink)}
+.process-auth-form input,.process-invite-form input,.process-invite-link-label input{display:block;width:100%;min-height:46px;padding:.8rem .9rem;border:1px solid var(--process-line);background:var(--process-paper);color:var(--process-ink);border-radius:0;font:400 .87rem/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+.process-auth-form input::placeholder,.process-invite-form input::placeholder{color:var(--process-muted);opacity:.8}
+.process-auth-form input:disabled,.process-auth-form button:disabled{opacity:.55;cursor:wait}
+.process-auth-form>.process-button{width:100%;border-radius:0;cursor:pointer;margin-top:.5rem}
+.process-auth-text-button{border:0;background:transparent;color:var(--process-plum);font-size:.77rem;justify-self:start;cursor:pointer;text-align:left;text-decoration:underline;text-underline-offset:3px;padding:.25rem 0}
+.process-auth-privacy{font-size:.75rem!important;color:var(--process-muted);margin:.4rem 0 0!important}
+.process-auth-status{min-height:0;margin:0;color:var(--process-plum);font-size:.85rem;line-height:1.5}
+.process-auth-status:empty{display:none}
+.process-auth-status.is-error{color:#b13a49}
+.process-auth-help{border-top:1px solid var(--process-line);margin:1.5rem 0 0;padding-top:1rem;color:var(--process-muted);font-size:.75rem}
+.process-auth-help a{color:var(--process-plum);font-weight:700}
+.process-invite-admin{border:1px solid #ffffff40;padding:clamp(1.3rem,2.4vw,2.2rem);margin:1rem 0 2rem;background:#ffffff0a;display:grid;gap:1rem}
+.process-invite-admin h3{font:400 clamp(1.5rem,2.5vw,2.1rem)/1.2 Georgia,serif;margin:0 0 .5rem}
+.process-invite-admin p:not(.process-kicker){color:#e2d6d2;font-size:.83rem;line-height:1.7;margin:0}
+.process-invite-admin .process-kicker{margin:0 0 .7rem}
+.process-invite-form{display:flex;align-items:end;flex-wrap:wrap;gap:.7rem}
+.process-invite-form label{flex:1;min-width:min(260px,100%);color:#f8f5ee}
+.process-invite-form input{background:#f8f5ee;color:#302523}
+.process-invite-form .process-button{border-radius:0;cursor:pointer}
+.process-invite-link-label{color:#f8f5ee}
+.process-invite-link-label input{background:#f8f5ee;color:#302523;font-size:.8rem}
+.process-invite-admin .process-small-button{margin-top:.7rem;cursor:pointer}
+.process-invite-admin #process-invite-status{color:#e6c5cc;margin:0;font-size:.79rem}
+.process-page [hidden]{display:none!important}
+html[data-theme="dark"] .process-auth-paper{background:#181515}
+html[data-theme="dark"] .process-auth-form input{background:#0a0909}
+html[data-theme="dark"] .process-auth-form .process-auth-status.is-error{color:#e598a6}
+@media(max-width:850px){.process-auth-grid{grid-template-columns:1fr;gap:2rem}.process-auth-screen{align-items:start}.process-auth-editorial h1{font-size:clamp(3.5rem,10vw,5.5rem)}.process-auth-footnote{margin-top:2rem}.process-auth-paper{max-width:650px}}
+@media(max-width:520px){.process-auth-screen{padding:2.8rem 0}.process-auth-editorial h1{font-size:clamp(3.4rem,13.5vw,4.5rem)}.process-auth-paper{padding:1.25rem}.process-auth-form input{font-size:1rem}}
