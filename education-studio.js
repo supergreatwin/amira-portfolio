@@ -1,4 +1,5 @@
-import { db, byId as $, isStaff, identify, STAGES, TYPES, setMessage, niceError, slugify, safeHttps, safeFilename, renderStageOptions, formatSize } from './education-core.js';
+import { byId as $, STAGES, TYPES, setMessage, niceError, slugify, safeHttps, safeFilename, renderStageOptions, formatSize } from './education-core.js';
+import { processDb as db, identifyProcess } from './the-process/process-auth-core.js';
 const state={ user:null, course:null, lesson:null, courses:[], lessons:[], assets:[], submission:null, loading:false };
 const status=(m,e=false)=>setMessage('studio-status',m,e);
 const val=id=>$(id).value.trim();
@@ -233,19 +234,19 @@ $('review-form').onsubmit=async e=>{
 };
 tabs.forEach(b=>b.onclick=()=>{tab(b.dataset.tab);if(b.dataset.tab==='review')void loadReviews().catch(e=>status(niceError(e),true));});
 $('studio-reload').onclick=async()=>{try{await loadCourses();if(state.course)await loadLessons();status('Workspace refreshed.');}catch(e){status(niceError(e),true);}};
-$('studio-logout').onclick=async()=>{await db.auth.signOut();location.href='editorial.html';};
+$('studio-logout').onclick=async()=>{await db.auth.signOut({scope:'local'});location.href='the-process/';};
 for(const id of ['resource-kind','link-kind']){
   const el=$(id);TYPES.forEach(type=>{const opt=document.createElement('option');opt.value=type;opt.textContent=type;el.append(opt);});
 }
 renderStageOptions($('lesson-stage'));
 async function start(){
-  const identity=await identify();
-  if(!identity.user||!isStaff(identity.user)){status('An authorized Editorial Desk session is required.',true);return;}
+  const identity=await identifyProcess();
+  if(!identity.user||!identity.staff){status('Sign in as a Process instructor. Editorial Desk sessions do not grant access.',true);return;}
   state.user=identity.user;
   $('studio-user').textContent=identity.user.email;
   $('studio-locked').hidden=true;$('studio-main').hidden=false;
   await loadCourses();
   if(state.courses.length)chooseCourse(state.courses[0]);
-  status('Private Editorial Desk ready. Public release remains disabled.');
+  status('Private Process instructor studio ready. Only invited members can access published lessons.');
 }
 void start().catch(e=>status(niceError(e),true));
