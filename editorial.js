@@ -1,4 +1,5 @@
 import { cms as db } from './cms-core.js';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.1/+esm';
 
 const PROJECT_URL = 'https://tfarhghukyogaowjqykn.supabase.co';
 const PUBLISHABLE_KEY = 'sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS';
@@ -27,6 +28,23 @@ function enterRecoveryMode() {
   try { sessionStorage.setItem(RECOVERY_KEY, '1'); } catch {}
   recoveryUi();
   notice(msg('Set and confirm a new password before entering the Editorial Desk.', 'يجب تعيين كلمة مرور جديدة وتأكيدها قبل فتح المكتب التحريري.'));
+}
+let isolatedRecoveryClient = null;
+function recoveryAuth() {
+  if (!isolatedRecoveryClient) {
+    isolatedRecoveryClient = createClient(PROJECT_URL, PUBLISHABLE_KEY, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: true,
+        storageKey: 'amira-editorial-recovery-memory-v1'
+      }
+    });
+    isolatedRecoveryClient.auth.onAuthStateChange(event => {
+      if (event === 'PASSWORD_RECOVERY') enterRecoveryMode();
+    });
+  }
+  return isolatedRecoveryClient.auth;
 }
 function clearRecoveryMarker() {
   try { sessionStorage.removeItem(RECOVERY_KEY); } catch {}
@@ -345,10 +363,16 @@ $('ed-recover-form').addEventListener('submit', async event => {
   const save = $('ed-recover-form').querySelector('button[type="submit"]');
   save.disabled = true;
   try {
-    const { error } = await db.auth.updateUser({ password });
+    // Reset links are redeemed in a temporary, non-persistent Supabase client.
+    // The ordinary CMS client never imports this recovery session.
+    const auth = recoveryAuth();
+    const { data:sessionData, error:sessionError } = await auth.getSession();
+    if (sessionError || !sessionData?.session) throw new Error('Recovery link expired or unavailable.');
+    const { error } = await auth.updateUser({ password });
     if (error) throw error;
-    // Recovery tokens produce a session: explicitly sign out after the change,
-    // requiring the new password or a separate OTP sign-in for dashboard access.
+    const { error:recoveryLogoutError } = await auth.signOut({ scope: 'local' });
+    if (recoveryLogoutError) throw recoveryLogoutError;
+    // Also invalidate any prior saved Editorial Desk browser session.
     const { error:logoutError } = await db.auth.signOut({ scope: 'local' });
     if (logoutError) throw logoutError;
     recoveryMode = false;
@@ -365,6 +389,7 @@ $('ed-recover-form').addEventListener('submit', async event => {
   }
 });
 $('ed-cancel-recovery').addEventListener('click', async () => {
+  if (isolatedRecoveryClient) await isolatedRecoveryClient.auth.signOut({ scope: 'local' });
   await db.auth.signOut({ scope: 'local' });
   recoveryMode = false;
   otpMode = false;
@@ -386,6 +411,8 @@ db.auth.onAuthStateChange((event) => {
   }
 });
 startNew();
-if (recoveryMode) enterRecoveryMode();
-else void refreshAuth();
+if (recoveryMode) {
+  recoveryAuth(); // Consume the callback only in temporary, non-persistent storage.
+  enterRecoveryMode();
+} else void refreshAuth();
 export { db };
