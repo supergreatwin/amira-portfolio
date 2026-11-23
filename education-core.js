@@ -13,7 +13,8 @@ export const STAGES = [
   { id: 'production', label: '04 / Production', description: 'Camera, sound, interviews and filming on location.' },
   { id: 'postproduction', label: '05 / Post-production', description: 'Editing, sound design, colour, structure and revision.' },
   { id: 'distribution', label: '06 / Distribution', description: 'Deliverables, festivals, screenings and outreach.' },
-  { id: 'reflection', label: '07 / Reflection', description: 'Lessons, feedback, revisions and new questions.' }
+  { id: 'reflection', label: '07 / Reflection', description: 'Look back at the making: what surprised you, what changed, and what you would do differently next time.' },
+  { id: 'amira_feedback', label: '08 / 1-1 with Amira 🎬', description: 'Cue the director’s chair! Bring your work, your questions, and your brave first cuts. Receive honest, constructive notes from Amira and turn them into your next creative move.' }
 ];
 
 export const TYPES = ['pdf','video','audio','image','slides','worksheet','template','transcript','subtitles','archive','link','other'];
