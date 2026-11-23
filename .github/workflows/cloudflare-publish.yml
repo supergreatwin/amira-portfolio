@@ -26,7 +26,7 @@ jobs:
         run: PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
       - name: Validate the approved classic homepage and original photography collections
         run: |
-          node --check dist/pages.mjs
+          node --check pages.mjs
           node --check dist/site-refinement.js
           grep -q 'classic-site-header' dist/index.html
           ! grep -q 'photo-mosaic' dist/index.html
