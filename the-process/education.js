@@ -1,5 +1,5 @@
 import { db, identify, byId as $, setMessage, niceError, STAGES, articleText, safeHttps, formatSize, safeFilename } from '../education-core.js';
-const state={identity:null,courses:[],course:null,lessons:[],currentLesson:null,enrolled:false};
+const state={identity:null,courses:[],course:null,lessons:[],currentLesson:null,enrolled:false,archiveStage:'all',archiveSearch:''};
 const status=(m,e=false)=>setMessage('student-status',m,e);
 function element(tag,className,text){const x=document.createElement(tag);if(className)x.className=className;if(text!==undefined)x.textContent=text;return x;}
 function showPrivate(identity){
@@ -77,6 +77,34 @@ function renderStages(){
       sec.append(note,feedbackArea);
     }
     area.append(sec);
+  }
+  renderArchive();
+}
+function renderArchive(){
+  const area=$('archive-cards');if(!area)return;
+  area.replaceChildren();
+  const text=state.archiveSearch.trim().toLocaleLowerCase();
+  const filtered=state.lessons.filter(lesson=>
+    (state.archiveStage==='all'||lesson.stage===state.archiveStage)&&
+    (!text||[lesson.title,lesson.summary,lesson.lesson_kind,STAGES.find(s=>s.id===lesson.stage)?.label].some(value=>String(value||'').toLocaleLowerCase().includes(text)))
+  );
+  if(!filtered.length){
+    const empty=element('p','process-archive-empty',
+      state.course?(state.lessons.length?'No lessons match this stage or search. Try another filter.':'No lessons are published in this collection yet. Amira can add them through the private Educational Studio.')
+        :'The archive is being curated. There are no learning collections to browse yet.');
+    area.append(empty);return;
+  }
+  for(const [index,lesson] of filtered.entries()){
+    const stage=STAGES.find(item=>item.id===lesson.stage);
+    const card=element('button','process-archive-card');card.type='button';
+    card.append(element('span','process-archive-card__number',String(index+1).padStart(2,'0')));
+    card.append(element('span','process-archive-card__stage',stage?.label||'The process'));
+    card.append(element('h3','process-archive-card__title',lesson.title));
+    card.append(element('p','process-archive-card__summary',lesson.summary||'Open this lesson to explore the process and its attached resources.'));
+    const foot=element('span','process-archive-card__footer');foot.append(element('span','',lesson.lesson_kind||'Lesson'),element('span','','Explore lesson ↗'));
+    card.append(foot);
+    card.onclick=()=>void openLesson(lesson).catch(error=>status(niceError(error),true));
+    area.append(card);
   }
 }
 async function renderFeedback(){
@@ -226,9 +254,24 @@ $('student-complete').onclick=async()=>{
 };
 $('student-back').onclick=()=>{
   $('student-lesson-view').hidden=true;
-  $('student-stages').scrollIntoView({behavior:'smooth'});
+  $('archive-cards').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 };
 $('student-logout').onclick=async()=>{await db.auth.signOut();location.reload();};
+for(const control of document.querySelectorAll('[data-archive-stage]')){
+  control.addEventListener('click',()=>{
+    state.archiveStage=control.dataset.archiveStage;
+    for(const button of document.querySelectorAll('[data-archive-stage]')){
+      const current=button===control;
+      button.classList.toggle('active',current);
+      button.setAttribute('aria-pressed',String(current));
+    }
+    renderArchive();
+  });
+}
+$('archive-search').addEventListener('input',event=>{
+  state.archiveSearch=event.target.value;
+  renderArchive();
+});
 async function start(){
   const identity=await identify();
   // Pre-launch: only editorial staff can enter even when an existing learner token is present.
