@@ -1,20 +1,124 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f8f4ec">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="description" content="The Process: an evolving notebook on documentary filmmaking by Amira Abdelfadil.">
 <title>The Process — Amira Abdelfadil</title>
-<link rel="stylesheet" href="education.css"></head>
-<body><header class="edu-bar"><div class="edu-width edu-bar-inner">
-<a class="edu-mark" href="../index.html">amira abdelfadil</a><nav class="edu-menu"><span class="edu-eyebrow">The Process / Private Learning</span><a href="../index.html">Return to portfolio ↗</a></nav>
-</div></header>
-<main class="edu-width"><section class="edu-hero" hidden><p class="edu-eyebrow">An educational notebook by Amira Abdelfadil</p><h1>Beyond the <em>frame.</em></h1><p class="edu-lede">A place to understand filmmaking through its stages — from the first idea to a finished documentary. Selected lessons, original production documents, moving images and field notes.</p></section>
-<p id="student-status" class="edu-status" role="status" aria-live="polite"></p>
-<section class="edu-panel" id="student-login"><h2>Private educational workspace</h2><p class="edu-note">This teaching space is available to Amira’s approved editorial team only. Learner access is not enabled.</p><p><a class="edu-button" href="../editorial.html">Sign in through Editorial Desk</a></p></section>
-<section id="student-learning" hidden><div class="edu-buttons" style="justify-content:flex-end;padding-top:1rem"><button type="button" id="student-logout" class="edu-button ghost" hidden>Sign out</button></div><div class="edu-layout"><aside class="edu-stack"><section><p class="edu-eyebrow">Learning collections</p><div id="student-courses" class="edu-stack" style="margin-top:1rem"></div></section><div><p class="edu-note" id="student-account"></p></div></aside><section><div class="edu-buttons"><a class="edu-button alt" href="../education-studio.html">Edit educational content ↗</a></div><div class="edu-eyebrow" style="margin-top:1.5rem">The filmmaking process</div><h2 id="student-course-title" style="font:400 clamp(2.3rem,5vw,4.5rem)/1.05 Georgia,serif;letter-spacing:-.05em;margin:.7rem 0 1.2rem"></h2><p class="edu-lede" id="student-course-description"></p><div id="student-enrollment"></div><div id="student-stages" style="margin-top:2rem"></div></section></div>
-<section id="student-lesson-view" class="edu-panel" hidden><div class="edu-buttons" style="margin-bottom:1.4rem"><button class="edu-button ghost" type="button" id="student-back">← Back to stages</button><span class="edu-eyebrow" id="student-lesson-stage"></span></div><h2 id="student-lesson-title"></h2><p class="edu-lede" id="student-lesson-summary"></p><div id="student-lesson-media"></div><div id="student-lesson-body" class="edu-article" style="margin-top:1.5rem"></div><section><h3 style="font:400 1.8rem Georgia,serif;margin:2rem 0 1rem">Documents &amp; resources</h3><div id="student-resources" class="edu-files"></div></section>
-<section id="student-assignment-container" hidden><h3 style="font:400 1.8rem Georgia,serif;margin:2rem 0 1rem">Practical assignment</h3><div id="student-assignments"></div></section>
-<section id="student-quiz-container" hidden><h3 style="font:400 1.8rem Georgia,serif;margin:2rem 0 1rem">Questions for reflection</h3><div id="student-quizzes"></div></section>
-<div class="edu-buttons" style="margin-top:1.6rem"><button type="button" class="edu-button alt" id="student-complete">Mark lesson complete ✓</button></div></section>
-</section>
-</main><footer class="edu-footer"><div class="edu-width">Amira Abdelfadil · Private Educational Archive · Access by invitation only</div></footer>
-<script type="module" src="education.js"></script>
+<script src="../theme-init.js"></script>
+<link rel="stylesheet" href="../theme.css?v=20261120site">
+<link rel="stylesheet" href="education.css?v=20261123eight">
+<link rel="stylesheet" href="process-layout.css?v=20261123editorial">
+<script defer src="../theme.js?v=20261120site"></script>
+</head>
+<body class="process-page">
+<a class="process-skip" href="#main">Skip to content</a>
+<header class="process-topbar topbar">
+  <div class="edu-width process-header-inner">
+    <a class="process-brand" href="../index.html" aria-label="Amira Abdelfadil home"><strong>AMIRA ABDELFADIL</strong><span>FILM &amp; ART</span></a>
+    <nav class="process-main-nav" aria-label="Primary navigation">
+      <a href="../films.html">Films</a><a href="#main" aria-current="page">The Process</a><a href="#stages">For Filmmakers</a><a href="../art.html">Photography</a><a href="../about.html">About</a>
+    </nav>
+    <div class="process-nav-actions nav-actions">
+      <a class="process-collaborate" href="../contact.html">Collaborate <span aria-hidden="true">↗</span></a>
+      <details class="process-mobile-menu"><summary aria-label="Open navigation">Menu ☰</summary>
+        <nav aria-label="Mobile navigation">
+          <a href="../films.html">Films</a><a href="#main" aria-current="page">The Process</a><a href="#stages">For Filmmakers</a><a href="../art.html">Photography</a><a href="../about.html">About</a><a href="../contact.html">Collaborate ↗</a>
+        </nav>
+      </details>
+    </div>
+  </div>
+</header>
+<main id="main">
+  <section class="edu-width process-hero" aria-labelledby="process-hero-title">
+    <div class="process-hero-copy">
+      <p class="process-kicker">AMIRA'S NOTEBOOK <span aria-hidden="true">/</span> THE PROCESS</p>
+      <h1 id="process-hero-title">The work<br>behind <em>the<br>work.</em></h1>
+      <p class="process-hero-deck">Films begin long before the camera rolls. An evolving archive of ideas, field research, creative decisions and the materials that shape a story.</p>
+      <div class="process-hero-actions">
+        <a class="process-button" href="#archive">Explore the archive <span aria-hidden="true">↗</span></a>
+        <a class="process-button process-button--outline" href="../films.html">Browse films <span aria-hidden="true">↘</span></a>
+      </div>
+    </div>
+    <figure class="process-hero-photo">
+      <img src="../assets/mamina-02.jpg" alt="Documentary still from Mamina by Amira Abdelfadil" width="1200" height="900" fetchpriority="high">
+      <figcaption>STILL FROM MAMINA</figcaption>
+      <span class="process-photo-side" aria-hidden="true">A LIVING ARCHIVE · CAIRO, EGYPT</span>
+      <div class="process-photo-note"><em>Every frame has a backstory.</em><span>A closer look at the choices behind the finished films.</span></div>
+    </figure>
+  </section>
+
+  <section class="process-stages-section" id="stages" aria-labelledby="process-stages-title">
+    <div class="edu-width">
+      <div class="process-section-intro">
+        <div><p class="process-kicker">01 / LEARNING FROM THE WORK</p><h2 id="process-stages-title">Not a course.<br><em>A closer look.</em></h2></div>
+        <p>The educational layer is personal and practical. It reveals the questions behind the creative choices rather than turning filmmaking into a classroom.</p>
+      </div>
+      <div class="process-stage-grid">
+        <article class="process-stage-card"><span>01</span><h3>Finding<br>the idea</h3><p>Where a question begins, how it evolves and why a story matters.</p></article>
+        <article class="process-stage-card"><span>02</span><h3>Research<br>&amp; ethics</h3><p>Participant care, consent, interviews, context and documentary responsibility.</p></article>
+        <article class="process-stage-card"><span>03</span><h3>Pre-production</h3><p>Treatments, storyboards, schedules and turning an idea into a workable plan.</p></article>
+        <article class="process-stage-card"><span>04</span><h3>Production</h3><p>Camera, sound, interviews, collaboration and decisions made on location.</p></article>
+        <article class="process-stage-card"><span>05</span><h3>Post-production</h3><p>Finding the edit through structure, rhythm, sound and difficult omissions.</p></article>
+        <article class="process-stage-card"><span>06</span><h3>Distribution</h3><p>Sharing the finished work through screenings, festivals and outreach.</p></article>
+        <article class="process-stage-card"><span>07</span><h3>Reflection</h3><p>What changed, what worked and what the next story might teach us.</p></article>
+        <article class="process-stage-card process-stage-card--final"><span>08 ✦</span><h3>1-1 with<br><em>Amira.</em></h3><p>The director's chair is yours. Bring the first cut, get constructive notes and make the next move.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="process-archive-section" id="archive" aria-labelledby="process-archive-heading">
+    <div class="edu-width">
+      <div class="process-archive-intro">
+        <div><p class="process-kicker">02 / SELECTED PRODUCTION MATERIALS</p><h2 id="process-archive-heading">Inside the <em>archive.</em></h2></div>
+        <p>A closer look at the filmmaking process, from the first question to the final conversation. Browse by stage, not by film.</p>
+      </div>
+      <p class="edu-status" id="student-status" role="status" aria-live="polite"></p>
+      <section id="student-login" class="process-access" aria-labelledby="private-access-title">
+        <div><p class="process-kicker">PRIVATE WORKSPACE</p><h3 id="private-access-title">The archive is being curated.</h3><p>Teaching materials, notes and assignments remain available to Amira's approved editorial team while the learning platform is in preparation.</p></div>
+        <a href="../editorial.html" class="process-button process-button--light">Editorial Desk sign-in <span aria-hidden="true">↗</span></a>
+      </section>
+      <section id="student-learning" hidden aria-label="Private educational collection">
+        <div class="process-private-bar"><p class="edu-note" id="student-account"></p><div class="edu-buttons"><a class="process-text-link" href="../education-studio.html">Edit educational content ↗</a><button type="button" id="student-logout" class="process-small-button" hidden>Sign out</button></div></div>
+        <div class="process-collection-picker"><span class="process-kicker">LEARNING COLLECTIONS</span><div id="student-courses" class="process-collection-list"></div></div>
+        <div class="process-archive-controls">
+          <div class="process-filter-list" role="group" aria-label="Filter lessons by filmmaking stage">
+            <button type="button" data-archive-stage="all" class="active" aria-pressed="true">All</button>
+            <button type="button" data-archive-stage="idea" aria-pressed="false">Idea</button>
+            <button type="button" data-archive-stage="research" aria-pressed="false">Research</button>
+            <button type="button" data-archive-stage="preproduction" aria-pressed="false">Planning</button>
+            <button type="button" data-archive-stage="production" aria-pressed="false">On location</button>
+            <button type="button" data-archive-stage="postproduction" aria-pressed="false">Post</button>
+            <button type="button" data-archive-stage="distribution" aria-pressed="false">Distribution</button>
+            <button type="button" data-archive-stage="reflection" aria-pressed="false">Reflection</button>
+            <button type="button" data-archive-stage="amira_feedback" aria-pressed="false">1-1 feedback</button>
+          </div>
+          <label class="process-search"><span class="process-visually-hidden">Search the archive</span><input id="archive-search" type="search" placeholder="⌕  Search the archive…" autocomplete="off"></label>
+        </div>
+        <div id="archive-cards" class="process-archive-grid" aria-live="polite"></div>
+        <div id="student-enrollment" class="process-enrollment"></div>
+        <details class="process-stage-directory"><summary>View lessons by filmmaking stage <span aria-hidden="true">↗</span></summary>
+          <h3 id="student-course-title"></h3><p id="student-course-description"></p><div id="student-stages"></div>
+        </details>
+        <section id="student-lesson-view" class="edu-panel process-lesson-detail" hidden aria-labelledby="student-lesson-title">
+          <div class="edu-buttons process-lesson-toolbar"><button class="edu-button ghost" type="button" id="student-back">← Back to archive</button><span class="edu-eyebrow" id="student-lesson-stage"></span></div>
+          <h2 id="student-lesson-title"></h2><p class="edu-lede" id="student-lesson-summary"></p><div id="student-lesson-media"></div><div id="student-lesson-body" class="edu-article"></div>
+          <section><h3>Documents &amp; resources</h3><div id="student-resources" class="edu-files"></div></section>
+          <section id="student-assignment-container" hidden><h3>Practical assignment</h3><div id="student-assignments"></div></section>
+          <section id="student-quiz-container" hidden><h3>Questions for reflection</h3><div id="student-quizzes"></div></section>
+          <div class="edu-buttons"><button type="button" class="edu-button alt" id="student-complete">Mark lesson complete ✓</button></div>
+        </section>
+      </section>
+    </div>
+  </section>
+
+  <section class="process-notebook" aria-labelledby="process-notebook-heading"><div class="edu-width process-notebook-inner">
+    <div><p class="process-kicker">AN OPEN NOTEBOOK</p><h2 id="process-notebook-heading">Some stories are<br><em>worth sharing twice.</em></h2></div>
+    <div><p>The finished film is one story. Its making is another. This space gives Amira room to share selected insights with filmmakers, students and curious viewers.</p><a class="process-button" href="../contact.html">Get in touch <span aria-hidden="true">↗</span></a></div>
+  </div></section>
+</main>
+<footer class="process-footer"><div class="edu-width process-footer-inner"><span>© Amira Abdelfadil · Cairo, Egypt</span><nav aria-label="Footer"><a href="../index.html">Portfolio</a><a href="../contact.html">Contact</a></nav></div></footer>
+<script type="module" src="education.js?v=20261123editorial"></script>
 </body></html>
