@@ -42,7 +42,7 @@ jobs:
           grep -q 'the-process' dist/_headers
           ! grep -q 'id="student-auth"' dist/the-process/index.html
 
-      - name: Verify site-owned bilingual Field Notes subscriptions
+      - name: Verify site-owned bilingual Notebook subscriptions
         run: |
           test -f dist/field-notes-native.css
           test -f dist/field-notes-native.js
@@ -53,16 +53,16 @@ jobs:
           node --input-type=module --check < dist/field-notes-admin.js
           grep -q 'data-field-notes-form' dist/notes.html
           grep -q 'data-field-notes-form' dist/ar/notes.html
-          grep -q 'data-field-notes-form' dist/responsive.html
-          grep -q 'data-field-notes-form' dist/ar/responsive.html
           grep -q 'data-field-notes-admin' dist/editorial.html
           grep -q 'data-field-notes-admin' dist/ar/editorial.html
           grep -q 'field-notes-native.js?v=1' dist/notes.html
           grep -q 'field-notes-native.js?v=1' dist/ar/notes.html
+          test -f dist/responsive.html
+          test -f dist/ar/responsive.html
+          grep -q 'location.replace' dist/responsive.html
+          grep -q 'location.replace' dist/ar/responsive.html
           ! grep -q 'subscribe-forms.beehiiv.com' dist/notes.html
           ! grep -q 'subscribe-forms.beehiiv.com' dist/ar/notes.html
-          ! grep -q 'subscribe-forms.beehiiv.com' dist/responsive.html
-          ! grep -q 'subscribe-forms.beehiiv.com' dist/ar/responsive.html
           ! grep -q 'amiras-newsletter-beec8a' dist/notes.html
           ! grep -q 'amiras-newsletter-beec8a' dist/ar/notes.html
       - name: Verify the canonical classic homepage, film popups and preserved original photos
