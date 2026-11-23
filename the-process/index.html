@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../theme.css?v=20261120site">
 <link rel="stylesheet" href="education.css?v=20261123eight">
 <link rel="stylesheet" href="process-layout.css?v=20261123sharp2">
+<link rel="stylesheet" href="process-auth.css?v=20261123invite1">
 <script defer src="../theme.js?v=20261120site"></script>
 </head>
 <body class="process-page">
@@ -31,7 +32,66 @@
     </div>
   </div>
 </header>
-<main id="main">
+<section id="process-auth-screen" class="process-auth-screen" aria-label="The Process account access">
+  <div class="edu-width process-auth-grid">
+    <div class="process-auth-editorial">
+      <p class="process-kicker">PRIVATE BY INVITATION · AMIRA'S NOTEBOOK</p>
+      <h1>Every story<br>has a <em>way in.</em></h1>
+      <p>Step inside the making of a film, from the first idea to a one-on-one conversation about your work. The Process is a private learning archive for invited members.</p>
+      <div class="process-auth-footnote">A LITTLE MORE THAN BEHIND THE SCENES. A LOT MORE PERSONAL.</div>
+    </div>
+    <div class="process-auth-paper">
+      <p class="process-kicker">THE PROCESS / YOUR ACCOUNT</p>
+      <div id="process-auth-tabs" class="process-auth-tabs" role="tablist" aria-label="Account access">
+        <button type="button" class="active" role="tab" aria-selected="true" data-process-auth-mode="signin">Sign in</button>
+        <button type="button" role="tab" aria-selected="false" data-process-auth-mode="signup">Create account</button>
+      </div>
+      <p id="process-auth-status" class="process-auth-status" role="status" aria-live="polite"></p>
+      <form id="process-signin-form" class="process-auth-form">
+        <h2>Welcome back.</h2>
+        <p>Access your private filmmaking notebook.</p>
+        <label>Email address<input id="process-signin-email" autocomplete="email" type="email" required placeholder="you@example.com" maxlength="254"></label>
+        <label>Password<input id="process-signin-password" autocomplete="current-password" type="password" required></label>
+        <button type="submit" class="process-button">Sign in to The Process ↗</button>
+        <button type="button" class="process-auth-text-button" data-process-auth-go="forgot">Forgot password?</button>
+      </form>
+      <form id="process-signup-form" class="process-auth-form" hidden>
+        <h2>Your invitation starts here.</h2>
+        <p>Registration is invitation-only. Use the email address and code from your invitation.</p>
+        <label>Your name<input id="process-signup-name" type="text" autocomplete="name" required maxlength="80"></label>
+        <label>Invited email address<input id="process-signup-email" type="email" autocomplete="email" required maxlength="254" placeholder="you@example.com"></label>
+        <label>Invitation code<input id="process-signup-invite" type="text" required autocomplete="off" spellcheck="false" minlength="64" maxlength="64" placeholder="Paste your 64-character invitation code"></label>
+        <label>Create password<input id="process-signup-password" type="password" autocomplete="new-password" required minlength="10" placeholder="At least 10 characters"></label>
+        <label>Confirm password<input id="process-signup-confirm" type="password" autocomplete="new-password" required minlength="10"></label>
+        <p class="process-auth-privacy">Your invitation is single-use and tied to your email. Email verification is required before you can enter.</p>
+        <button type="submit" class="process-button">Create my account ↗</button>
+      </form>
+      <form id="process-claim-form" class="process-auth-form" hidden>
+        <h2>One final step.</h2>
+        <p>You're signed in, but your Process membership needs to be activated. Enter your invitation code.</p>
+        <label>Invitation code<input id="process-claim-code" type="text" required autocomplete="off" minlength="64" maxlength="64" spellcheck="false"></label>
+        <button type="submit" class="process-button">Activate my invitation ↗</button>
+        <button type="button" id="process-claim-signout" class="process-auth-text-button">Use another account</button>
+      </form>
+      <form id="process-forgot-form" class="process-auth-form" hidden>
+        <h2>Find your way back.</h2>
+        <p>We'll send you a password-reset link if your email is registered.</p>
+        <label>Email address<input id="process-forgot-email" autocomplete="email" type="email" required></label>
+        <button type="submit" class="process-button">Send password reset ↗</button>
+        <button type="button" class="process-auth-text-button" data-process-auth-go="signin">Back to sign in</button>
+      </form>
+      <form id="process-password-form" class="process-auth-form" hidden>
+        <h2>A fresh start.</h2>
+        <p>Choose a new password for your account.</p>
+        <label>New password<input id="process-new-password" autocomplete="new-password" type="password" required minlength="10"></label>
+        <label>Confirm new password<input id="process-new-password-confirm" autocomplete="new-password" type="password" required minlength="10"></label>
+        <button type="submit" class="process-button">Update password ↗</button>
+      </form>
+      <p class="process-auth-help">No invitation? Ask Amira directly. <a href="../contact.html">Contact the studio ↗</a></p>
+    </div>
+  </div>
+</section>
+<main id="main" hidden>
   <section class="edu-width process-hero" aria-labelledby="process-hero-title">
     <div class="process-hero-copy">
       <p class="process-kicker">AMIRA'S NOTEBOOK <span aria-hidden="true">/</span> THE PROCESS</p>
@@ -76,12 +136,18 @@
         <p>A closer look at the filmmaking process, from the first question to the final conversation. Browse by stage, not by film.</p>
       </div>
       <p class="edu-status" id="student-status" role="status" aria-live="polite"></p>
-      <section id="student-login" class="process-access" aria-labelledby="private-access-title">
-        <div><p class="process-kicker">PRIVATE WORKSPACE</p><h3 id="private-access-title">The archive is being curated.</h3><p>Teaching materials, notes and assignments remain available to Amira's approved editorial team while the learning platform is in preparation.</p></div>
-        <a href="../editorial.html" class="process-button process-button--light">Editorial Desk sign-in <span aria-hidden="true">↗</span></a>
-      </section>
       <section id="student-learning" hidden aria-label="Private educational collection">
-        <div class="process-private-bar"><p class="edu-note" id="student-account"></p><div class="edu-buttons"><a class="process-text-link" href="../education-studio.html">Edit educational content ↗</a><button type="button" id="student-logout" class="process-small-button" hidden>Sign out</button></div></div>
+        <div class="process-private-bar"><p class="edu-note" id="student-account"></p><div class="edu-buttons"><a class="process-text-link" id="process-editor-link" href="../education-studio.html" hidden>Edit educational content ↗</a><button type="button" id="student-logout" class="process-small-button">Sign out</button></div></div>
+        <section id="process-invite-admin" class="process-invite-admin" hidden aria-labelledby="process-invite-title">
+          <div><p class="process-kicker">INSTRUCTOR ACCESS / PRIVATE INVITATIONS</p><h3 id="process-invite-title">Invite someone to The Process.</h3><p>Create a one-time invitation for an email address. Only instructors can issue invitations.</p></div>
+          <form id="process-invite-form" class="process-invite-form">
+            <label>Invitee's email address<input type="email" id="process-invite-email" required maxlength="254" placeholder="person@example.com"></label>
+            <button type="submit" id="process-invite-submit" class="process-button">Create invitation ↗</button>
+          </form>
+          <div id="process-issued-wrap" hidden><label class="process-invite-link-label">Private invitation link<input id="process-issued-link" type="text" readonly></label><button type="button" id="process-copy-invite" class="process-small-button">Copy invitation link</button></div>
+          <p id="process-invite-status" role="status" aria-live="polite"></p>
+        </section>
+        
         <div class="process-collection-picker"><span class="process-kicker">LEARNING COLLECTIONS</span><div id="student-courses" class="process-collection-list"></div></div>
         <div class="process-archive-controls">
           <div class="process-filter-list" role="group" aria-label="Filter lessons by filmmaking stage">
@@ -120,5 +186,5 @@
   </div></section>
 </main>
 <footer class="process-footer"><div class="edu-width process-footer-inner"><span>© Amira Abdelfadil · Cairo, Egypt</span><nav aria-label="Footer"><a href="../index.html">Portfolio</a><a href="../contact.html">Contact</a></nav></div></footer>
-<script type="module" src="education.js?v=20261123editorial"></script>
+<script type="module" src="education.js?v=20261123invite1"></script>
 </body></html>
