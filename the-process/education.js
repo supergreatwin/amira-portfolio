@@ -1,10 +1,14 @@
-import { db, identify, byId as $, setMessage, niceError, STAGES, articleText, safeHttps, formatSize, safeFilename } from '../education-core.js';
+import { byId as $, setMessage, niceError, STAGES, articleText, safeHttps, formatSize, safeFilename } from '../education-core.js';
+import { processDb as db } from './process-auth-core.js';
+import { mountProcessAuth } from './process-auth-ui.js';
 const state={identity:null,courses:[],course:null,lessons:[],currentLesson:null,enrolled:false,archiveStage:'all',archiveSearch:''};
 const status=(m,e=false)=>setMessage('student-status',m,e);
 function element(tag,className,text){const x=document.createElement(tag);if(className)x.className=className;if(text!==undefined)x.textContent=text;return x;}
 function showPrivate(identity){
-  state.identity=identity;$('student-login').hidden=true;$('student-learning').hidden=false;
+  state.identity=identity;$('student-learning').hidden=false;
   $('student-logout').hidden=false;
+  $('process-editor-link').hidden=!identity.staff;
+  $('process-invite-admin').hidden=!identity.staff;
   $('student-account').textContent=(identity.member?.display_name||identity.user.email)+(identity.staff?' · Instructor preview':' · Student');
 }
 async function loadCourses(){
@@ -256,7 +260,7 @@ $('student-back').onclick=()=>{
   $('student-lesson-view').hidden=true;
   $('archive-cards').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 };
-$('student-logout').onclick=async()=>{await db.auth.signOut();location.reload();};
+$('student-logout').onclick=async()=>{await db.auth.signOut({scope:'local'});location.href='./';};
 for(const control of document.querySelectorAll('[data-archive-stage]')){
   control.addEventListener('click',()=>{
     state.archiveStage=control.dataset.archiveStage;
@@ -273,15 +277,13 @@ $('archive-search').addEventListener('input',event=>{
   renderArchive();
 });
 async function start(){
-  const identity=await identify();
-  // Pre-launch: only editorial staff can enter even when an existing learner token is present.
-  if(!identity.user || !identity.staff || !identity.member){
-    status('Private workspace. Sign in through the approved Editorial Desk account.');
-    return;
-  }
-  const hero=document.querySelector('.edu-hero');if(hero)hero.hidden=false;
-  showPrivate(identity);
-  await loadCourses();
-  status('Instructor-only working site. Learner access remains disabled.');
+  await mountProcessAuth(async identity=>{
+    showPrivate(identity);
+    await loadCourses();
+    status('Your private Process workspace is ready.');
+  });
 }
-void start().catch(error=>status(niceError(error),true));
+void start().catch(error=>{
+  const indicator=$('process-auth-status');
+  if(indicator){indicator.textContent=niceError(error);indicator.classList.add('is-error');}
+});
