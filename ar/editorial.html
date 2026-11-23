@@ -17,9 +17,14 @@
 <form id="ed-auth-form">
 <div class="ed-field"><label for="ed-email">البريد الإلكتروني</label><input id="ed-email" type="email" placeholder="البريد الإلكتروني" autocomplete="username" maxlength="254" required></div>
 <div class="ed-field"><label for="ed-password">كلمة المرور</label><input id="ed-password" type="password" autocomplete="current-password" required></div>
-<div class="ed-actions"><button class="ed-button" type="submit">دخول</button><button class="ed-button ghost" type="button" id="ed-forgot">نسيت كلمة المرور</button></div></form>
-<div class="ed-notice">سيتم منح صلاحية الإدارة تلقائيًا بعد تأكيد البريد الإلكتروني من Supabase. لا يمكن للآخرين الدخول إلى لوحة التحرير.</div>
-<form id="ed-recover-form" hidden><h3>تعيين كلمة مرور جديدة</h3><div class="ed-field"><label for="ed-new-password">كلمة المرور الجديدة</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><button class="ed-button" type="submit">حفظ كلمة المرور</button></form>
+<div class="ed-actions"><button class="ed-button" type="submit">دخول</button><button class="ed-button ghost" type="button" id="ed-forgot">نسيت كلمة المرور</button><button class="ed-button alt" type="button" id="ed-use-code">الدخول برمز بريد إلكتروني لمرة واحدة</button></div></form>
+<div class="ed-notice">يمكن للحسابات المعتمدة فقط التحرير والنشر. إذا تعذّر تسجيل الدخول، استخدمي إعادة تعيين كلمة المرور لحسابك.</div>
+<form id="ed-code-form" hidden>
+<div class="ed-field"><label for="ed-code-email">البريد الإلكتروني</label><input id="ed-code-email" type="email" autocomplete="username" maxlength="254" required></div>
+<p class="ed-muted">إذا كان الحساب مؤهلاً، سيُرسل رمز إلى بريده الإلكتروني.</p>
+<div class="ed-field" id="ed-code-field" hidden><label for="ed-code">رمز لمرة واحدة</label><input id="ed-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" minlength="6" maxlength="10" dir="ltr"></div>
+<div class="ed-actions"><button class="ed-button" type="button" id="ed-send-code">إرسال رمز</button><button class="ed-button" type="submit" id="ed-verify-code" hidden>التحقق وتسجيل الدخول</button><button class="ed-button ghost" type="button" id="ed-use-password">استخدام كلمة المرور</button></div>
+</form>
 </section>
 <section class="ed-panel" id="ed-dashboard" hidden>
 <div class="ed-workspace-header"><div><span class="ed-eyebrow">إدارة المحتوى</span><h2>المقالات والمشروعات</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><a class="ed-button alt" href="../education-studio.html">استوديو التعليم — الدروس والملفات ↗</a><a class="ed-button alt" href="../content-studio.html">الأفلام والصور والمحتوى ↗</a><button id="ed-new" type="button" class="ed-button alt">مقال جديد</button><button id="ed-refresh" type="button" class="ed-button ghost">تحديث</button><button id="ed-logout" type="button" class="ed-button ghost">خروج</button></div></div>
@@ -52,7 +57,7 @@
 </form></div>
 </section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · استوديو التحرير · <a href="../">العودة للموقع</a></div></footer>
-<script type="module" src="../editorial.js?v=20261121authfix"></script>
+<script type="module" src="../editorial.js?v=20261123recoveryotp"></script>
 
 <script type="module" src="../field-notes-admin.js?v=1"></script>
 </body></html>

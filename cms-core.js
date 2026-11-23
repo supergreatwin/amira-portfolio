@@ -1,9 +1,25 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.1/+esm';
+import { recoveryTarget } from './editorial-auth-core.js';
+
+function routeRecovery() {
+  const recoveryPage = recoveryTarget(window.location.href);
+  if (!recoveryPage) return false;
+  // Also cover a reset link opened in a tab already showing this same URL:
+  // fragment-only navigation does not re-evaluate JavaScript modules.
+  document.documentElement.hidden = true;
+  window.location.replace(recoveryPage);
+  return true;
+}
+window.addEventListener('hashchange', routeRecovery);
+if (routeRecovery()) {
+  // Stop dependent studio modules, even while navigation is still pending.
+  throw new Error('Password recovery continues on the dedicated reset page.');
+}
 
 export const cms = createClient(
   'https://tfarhghukyogaowjqykn.supabase.co',
   'sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS',
-  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
+  {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:false}}
 );
 export const BUCKET='amira-site-content';
 export const $=id=>document.getElementById(id);

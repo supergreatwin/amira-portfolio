@@ -9,7 +9,7 @@ const msg = (en, arabic) => ar ? arabic : en;
 const state = { id: null, entries: [], user: null, loading: false };
 const fields = ['title-en', 'title-ar', 'slug', 'section', 'excerpt-en', 'excerpt-ar', 'body-en', 'body-ar', 'cover', 'featured'];
 const names = { 'title-en': 'title_en', 'title-ar': 'title_ar', slug: 'slug', section: 'section', 'excerpt-en': 'excerpt_en', 'excerpt-ar': 'excerpt_ar', 'body-en': 'body_en', 'body-ar': 'body_ar', cover: 'cover_image_url', featured: 'featured' };
-let recoveryMode = false;
+let authCheck = 0;
 function notice(text, isError = false) {
   $('ed-message').textContent = text || '';
   $('ed-message').style.color = isError ? '#a02a2a' : 'var(--plum)';
@@ -75,12 +75,19 @@ async function loadEntries() {
   }
 }
 async function refreshAuth() {
-  const { data, error } = await db.auth.getUser();
+  const check = ++authCheck;
+  let data, error;
+  try { ({ data, error } = await db.auth.getUser()); }
+  catch { if (check === authCheck) showGuest(); return; }
+  if (check !== authCheck) return;
   const user = data?.user;
   if (error || !user) { showGuest(); return; }
   const role = user.app_metadata?.editorial_role;
   if (role !== 'admin' && role !== 'editor') {
     showGuest();
+    // A valid password or email code authenticates identity, never permissions.
+    // Scope is this CMS session; The Process has its own session storage key.
+    try { await db.auth.signOut({ scope: 'local' }); } catch {}
     notice(msg('This account does not have Editorial Desk access. Contact the site administrator.', 'هذا الحساب غير مُصرّح له بالدخول إلى المكتب التحريري. تواصلي مع مديرة الموقع.'), true);
     return;
   }
@@ -219,28 +226,123 @@ resetButton.addEventListener('click', async () => {
     refreshResetButton();
   }
 });
-$('ed-recover-form').addEventListener('submit', async event => {
-  event.preventDefault();
-  const password = $('ed-new-password').value;
-  if (password.length < 12) { notice(msg('Use a password of at least 12 characters.', 'كلمة المرور يجب أن تتكون من ١٢ حرفًا على الأقل.'), true); return; }
-  const { error } = await db.auth.updateUser({ password });
-  if (error) notice(error.message, true);
-  else { recoveryMode = false; $('ed-recover-form').hidden = true; notice(msg('Password updated. You can now sign in.', 'تم تغيير كلمة المرور. يمكنك تسجيل الدخول.')); await refreshAuth(); }
+const codeForm = $('ed-code-form');
+const codeEmail = $('ed-code-email');
+const sendCode = $('ed-send-code');
+const CODE_COOLDOWN_KEY = 'amira-editorial-code-at';
+let codePending = false;
+let requestedEmail = '';
+let codeRequest = 0;
+function codeCooldownRemaining() {
+  try {
+    return Math.max(0, Math.ceil((Number(localStorage.getItem(CODE_COOLDOWN_KEY)) + 60_000 - Date.now()) / 1000)) || 0;
+  } catch { return 0; }
+}
+function refreshCodeButtons() {
+  const remaining = codeCooldownRemaining();
+  sendCode.disabled = codePending || signInPending || remaining > 0;
+  sendCode.textContent = remaining > 0
+    ? msg('Resend in ' + remaining + 's', 'إعادة الإرسال بعد ' + remaining + ' ثانية')
+    : msg(requestedEmail ? 'Resend code' : 'Send code', requestedEmail ? 'إعادة إرسال الرمز' : 'إرسال رمز');
+  $('ed-verify-code').disabled = codePending || signInPending;
+  codeEmail.readOnly = codePending;
+  $('ed-use-password').disabled = codePending;
+}
+function clearCode() {
+  requestedEmail = '';
+  codeRequest++;
+  $('ed-code').value = '';
+  $('ed-code').required = false;
+  $('ed-code-field').hidden = true;
+  $('ed-verify-code').hidden = true;
+}
+$('ed-use-code').addEventListener('click', () => {
+  if (signInPending) return;
+  $('ed-password').value = '';
+  codeEmail.value = activeEmail();
+  clearCode();
+  $('ed-auth-form').hidden = true;
+  codeForm.hidden = false;
+  notice('');
+  refreshCodeButtons();
+  codeEmail.focus();
 });
+$('ed-use-password').addEventListener('click', () => {
+  if (codePending) return;
+  $('ed-email').value = codeEmail.value;
+  clearCode();
+  codeForm.hidden = true;
+  $('ed-auth-form').hidden = false;
+  notice('');
+  $('ed-password').focus();
+});
+codeEmail.addEventListener('input', () => { clearCode(); refreshCodeButtons(); });
+sendCode.addEventListener('click', async () => {
+  if (codePending || signInPending || codeCooldownRemaining() > 0 || !codeEmail.reportValidity()) return;
+  const email = codeEmail.value.trim().toLowerCase();
+  const request = ++codeRequest;
+  codePending = true;
+  try { localStorage.setItem(CODE_COOLDOWN_KEY, String(Date.now())); } catch {}
+  refreshCodeButtons();
+  try {
+    const { error } = await db.auth.signInWithOtp({ email, options: { shouldCreateUser: false } });
+    if (request !== codeRequest) return;
+    // Unknown addresses may be rejected rather than masked by the provider.
+    // Present the same result and verification form without creating accounts.
+    if (error && !['otp_disabled', 'user_not_found', 'signup_disabled'].includes(error.code)) {
+      notice(msg('Unable to request a code right now. Please try again later.', 'تعذّر طلب رمز حاليًا. يُرجى المحاولة لاحقًا.'), true);
+      return;
+    }
+    requestedEmail = email;
+    $('ed-code').required = true;
+    $('ed-code-field').hidden = false;
+    $('ed-verify-code').hidden = false;
+    notice(msg('If this account is eligible, a sign-in code has been sent. Check your inbox and spam folder.',
+      'إذا كان الحساب مؤهلاً، فقد أُرسل رمز تسجيل الدخول. تحققي من الوارد والبريد غير المرغوب فيه.'));
+    $('ed-code').focus();
+  } catch {
+    notice(msg('Unable to request a code. Check your connection and try again.', 'تعذّر طلب رمز. تحققي من الاتصال وحاولي مجددًا.'), true);
+  } finally { codePending = false; refreshCodeButtons(); }
+});
+codeForm.addEventListener('submit', async event => {
+  event.preventDefault();
+  if (codePending || signInPending) return;
+  if (!requestedEmail) { sendCode.click(); return; }
+  if (requestedEmail !== codeEmail.value.trim().toLowerCase() || !codeForm.reportValidity()) return;
+  const token = $('ed-code').value.trim();
+  if (!/^[0-9]{6,10}$/.test(token)) return;
+  codePending = true;
+  refreshCodeButtons();
+  notice(msg('Verifying code…', 'جارٍ التحقق من الرمز…'));
+  try {
+    const { error } = await db.auth.verifyOtp({ email: requestedEmail, token, type: 'email' });
+    $('ed-code').value = '';
+    if (error) {
+      notice(msg('This code is invalid, expired or already used. Try again or request a new code.',
+        'الرمز غير صالح أو انتهت صلاحيته أو استُخدم من قبل. حاولي مجددًا أو اطلبي رمزًا جديدًا.'), true);
+      return;
+    }
+    clearCode();
+    await refreshAuth();
+  } catch {
+    notice(msg('Unable to verify the code. Check your connection and try again.', 'تعذّر التحقق من الرمز. تحققي من الاتصال وحاولي مجددًا.'), true);
+  } finally { codePending = false; refreshCodeButtons(); }
+});
+refreshCodeButtons();
+setInterval(refreshCodeButtons, 1000);
 $('ed-logout').addEventListener('click', async () => {
-  const { error } = await db.auth.signOut();
+  const { error } = await db.auth.signOut({ scope: 'local' });
   if (error) notice(error.message, true);
   else { showGuest(); notice(msg('Signed out.', 'تم تسجيل الخروج.')); }
 });
 db.auth.onAuthStateChange((event) => {
   if (event === 'PASSWORD_RECOVERY') {
-    recoveryMode = true;
-    $('ed-auth').hidden = false;
-    $('ed-recover-form').hidden = false;
-    $('ed-dashboard').hidden = true;
-    notice(msg('Set a new password below.', 'عيّني كلمة مرور جديدة أدناه.'));
-  } else if (!recoveryMode && ['SIGNED_IN', 'TOKEN_REFRESHED', 'SIGNED_OUT', 'USER_UPDATED'].includes(event)) {
-    setTimeout(() => { if (!recoveryMode) void refreshAuth(); }, 0);
+    // Defensive fallback; the CMS never consumes recovery URLs itself.
+    ++authCheck;
+    showGuest();
+    window.location.replace(ar ? '../ar/reset-password.html' : 'reset-password.html');
+  } else if (['SIGNED_IN', 'TOKEN_REFRESHED', 'SIGNED_OUT', 'USER_UPDATED'].includes(event)) {
+    setTimeout(() => { void refreshAuth(); }, 0);
   }
 });
 startNew();
