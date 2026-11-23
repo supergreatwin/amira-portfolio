@@ -9,7 +9,32 @@ const msg = (en, arabic) => ar ? arabic : en;
 const state = { id: null, entries: [], user: null, loading: false };
 const fields = ['title-en', 'title-ar', 'slug', 'section', 'excerpt-en', 'excerpt-ar', 'body-en', 'body-ar', 'cover', 'featured'];
 const names = { 'title-en': 'title_en', 'title-ar': 'title_ar', slug: 'slug', section: 'section', 'excerpt-en': 'excerpt_en', 'excerpt-ar': 'excerpt_ar', 'body-en': 'body_en', 'body-ar': 'body_ar', cover: 'cover_image_url', featured: 'featured' };
-let recoveryMode = false;
+const RECOVERY_KEY = 'amira-editorial-recovery-pending-v2';
+let recoveryMode = new URLSearchParams(location.search).get('reset') === '1'
+  || new URLSearchParams(location.hash.replace(/^#/, '')).get('type') === 'recovery';
+try { recoveryMode = recoveryMode || sessionStorage.getItem(RECOVERY_KEY) === '1'; } catch {}
+let otpMode = false;
+function recoveryUi() {
+  state.user = null;
+  $('ed-auth').hidden = false;
+  $('ed-dashboard').hidden = true;
+  $('ed-auth-form').hidden = true;
+  $('ed-otp-panel').hidden = true;
+  $('ed-recover-form').hidden = false;
+}
+function enterRecoveryMode() {
+  recoveryMode = true;
+  try { sessionStorage.setItem(RECOVERY_KEY, '1'); } catch {}
+  recoveryUi();
+  notice(msg('Set and confirm a new password before entering the Editorial Desk.', 'يجب تعيين كلمة مرور جديدة وتأكيدها قبل فتح المكتب التحريري.'));
+}
+function clearRecoveryMarker() {
+  try { sessionStorage.removeItem(RECOVERY_KEY); } catch {}
+  const address = new URL(location.href);
+  address.searchParams.delete('reset');
+  address.hash = '';
+  history.replaceState(null, '', address.pathname + address.search);
+}
 function notice(text, isError = false) {
   $('ed-message').textContent = text || '';
   $('ed-message').style.color = isError ? '#a02a2a' : 'var(--plum)';
@@ -22,6 +47,10 @@ function showGuest() {
   state.user = null;
   $('ed-auth').hidden = false;
   $('ed-dashboard').hidden = true;
+  if (recoveryMode) { recoveryUi(); return; }
+  $('ed-recover-form').hidden = true;
+  $('ed-auth-form').hidden = otpMode;
+  $('ed-otp-panel').hidden = !otpMode;
 }
 function startNew() {
   state.id = null;
@@ -75,11 +104,15 @@ async function loadEntries() {
   }
 }
 async function refreshAuth() {
+  // A recovery callback creates a temporary Supabase Auth session. Never
+  // treat it as a normal Editorial Desk login until the password is changed.
+  if (recoveryMode) { recoveryUi(); return; }
   const { data, error } = await db.auth.getUser();
   const user = data?.user;
   if (error || !user) { showGuest(); return; }
   const role = user.app_metadata?.editorial_role;
   if (role !== 'admin' && role !== 'editor') {
+    await db.auth.signOut({ scope: 'local' });
     showGuest();
     notice(msg('This account does not have Editorial Desk access. Contact the site administrator.', 'هذا الحساب غير مُصرّح له بالدخول إلى المكتب التحريري. تواصلي مع مديرة الموقع.'), true);
     return;
@@ -141,6 +174,81 @@ $('ed-new').addEventListener('click', () => { delete $('ed-slug').dataset.manual
 $('ed-refresh').addEventListener('click', loadEntries);
 document.querySelectorAll('button[data-save]').forEach(button => button.addEventListener('click', () => saveEntry(button.dataset.save)));
 let signInPending = false;
+let otpRequestPending = false;
+let otpVerifyPending = false;
+let otpRequestedAt = 0;
+function showOtpPanel() {
+  if (recoveryMode) return;
+  otpMode = true;
+  $('ed-otp-email').value = $('ed-email').value.trim();
+  $('ed-auth-form').hidden = true;
+  $('ed-otp-panel').hidden = false;
+  $('ed-otp-email').focus();
+  notice('');
+}
+$('ed-use-code').addEventListener('click', showOtpPanel);
+$('ed-back-password').addEventListener('click', () => {
+  if (recoveryMode) return;
+  otpMode = false;
+  $('ed-otp-panel').hidden = true;
+  $('ed-auth-form').hidden = false;
+  $('ed-email').value = $('ed-otp-email').value.trim();
+  notice('');
+});
+$('ed-otp-request-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (otpRequestPending || recoveryMode) return;
+  const email = $('ed-otp-email').value.trim().toLowerCase();
+  if (!$('ed-otp-email').reportValidity()) return;
+  if (Date.now() - otpRequestedAt < 60_000) {
+    notice(msg('For security, wait one minute before requesting another code.', 'للأمان، انتظري دقيقة قبل طلب رمز آخر.'), true);
+    return;
+  }
+  otpRequestPending = true;
+  $('ed-otp-send').disabled = true;
+  notice(msg('Requesting a one-time code…', 'جارٍ طلب رمز الدخول…'));
+  try {
+    const { error } = await db.auth.signInWithOtp({
+      email,
+      options: { shouldCreateUser: false, emailRedirectTo: 'https://amiraabdelfadil.com/' + (ar ? 'ar/editorial.html' : 'editorial.html') }
+    });
+    if (error) throw error;
+    otpRequestedAt = Date.now();
+    $('ed-otp-verify-form').hidden = false;
+    $('ed-otp-token').focus();
+    notice(msg('If the account is eligible, check its email for a one-time code.', 'إذا كان الحساب مؤهلًا، فتحققي من البريد الإلكتروني للحصول على رمز لمرة واحدة.'));
+  } catch (error) {
+    notice(msg('Could not send a sign-in code. Please try again later.', 'تعذر إرسال رمز الدخول. يُرجى المحاولة لاحقًا.'), true);
+  } finally {
+    otpRequestPending = false;
+    $('ed-otp-send').disabled = false;
+  }
+});
+$('ed-otp-verify-form').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (otpVerifyPending || recoveryMode) return;
+  const email = $('ed-otp-email').value.trim().toLowerCase();
+  const token = $('ed-otp-token').value.replace(/\s+/g, '');
+  if (!/^[0-9]{6,8}$/.test(token)) {
+    notice(msg('Enter the numeric code sent to your email.', 'أدخلي الرمز الرقمي المرسل إلى بريدك الإلكتروني.'), true);
+    return;
+  }
+  otpVerifyPending = true;
+  $('ed-otp-verify').disabled = true;
+  notice(msg('Checking your code…', 'جارٍ التحقق من الرمز…'));
+  try {
+    const { error } = await db.auth.verifyOtp({ email, token, type: 'email' });
+    if (error) throw error;
+    $('ed-otp-token').value = '';
+    otpMode = false;
+    await refreshAuth(); // Enforces admin/editor from signed app_metadata.
+  } catch (error) {
+    notice(msg('The code is invalid or expired. Request another code.', 'الرمز غير صحيح أو انتهت صلاحيته. اطلبي رمزًا آخر.'), true);
+  } finally {
+    otpVerifyPending = false;
+    $('ed-otp-verify').disabled = false;
+  }
+});
 $('ed-auth-form').addEventListener('submit', async event => {
   event.preventDefault();
   if (signInPending) return;
@@ -219,13 +327,51 @@ resetButton.addEventListener('click', async () => {
     refreshResetButton();
   }
 });
+let recoverySaving = false;
 $('ed-recover-form').addEventListener('submit', async event => {
   event.preventDefault();
+  if (!recoveryMode || recoverySaving) return;
   const password = $('ed-new-password').value;
-  if (password.length < 12) { notice(msg('Use a password of at least 12 characters.', 'كلمة المرور يجب أن تتكون من ١٢ حرفًا على الأقل.'), true); return; }
-  const { error } = await db.auth.updateUser({ password });
-  if (error) notice(error.message, true);
-  else { recoveryMode = false; $('ed-recover-form').hidden = true; notice(msg('Password updated. You can now sign in.', 'تم تغيير كلمة المرور. يمكنك تسجيل الدخول.')); await refreshAuth(); }
+  const confirmation = $('ed-confirm-password').value;
+  if (password.length < 12) {
+    notice(msg('Use a password of at least 12 characters.', 'كلمة المرور يجب أن تتكون من ١٢ حرفًا على الأقل.'), true);
+    return;
+  }
+  if (password !== confirmation) {
+    notice(msg('The two passwords do not match.', 'كلمتا المرور غير متطابقتين.'), true);
+    return;
+  }
+  recoverySaving = true;
+  const save = $('ed-recover-form').querySelector('button[type="submit"]');
+  save.disabled = true;
+  try {
+    const { error } = await db.auth.updateUser({ password });
+    if (error) throw error;
+    // Recovery tokens produce a session: explicitly sign out after the change,
+    // requiring the new password or a separate OTP sign-in for dashboard access.
+    const { error:logoutError } = await db.auth.signOut({ scope: 'local' });
+    if (logoutError) throw logoutError;
+    recoveryMode = false;
+    otpMode = false;
+    clearRecoveryMarker();
+    $('ed-recover-form').reset();
+    showGuest();
+    notice(msg('Password updated successfully. Sign in using the new password.', 'تم تحديث كلمة المرور. سجّلي الدخول باستخدام كلمة المرور الجديدة.'));
+  } catch (error) {
+    notice(msg('The password could not be updated. Please use a fresh reset link.', 'تعذر تحديث كلمة المرور. يُرجى استخدام رابط إعادة تعيين جديد.'), true);
+  } finally {
+    recoverySaving = false;
+    save.disabled = false;
+  }
+});
+$('ed-cancel-recovery').addEventListener('click', async () => {
+  await db.auth.signOut({ scope: 'local' });
+  recoveryMode = false;
+  otpMode = false;
+  clearRecoveryMarker();
+  $('ed-recover-form').reset();
+  showGuest();
+  notice(msg('Password recovery cancelled. You can sign in normally.', 'تم إلغاء إعادة تعيين كلمة المرور. يمكنك تسجيل الدخول بشكل طبيعي.'));
 });
 $('ed-logout').addEventListener('click', async () => {
   const { error } = await db.auth.signOut();
@@ -234,15 +380,12 @@ $('ed-logout').addEventListener('click', async () => {
 });
 db.auth.onAuthStateChange((event) => {
   if (event === 'PASSWORD_RECOVERY') {
-    recoveryMode = true;
-    $('ed-auth').hidden = false;
-    $('ed-recover-form').hidden = false;
-    $('ed-dashboard').hidden = true;
-    notice(msg('Set a new password below.', 'عيّني كلمة مرور جديدة أدناه.'));
+    enterRecoveryMode();
   } else if (!recoveryMode && ['SIGNED_IN', 'TOKEN_REFRESHED', 'SIGNED_OUT', 'USER_UPDATED'].includes(event)) {
     setTimeout(() => { if (!recoveryMode) void refreshAuth(); }, 0);
   }
 });
 startNew();
-void refreshAuth();
+if (recoveryMode) enterRecoveryMode();
+else void refreshAuth();
 export { db };
