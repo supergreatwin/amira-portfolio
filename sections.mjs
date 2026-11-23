@@ -8,7 +8,7 @@ export const writingIntro = [
 
 export const featuredEssays = [
   {
-    heading: ['Personal essays', 'مقالات شخصية'],
+    heading: ['Personal essays', 'Personal essays'],
     articles: [
       ['The Beauty of Capturing Memories', 'جمال توثيق الذكريات', 'https://thought.is/the-beauty-of-capturing-memories/'],
       ['Maybe One Day I’ll Write a Masterpiece', 'ربما أكتب يومًا عملًا خالدًا', 'https://thought.is/maybe-one-day-ill-write-a-masterpiece/'],
@@ -16,7 +16,7 @@ export const featuredEssays = [
     ],
   },
   {
-    heading: ['Essays on film', 'مقالات عن السينما'],
+    heading: ['Essays on art and culture', 'Essays on art and culture'],
     articles: [
       ['Romance Movies Have Affected How We Perceive Love', 'كيف أثّرت الأفلام الرومانسية في نظرتنا إلى الحب؟', 'https://movieweb.com/the-danger-of-romantic-movies-in-how-we-perceive-love/'],
       ['The 11 All-Time Best Documentaries About Racism', 'أفضل ١١ فيلمًا وثائقيًا عن العنصرية', 'https://movieweb.com/the-best-documentaries-about-racism/'],
@@ -51,7 +51,7 @@ export function writingSection({ arabic = false } = {}) {
   const index = Number(arabic);
   const categories = featuredEssays.map(category => `<section class="featured-essays">
   <h3>${category.heading[index]}</h3>
-  <ul>${category.articles.map(([english, translated, url]) => `<li><a href="${url}"${arabic ? ' hreflang="en"' : ''}>${escape(arabic ? translated : english)} <span aria-hidden="true">↗</span></a></li>`).join('')}</ul>
+  <ul>${category.articles.map(([english, translated, url]) => `<li><a href="${url}"${arabic ? ' hreflang="en"' : ''}>${escape(english)} <span aria-hidden="true">↗</span></a></li>`).join('')}</ul>
 </section>`).join('\n');
   return `<div class="writing-selection">
 ${categories}

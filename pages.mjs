@@ -28,15 +28,17 @@ function sharedHeader(source, directory, filename) {
     : name === 'writing' ? /^(writing|journal|notes)/.test(filename)
     : name === 'about' ? filename === 'about.html' : false;
   const navItems = arabic
-    ? [['films','الأفلام','index.html#work'],['photography','الفن والتصوير','art.html'],['writing','كتابات','../writing.html'],['about','نبذة','../about.html']]
-    : [['films','Films','films.html'],['photography','Art & Photography','art.html'],['writing','Writing','writing.html'],['about','About','about.html']];
+    ? [['films','الأفلام','index.html#work'],['photography','الفن والتصوير','art.html'],['writing','كتابات','writing.html']]
+    : [['films','Films','films.html'],['photography','Art & Photography','art.html'],['writing','Writing','writing.html']];
   const mainNav = navItems.map(([key,label,path]) =>
     '<a href="'+href(path)+'"'+(safeActive(key)?' aria-current="page"':'')+'>'+label.replaceAll('&','&amp;')+'</a>').join('');
   const alternate = arabic ? '../index.html' : (directory === 'the-process' ? '../ar/' : 'ar/');
   const languageLabel = arabic ? 'English' : 'العربية';
-  const mobileNav = mainNav +
-    '<a href="'+href('notes.html')+'">'+(arabic?'رسائل أميرة':'Field Notes')+'</a>'+
-    '<a href="'+alternate+'">'+languageLabel+'</a>';
+  const extraNav = arabic
+    ? [['الرئيسية','index.html'],['دفتر الملاحظات','notes.html'],['التعاونات','collaborations.html'],['العروض والمعارض','screenings.html'],['الجوائز','awards.html'],['التوصيات','endorsements.html'],['عن أميرة','../about.html'],['التواصل','contact.html']]
+    : [['Home','index.html'],['Notebook','notes.html'],['Collaborations','collaborations.html'],['Screenings & Exhibitions','screenings.html'],['Awards','awards.html'],['Endorsements','endorsements.html'],['About','about.html'],['Contact','contact.html']];
+  const mobileNav = mainNav + extraNav.map(([label,path]) => '<a href="' + path + '">' + label + '</a>').join('') +
+    '<a href="' + alternate + '">' + languageLabel + '</a>';
   const brand = href('index.html');
   return '<header class="site-header topbar home-topbar'+(photoHome?' site-header--home':'')+'">'+
     '<div class="site-header__frame nav-inner">'+
@@ -44,9 +46,9 @@ function sharedHeader(source, directory, filename) {
     '<div class="site-header__center nav-panel" id="navigation-panel"><div><nav aria-label="Main navigation">'+mainNav+'</nav></div></div>'+
     '<div class="site-header__utilities nav-actions">'+
     '<nav class="site-header__shortcuts nav-shortcuts" aria-label="Resources and language">'+
-    '<a href="'+href('notes.html')+'">'+(arabic?'رسائل أميرة':'Field Notes')+'</a><a href="'+alternate+'" lang="'+(arabic?'en':'ar')+'">'+languageLabel+'</a></nav>'+
+    '<a href="'+alternate+'" lang="'+(arabic?'en':'ar')+'">'+languageLabel+'</a></nav>'+
     '<button type="button" class="menu-toggle" aria-controls="navigation-panel" aria-expanded="false" aria-label="Legacy menu" hidden></button>'+
-    '<details class="mobile-menu"><summary>Menu</summary><nav aria-label="Mobile navigation">'+mobileNav+'</nav></details>'+
+    '<details class="mobile-menu"><summary aria-label="Menu">☰</summary><nav aria-label="Mobile navigation">'+mobileNav+'</nav></details>'+
     '</div></div></header>';
 }
 

@@ -39,3 +39,36 @@ html,body{max-width:100%;overflow-x:clip}
 @media(max-width:1080px){.site-header.site-header .site-header__center{display:none!important}.classic-live .film-grid[data-layout=gallery]{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.classic-live .header-quick{display:none}.classic-live .topbar.classic-site-header{grid-template-columns:1fr auto}.classic-live .film-grid[data-layout=gallery]{grid-template-columns:repeat(2,minmax(0,1fr))}.classic-live .about-grid{grid-template-columns:1fr}.classic-live .about-portrait{max-width:550px}}
 @media(max-width:540px){.classic-live .hero h1{font-size:clamp(36px,9vw,64px);white-space:normal}.classic-live .film-grid[data-layout=gallery]{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.classic-live .film-caption h3{font-size:16px}.classic-live .film-caption .eyebrow{min-height:58px;font-size:10px}.classic-live .still-grid,.project-gallery .gallery-grid{grid-template-columns:1fr}}
+
+/* Cohesive interior gallery, Writing and notebook treatment */
+.site-header .mobile-menu{display:block!important}
+.site-header .mobile-menu nav{z-index:350!important}
+.writing-publication-note{display:grid;grid-template-columns:minmax(130px,215px) minmax(0,1fr);align-items:start;gap:clamp(18px,4vw,50px);padding:12px 0 38px}
+.writing-publication-note span{font-weight:650;color:#784a50}
+.writing-publication-note p{margin:0;font-weight:400;font-size:clamp(16px,1.7vw,23px);line-height:1.6}
+.collab-poster-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(12px,1.7vw,25px);align-items:stretch;margin:22px 0 62px}
+.collab-poster-card{min-width:0}
+.collab-poster-frame{aspect-ratio:5/7;overflow:hidden;border-radius:3px;background:#d8cfc9}
+.collab-poster-frame img{width:100%;height:100%;object-fit:cover;display:block}
+.collab-poster-card h2{font-size:clamp(17px,1.5vw,24px);margin:12px 0 7px;min-height:58px;line-height:1.2}
+.collab-poster-credits{font-size:13px;line-height:1.55;color:var(--muted,#62554a)}
+.collab-other-title{font-size:clamp(24px,3vw,39px);margin-bottom:22px}
+.studio-quick-buttons{display:flex;align-items:center;flex-wrap:wrap;gap:14px}
+.studio-quick-buttons button{padding:13px 18px;border:1px solid #784a50;border-radius:2px;background:#784a50;color:#fff;cursor:pointer;font-weight:650}
+.studio-quick-buttons button+button{background:transparent;color:#784a50}
+.reference-body{background:#f8f4ec;color:#292420;font:16px/1.6 system-ui,-apple-system,sans-serif}
+.reference-header{display:flex;gap:18px;align-items:center;justify-content:space-between;padding:18px clamp(20px,5vw,70px);border-bottom:1px solid #dacbc8}
+.reference-wordmark{font-size:22px;font-weight:850;letter-spacing:-.07em;color:inherit;text-decoration:none}
+.reference-header nav{display:flex;gap:15px;font-size:13px}
+.reference-container{width:min(1200px,calc(100% - 40px));margin:60px auto 95px}
+.reference-title{margin-bottom:45px}
+.reference-title>p{color:#784a50;font-size:12px;font-weight:730;letter-spacing:.13em}
+.reference-title h1{font-size:clamp(43px,7vw,92px);line-height:1.04;letter-spacing:-.06em;margin:12px 0}
+.reference-title h1 em{color:#784a50;font-style:normal}
+.reference-row{display:grid;grid-template-columns:clamp(100px,17vw,200px) minmax(0,1fr);gap:24px;padding:26px 0;border-top:1px solid #d6c8c6;align-items:start}
+.reference-row time{font-size:clamp(21px,3vw,38px);font-weight:780;color:#784a50;line-height:1.12}
+.reference-row h2{font-size:clamp(21px,2.5vw,33px);line-height:1.22;margin:0 0 8px;letter-spacing:-.045em}
+.reference-row p{margin:0;line-height:1.7;color:#62554a;text-align:justify;text-justify:inter-word}
+.endorsement-empty{text-align:center;border-top:1px solid #d6c8c6;padding:100px 10px;font-style:italic}
+@media(max-width:1100px){.collab-poster-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:700px){.collab-poster-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.collab-poster-card h2{min-height:52px}.writing-publication-note{grid-template-columns:1fr;gap:6px}.reference-row{grid-template-columns:1fr;gap:9px}.reference-header nav{display:none}}
