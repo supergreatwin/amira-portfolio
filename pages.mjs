@@ -98,7 +98,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       // Remove eagerly loaded third-party widget code to prevent pre-interaction requests.
       html = html.replace(/<script\s+async\s+src=["']https:\/\/tally\.so\/widgets\/embed\.js["']><\/script>/gi, '');
     }
-    if (isDocument) {
+    if (isDocument && file !== 'reset-password.html') {
       const isArabic = directory === 'ar' || /<html[^>]*lang=["']ar/i.test(themedSource);
       const labels = isArabic
         ? [['privacy','الخصوصية'],['terms','الشروط'],['cookies','ملفات الارتباط']]
@@ -150,7 +150,11 @@ await writeFile(join(dist, '_headers'),
 await writeFile(join(dist, '_headers'),
   (await readFile(join(dist, '_headers'), 'utf8')) +
   '/the-process/*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
-  '/education-studio.html\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n');
+  '/education-studio.html\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  ['editorial.html', 'ar/editorial.html', 'reset-password.html', 'ar/reset-password.html'].map(path =>
+    '/' + path + '\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n  Referrer-Policy: no-referrer\n').join('') +
+  ['cms-core.js', 'editorial.js', 'editorial-auth-core.js', 'password-recovery.js'].map(path =>
+    '/' + path + '\n  Cache-Control: no-cache\n').join(''));
 
 await writeFile(join(dist, '404.html'), `<!doctype html>
 <html lang="en">

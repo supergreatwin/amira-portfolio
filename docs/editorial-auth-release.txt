@@ -1,0 +1,30 @@
+Amira Editorial Desk authentication release
+Target: supergreatwin/amira-portfolio; Supabase Amira Abdelfadil Editorial (tfarhghukyogaowjqykn).
+Status: source implemented and locally verified; NOT a completed live release.
+
+Result
+Recovery links reaching the existing English/Arabic Editorial Desk URLs route to dedicated reset forms before a CMS client can consume them. A fragment added to an already open tab routes too. The reset page removes credentials from the address, validates a separate memory-only session, requires a matching password and confirmation (12+ characters), updates through Supabase Auth, and ends that local session. It asks the user to sign in again. Failed updates never finish recovery or reveal a dashboard.
+
+The existing sign-in card adds email-code request and verification, cooldown, generic request responses, and invalid/expired-code feedback. It prohibits automatic signup and verifies email OTPs. Both password and code login check server-validated app_metadata.editorial_role for admin/editor. Editable user_metadata cannot authorize access. CMS sign-out uses local scope to preserve the independent Process session.
+
+Preserved
+Current CSS, public layout/content, editorial publishing controls, admin/editor database policies, password-reset Edge Function quotas, and every file under the-process/. No role assignment, invitation, policy, database, SMTP or deployed function was changed.
+
+Supabase setup required before claiming email-code delivery works
+The connected tools do not expose hosted Auth template settings. The dashboard asked for login, so the current template and SMTP configuration were not verified or modified.
+After release approval, open https://supabase.com/dashboard/project/tfarhghukyogaowjqykn/auth/templates and back up the existing Magic Link subject/body. Set that template body to supabase/templates/editorial-email-code.html and subject to "Your sign-in code / رمز تسجيل الدخول". The template includes {{ .Token }}. Do not change the recovery, signup, invitation or email-change templates. No new Auth provider, role, redirect allowlist or database policy is required for the existing reset service's implicit recovery links.
+Template documentation: https://supabase.com/docs/guides/auth/auth-email-passwordless#with-otp
+
+Verification
+- node build.mjs --check: passed.
+- PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs: passed.
+- node --test tests/editorial-auth.test.mjs tests/legal-privacy.test.mjs: 22 passed.
+- Browser checks used the real pinned Supabase JS 2.119.1 with synthetic users/tokens and mocked network responses. Checked recovery routing/session isolation, confirmation, failed/successful update, reload, Arabic phone layout, code request/signup prohibition, cooldown, invalid code, administrator access, denial without editorial role, exactly one request per action, and preserved Process storage. No live email or password update was performed.
+- Additional existing homepage-mosaic.test.mjs fails on a previous-homepage expectation (viewport-fit=cover); reproduced on unmodified source, separately from the authentication checks.
+- Read-only Supabase inspection confirmed editorial RLS uses protected app_metadata roles, and Process membership has independent policies/session storage. Health advisories were empty. Security advisors report an existing leaked-password-protection warning and RLS-enabled internal tables without direct-client policies. These were not modified.
+
+Before live acceptance
+With release approval, merge this PR and confirm the custom domain serves its commit/assets separately from any green build. Apply the saved email template. In a consenting test account, request a real recovery email; verify dashboard is inaccessible in that recovery flow until a matching new password is saved, and then sign in afresh. Test expired/reused links and codes, resend limits, password login, admin, editor, unauthorized and Process-only accounts, EN/AR, light/dark, desktop/phone, and failed network. Verify The Process password sign-in and invitation membership remain unchanged. Real inbox delivery, server-side token expiry/replay, production headers and live UI are NOT VERIFIED by the mocked tests.
+
+Rollback
+Before applying the template, save its previous subject/body. Revert this source commit and redeploy the preceding approved revision; restore the saved Magic Link template if it was changed. No database migration or policy rollback is needed. A source rollback restores the old reset-flow defect, so use a forward correction if possible.

@@ -17,9 +17,14 @@
 <form id="ed-auth-form">
 <div class="ed-field"><label for="ed-email">Email</label><input id="ed-email" type="email" placeholder="Email address" autocomplete="username" maxlength="254" required></div>
 <div class="ed-field"><label for="ed-password">Password</label><input id="ed-password" type="password" autocomplete="current-password" required></div>
-<div class="ed-actions"><button class="ed-button" type="submit">Sign in</button><button class="ed-button ghost" type="button" id="ed-forgot">Reset password</button></div></form>
+<div class="ed-actions"><button class="ed-button" type="submit">Sign in</button><button class="ed-button ghost" type="button" id="ed-forgot">Reset password</button><button class="ed-button alt" type="button" id="ed-use-code">Use a one-time email code</button></div></form>
 <div class="ed-notice">Only approved accounts can edit or publish. If you cannot sign in, use Reset password for your own account.</div>
-<form id="ed-recover-form" hidden><h3>Choose a new password</h3><div class="ed-field"><label for="ed-new-password">New password</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><button class="ed-button" type="submit">Update password</button></form>
+<form id="ed-code-form" hidden>
+<div class="ed-field"><label for="ed-code-email">Email</label><input id="ed-code-email" type="email" autocomplete="username" maxlength="254" required></div>
+<p class="ed-muted">If the account is eligible, a code will be sent to its email address.</p>
+<div class="ed-field" id="ed-code-field" hidden><label for="ed-code">One-time code</label><input id="ed-code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6,10}" minlength="6" maxlength="10" dir="ltr"></div>
+<div class="ed-actions"><button class="ed-button" type="button" id="ed-send-code">Send code</button><button class="ed-button" type="submit" id="ed-verify-code" hidden>Verify and sign in</button><button class="ed-button ghost" type="button" id="ed-use-password">Use password</button></div>
+</form>
 </section>
 <section class="ed-panel" id="ed-dashboard" hidden>
 <div class="ed-workspace-header"><div><span class="ed-eyebrow">Content management</span><h2>Stories & Projects</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><a class="ed-button alt" href="education-studio.html">Education Studio — private courses, lessons & files ↗</a><a class="ed-button alt" href="content-studio.html">Films, Photos & Content ↗</a><button id="ed-new" type="button" class="ed-button alt">+ New entry</button><button id="ed-refresh" type="button" class="ed-button ghost">Refresh</button><button id="ed-logout" type="button" class="ed-button ghost">Sign out</button></div></div>
@@ -52,7 +57,7 @@
 </form></div>
 </section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · Editorial studio · <a href="./">Back to portfolio</a></div></footer>
-<script type="module" src="editorial.js?v=20261121authfix"></script>
+<script type="module" src="editorial.js?v=20261123recoveryotp"></script>
 
 <script type="module" src="field-notes-admin.js?v=1"></script>
 </body></html>

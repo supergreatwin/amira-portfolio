@@ -1,0 +1,36 @@
+name: Verify Editorial Desk authentication
+on:
+  pull_request:
+    paths:
+      - '*editorial*'
+      - 'cms-core.js'
+      - '*recovery*'
+      - '*reset-password*'
+      - 'ar/editorial.html'
+      - 'ar/reset-password.html'
+      - 'pages.mjs'
+      - 'tests/editorial-auth.test.mjs'
+      - '.github/workflows/editorial-auth-check.yml'
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check authentication scripts
+        run: |
+          node --input-type=module --check < cms-core.js
+          node --input-type=module --check < editorial.js
+          node --input-type=module --check < editorial-auth-core.js
+          node --input-type=module --check < password-recovery.js
+      - name: Build and verify recovery, authorization and separation
+        run: |
+          node build.mjs --check
+          PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
+          node --test tests/editorial-auth.test.mjs tests/legal-privacy.test.mjs
