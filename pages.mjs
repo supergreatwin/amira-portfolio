@@ -91,7 +91,7 @@ for (const directory of ['', 'ar', 'the-process']) {
     const classicArabicHome = isDocument && directory === 'ar' && file === 'index.html' &&
       !photographicHome;
     // No host-agnostic redirects: they would also affect custom-domain aliases.
-    if (isDocument && file !== 'classic.html' && !photographicHome && !classicArabicHome &&
+    if (isDocument && directory !== 'the-process' && file !== 'classic.html' && !photographicHome && !classicArabicHome &&
         /<header\b[\s\S]*?<\/header>/i.test(themedSource)) {
       themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
       // The shared CSS loads after existing theme and layout rules.
