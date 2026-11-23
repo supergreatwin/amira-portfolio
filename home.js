@@ -146,8 +146,8 @@ motion.addEventListener('change', () => {
 
 const grid = document.querySelector('.film-grid');
 const viewSwitch = document.querySelector('.view-switch');
-const viewButtons = Array.from(viewSwitch.querySelectorAll('button'));
-viewSwitch.hidden = false;
+const viewButtons = Array.from(viewSwitch?.querySelectorAll('button') || []);
+if(viewSwitch)viewSwitch.hidden = true;
 
 viewButtons.forEach(button => button.addEventListener('click', () => {
   if (grid.dataset.layout === button.dataset.view) return;

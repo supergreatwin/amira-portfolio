@@ -32,8 +32,8 @@
   <link rel="stylesheet" href="../cms-public.css?v=1">
   <script type="module" src="../cms-public.js?v=1"></script>
 <script src="../site-design-router.js?v=4" defer></script>
-</head>
-<body>
+<link rel="stylesheet" href="../site-refinement.css?v=20261123production"></head>
+<body class="classic-live">
   <a class="skip-link" href="#main">انتقل إلى المحتوى</a>
   <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
     <symbol id="arrow-up-right" viewBox="0 0 24 24"><path d="M5 19 19 5M7 5h12v12"/></symbol>
@@ -44,27 +44,7 @@
     <symbol id="close-icon" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
   </svg>
 
-  <header class="topbar">
-    <a href="#top" class="brand" aria-label="أميرة عبد الفضيل، الصفحة الرئيسية">أميرة عبد الفضيل</a>
-    <nav id="navigation-panel" aria-label="التنقل الرئيسي">
-      <a href="#work">الأفلام</a>
-      <a href="art.html">الفن والتصوير</a>
-      <a href="#writing">كتابات</a>
-      <a href="notes.html">رسائل أميرة</a>
-      <a href="collaborations.html">التعاونات</a>
-      <a href="#about">نبذة</a>
-    </nav>
-    <div class="nav-actions">
-      <a class="topbar-end films-shortcut" href="#work">الأفلام</a>
-      <a class="topbar-end" href="contact.html">تواصل معي</a>
-      <a class="topbar-end language-link" href="../" hreflang="en" lang="en">English</a>
-      <button class="menu-toggle" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="navigation-panel" hidden>
-        <svg class="icon menu-lines" aria-hidden="true"><use href="#list-icon"/></svg>
-        <svg class="icon menu-close" aria-hidden="true"><use href="#close-icon"/></svg>
-      </button>
-    </div>
-    <div class="read-progress" aria-hidden="true"></div>
-  </header>
+  <header class="topbar classic-site-header"><a class="brand" href="index.html">أميرة عبد الفضيل</a><nav class="header-quick" aria-label="Primary"><a href="../films.html">الأفلام</a><a href="art.html">الفن والتصوير</a><a href="writing.html">الكتابات</a></nav><div class="nav-actions"><a class="topbar-end language-link" href="../">English</a><button class="menu-toggle" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="navigation-panel"><svg class="icon menu-lines" aria-hidden="true"><use href="#list-icon"/></svg><svg class="icon menu-close" aria-hidden="true"><use href="#close-icon"/></svg></button></div><nav id="navigation-panel" class="classic-menu-panel" aria-label="More pages"><a href="../films.html">الأفلام</a><a href="art.html">الفن والتصوير</a><a href="writing.html">الكتابات</a><a href="notes.html">دفتر الملاحظات</a><a href="collaborations.html">التعاونات</a><a href="screenings.html">العروض والمعارض</a><a href="awards.html">الجوائز</a><a href="endorsements.html">التوصيات</a><a href="../about.html">عن أميرة</a><a href="contact.html">تواصل</a></nav><div class="read-progress"></div></header>
 
   <main id="main" tabindex="-1">
     <section class="hero" id="top" aria-labelledby="hero-title">
@@ -256,26 +236,6 @@
       <a class="line-link" href="https://www.instagram.com/amiraabdelfadil/">يوميات أميرة البصرية على إنستغرام <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a>
     </section>
 
-    <section class="section writing" id="writing" aria-labelledby="writing-title">
-      <div class="section-tag eyebrow">كتابات</div>
-      <div class="writing-grid">
-        <div><h2 class="display" id="writing-title">خارج <em>الكادر</em></h2><p class="section-deck">مجموعة مقالات عن الذاكرة والهوية والعملية الإبداعية والجرأة على خوض التجربة.</p></div>
-        <!-- writing-archives:start -->
-        <div class="writing-selection">
-        <section class="featured-essays">
-          <h3>مقالات شخصية</h3>
-          <ul><li><a href="https://thought.is/the-beauty-of-capturing-memories/" hreflang="en">جمال توثيق الذكريات <span aria-hidden="true">↗</span></a></li><li><a href="https://thought.is/maybe-one-day-ill-write-a-masterpiece/" hreflang="en">ربما أكتب يومًا عملًا خالدًا <span aria-hidden="true">↗</span></a></li><li><a href="https://thought.is/no-matter-what-i-will-always-choose-effort/" hreflang="en">مهما حدث، سأختار دائمًا بذل الجهد <span aria-hidden="true">↗</span></a></li></ul>
-        </section>
-        <section class="featured-essays">
-          <h3>مقالات عن السينما</h3>
-          <ul><li><a href="https://movieweb.com/the-danger-of-romantic-movies-in-how-we-perceive-love/" hreflang="en">كيف أثّرت الأفلام الرومانسية في نظرتنا إلى الحب؟ <span aria-hidden="true">↗</span></a></li><li><a href="https://movieweb.com/the-best-documentaries-about-racism/" hreflang="en">أفضل ١١ فيلمًا وثائقيًا عن العنصرية <span aria-hidden="true">↗</span></a></li><li><a href="https://movieweb.com/blue-lock-life-lessons-we-can-learn/" hreflang="en">١١ درسًا في الحياة من أنمي كرة القدم «بلو لوك» <span aria-hidden="true">↗</span></a></li></ul>
-        </section>
-        </div>
-        <!-- writing-archives:end -->
-      </div>
-    </section>
-
-
     <section class="section about" id="about" aria-labelledby="about-title">
       <div class="section-tag eyebrow">نبذة</div>
       <div class="about-grid">
@@ -289,73 +249,11 @@
         <img class="about-portrait" src="../assets/amira-portrait.jpg" alt="أميرة تحمل كاميرا" width="540" height="720" loading="lazy">
       </div>
 
-      <!-- portrait-experience:start -->
-      <div class="portrait-experience" id="portrait" aria-labelledby="portrait-heading">
-        <div class="portrait-head">
-          <div><p class="eyebrow">بورتريه شخصي · أيام مع أميرة</p><h3 id="portrait-heading">خارج <em>الكادر.</em></h3></div>
-        </div>
-        <div class="portrait-feature">
-          <div class="portrait-title-card" aria-label="أيام مع أميرة">
-            <span class="portrait-arabic" lang="ar" dir="rtl">أيام مع أميرة</span>
-          </div>
-          <div class="portrait-summary">
-            <p class="eyebrow">أيام مع أميرة · مقاطع مختارة</p>
-            <h4>حكاية تُروى في التفاصيل.</h4><p>من سؤال عن المستقبل إلى لحظة على ضفاف النهر. دعوة للتعرّف على أميرة بعيدًا عن الصورة الرسمية.</p>
-            <div class="portrait-actions">
-            </div>
-          </div>
-        </div>
-        <div class="portrait-moments">
-          <div class="portrait-moments-head"><h4>لحظات من البورتريه</h4><p>اختَر لحظة لاستكشاف تفاصيلها.</p></div>
-          <div class="portrait-moments-grid">
-            <div class="portrait-tabs" role="tablist" aria-label="لحظات من البورتريه">
-          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-question" data-portrait-moment="question" aria-controls="portrait-moment-panel" aria-selected="true" tabindex="0">
-            <span class="portrait-number">01</span><span><strong>المستقبل</strong><small>سؤال عن السنوات الخمس القادمة</small></span><span class="portrait-length" dir="ltr">00:31</span>
-          </button>
-          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-conversation" data-portrait-moment="conversation" aria-controls="portrait-moment-panel" aria-selected="false" tabindex="-1">
-            <span class="portrait-number">02</span><span><strong>الحوار</strong><small>لقطة قريبة وعفوية</small></span><span class="portrait-length" dir="ltr">00:24</span>
-          </button>
-          <button type="button" role="tab" class="portrait-tab" id="portrait-tab-riverside" data-portrait-moment="riverside" aria-controls="portrait-moment-panel" aria-selected="false" tabindex="-1">
-            <span class="portrait-number">03</span><span><strong>النهر</strong><small>تأمل من خلف الشرفة</small></span><span class="portrait-length" dir="ltr">00:24</span>
-          </button>
-            </div>
-            <div class="portrait-scene" role="tabpanel" id="portrait-moment-panel" tabindex="0" aria-labelledby="portrait-tab-question">
-              <div class="portrait-scene-copy">
-                <p class="eyebrow">من البورتريه · <span data-moment-number>01</span></p>
-              <h5 data-moment-title>نظرة إلى المستقبل</h5>
-              <p data-moment-desc>سؤال هادئ عن السنوات الخمس القادمة.</p>
-              <p class="portrait-quote" lang="ar" dir="rtl" data-moment-quote>«شايفة نفسك فين كمان خمس سنين؟»</p>
-              </div>
-              <div class="portrait-scene-media" aria-label="المقطع الأصلي المختار"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- portrait-experience:end -->
+      
     </section>
-  <section class="notes-home" id="field-notes" aria-labelledby="field-notes-title">
-    <div class="notes-home-inner">
-      <div><p class="eyebrow" style="color:var(--plum);margin-bottom:1rem">من خلف الكادر</p><h2 id="field-notes-title">رسائل <em>أميرة.</em></h2></div>
-      <div class="notes-home-copy"><p>رسائل متفرقة عن السينما والناس والأماكن وحكايات تستحق أن تُروى. اشترك في رسائل أميرة، أو شارك فكرة، أو ابدأ تعاونًا إبداعيًا معها.</p>
-        <div class="notes-home-actions"><a href="notes.html">اكتشف رسائل أميرة</a><a href="collaborate.html">طلب تعاون</a><a href="pitch.html">شارك فكرة</a></div>
-      </div>
-    </div>
-  </section>
+  <section class="classic-collab-teaser"><h2>حكايات نصنعها معًا.</h2><a href="collaborations.html">استكشف التعاونات ↗</a></section></main>
 
-  </main>
-
-  <footer class="section footer" id="contact" aria-labelledby="contact-title">
-    <div class="section-tag eyebrow">التواصل</div>
-    <div class="footer-main" id="elsewhere">
-      <h2 class="display" id="contact-title">تواصل مع <em>أميرة</em></h2>
-      <div class="footer-links">
-        <a class="line-link" href="mailto:byamira01@gmail.com" dir="ltr">byamira01@gmail.com</a>
-        <a class="line-link" href="https://www.instagram.com/amiraabdelfadil/">إنستغرام <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a>
-        <a class="line-link" href="https://www.linkedin.com/in/amira-a-4a9b73113/">لينكدإن <svg class="icon" aria-hidden="true"><use href="#arrow-up-right"/></svg></a>
-      </div>
-    </div>
-    <div class="footer-base eyebrow"><span>أميرة عبد الفضيل <span class="mid-dot">·</span> القاهرة، مصر</span><a href="#top">العودة إلى الأعلى <span aria-hidden="true">↑</span></a></div>
-  </footer>
+  <footer class="classic-compact-footer" id="contact"><span>© أميرة عبد الفضيل · القاهرة، مصر</span><a href="contact.html">تواصل ↗</a></footer>
 
 
   <dialog class="portrait-modal" aria-label="مشغل الفيديو">
@@ -375,7 +273,7 @@
     <div class="education-announcement__masthead">
       <div class="education-announcement__identity">
         <span class="education-announcement__brand">أميرة عبد الفضيل</span>
-        <span class="education-announcement__department">رسائل أميرة / جديد الاستوديو</span>
+        <span class="education-announcement__department">دفتر الملاحظات / جديد الاستوديو</span>
       </div>
       <button class="education-announcement__close" type="button" data-education-dismiss aria-label="إغلاق الإعلان">&times;</button>
     </div>
@@ -388,7 +286,7 @@
     <div class="education-announcement__content">
       <p class="education-announcement__label">قريبًا / محتوى تعليمي</p>
       <h2 class="education-announcement__title" id="education-announcement-title">فصل جديد من <em>التعلّم.</em></h2>
-      <p class="education-announcement__body">أميرة بتحضّر محتوى تعليمي جديد هتشوفوه قريب. اشترك في رسائل أميرة وكون أول من يعرف موعد إطلاقه.</p>
+      <p class="education-announcement__body">أميرة بتحضّر محتوى تعليمي جديد هتشوفوه قريب. اشترك في دفتر الملاحظات وكون أول من يعرف موعد إطلاقه.</p>
       <a class="education-announcement__cta" href="notes.html#newsletter"><span>خلّيك أول من يعرف</span><span class="education-announcement__cta-arrow" aria-hidden="true">↗</span></a>
     </div>
     <div class="education-announcement__footer"><span>من مساحة أميرة الإبداعية</span><span>قريبًا / ٠٠١</span></div>

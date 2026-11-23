@@ -91,7 +91,7 @@ for (const directory of ['', 'ar', 'the-process']) {
     const classicArabicHome = isDocument && directory === 'ar' && file === 'index.html' &&
       !photographicHome;
     // No host-agnostic redirects: they would also affect custom-domain aliases.
-    if (isDocument && directory !== 'the-process' && file !== 'classic.html' && !photographicHome && !classicArabicHome &&
+    if (isDocument && directory !== 'the-process' && !(directory === '' && ['index.html','classic.html'].includes(file)) && !photographicHome && !classicArabicHome &&
         /<header\b[\s\S]*?<\/header>/i.test(themedSource)) {
       themedSource = themedSource.replace(/<header\b[\s\S]*?<\/header>/i, sharedHeader(themedSource, directory, file));
       // The shared CSS loads after existing theme and layout rules.
@@ -127,6 +127,14 @@ for (const directory of ['', 'ar', 'the-process']) {
       const controls = '<script defer src="' + prefix +
         'privacy-controls.js?v=20261122" data-measurement-id="' + analyticsId + '"></script>\n';
       html = html.replace(/<\/head>/i, legalStyles + controls + '</head>');
+    }
+    // Preserve all original photographs and photography gallery pages.
+    if (isDocument && directory !== 'the-process') {
+      const prefix = directory === 'ar' ? '../' : '';
+      if (!html.includes('site-refinement.css'))
+        html = html.replace(/<\/head>/i, '<link rel="stylesheet" href="' + prefix + 'site-refinement.css?v=20261123production"></head>');
+      if (!html.includes('site-refinement.js'))
+        html = html.replace(/<\/body>/i, '<script defer src="' + prefix + 'site-refinement.js?v=20261123production"></script></body>');
     }
     // Apply the branded canonical domain to public HTML and discovery files.
     const seoOutput = isDocument || ['robots.txt', 'sitemap.xml'].includes(file)
