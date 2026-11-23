@@ -179,7 +179,11 @@ await writeFile(join(dist, '_headers'),
 await writeFile(join(dist, '_headers'),
   (await readFile(join(dist, '_headers'), 'utf8')) +
   '/the-process/*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
-  '/education-studio.html\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n');
+  '/education-studio.html\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  '/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  '/ar/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  '/editorial.js\n  Cache-Control: no-store\n' +
+  '/cms-core.js\n  Cache-Control: no-store\n');
 
 await writeFile(join(dist, '404.html'), `<!doctype html>
 <html lang="en">
