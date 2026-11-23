@@ -24,15 +24,17 @@ jobs:
         run: node build.mjs --check
       - name: Produce the Cloudflare Pages distribution
         run: PORTFOLIO_SITE_URL=https://amiraabdelfadil.pages.dev/ node pages.mjs
-      - name: Check that matching responsive headers are included
+      - name: Validate the approved classic homepage and original photography collections
         run: |
-          grep -q 'height:100dvh' dist/home-minimal.css
-          grep -q 'home-header-unified.css?v=2' dist/index.html
-          grep -q 'home-header-unified.css?v=2' dist/responsive.html
-          grep -q 'home-header-unified.css?v=2' dist/ar/responsive.html
-          grep -q 'home-header-unified.css?v=2' dist/ar/current.html
-          grep -q 'home-minimal.js?v=20261121stability' dist/index.html
-          ! grep -q 'site-header.css?v=' dist/responsive.html
+          node --check dist/pages.mjs
+          node --check dist/site-refinement.js
+          grep -q 'classic-site-header' dist/index.html
+          ! grep -q 'photo-mosaic' dist/index.html
+          test -f dist/assets/photography/italy/01.jpg
+          test -f dist/assets/photography/alexandria/01.jpg
+          test -f dist/assets/photography/zamalek/01.jpg
+          test -f dist/assets/photography/west-el-balad/01.jpg
+          test -f dist/assets/photography/between-stone-and-sea/01.jpg
       - name: Deploy to existing Cloudflare Pages project if authorized
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN || secrets.CF_API_TOKEN }}

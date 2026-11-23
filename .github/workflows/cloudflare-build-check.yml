@@ -65,44 +65,32 @@ jobs:
           ! grep -q 'subscribe-forms.beehiiv.com' dist/ar/responsive.html
           ! grep -q 'amiras-newsletter-beec8a' dist/notes.html
           ! grep -q 'amiras-newsletter-beec8a' dist/ar/notes.html
-      - name: Reject homepage gaps and padded new uploads
+      - name: Verify the canonical classic homepage, film popups and preserved original photos
         run: |
-          node --check dist/homepage-photo-guard.mjs
-          node --test tests/homepage-mosaic.test.mjs
-          grep -q 'max-height:min(52dvh,410px)' dist/education-announcement.css
-          grep -q 'navigator.standalone === true' dist/theme-init.js
-          grep -q 'html.amira-ios-homeapp .home-topbar' dist/homepage-mosaic-integrity.css
-          grep -q 'theme-init.js?v=4' dist/index.html
-          grep -q 'theme-init.js?v=4' dist/ar/responsive.html
-          grep -q -- '--amira-standalone-top:max(52px' dist/homepage-mosaic-integrity.css
-          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/index.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/responsive.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/ar/current.html
-          grep -q 'homepage-mosaic-integrity.css?v=20261121iosstandalone3' dist/ar/responsive.html
-      - name: Verify stable bilingual full-viewport homepage headers in production output
-        run: |
-          test -f dist/home-header-unified.css
-          test -f dist/responsive.html
-          test -f dist/ar/current.html
-          test -f dist/ar/responsive.html
-          grep -q 'height:100dvh' dist/home-minimal.css
-          grep -q 'position:fixed' dist/home-header-unified.css
-          grep -q 'home-minimal.js?v=20261121about' dist/index.html
-          grep -q 'is-after-hero' dist/home-minimal.js
-          grep -q 'home-header-unified.css?v=2' dist/index.html
-          grep -q 'home-header-unified.css?v=2' dist/responsive.html
-          grep -q 'home-header-unified.css?v=2' dist/ar/current.html
-          grep -q 'home-header-unified.css?v=2' dist/ar/responsive.html
-          grep -q 'class="home-topbar"' dist/index.html
-          grep -q 'class="home-topbar"' dist/responsive.html
-          grep -q 'class="home-topbar"' dist/ar/current.html
-          grep -q 'class="home-topbar"' dist/ar/responsive.html
-          ! grep -q 'site-header.css?v=' dist/index.html
-          ! grep -q 'site-header.css?v=' dist/responsive.html
-          ! grep -q 'site-header.css?v=' dist/ar/current.html
-          ! grep -q 'site-header.css?v=' dist/ar/responsive.html
-          grep -q 'site-design-router.js?v=4' dist/index.html
-          grep -q 'site-design-router.js?v=4' dist/responsive.html
-          grep -q 'site-design-router.js?v=4' dist/ar/responsive.html
-          grep -q 'const normalized=p=>' dist/site-design-router.js
-          grep -q 'amira-design-routing' dist/theme-init.js
+          node --check dist/home.js
+          node --check dist/site-refinement.js
+          node --check dist/pages.mjs
+          grep -q 'classic-site-header' dist/index.html
+          grep -q 'class="hero-media"' dist/index.html
+          grep -q 'data-project="sweet-and-salty"' dist/index.html
+          grep -q 'data-project="double-edged-sword"' dist/index.html
+          grep -q 'class="project-dialog"' dist/index.html
+          grep -q 'assets/mamina-02.jpg' dist/index.html
+          ! grep -q 'photo-mosaic' dist/index.html
+          test -f dist/assets/photography/italy/01.jpg
+          test -f dist/assets/photography/alexandria/01.jpg
+          test -f dist/assets/photography/zamalek/01.jpg
+          test -f dist/assets/photography/west-el-balad/01.jpg
+          test -f dist/assets/photography/between-stone-and-sea/01.jpg
+          test -f dist/italy.html
+          test -f dist/alexandria.html
+          test -f dist/west-el-balad.html
+          test -f dist/zamalek.html
+          test -f dist/between-stone-and-sea.html
+          grep -q 'collab-poster-grid' dist/collaborations.html
+          grep -q 'site-refinement.js' dist/collaborations.html
+          test -f dist/screenings.html
+          test -f dist/awards.html
+          test -f dist/endorsements.html
+          grep -q 'A collection of:' dist/writing.html
+          grep -q 'data-tally-form=' dist/notes.html
