@@ -12,7 +12,13 @@ async function loadCourses(){
   if(error)throw error;
   state.courses=data||[];
   const container=$('student-courses');container.replaceChildren();
-  if(!state.courses.length)container.append(element('p','edu-note','No learning collections are available yet.'));
+  if(!state.courses.length){
+    container.append(element('p','edu-note','The first learning collection is being prepared.'));
+    state.course=null;state.lessons=[];state.enrolled=false;
+    $('student-course-title').textContent='Eight stages. One story.';
+    $('student-course-description').textContent='From the first idea to a 1-1 with Amira: explore the complete filmmaking journey. Lessons are being prepared.';
+    renderStages();await renderFeedback();
+  }
   for(const course of state.courses){
     const b=element('button','edu-card');b.type='button';
     const h=element('h3','',course.title),small=element('small','',course.subtitle||course.status);
@@ -47,12 +53,14 @@ async function selectCourse(course){
     if(error)throw error;state.lessons=data||[];
   }else state.lessons=[];
   renderStages();
+  await renderFeedback();
 }
 function renderStages(){
   const area=$('student-stages');area.replaceChildren();
   for(const stage of STAGES){
-    const sec=element('section','edu-stage'),heading=element('h3','',stage.label);
-    sec.append(element('span','edu-eyebrow','The process'),heading,element('p','',stage.description));
+    const finalStage=stage.id==='amira_feedback';
+    const sec=element('section',finalStage?'edu-stage edu-stage--feedback':'edu-stage'),heading=element('h3','',stage.label);
+    sec.append(element('span','edu-eyebrow',finalStage?'The final cut? Let’s talk. ✦':'The process'),heading,element('p','',stage.description));
     const list=element('div','edu-lessons');
     for(const lesson of state.lessons.filter(x=>x.stage===stage.id)){
       const b=element('button','edu-lesson');b.type='button';
@@ -61,8 +69,44 @@ function renderStages(){
       b.onclick=()=>void openLesson(lesson).catch(e=>status(niceError(e),true));
       list.append(b);
     }
-    if(!list.children.length)list.append(element('p','edu-note',state.enrolled?'Lessons will appear here when added.':'Join the collection to view lessons.'));
-    sec.append(list);area.append(sec);
+    if(!list.children.length&&state.course)list.append(element('p','edu-note',state.enrolled?'Lessons will appear here when added.':'Join the collection to view lessons.'));
+    sec.append(list);
+    if(finalStage){
+      const note=element('p','edu-feedback-prompt','✦ The best part of a first cut? It isn’t the last. This is your space for Amira’s notes and your next breakthrough.');
+      const feedbackArea=element('div','edu-feedback-list');feedbackArea.id='student-feedback';
+      sec.append(note,feedbackArea);
+    }
+    area.append(sec);
+  }
+}
+async function renderFeedback(){
+  const area=$('student-feedback');if(!area)return;
+  area.replaceChildren();
+  const empty=message=>area.append(element('p','edu-note',message));
+  if(!state.course){empty('Lessons and personal feedback will appear here as this learning space develops.');return;}
+  if(!state.enrolled||state.identity.staff){empty('Personal feedback appears here after Amira reviews and releases it. Sessions and reviews are arranged separately.');return;}
+  const lessonIds=state.lessons.map(lesson=>lesson.id);
+  if(!lessonIds.length){empty('Your feedback will appear here after you submit work and Amira releases her notes.');return;}
+  const {data:assignments,error:assignmentError}=await db.from('edu_assignments').select('id,title').in('lesson_id',lessonIds);
+  if(assignmentError)throw assignmentError;
+  if(!assignments?.length){empty('Your feedback will appear here after you submit work and Amira releases her notes.');return;}
+  const titles=new Map(assignments.map(item=>[item.id,item.title]));
+  const {data:submissions,error:submissionError}=await db.from('edu_submissions').select('id,assignment_id').eq('user_id',state.identity.user.id).in('assignment_id',assignments.map(item=>item.id));
+  if(submissionError)throw submissionError;
+  if(!submissions?.length){empty('Your first piece of feedback is still ahead. Submit an assignment to start the conversation.');return;}
+  const submitted=new Map(submissions.map(item=>[item.id,item.assignment_id]));
+  const {data:notes,error:feedbackError}=await db.from('edu_feedback').select('submission_id,comments,points,reviewed_at').eq('released_to_student',true).in('submission_id',submissions.map(item=>item.id)).order('reviewed_at',{ascending:false});
+  if(feedbackError)throw feedbackError;
+  if(!notes?.length){empty('Amira’s notes have not been released yet. Check back after your work has been reviewed.');return;}
+  area.append(element('h4','edu-feedback-heading','Your notes from Amira'));
+  for(const note of notes){
+    const card=element('article','edu-feedback-card');
+    card.append(element('strong','',titles.get(submitted.get(note.submission_id))||'Your submitted work'));
+    if(note.comments)card.append(element('p','',note.comments));
+    const metadata=[note.points===null||note.points===undefined?'':'Score: '+note.points,
+      note.reviewed_at?'Reviewed '+new Date(note.reviewed_at).toLocaleDateString():''].filter(Boolean).join(' · ');
+    if(metadata)card.append(element('small','edu-note',metadata));
+    area.append(card);
   }
 }
 async function openLesson(lesson){
