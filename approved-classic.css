@@ -882,3 +882,6 @@ html,body{max-width:100%;overflow-x:clip}
 #canvas .film-page-hero picture{display:block}#canvas .film-page-poster picture{display:block}
 #canvas[dir=rtl] .film-page-heading h1{letter-spacing:0}
 :root[data-theme=dark] #canvas .filled{color:#231c1c;background:var(--wine)}
+/* Responsive picture sources must fill the same approved 5:7 collaboration frame. */
+#canvas #page-collaborations .collab-card .collab-poster-frame{aspect-ratio:5/7!important;position:relative;overflow:hidden}
+#canvas #page-collaborations .collab-card .collab-poster-frame picture>img{position:absolute;inset:0;display:block!important;width:100%!important;height:100%!important;aspect-ratio:auto!important;object-fit:cover!important;object-position:center!important;border:0!important;border-radius:0!important}
