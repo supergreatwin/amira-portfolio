@@ -25,8 +25,8 @@ function sharedHeader(source, directory, filename) {
     ? [['الأفلام','../films.html'],['الفن والتصوير','art.html'],['الكتابات','writing.html']]
     : [['Films','films.html'],['Art & Photography','art.html'],['Writing','writing.html']];
   const extra = arabic
-    ? [['الرئيسية','index.html'],['دفتر الملاحظات','notes.html'],['التعاونات','collaborations.html'],['العروض والمعارض','screenings.html'],['الجوائز','awards.html'],['التوصيات','endorsements.html'],['عن أميرة','../about.html'],['التواصل','contact.html']]
-    : [['Home','index.html'],['Notebook','notes.html'],['Collaborations','collaborations.html'],['Screenings & Exhibitions','screenings.html'],['Awards','awards.html'],['Endorsements','endorsements.html'],['About','about.html'],['Contact','contact.html']];
+    ? [['الرئيسية','index.html'],['دفتر الملاحظات','notes.html'],['التعاونات','collaborations.html'],['التوصيات','endorsements.html'],['العروض والمعارض','screenings.html'],['الجوائز','awards.html'],['خارج الإطار','beyond-the-frame.html'],['أيام مع أميرة','days-with-amira.html'],['عن أميرة','../about.html'],['التواصل','contact.html']]
+    : [['Home','index.html'],['Notebook','notes.html'],['Collaborations','collaborations.html'],['Endorsements','endorsements.html'],['Screenings & Exhibitions','screenings.html'],['Awards','awards.html'],['Beyond the Frame','beyond-the-frame.html'],['أيام مع أميرة','days-with-amira.html'],['About','about.html'],['Contact','contact.html']];
   const link = ([text,url], mobileOnly) => '<a'+(mobileOnly?' class="menu-mobile-only"':'')+' href="'+(arabic?url:prefix+url)+'">'+text.replaceAll('&','&amp;')+'</a>';
   const direct = primary.map(item=>link(item,false)).join('');
   const dropdown = primary.map(item=>link(item,true)).join('') + extra.map(item=>link(item,false)).join('');

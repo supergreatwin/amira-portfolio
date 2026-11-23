@@ -3,7 +3,7 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
 <title>المكتب التحريري — أميرة عبد الفضيل</title>
-<link rel="stylesheet" href="../editorial.css"><link rel="stylesheet" href="../site-design-editor.css">
+<link rel="stylesheet" href="../editorial.css">
 <link rel="stylesheet" href="../field-notes-admin.css?v=1">
 </head>
 <body data-locale="ar">
@@ -22,17 +22,8 @@
 <form id="ed-recover-form" hidden><h3>تعيين كلمة مرور جديدة</h3><div class="ed-field"><label for="ed-new-password">كلمة المرور الجديدة</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><button class="ed-button" type="submit">حفظ كلمة المرور</button></form>
 </section>
 <section class="ed-panel" id="ed-dashboard" hidden>
-<div class="ed-workspace-header"><div><span class="ed-eyebrow">إدارة المحتوى</span><h2>المقالات والمشروعات</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><a class="ed-button alt" href="../education-studio.html">استوديو التعليم — الدروس والملفات ↗</a><a class="ed-button alt" href="../content-studio.html">الأفلام والصور والصفحة الرئيسية ↗</a><button id="ed-new" type="button" class="ed-button alt">مقال جديد</button><button id="ed-refresh" type="button" class="ed-button ghost">تحديث</button><button id="ed-logout" type="button" class="ed-button ghost">خروج</button></div></div>
-<section class="ed-panel site-design-panel" data-site-design-control hidden aria-labelledby="site-design-heading">
-  <p class="ed-eyebrow">التصميم والتخطيط</p>
-  <h2 id="site-design-heading">تصميم الموقع</h2>
-  <p class="ed-muted">بدّلي بين التصميم المتجاوب الجديد والتصميم الأصلي ذي الصور الأربع والتصميم التحريري الكلاسيكي. الاختيار ينطبق على كل زوار الموقع ويمكن الرجوع عنه في أي وقت.</p>
-  <label class="site-design-row" for="site-design-responsive"><span><strong>تفعيل الموقع المتجاوب الجديد</strong><small>الأفلام والتصوير والكتابات ورسائل أميرة في تصميم واحد مناسب لكل الشاشات</small></span><input id="site-design-responsive" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
-  <label class="site-design-row" for="site-design-classic"><span><strong>التصميم التحريري الكلاسيكي السابق</strong><small>التصميم الأقدم · قبل تحديث ٢٠ نوفمبر</small></span><input id="site-design-classic" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
-  <p class="ed-muted">أغلقي المفتاحين للعودة إلى تصميمنا الأصلي ذي الصور الأربع في كامل الشاشة.</p>
-  <p id="site-design-status" class="ed-muted site-design-status" role="status" aria-live="polite">جارٍ قراءة التصميم المنشور…</p>
-  <div class="site-design-preview-links"><a class="ed-preview-link" href="responsive.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة الجديد ↗</a><a class="ed-preview-link" href="current.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة التصميم الأصلي ↗</a><a class="ed-preview-link" href="index.html?design-preview=1" target="_blank" rel="noopener noreferrer">معاينة الكلاسيكي ↗</a><a class="ed-preview-link" href="./" target="_blank" rel="noopener noreferrer">فتح الموقع المنشور ↗</a></div>
-</section>
+<div class="ed-workspace-header"><div><span class="ed-eyebrow">إدارة المحتوى</span><h2>المقالات والمشروعات</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><a class="ed-button alt" href="../education-studio.html">استوديو التعليم — الدروس والملفات ↗</a><a class="ed-button alt" href="../content-studio.html">الأفلام والصور والمحتوى ↗</a><button id="ed-new" type="button" class="ed-button alt">مقال جديد</button><button id="ed-refresh" type="button" class="ed-button ghost">تحديث</button><button id="ed-logout" type="button" class="ed-button ghost">خروج</button></div></div>
+
 <section class="ed-panel fn-admin" data-field-notes-admin hidden aria-labelledby="fn-admin-heading">
   <span class="ed-eyebrow">Field Notes / Subscriber Desk</span>
   <h2 id="fn-admin-heading">قائمة رسائل أميرة</h2>
@@ -59,9 +50,9 @@
 <div class="ed-actions"><button class="ed-button alt" type="button" data-save="draft">حفظ مسودة</button><button class="ed-button ghost" type="button" data-save="in_review">إرسال للمراجعة</button><button class="ed-button" type="button" data-save="published">نشر</button><button class="ed-button ghost" type="button" data-save="archived">أرشفة</button></div>
 <a class="ed-preview-link" id="ed-public-link" href="journal.html" target="_blank" rel="noopener">عرض المقالات المنشورة</a>
 </form></div>
-<section class="ed-home-photos" aria-labelledby="ed-photos-title"><div class="ed-workspace-header"><div><span class="ed-eyebrow">صور الصفحة الرئيسية</span><h2 id="ed-photos-title">صور المربعات الأربعة</h2><p class="ed-muted">ارفعي صورة أصلية لكل مربع في شبكة الصور. الحد الأقصى ٦ ميجابايت لكل صورة.</p></div></div><p id="ed-photo-message" class="ed-status" role="status" aria-live="polite"></p><div id="ed-photo-grid" class="ed-photo-grid"></div></section></section>
+</section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · استوديو التحرير · <a href="../">العودة للموقع</a></div></footer>
-<script type="module" src="../editorial.js?v=20261121authfix"></script><script type="module" src="../homepage-editor.js"></script>
-<script type="module" src="../site-design-editor.js?v=2"></script>
+<script type="module" src="../editorial.js?v=20261121authfix"></script>
+
 <script type="module" src="../field-notes-admin.js?v=1"></script>
 </body></html>

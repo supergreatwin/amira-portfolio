@@ -102,6 +102,25 @@ jobs:
           grep -q 'amira-more-menu' dist/endorsements.html
           grep -q 'amira-more-menu' dist/ar/awards.html
           grep -q 'menu-mobile-only' dist/index.html
+          test -f dist/beyond-the-frame.html
+          test -f dist/ar/beyond-the-frame.html
+          test -f dist/days-with-amira.html
+          test -f dist/ar/days-with-amira.html
+          test -f dist/days-with-amira.js
+          node --check dist/days-with-amira.js
+          grep -q 'portrait-feature.mp4' dist/days-with-amira.html
+          ! grep -q 'portrait-feature.mp4' dist/beyond-the-frame.html
+          grep -q 'amira-more-menu' dist/beyond-the-frame.html
+          grep -q 'amira-more-menu' dist/days-with-amira.html
+          grep -q 'Beyond the Frame' dist/index.html
+          grep -q 'Writing<em>' dist/writing.html
+          ! grep -q 'data-site-design-control' dist/editorial.html
+          ! grep -q 'data-site-design-control' dist/ar/editorial.html
+          ! grep -q 'data-site-design-control' dist/content-studio.html
+          grep -q 'id="ed-auth"' dist/editorial.html
+          grep -q 'data-cms-pane="galleries"' dist/content-studio.html
+          grep -q 'assets/optimized/mamina-02.webp' dist/index.html
+
           grep -q 'Date to be verified' dist/awards.html
           grep -q 'التاريخ قيد التحقق' dist/ar/awards.html
           grep -q 'A collection of:' dist/writing.html

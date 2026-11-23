@@ -2,8 +2,8 @@
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
 <title>Content & Films — Amira Editorial Desk</title>
-<link rel="stylesheet" href="editorial.css"><link rel="stylesheet" href="content-studio.css"><link rel="stylesheet" href="homepage-layout-editor.css">
-<link rel="stylesheet" href="site-design-editor.css">
+<link rel="stylesheet" href="editorial.css"><link rel="stylesheet" href="content-studio.css">
+
 </head><body>
 <header class="ed-header"><div class="ed-width ed-top"><a class="ed-logo" href="index.html">amira abdelfadil</a><nav class="ed-links"><a href="editorial.html">Editorial Desk</a><a href="index.html">Website ↗</a></nav></div></header>
 <main class="ed-width"><section class="ed-hero"><p class="ed-eyebrow">Amira's studio / publishing</p><h1>Content &amp; Films.</h1><p class="ed-description">Create films, curate photography and art, write site copy, and upload only original or licensed imagery. The site updates when entries are published.</p></section>
@@ -11,60 +11,8 @@
 <section id="cms-locked" class="ed-panel"><h2>Private editorial workspace</h2><p class="ed-muted">Sign in through Amira's Editorial Desk with an approved administrator or editor account.</p><a class="ed-button" href="editorial.html">Open Editorial Desk</a></section>
 <section id="cms-main" hidden>
 <div class="cms-toolbar"><div><span class="ed-eyebrow">Authenticated / <span id="cms-account"></span></span></div><div class="ed-actions"><button id="cms-refresh" type="button" class="ed-button alt">Refresh content</button><button id="cms-signout" type="button" class="ed-button ghost">Sign out</button></div></div>
-<section class="ed-panel site-design-panel" data-site-design-control hidden aria-labelledby="site-design-heading">
-  <p class="ed-eyebrow">Design & layout</p>
-  <h2 id="site-design-heading">Website design</h2>
-  <p class="ed-muted">Switch between the current full-screen, four-photo homepage and the previous editorial homepage. Changes go live immediately and are reversible.</p>
-  <label class="site-design-row" for="site-design-classic"><span><strong>Use previous editorial design</strong><small>Classic layout · before the 20 November redesign</small></span><input id="site-design-classic" type="checkbox" role="switch" aria-describedby="site-design-status"></label>
-  <p id="site-design-status" class="ed-muted site-design-status" role="status" aria-live="polite">Checking published design…</p>
-  <a class="ed-preview-link" href="./" target="_blank" rel="noopener noreferrer">Open live homepage ↗</a>
-</section>
-<div class="cms-nav" role="tablist" aria-label="Content types"><button data-cms-tab="homepage" type="button">Homepage Images</button><button data-cms-tab="films" class="active" type="button">Films</button><button data-cms-tab="galleries" type="button">Photography & Art</button><button data-cms-tab="sections" type="button">Page Sections</button><a href="editorial.html" class="cms-tab-link">Writing, news & collaborations ↗</a></div>
-<div class="cms-work" data-cms-pane="homepage" hidden>
-<aside class="cms-aside">
-  <h2>Homepage photography</h2>
-  <p class="ed-muted">The homepage images fill the entire opening screen. Change the number of images and their orientation without changing Amira's typography, navigation or other content.</p>
-  <p class="ed-muted">Changes are visible in this preview immediately but will not appear on the site until you select <strong>Save homepage</strong>.</p>
-  <div class="cms-home-legend"><span>Single picture</span><span>Horizontal strips</span><span>Vertical strips</span><span>Original mosaic</span></div>
-</aside>
-<div class="cms-editor">
-<form id="homepage-layout-form">
-  <h2>Arrange your homepage.</h2>
-  <div class="ed-grid">
-    <div class="ed-field">
-      <label for="homepage-photo-count">Number of photographs</label>
-      <select id="homepage-photo-count" required>
-        <option value="1">1 photo — full screen</option>
-        <option value="2">2 photos</option>
-        <option value="3">3 photos</option>
-        <option value="4">4 photos — original available</option>
-      </select>
-    </div>
-    <div class="ed-field">
-      <label for="homepage-photo-layout">Photo arrangement</label>
-      <select id="homepage-photo-layout">
-        <option value="grid">Mosaic / balanced grid</option>
-        <option value="vertical">Vertical strips — side by side</option>
-        <option value="horizontal">Horizontal strips — stacked bands</option>
-      </select>
-    </div>
-  </div>
-  <p class="ed-muted">All compositions remain full screen, with no gaps or rounded corners. The first photo starts at the left in the English layout.</p>
-  <div class="cms-home-live-preview" id="homepage-preview" data-photo-layout="grid" data-photo-count="4" style="--mosaic-count:4" aria-label="Live preview of homepage image arrangement"></div>
-  <div class="ed-actions" style="margin-top:1rem">
-    <button type="button" class="ed-button alt" id="homepage-fullscreen-preview">Preview full screen ↗</button>
-  </div>
-  <h3 class="cms-home-edit-heading">Photographs &amp; focus</h3>
-  <p class="ed-muted">Replace pictures with original JPG, PNG, or WebP files (up to 6 MB each), adjust their crop position, or move them earlier or later. Hidden photos stay saved and return when you increase the count.</p>
-  <div id="homepage-photo-controls" class="cms-home-photo-list"></div>
-  <p id="homepage-message" class="ed-status cms-home-message" role="status" aria-live="polite"></p>
-  <div class="ed-actions">
-    <button class="ed-button" type="submit" id="homepage-save">Save homepage images &amp; layout</button>
-    <button class="ed-button ghost" type="button" id="homepage-restore">Discard unsaved edits</button>
-  </div>
-</form>
-</div>
-</div>
+
+<div class="cms-nav" role="tablist" aria-label="Content types"><button data-cms-tab="films" class="active" type="button">Films</button><button data-cms-tab="galleries" type="button">Photography & Art</button><button data-cms-tab="sections" type="button">Page Sections</button><a href="editorial.html" class="cms-tab-link">Writing, news & collaborations ↗</a></div>
 <div class="cms-work" data-cms-pane="films">
 <aside class="cms-aside"><div class="cms-aside-head"><h2>Filmography</h2><button type="button" class="ed-button alt" id="cms-new-film">+ Film</button></div><div class="cms-records" id="cms-film-list"></div><p class="ed-muted">New films are independent from the existing five, which remain unchanged.</p></aside>
 <div class="cms-editor"><form id="cms-film-form"><h2 id="cms-film-heading">Create film</h2>
@@ -92,7 +40,7 @@
 </section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · Editorial Desk · Only original or licensed media.</div></footer>
 <dialog id="cms-fullscreen" class="cms-fullscreen" aria-label="Full-screen image preview"><button type="button" id="cms-close-preview" aria-label="Close image" class="cms-close">Close ✕</button><img id="cms-fullscreen-image" alt="Full-screen media preview"></dialog>
-<dialog id="homepage-preview-dialog" class="cms-home-dialog" aria-label="Full-screen homepage arrangement preview"></dialog>
+
 <script type="module" src="content-studio.js"></script>
-<script type="module" src="homepage-layout-editor.js"></script><script type="module" src="site-design-editor.js"></script>
+
 </body></html>

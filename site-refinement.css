@@ -200,3 +200,67 @@ html[lang=ar] .site-header.site-header .site-header__center nav a{letter-spacing
   .amira-unified-header.site-header .site-header__frame{padding-inline:16px}
   .amira-unified-header.site-header .site-header__brand{font-size:clamp(14px,4vw,17px)}
 }
+
+
+/* Classic prototype-style menus: typographic hierarchy, spacing, right arrows and a footer. */
+.classic-live .film-image picture{width:100%;height:100%;display:block}
+.classic-live .film-image picture img{width:100%;height:100%;object-fit:cover;display:block}
+.classic-live .topbar.has-menu #navigation-panel{
+ width:min(405px,calc(100vw - 28px))!important;max-height:min(79dvh,740px)!important;
+ padding:12px 23px 0!important;border:1px solid #d0c8c1!important;
+ background:#f8f4ec!important;box-shadow:0 22px 56px #19131238!important;
+}
+.classic-live .topbar.has-menu #navigation-panel.open{display:grid!important}
+.classic-live #navigation-panel a,
+.site-header.site-header .amira-more-menu[open] > nav > a{
+ display:flex!important;align-items:center!important;justify-content:space-between!important;
+ gap:15px!important;min-height:52px!important;padding:12px 1px!important;
+ text-decoration:none!important;color:#35272a!important;
+ font-weight:800!important;font-size:clamp(15px,1.17vw,17px)!important;
+ letter-spacing:-.04em!important;line-height:1.28!important;
+ border-bottom:1px solid #8f7a7835!important;
+ text-shadow:none!important;overflow-wrap:anywhere;
+}
+.classic-live #navigation-panel a::after,
+.site-header.site-header .amira-more-menu[open] > nav > a::after{
+ content:"↗";flex:none;font-size:19px;font-weight:450;color:#332c2b;
+}
+.classic-live #navigation-panel a:hover,.site-header.site-header .amira-more-menu[open]>nav>a:hover{color:#784a50!important}
+.site-header.site-header .amira-more-menu[open]>nav{
+ width:min(405px,calc(100vw - 28px))!important;padding:12px 23px 0!important;
+ background:#f8f4ec!important;border:1px solid #d0c8c1!important;box-shadow:0 22px 56px #19131238!important;
+ gap:0!important;
+}
+.site-header.site-header .amira-more-menu[open]>nav::after{
+ content:"Film · Photography · Writing　　　　　　 © Amira Abdelfadil";
+ display:block;min-height:46px;padding:15px 0;color:#675b5c;
+ font:400 11px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;white-space:normal;
+}
+.classic-live .amira-menu-foot{
+ display:flex;align-items:center;justify-content:space-between;gap:6px 10px;
+ min-height:46px;font-size:11px;color:#675b5c;flex-wrap:wrap;
+}
+:root[data-theme=dark] .classic-live .topbar.has-menu #navigation-panel,
+:root[data-theme=dark] .site-header.site-header .amira-more-menu[open]>nav{
+ background:#080808!important;color:#f8f4ec!important;border-color:#ffffff50!important;
+}
+:root[data-theme=dark] .classic-live #navigation-panel>a,
+:root[data-theme=dark] .site-header.site-header .amira-more-menu[open]>nav>a{
+ color:#f8f4ec!important;border-bottom-color:#ffffff37!important;
+}
+:root[data-theme=dark] .classic-live #navigation-panel>a::after,
+:root[data-theme=dark] .site-header.site-header .amira-more-menu[open]>nav>a::after{color:#f8f4ec}
+:root[data-theme=dark] .classic-live .amira-menu-foot,
+:root[data-theme=dark] .site-header.site-header .amira-more-menu[open]>nav::after{color:#c8bec4}
+html[lang=ar] .site-header.site-header .amira-more-menu[open]>nav::after{content:"سينما · تصوير · كتابة　　　　　　 © Amira Abdelfadil";direction:rtl}
+html[lang=ar] .site-header.site-header .amira-more-menu[open]>nav>a{letter-spacing:0!important}
+@media(max-width:1120px){.site-header.site-header .amira-more-menu[open]>nav>a.menu-mobile-only{display:flex!important}}
+@media(max-width:850px){.classic-live #navigation-panel>a.menu-mobile-only{display:flex!important}}
+@view-transition{navigation:auto}
+::view-transition-old(root){animation:amira-page-out .16s ease-in both}
+::view-transition-new(root){animation:amira-page-in .22s ease-out both}
+@keyframes amira-page-out{from{opacity:1}to{opacity:.88}}
+@keyframes amira-page-in{from{opacity:.88}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){
+ ::view-transition-old(root),::view-transition-new(root){animation-duration:0s!important}
+}
