@@ -69,7 +69,7 @@ jobs:
         run: |
           node --check dist/home.js
           node --check dist/site-refinement.js
-          node --check dist/pages.mjs
+          node --check pages.mjs
           grep -q 'classic-site-header' dist/index.html
           grep -q 'class="hero-media"' dist/index.html
           grep -q 'data-project="sweet-and-salty"' dist/index.html
