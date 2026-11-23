@@ -31,6 +31,18 @@ function initAnnouncement(){
  d.addEventListener('close',()=>clearTimeout(timeout));
  if(document.readyState==='complete')d.showModal();else window.addEventListener('load',()=>d.showModal(),{once:true});
 }
-const start=()=>{initForms();initAnnouncement();document.querySelectorAll('.footer-base a[href="#top"]').forEach(a=>a.remove())};
+function initUnifiedMenus(){
+  document.querySelectorAll('details.amira-more-menu').forEach(menu=>{
+    const toggle=menu.querySelector('summary');
+    menu.addEventListener('keydown',event=>{
+      if(event.key==='Escape'&&menu.open){menu.open=false;toggle.focus();}
+    });
+    menu.querySelectorAll('nav a').forEach(link=>link.addEventListener('click',()=>{menu.open=false;}));
+    document.addEventListener('pointerdown',event=>{
+      if(menu.open&&!menu.contains(event.target))menu.open=false;
+    });
+  });
+}
+const start=()=>{initForms();initAnnouncement();initUnifiedMenus();document.querySelectorAll('.footer-base a[href="#top"]').forEach(a=>a.remove())};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();

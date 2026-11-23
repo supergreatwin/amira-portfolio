@@ -19,39 +19,28 @@ const verificationFile = /^google[a-z0-9]+\.html$/i;
 // Common header for inner pages; preserve deliberately authored photographic home headers.
 // The private educational pages keep their existing Supabase authorization.
 function sharedHeader(source, directory, filename) {
-  const prefix = directory ? '../' : '';
   const arabic = directory === 'ar' || /<html[^>]*lang=["']ar/i.test(source);
-  const photoHome = !directory && filename === 'index.html' && source.includes('photo-mosaic');
-  const href = path => arabic ? path : prefix + path;
-  const safeActive = name => name === 'films' ? (/(^film-|^films)/.test(filename) || source.includes('data-cms-film'))
-    : name === 'photography' ? /^(art|italy|alexandria|west-el-balad|zamalek|between-stone-and-sea|collection)/.test(filename)
-    : name === 'writing' ? /^(writing|journal|notes)/.test(filename)
-    : name === 'about' ? filename === 'about.html' : false;
-  const navItems = arabic
-    ? [['films','الأفلام','index.html#work'],['photography','الفن والتصوير','art.html'],['writing','كتابات','writing.html']]
-    : [['films','Films','films.html'],['photography','Art & Photography','art.html'],['writing','Writing','writing.html']];
-  const mainNav = navItems.map(([key,label,path]) =>
-    '<a href="'+href(path)+'"'+(safeActive(key)?' aria-current="page"':'')+'>'+label.replaceAll('&','&amp;')+'</a>').join('');
-  const alternate = arabic ? '../index.html' : (directory === 'the-process' ? '../ar/' : 'ar/');
-  const languageLabel = arabic ? 'English' : 'العربية';
-  const extraNav = arabic
+  const prefix = directory && !arabic ? '../' : '';
+  const primary = arabic
+    ? [['الأفلام','../films.html'],['الفن والتصوير','art.html'],['الكتابات','writing.html']]
+    : [['Films','films.html'],['Art & Photography','art.html'],['Writing','writing.html']];
+  const extra = arabic
     ? [['الرئيسية','index.html'],['دفتر الملاحظات','notes.html'],['التعاونات','collaborations.html'],['العروض والمعارض','screenings.html'],['الجوائز','awards.html'],['التوصيات','endorsements.html'],['عن أميرة','../about.html'],['التواصل','contact.html']]
     : [['Home','index.html'],['Notebook','notes.html'],['Collaborations','collaborations.html'],['Screenings & Exhibitions','screenings.html'],['Awards','awards.html'],['Endorsements','endorsements.html'],['About','about.html'],['Contact','contact.html']];
-  const mobileNav = mainNav + extraNav.map(([label,path]) => '<a href="' + path + '">' + label + '</a>').join('') +
-    '<a href="' + alternate + '">' + languageLabel + '</a>';
-  const brand = href('index.html');
-  return '<header class="site-header topbar home-topbar'+(photoHome?' site-header--home':'')+'">'+
-    '<div class="site-header__frame nav-inner">'+
-    '<a class="site-header__brand brand" href="'+brand+'" aria-label="Amira Abdelfadil — home">amira abdelfadil</a>'+
-    '<div class="site-header__center nav-panel" id="navigation-panel"><div><nav aria-label="Main navigation">'+mainNav+'</nav></div></div>'+
-    '<div class="site-header__utilities nav-actions">'+
-    '<nav class="site-header__shortcuts nav-shortcuts" aria-label="Resources and language">'+
-    '<a href="'+alternate+'" lang="'+(arabic?'en':'ar')+'">'+languageLabel+'</a></nav>'+
-    '<button type="button" class="menu-toggle" aria-controls="navigation-panel" aria-expanded="false" aria-label="Legacy menu" hidden></button>'+
-    '<details class="mobile-menu"><summary aria-label="Menu">☰</summary><nav aria-label="Mobile navigation">'+mobileNav+'</nav></details>'+
-    '</div></div></header>';
+  const link = ([text,url], mobileOnly) => '<a'+(mobileOnly?' class="menu-mobile-only"':'')+' href="'+(arabic?url:prefix+url)+'">'+text.replaceAll('&','&amp;')+'</a>';
+  const direct = primary.map(item=>link(item,false)).join('');
+  const dropdown = primary.map(item=>link(item,true)).join('') + extra.map(item=>link(item,false)).join('');
+  const mark = '<span class="amira-menu-bars" aria-hidden="true"><span></span><span></span><span></span></span>';
+  const brand = arabic ? 'أميرة عبد الفضيل' : 'amira abdelfadil';
+  const alternate = arabic ? '../' : (directory ? '../ar/' : 'ar/');
+  return '<header class="site-header topbar amira-unified-header"><div class="site-header__frame nav-inner">'+
+    '<a class="site-header__brand brand" href="'+(arabic?'index.html':prefix+'index.html')+'">'+brand+'</a>'+
+    '<div class="site-header__center nav-panel"><div><nav aria-label="Primary navigation">'+direct+'</nav></div></div>'+
+    '<div class="site-header__utilities nav-actions"><nav class="site-header__shortcuts nav-shortcuts" aria-label="Language">'+
+    '<a href="'+alternate+'" lang="'+(arabic?'en':'ar')+'">'+(arabic?'English':'العربية')+'</a></nav>'+
+    '<details class="mobile-menu amira-more-menu"><summary aria-label="'+(arabic?'فتح قائمة الصفحات':'Open more pages')+'">'+mark+'</summary>'+
+    '<nav aria-label="More pages">'+dropdown+'</nav></details></div></div></header>';
 }
-
 
 await rm(dist, { recursive: true, force: true });
 await mkdir(dist);
