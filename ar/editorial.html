@@ -2,6 +2,16 @@
 <html lang="ar" dir="rtl"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="theme-color" content="#f8f4ec">
+<script>
+/* Capture the recovery callback before the Supabase client processes its URL. */
+(() => {
+  const fragment = new URLSearchParams(location.hash.replace(/^#/, ''));
+  const params = new URLSearchParams(location.search);
+  if (fragment.get('type') === 'recovery' || params.get('reset') === '1') {
+    try { sessionStorage.setItem('amira-editorial-recovery-pending-v2', '1'); } catch {}
+  }
+})();
+</script>
 <title>المكتب التحريري — أميرة عبد الفضيل</title>
 <link rel="stylesheet" href="../editorial.css">
 <link rel="stylesheet" href="../field-notes-admin.css?v=1">
@@ -17,9 +27,22 @@
 <form id="ed-auth-form">
 <div class="ed-field"><label for="ed-email">البريد الإلكتروني</label><input id="ed-email" type="email" placeholder="البريد الإلكتروني" autocomplete="username" maxlength="254" required></div>
 <div class="ed-field"><label for="ed-password">كلمة المرور</label><input id="ed-password" type="password" autocomplete="current-password" required></div>
-<div class="ed-actions"><button class="ed-button" type="submit">دخول</button><button class="ed-button ghost" type="button" id="ed-forgot">نسيت كلمة المرور</button></div></form>
+<div class="ed-actions"><button class="ed-button" type="submit">دخول</button><button class="ed-button ghost" type="button" id="ed-forgot">نسيت كلمة المرور</button><button class="ed-button ghost" type="button" id="ed-use-code">الدخول برمز لمرة واحدة</button></div></form>
 <div class="ed-notice">سيتم منح صلاحية الإدارة تلقائيًا بعد تأكيد البريد الإلكتروني من Supabase. لا يمكن للآخرين الدخول إلى لوحة التحرير.</div>
-<form id="ed-recover-form" hidden><h3>تعيين كلمة مرور جديدة</h3><div class="ed-field"><label for="ed-new-password">كلمة المرور الجديدة</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><button class="ed-button" type="submit">حفظ كلمة المرور</button></form>
+<section id="ed-otp-panel" class="ed-otp-panel" hidden aria-labelledby="ed-otp-heading">
+<h3 id="ed-otp-heading">رمز الدخول عبر البريد الإلكتروني</h3>
+<p class="ed-muted">اطلبي رمزًا يُستخدم لمرة واحدة عبر بريدك الإلكتروني. الدخول متاح للحسابات المصرح لها فقط.</p>
+<form id="ed-otp-request-form">
+<div class="ed-field"><label for="ed-otp-email">البريد الإلكتروني</label><input type="email" id="ed-otp-email" autocomplete="email" maxlength="254" required></div>
+<div class="ed-actions"><button class="ed-button" id="ed-otp-send" type="submit">إرسال الرمز</button><button class="ed-button ghost" id="ed-back-password" type="button">الدخول بكلمة المرور</button></div>
+</form>
+<form id="ed-otp-verify-form" hidden>
+<div class="ed-field"><label for="ed-otp-token">رمز لمرة واحدة</label><input id="ed-otp-token" type="text" required inputmode="numeric" autocomplete="one-time-code" maxlength="8" pattern="[0-9]{6,8}" aria-describedby="ed-otp-note"></div>
+<p class="ed-muted" id="ed-otp-note">افتحي بريدك للحصول على الرمز. الرمز وحده لا يُنشئ صلاحيات تحرير.</p>
+<button type="submit" class="ed-button" id="ed-otp-verify">التحقق من الرمز والدخول</button>
+</form>
+</section>
+<form id="ed-recover-form" hidden><h3>تعيين كلمة مرور جديدة</h3><div class="ed-field"><label for="ed-new-password">كلمة المرور الجديدة</label><input id="ed-new-password" type="password" minlength="12" autocomplete="new-password" required></div><div class="ed-field"><label for="ed-confirm-password">تأكيد كلمة المرور الجديدة</label><input id="ed-confirm-password" type="password" minlength="12" autocomplete="new-password" required></div><div class="ed-actions"><button class="ed-button" type="submit">حفظ كلمة المرور</button><button class="ed-button ghost" id="ed-cancel-recovery" type="button">إلغاء إعادة التعيين</button></div></form>
 </section>
 <section class="ed-panel" id="ed-dashboard" hidden>
 <div class="ed-workspace-header"><div><span class="ed-eyebrow">إدارة المحتوى</span><h2>المقالات والمشروعات</h2><p class="ed-muted" id="ed-account"></p></div><div class="ed-actions"><a class="ed-button alt" href="../education-studio.html">استوديو التعليم — الدروس والملفات ↗</a><a class="ed-button alt" href="../content-studio.html">الأفلام والصور والمحتوى ↗</a><button id="ed-new" type="button" class="ed-button alt">مقال جديد</button><button id="ed-refresh" type="button" class="ed-button ghost">تحديث</button><button id="ed-logout" type="button" class="ed-button ghost">خروج</button></div></div>
@@ -52,7 +75,7 @@
 </form></div>
 </section>
 </main><footer class="ed-foot"><div class="ed-width">Amira Abdelfadil · استوديو التحرير · <a href="../">العودة للموقع</a></div></footer>
-<script type="module" src="../editorial.js?v=20261121authfix"></script>
+<script type="module" src="../editorial.js?v=20261123otp-reset3"></script>
 
 <script type="module" src="../field-notes-admin.js?v=1"></script>
 </body></html>
