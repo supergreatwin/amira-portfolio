@@ -1,6 +1,8 @@
-name: Publish Amira to Cloudflare (verified fallback)
+name: Publish Amira to Cloudflare
 
 on:
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -27,7 +29,8 @@ jobs:
       - name: Validate the approved classic homepage and original photography collections
         run: |
           node --check pages.mjs
-          node --check dist/site-refinement.js
+          node --check dist/approved-classic.js
+          node --test tests/legal-privacy.test.mjs tests/approved-classic.test.mjs
           grep -q 'classic-site-header' dist/index.html
           ! grep -q 'photo-mosaic' dist/index.html
           test -f dist/assets/photography/italy/01.jpg
