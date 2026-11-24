@@ -99,10 +99,10 @@ test('Every documentary highlights Films and switches language to the same docum
  }
 });
 
-test('Endorsements omit institutional recognition and independent artist listings in both languages',()=>{
+test('Endorsements omit Human Impacts Institute and Artfacts while retaining MSA in both languages',()=>{
  for(const locale of ['','ar/']){
   const html=read('dist/'+locale+'endorsements.html');
-  assert.doesNotMatch(html,/data-portfolio-key="endorsements-[567]"|Institutional recognition|Independent artist listings|تقدير مؤسسي|ملفات الفنانين المستقلة|artfacts\.net\/artist\/amira-abdel-fadil|humanimpactsinstitute\.org/i);
-  for(let i=0;i<5;i++)assert.ok(html.includes('data-portfolio-key="endorsements-'+i+'"'));
+  assert.doesNotMatch(html,/data-portfolio-key="endorsements-[57]"|Independent artist listings|ملفات الفنانين المستقلة|artfacts\.net\/artist\/amira-abdel-fadil|humanimpactsinstitute\.org/i);
+  for(const i of [0,1,2,3,4,6])assert.ok(html.includes('data-portfolio-key="endorsements-'+i+'"'));
  }
 });

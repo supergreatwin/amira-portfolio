@@ -250,5 +250,13 @@ export const legacy = [
     "display": "March 2025",
     "year": 2025,
     "month": 3
+  },
+  {
+    "key": "endorsements-6",
+    "title": "MSA University — Egypt",
+    "kind": "endorsement",
+    "date": "2025-10-28",
+    "end": "",
+    "display": "2025-10-28"
   }
 ];
