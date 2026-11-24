@@ -88,10 +88,10 @@ async function loadMedia(table,id){
       if(url)resolved.push({url,type:item.media_kind,caption:item.caption||'',alt:item.alt_text||''});
     }catch(err){console.warn('A published media item is unavailable',err.message);}
   }
-  state.media=resolved;
+  state.media=table==='gallery'?resolved:resolved.filter(frame=>frame.type==='video');
   const container=$('cms-image-grid');
   container.replaceChildren();
-  resolved.forEach((frame,i)=>container.append(stillCard(frame,i,table==='gallery')));
+  resolved.forEach((frame,i)=>container.append(stillCard(frame,table==='gallery'?i:state.media.indexOf(frame),table==='gallery')));
   if(!resolved.length)container.append(node('p','cms-empty',ar?'لم تُضَف صور بعد.':'Additional images will appear here when published.'));
 }
 async function loadFilm(){

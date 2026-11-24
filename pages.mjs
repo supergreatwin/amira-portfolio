@@ -140,6 +140,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       const key = (ar ? 'ar/' : '') + file;
       let newHeader = (approvedShell.headers[key] || approvedShell.headers[(ar?'ar/':'')+'art.html'])
         .replace(/<a\b[^>]*href="index\.html"[^>]*>(?:Home|الرئيسية)<\/a>/g,'');
+      newHeader=newHeader.replace(/(<a\b[^>]*href="days-with-amira\.html"[^>]*>)[^<]*(<\/a>)/g,'$1'+(ar?'أيام مع أميرة':'Days with Amira')+'$2');
       const parentSection = /^film(?:-|\.html)/.test(file) ? 'films.html'
         : ['italy.html','alexandria.html','west-el-balad.html','zamalek.html','between-stone-and-sea.html','collection.html'].includes(file) ? 'art.html'
         : file === 'journal.html' ? 'writing.html'
