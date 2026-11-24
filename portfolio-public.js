@@ -4,7 +4,26 @@ const page=document.querySelector('#page-awards')?'awards':document.querySelecto
 const pick=(r,k)=>(ar&&r[k+'_ar'])||r[k+'_en']||'';
 const format=d=>new Intl.DateTimeFormat(ar?'ar-EG':'en-GB',{dateStyle:'long',timeZone:'UTC'}).format(new Date(d+'T00:00:00Z'));
 const dateLabel=r=>r.event_date?format(r.event_date)+(r.end_date?' — '+format(r.end_date):''):r.event_year?(r.event_month?new Intl.DateTimeFormat(ar?'ar-EG':'en-GB',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(r.event_year,r.event_month-1,1))):new Intl.NumberFormat(ar?'ar-EG':'en-GB',{useGrouping:false}).format(r.event_year)):(ar?'التاريخ قيد التأكيد':'Date TBC — pending confirmation');
-function dateNode(r,cls){const known=r.event_date||r.event_year;const el=node(known?'time':'div',cls+(!known?' date-tbc date-pending':''),dateLabel(r));if(known)el.dateTime=r.event_date||String(r.event_year)+(r.event_month?'-'+String(r.event_month).padStart(2,'0'):'');return el;}
+const locale=ar?'ar-EG':'en-GB';
+const number=n=>new Intl.NumberFormat(locale,{useGrouping:false}).format(n);
+const monthName=(m)=>new Intl.DateTimeFormat(locale,{month:'short',timeZone:'UTC'}).format(new Date(Date.UTC(2000,m-1,1))).toLocaleUpperCase(locale);
+function archiveDateParts(r){
+ if(!r.event_date)return {year:number(r.event_year),detail:r.event_month?monthName(r.event_month):''};
+ const [y,m,d]=r.event_date.split('-').map(Number);
+ let detail=number(d)+' '+monthName(m);
+ if(r.end_date){const [ey,em,ed]=r.end_date.split('-').map(Number);detail=y===ey&&m===em?number(d)+'–'+number(ed)+' '+monthName(m):detail+' — '+number(ed)+' '+monthName(em)+(ey!==y?' '+number(ey):'');}
+ return {year:number(y),detail};
+}
+function dateNode(r,cls){
+ const known=r.event_date||r.event_year;
+ const el=node(known?'time':'div',cls+(!known?' date-tbc date-pending':''));
+ if(!known){el.textContent=dateLabel(r);return el;}
+ el.dateTime=r.event_date||String(r.event_year)+(r.event_month?'-'+String(r.event_month).padStart(2,'0'):'');
+ if(cls==='portfolio-date'){el.textContent=dateLabel(r);return el;}
+ const {year,detail}=archiveDateParts(r);el.append(document.createTextNode(year));
+ if(detail){const span=node('span','');const bdi=node('bdi','',detail);bdi.dir=ar?'rtl':'ltr';span.append(bdi);el.append(span);}
+ return el;
+}
 function source(r){if(!r.source_url||!onlyHttps(r.source_url))return null;const a=node('a','',ar?'المصدر ↗':'Source ↗');a.href=r.source_url;a.target='_blank';a.rel='noopener noreferrer';return a;}
 function override(r){const a=document.querySelector('[data-portfolio-key="'+CSS.escape(r.legacy_key)+'"]');if(!a)return;const old=a.querySelector('.archive-date,.award-year');if(old)old.replaceWith(dateNode(r,page==='awards'?'award-year':'archive-date'));else{const tag=a.querySelector(':scope > .archive-tag');if(tag){const key=r.legacy_key; if(key==='endorsements-3'||key==='endorsements-5'||key==='endorsements-6')tag.textContent=tag.textContent.split('·')[key==='endorsements-6'?1:0].trim();if(key==='endorsements-4')tag.textContent=tag.textContent.split('·').at(-1).trim();tag.after(dateNode(r,'portfolio-date'));}else a.prepend(dateNode(r,'portfolio-date'));}}
 function append(r){if(page==='awards'&&r.kind!=='award'||page==='endorsements'&&r.kind!=='endorsement'||page==='screenings'&&!['exhibition','screening','selection'].includes(r.kind))return;

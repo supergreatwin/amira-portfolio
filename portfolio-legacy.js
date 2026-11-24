@@ -135,17 +135,17 @@ export const legacy = [
     "key": "screenings-11",
     "title": "Film Festival de Cefalù — A Double-Edged Sword",
     "kind": "selection",
-    "date": "",
+    "date": "2023-09-01",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "1 September 2023"
   },
   {
     "key": "screenings-12",
     "title": "Basilicata Film Festival — A Double-Edged Sword",
     "kind": "selection",
-    "date": "",
+    "date": "2023-10-12",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "12 October 2023"
   },
   {
     "key": "screenings-13",
@@ -153,7 +153,9 @@ export const legacy = [
     "kind": "selection",
     "date": "",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "March 2023",
+    "year": 2023,
+    "month": 3
   },
   {
     "key": "screenings-14",
@@ -161,7 +163,9 @@ export const legacy = [
     "kind": "selection",
     "date": "",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "April 2025",
+    "year": 2025,
+    "month": 4
   },
   {
     "key": "screenings-15",
@@ -169,7 +173,9 @@ export const legacy = [
     "kind": "selection",
     "date": "",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "May 2023",
+    "year": 2023,
+    "month": 5
   },
   {
     "key": "screenings-16",
@@ -191,17 +197,17 @@ export const legacy = [
     "key": "screenings-18",
     "title": "Egyptian American Film Festival — Mamina",
     "kind": "selection",
-    "date": "",
+    "date": "2025-10-31",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "31 October 2025"
   },
   {
     "key": "screenings-19",
     "title": "ICJ Film Festival — Mamina",
     "kind": "selection",
-    "date": "",
+    "date": "2027-02-01",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "1 February 2027"
   },
   {
     "key": "endorsements-0",
