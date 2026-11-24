@@ -741,6 +741,14 @@ html,body{max-width:100%;overflow-x:clip}
 }
 
 
+#page-home #work { scroll-margin-block-start: 4.5rem; }
+.home-feature-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 10px;
+}
+
 /* Review update: editorial publication credit aligned beside its short label. */
 #canvas .writing-publications{
   display:grid;grid-template-columns:minmax(145px, 220px) minmax(0,1fr);
