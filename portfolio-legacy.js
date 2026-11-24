@@ -63,9 +63,9 @@ export const legacy = [
     "key": "screenings-2",
     "title": "CICA Museum — Biophilia",
     "kind": "exhibition",
-    "date": "",
-    "end": "",
-    "display": "Date TBC — pending confirmation"
+    "date": "2026-03-04",
+    "end": "2026-03-22",
+    "display": "4–22 March 2026"
   },
   {
     "key": "screenings-3",
