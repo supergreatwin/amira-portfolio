@@ -5,7 +5,8 @@ export const legacy = [
     "kind": "award",
     "date": "",
     "end": "",
-    "display": "2025"
+    "display": "2025",
+    "year": 2025
   },
   {
     "key": "awards-1",
@@ -237,7 +238,9 @@ export const legacy = [
     "kind": "endorsement",
     "date": "",
     "end": "",
-    "display": "March 2025"
+    "display": "March 2025",
+    "year": 2025,
+    "month": 3
   },
   {
     "key": "endorsements-5",
