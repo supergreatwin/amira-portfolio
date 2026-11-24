@@ -37,7 +37,22 @@ test('One classic header, real legal controls, no obsolete public design switche
  for(const locale of ['','ar/'])for(const page of ['index','films','art','writing','notes','collaborations','screenings','awards','endorsements','days-with-amira','beyond-the-frame']){
   const html=read('dist/'+locale+page+'.html');assert.equal((html.match(/<header\b/g)||[]).length,1);
   assert.ok(html.includes('id="siteMenu"'));assert.ok(html.includes('data-privacy-settings'));
-  assert.doesNotMatch(html,/photo-mosaic|site-design-router\.js|education-announcement\.js|demo-toolbar/);
+  assert.doesNotMatch(html,/photo-mosaic|site-design-router\.js|demo-toolbar/);
  }
  for(const file of ['editorial.html','ar/editorial.html','content-studio.html'])assert.doesNotMatch(read('dist/'+file),/data-site-design-control|homepage-layout-editor\.js/);
+});
+
+test('Notebook announcement is restored on both published homepages only',()=>{
+ for(const locale of ['','ar/']){
+  const html=read('dist/'+locale+'index.html');
+  assert.equal((html.match(/data-education-announcement\b/g)||[]).length,1);
+  assert.match(html,/education-announcement\.css\?v=/);
+  assert.match(html,/education-announcement\.js\?v=/);
+  assert.match(html,/Notebook/);
+  assert.match(html,/href="notes\.html#newsletter"/);
+  assert.doesNotMatch(html.match(/<aside class="education-announcement"[\s\S]*?<\/aside>/)[0],/Field Notes/);
+  assert.match(read('dist/'+locale+'notes.html'),/data-field-notes-form/);
+  for(const page of ['films','art','writing','notes','beyond-the-frame'])assert.doesNotMatch(read('dist/'+locale+page+'.html'),/data-education-announcement|education-announcement\.js/);
+ }
+ assert.ok(exists('dist/education-announcement.css'));assert.ok(exists('dist/education-announcement.js'));
 });

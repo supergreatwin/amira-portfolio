@@ -274,3 +274,13 @@
   .education-announcement{max-height:min(48dvh,330px)!important}
   .education-announcement__footer{display:none}
 }
+
+/* Original film-strip treatment on the approved classic shell. */
+.education-announcement { --surface:#fbf8f4; --text:#292420; --muted:#62554a; --line:#d8cfc9; --accent:#663b46; --accent-text:#fff9f3; --espresso:#42242e; --latte:#eee4dd; }
+.education-announcement__film { background:#663b46; }
+.education-announcement__title { max-width:none; text-wrap:normal; }
+.education-announcement__body { max-width:none; }
+:root[data-theme="dark"] .education-announcement { --surface:#181616; --text:#eee8e6; --muted:#c7bdbb; --line:#4a4043; --accent:#e4b9c6; --accent-text:#fff9f3; --espresso:#43242e; --latte:#30272b; }
+:root[data-theme="dark"] .education-announcement__cta { background:#663b46; }
+.education-announcement__close:hover { transform:none; }
+[dir="rtl"] .education-announcement__title { max-width:none; }
