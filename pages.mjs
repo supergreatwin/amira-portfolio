@@ -202,6 +202,7 @@ await writeFile(join(dist, '_headers'),
 await writeFile(join(dist, '_headers'),
   (await readFile(join(dist, '_headers'), 'utf8')) +
   '/the-process/*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  '/portfolio-studio*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/education-studio.html\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/ar/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
