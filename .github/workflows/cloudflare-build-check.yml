@@ -55,8 +55,8 @@ jobs:
           grep -q 'data-field-notes-form' dist/ar/notes.html
           grep -q 'data-field-notes-admin' dist/editorial.html
           grep -q 'data-field-notes-admin' dist/ar/editorial.html
-          grep -q 'field-notes-native.js?v=1' dist/notes.html
-          grep -q 'field-notes-native.js?v=1' dist/ar/notes.html
+          grep -q 'field-notes-native.js?v=' dist/notes.html
+          grep -q 'field-notes-native.js?v=' dist/ar/notes.html
           test -f dist/responsive.html
           test -f dist/ar/responsive.html
           grep -q 'location.replace' dist/responsive.html

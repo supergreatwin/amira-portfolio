@@ -51,12 +51,20 @@
         <p class="education-announcement__film-title">Something's in the making.</p>
       </div>
     </div>
-    <div class="education-announcement__content">
+    <div class="education-announcement__content"><div class="education-announcement__screens"><div data-education-intro="" class="education-announcement__intro">
       <p class="education-announcement__label">Up next / educational content</p>
       <h2 class="education-announcement__title" id="education-announcement-title">A new chapter in <em>learning.</em></h2>
       <p class="education-announcement__body">Amira is preparing new educational content to share soon. Subscribe to Notebook and be the first to know when it launches.</p>
-      <a class="education-announcement__cta" href="notes.html#newsletter"><span>Be the first to know</span><span class="education-announcement__cta-arrow" aria-hidden="true">↗</span></a>
-    </div>
+      <button aria-expanded="false" aria-controls="education-signup" data-education-signup="" class="education-announcement__cta" type="button"><span>Be the first to know</span><span class="education-announcement__cta-arrow" aria-hidden="true">↗</span></button>
+    </div><section aria-label="Join Notebook" inert="" aria-hidden="true" class="education-announcement__signup" id="education-signup"><button data-education-back="" class="education-announcement__back" type="button">← Back</button><h3>Be the first to know.</h3><form class="fn-form" data-field-notes-form="" aria-label="Subscribe to Notebook">
+  <label class="fn-label" for="fn-en-announcement">Email address
+    <input dir="ltr" class="fn-input" type="email" name="email" id="fn-en-announcement" autocomplete="email" placeholder="you@example.com" maxlength="254" required>
+  </label>
+  <div class="fn-trap" aria-hidden="true"><label>Website<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+  <label class="fn-consent"><input type="checkbox" name="consent" value="yes" required><span>I agree to receive Notebook emails from Amira. I can unsubscribe at any time.</span></label>
+  <button class="fn-submit" type="submit">Receive Notebook <span aria-hidden="true">↗</span></button>
+  <p class="fn-feedback" role="status" aria-live="polite" data-field-notes-status="" hidden></p>
+</form><p class="fn-privacy"><a href="privacy.html">Privacy policy</a></p></section></div></div>
     <div class="education-announcement__footer"><span>From Amira's creative desk</span><span>No. 001 / coming soon</span></div>
   </aside>
 </body></html>

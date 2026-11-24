@@ -49,7 +49,10 @@ test('Notebook announcement is restored on both published homepages only',()=>{
   assert.match(html,/education-announcement\.css\?v=/);
   assert.match(html,/education-announcement\.js\?v=/);
   assert.match(html,/Notebook/);
-  assert.match(html,/href="notes\.html#newsletter"/);
+  assert.match(html,/data-education-signup/);
+  assert.match(html,/aria-controls="education-signup"/);
+  assert.match(html,/data-field-notes-form/);
+  assert.match(html,/field-notes-native\.js\?v=/);
   assert.doesNotMatch(html.match(/<aside class="education-announcement"[\s\S]*?<\/aside>/)[0],/Field Notes/);
   assert.match(read('dist/'+locale+'notes.html'),/data-field-notes-form/);
   for(const page of ['films','art','writing','notes','beyond-the-frame'])assert.doesNotMatch(read('dist/'+locale+page+'.html'),/data-education-announcement|education-announcement\.js/);

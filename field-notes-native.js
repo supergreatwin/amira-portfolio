@@ -35,7 +35,7 @@
          website:String(data.get('website')||''),
          locale:ar?'ar':'en'
        });
-       status.textContent=txt('Thank you. Your request to join Field Notes has been recorded.','شكرًا لك. تم تسجيل طلب اشتراكك في رسائل أميرة.');
+       status.textContent=txt('Thank you. Your request to join Notebook has been recorded.','شكرًا لك. تم تسجيل طلب اشتراكك في دفتر الملاحظات.');
        form.reset();
      }catch(error){
        status.classList.add('is-error');

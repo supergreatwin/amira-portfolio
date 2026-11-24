@@ -18,7 +18,7 @@ const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
 const verificationFile = /^google[a-z0-9]+\.html$/i;
 const approvedShell = JSON.parse(await readFile(join(root, 'approved-shell.json'), 'utf8'));
-const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','handover.css','approved-classic.js','cms-display.js','theme-init.js','education-announcement.css','education-announcement.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
+const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','handover.css','approved-classic.js','cms-display.js','field-notes-native.js','theme-init.js','education-announcement.css','education-announcement.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
 
 // Common header for inner pages; preserve deliberately authored photographic home headers.
 // The private educational pages keep their existing Supabase authorization.
@@ -174,7 +174,9 @@ for (const directory of ['', 'ar', 'the-process']) {
       // The original Notebook announcement is a homepage component, not a competing design shell.
       if (file === 'index.html' && html.includes('data-education-announcement')) {
         html = html.replace(/<\/head>/i,'<link rel="stylesheet" href="'+prefix+'education-announcement.css?v='+assetRevisions['education-announcement.css']+'"><script defer src="'+prefix+'education-announcement.js?v='+assetRevisions['education-announcement.js']+'"></script></head>');
+        if (html.includes('data-field-notes-form')) html=html.replace(/<\/head>/i,'<link rel="stylesheet" href="'+prefix+'field-notes-native.css?v=1"><script defer src="'+prefix+'field-notes-native.js?v='+assetRevisions['field-notes-native.js']+'"></script></head>');
       }
+      html=html.replace(/field-notes-native\.js(?:\?v=[a-zA-Z0-9]+)?"/g,'field-notes-native.js?v='+assetRevisions['field-notes-native.js']+'"');
       for (const [asset,hash] of Object.entries(assetRevisions)) html=html.replaceAll(asset+'"',asset+'?v='+hash+'"');
     }
     // Apply the branded canonical domain to public HTML and discovery files.

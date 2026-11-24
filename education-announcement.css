@@ -284,3 +284,25 @@
 :root[data-theme="dark"] .education-announcement__cta { background:#663b46; }
 .education-announcement__close:hover { transform:none; }
 [dir="rtl"] .education-announcement__title { max-width:none; }
+
+/* A second, animated panel keeps subscription on the current homepage. */
+.education-announcement__screens{position:relative;overflow:hidden;transition:height .28s cubic-bezier(.2,.75,.25,1)}
+.education-announcement__intro,.education-announcement__signup{width:100%;min-width:0;transition:opacity .2s,transform .28s cubic-bezier(.2,.75,.25,1)}
+.education-announcement__intro{position:relative;opacity:1;transform:translateY(0)}
+.education-announcement__signup{position:absolute;inset:0 auto auto 0;visibility:hidden;opacity:0;transform:translateY(24px);pointer-events:none}
+.education-announcement.is-signing-up .education-announcement__intro{position:absolute;inset:0 auto auto 0;visibility:hidden;opacity:0;transform:translateY(-24px);pointer-events:none}
+.education-announcement.is-signing-up .education-announcement__signup{position:relative;inset:auto;visibility:visible;opacity:1;transform:translateY(0);pointer-events:auto}
+.education-announcement.is-signing-up{max-height:calc(100dvh - 24px)!important}
+.education-announcement__masthead{position:sticky;top:0;z-index:4;background:var(--surface,#fbf8f4)}
+button.education-announcement__cta{width:100%;border:0;cursor:pointer;font-family:inherit;text-align:start}
+.education-announcement__signup h3{font-family:Georgia,"Times New Roman",serif;font-size:28px;line-height:1.15;margin:8px 0 20px;letter-spacing:-.035em}
+.education-announcement__back{display:inline-flex;align-items:center;min-height:36px;padding:0;border:0;background:transparent;color:var(--text);font-family:inherit;font-size:13px;font-weight:600;line-height:1.4;cursor:pointer}
+.education-announcement .fn-form{gap:12px}
+.education-announcement .fn-input{font-family:inherit}
+.education-announcement .fn-submit{background:#663b46;border-color:#663b46;color:#fff9f3}
+.education-announcement .fn-consent,.education-announcement .fn-label,.education-announcement .fn-feedback{color:var(--text)}
+.education-announcement .fn-privacy{color:var(--muted);text-align:start;font-size:12px;margin:12px 0 0}
+.education-announcement .fn-privacy a{text-decoration:underline;text-underline-offset:3px}
+[dir=rtl] .education-announcement__signup h3{font-family:Tahoma,Arial,sans-serif;letter-spacing:0}
+@media(prefers-reduced-motion:reduce){.education-announcement__screens,.education-announcement__intro,.education-announcement__signup{transition:none}}
+.education-announcement.has-consent-banner{bottom:var(--announcement-bottom)!important;max-height:var(--announcement-available-height)!important}
