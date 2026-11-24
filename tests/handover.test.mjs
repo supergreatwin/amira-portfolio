@@ -88,3 +88,13 @@ test('Public pages use the global header without repeated home and section-retur
   assert.doesNotMatch(html,/class="[^"]*\b(?:film-page-back|back-link|studio-back)\b/);
  }
 });
+test('Every documentary highlights Films and switches language to the same documentary',()=>{
+ for(const locale of ['','ar/'])for(const film of films){
+  const file='film-'+film.id+'.html';const html=read('dist/'+locale+file);
+  const header=html.match(/<header\b[\s\S]*?<\/header>/)[0];
+  const links=[...header.matchAll(/<a\b([^>]*)>/g)].map(x=>x[1]);
+  assert.ok(links.some(a=>a.includes('href="films.html"')&&a.includes('aria-current="location"')));
+  assert.ok(links.filter(a=>a.includes('href="art.html"')).every(a=>!a.includes('aria-current')));
+  assert.ok(links.some(a=>a.includes('class="header-aux"')&&a.includes('href="'+(locale?'../':'ar/')+file+'"')));
+ }
+});

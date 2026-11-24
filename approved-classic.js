@@ -4,6 +4,11 @@
   const ar=document.documentElement.lang==='ar';
   const motion=matchMedia('(prefers-reduced-motion: reduce)');
   const canvas=document.getElementById('canvas');
+  const language=document.querySelector('.header-aux');
+  const publicSlug=new URL(location.href).searchParams.get('slug');
+  if(language&&publicSlug&&/\/(?:film|collection|journal)(?:\.html)?$/.test(location.pathname)){
+    const target=new URL(language.href,location.href);target.searchParams.set('slug',publicSlug);language.href=target.href;
+  }
   const menu=document.getElementById('siteMenu');
   const toggle=document.getElementById('menuToggle');
   const setMenu=open=>{if(!menu||!toggle)return;menu.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));};

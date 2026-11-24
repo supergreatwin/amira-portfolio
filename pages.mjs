@@ -3,6 +3,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { site } from './content.mjs';
 import { createHash } from 'node:crypto';
+import { existsSync } from 'node:fs';
 
 const root = fileURLToPath(new URL('./', import.meta.url));
 const dist = join(root, 'dist');
@@ -137,8 +138,20 @@ for (const directory of ['', 'ar', 'the-process']) {
       const ar = directory === 'ar';
       const approved = html.includes('data-approved-classic');
       const key = (ar ? 'ar/' : '') + file;
-      const newHeader = (approvedShell.headers[key] || approvedShell.headers[(ar?'ar/':'')+'art.html'])
+      let newHeader = (approvedShell.headers[key] || approvedShell.headers[(ar?'ar/':'')+'art.html'])
         .replace(/<a\b[^>]*href="index\.html"[^>]*>(?:Home|الرئيسية)<\/a>/g,'');
+      const parentSection = /^film(?:-|\.html)/.test(file) ? 'films.html'
+        : ['italy.html','alexandria.html','west-el-balad.html','zamalek.html','between-stone-and-sea.html','collection.html'].includes(file) ? 'art.html'
+        : file === 'journal.html' ? 'writing.html'
+        : ['collaborate.html','pitch.html'].includes(file) ? 'notes.html' : null;
+      if (parentSection) {
+        newHeader = newHeader.replace(/ aria-current="(?:page|location)"/g,'')
+          .replace(/<a\b[^>]*>/g,tag=>tag.includes('href="'+parentSection+'"')?tag.replace('<a ','<a aria-current="location" '):tag);
+      }
+      if (existsSync(join(root,ar?'':'ar',file))) {
+        const alternate = (ar?'../':'ar/')+file;
+        newHeader = newHeader.replace(/<a\b[^>]*class="header-aux"[^>]*>/,tag=>tag.replace(/href="[^"]*"/,'href="'+alternate+'"'));
+      }
       html = html.replace(/<header\b[\s\S]*?<\/header>/i,newHeader);
       html = html.replace(/<footer\b[\s\S]*?<\/footer>/i,approvedShell.footers[ar?'ar':'en']);
       // The persistent header provides the section navigation and the home link.
