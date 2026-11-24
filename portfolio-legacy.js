@@ -250,29 +250,5 @@ export const legacy = [
     "display": "March 2025",
     "year": 2025,
     "month": 3
-  },
-  {
-    "key": "endorsements-5",
-    "title": "Human Impacts Institute — New York, USA",
-    "kind": "endorsement",
-    "date": "",
-    "end": "",
-    "display": "Pending confirmation"
-  },
-  {
-    "key": "endorsements-6",
-    "title": "MSA University — Egypt",
-    "kind": "endorsement",
-    "date": "2025-10-28",
-    "end": "",
-    "display": "2025-10-28"
-  },
-  {
-    "key": "endorsements-7",
-    "title": "Artfacts — Amira Abdel-Fadil",
-    "kind": "endorsement",
-    "date": "",
-    "end": "",
-    "display": "Pending confirmation"
   }
 ];
