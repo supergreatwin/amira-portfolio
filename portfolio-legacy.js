@@ -22,15 +22,17 @@ export const legacy = [
     "kind": "award",
     "date": "",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "March 2024",
+    "year": 2024,
+    "month": 3
   },
   {
     "key": "awards-3",
     "title": "Best Environmental Short Film — A Double-Edged Sword",
     "kind": "award",
-    "date": "",
+    "date": "2025-11-01",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "1 November 2025"
   },
   {
     "key": "awards-4",
@@ -38,7 +40,8 @@ export const legacy = [
     "kind": "award",
     "date": "",
     "end": "",
-    "display": "Date TBC — pending confirmation"
+    "display": "2025",
+    "year": 2025
   },
   {
     "key": "screenings-0",
