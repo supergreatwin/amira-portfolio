@@ -69,4 +69,4 @@ jobs:
         run: |
           node --check approved-classic.js
           node --check pages.mjs
-          node --test tests/approved-classic.test.mjs
+          node --test tests/approved-classic.test.mjs tests/handover.test.mjs

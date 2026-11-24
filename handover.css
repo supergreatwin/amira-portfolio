@@ -1,0 +1,128 @@
+
+/* Site-wide sharp corners for cinematic media, regardless of viewport or theme. */
+#canvas .hero-media,#canvas .hero-media img,#canvas .showcase-card,#canvas .showcase-open,#canvas .showcase-poster,#canvas .showcase-poster img,#canvas .film-card,#canvas .film-card img,#canvas .film-page-hero,#canvas .film-page-hero img,#canvas .film-page-poster,#canvas .film-page-poster img,#canvas .film-page-stills figure,#canvas .film-page-stills button,#canvas .film-page-stills img,#canvas .full-film-poster,#canvas .full-film-poster img,#canvas .full-film-stills figure,#canvas .full-film-stills img,#canvas .film-trailer-frame,#canvas .film-trailer-frame iframe,#canvas .collab-poster-frame,#canvas .collab-poster-frame img,#filmDialog .film-still-grid img,#filmDialog img,#filmImageViewer img,#canvas .beyond-content img,#canvas .home-beyond img {border-radius:0!important;box-shadow:none!important;}
+#canvas .showcase-poster,#canvas .showcase-poster img,#canvas .collab-poster-frame,#canvas .collab-poster-frame img{border:0!important;}
+#canvas .home-feature{padding-block:clamp(36px,6vw,80px);border-top:1px solid var(--border);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,72px);align-items:center;}
+#canvas .home-feature h2{font-size:clamp(34px,5vw,70px);letter-spacing:-.07em;line-height:1.04;margin:12px 0 24px;}
+#canvas .home-feature .feature-description{color:var(--muted);font-size:clamp(15px,1.5vw,20px);line-height:1.65;margin:0 0 24px;max-width:40em;}
+#canvas .home-feature figure{margin:0;min-width:0;}
+#canvas .home-feature img{width:100%;height:auto;display:block;border-radius:0;}
+#canvas .home-beyond figure img{aspect-ratio:4/5;object-fit:cover;object-position:center;}
+#canvas .home-art-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;}
+#canvas .home-art-grid button{background:none;color:var(--ink);border:0;padding:0;cursor:pointer;text-align:start;min-width:0;}
+#canvas .home-art-grid img{aspect-ratio:4/5;object-fit:cover;margin-bottom:10px;}
+#canvas .home-writing-links .eyebrow{margin:20px 0 5px;}
+#canvas .home-writing-links .essay-link{font-size:16px;}
+#canvas.mobile .home-feature{grid-template-columns:1fr;gap:22px;}
+#canvas.mobile .film-page-poster{margin-inline:auto;max-width:min(70%,245px);}
+@media(max-width:700px){#canvas .home-feature{grid-template-columns:1fr;gap:22px;}#canvas .film-page-poster{margin-inline:auto;max-width:min(70%,245px);}}
+
+#canvas .archive-group-title{font-size:clamp(24px,3.4vw,42px);line-height:1.15;margin:clamp(30px,5vw,64px) 0 10px;color:var(--ink);font-weight:500}#canvas .archive-group-description{margin:0 0 18px;color:var(--muted);font-size:14px;line-height:1.6}#canvas .archive-group-title:first-child{margin-top:0}
+
+#canvas #page-endorsements .recognition-content{display:block;min-height:0;padding-top:0;max-width:1050px;margin-inline:auto}
+#canvas .recognition-group{padding:clamp(20px,3vw,40px) 0;border-top:1px solid var(--line, #aaa5);}
+#canvas .recognition-group h2{font-size:clamp(21px,2.6vw,32px);margin:0 0 18px;letter-spacing:-.035em}
+#canvas .recognition-entry{padding:22px 0;max-width:780px}
+#canvas .recognition-entry + .recognition-entry{border-top:1px solid var(--line, #aaa5)}
+#canvas .recognition-entry h3{font-size:clamp(19px,2.4vw,28px);margin:8px 0 14px}
+#canvas .recognition-entry blockquote{font-size:clamp(21px,3vw,34px);line-height:1.35;font-family:Georgia,serif;font-style:italic;margin:16px 0;color:var(--ink,inherit)}
+#canvas .recognition-entry p:not(.archive-tag),#canvas .recognition-note{line-height:1.7;color:var(--muted);margin:10px 0 15px;text-align:start}
+#canvas .recognition-entry a{font-size:14px;font-weight:600;text-decoration:underline;text-underline-offset:4px;color:inherit}
+
+
+#canvas .testimonial-entry .testimonial-quote{font-size:clamp(18px,2.2vw,25px);line-height:1.65;margin:16px 0 24px;padding-inline-start:clamp(12px,2vw,25px);border-inline-start:2px solid #8d485b}
+#canvas .testimonial-entry .testimonial-quote p{font-size:inherit;font-family:inherit;font-style:inherit;color:inherit;line-height:inherit;margin:0 0 1em;text-align:start}
+#canvas .testimonial-entry .testimonial-quote p:last-child{margin-bottom:0}
+#canvas .testimonial-attribution{font-size:15px;line-height:1.6;margin:18px 0 12px}
+#canvas .testimonial-attribution strong{display:block;font-size:17px}
+#canvas .testimonial-context,#canvas .letter-note{font-size:13px;color:var(--muted)}
+#canvas .recommendation-letter{border-top:1px solid var(--line,#9995);margin-top:22px;padding-top:15px}
+#canvas .recommendation-letter summary{font-size:15px;font-weight:600;cursor:pointer;line-height:1.5;text-decoration:underline;text-underline-offset:4px}
+#canvas .letter-text{padding:18px 0;max-width:760px}
+#canvas .letter-text p{font-size:15px;line-height:1.8}
+#canvas .film-testimonial-ref{display:block;text-align:start;margin:26px 0 12px;padding:14px 0;border-top:1px solid var(--line,#9995);background:transparent;color:inherit;border-radius:0;cursor:pointer;font-weight:600;text-decoration:underline;text-underline-offset:4px}
+
+
+/* Homepage only: same content grid for the hero and all following sections. */
+#canvas #page-home{--home-content-width:min(1230px,calc(100% - clamp(46px,10vw,150px)))}
+@media(max-width:1040px){#canvas #page-home{--home-content-width:calc(100% - 64px)}}
+@media(max-width:800px){#canvas #page-home{--home-content-width:calc(100% - 42px)}}
+@media(max-width:520px){#canvas #page-home{--home-content-width:calc(100% - 34px)}}
+#canvas.mobile #page-home{--home-content-width:calc(100% - 36px)}
+#canvas #page-home > .content,#canvas #page-home > .hero.classic-original{width:var(--home-content-width);max-width:none;margin-inline:auto;box-sizing:border-box}
+#canvas #page-home > .hero.classic-original{padding-inline:0!important}
+#canvas #page-home .hero-content{width:100%;box-sizing:border-box}
+#canvas #page-home .hero-media{width:100%;max-width:none;margin-inline:0;border-radius:clamp(18px,2.3vw,30px)!important;overflow:hidden}
+#canvas #page-home .hero-media img{border-radius:inherit!important}
+#canvas.mobile #page-home .hero-media{border-radius:18px!important}
+#canvas #page-home .hero-cta .filled,#canvas #page-home .hero-cta .outlined{border-radius:0!important}
+
+/* Shared production rhythm: preserve the classic type hierarchy and bilingual direction. */
+:root{--font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;--font-literary:Georgia,"Times New Roman",serif;--site-content-width:min(1230px,calc(100% - clamp(46px,10vw,150px)))}
+html[lang=ar]{--font-body:Tahoma,Arial,sans-serif;--font-literary:Tahoma,Arial,sans-serif}
+body{font-family:var(--font-body)}
+button,input,textarea,select{font-family:inherit}
+#canvas{font-family:var(--font-body)}
+#canvas .content,#canvas .special-container{width:var(--site-content-width);margin-inline:auto;min-width:0}
+#canvas .content .content{width:100%;margin-inline:0}
+#canvas h1,#canvas h2,#canvas h3,#canvas h4,#canvas button,#canvas .filled,#canvas .outlined{font-family:var(--font-body)}
+#canvas h1 em,#canvas h2 em,#canvas h3 em,#canvas .testimonial-quote{font-family:var(--font-literary)}
+#canvas main p,#canvas main li,#canvas main dd,#canvas .testimonial-quote p,#canvas .feature-description{ text-align:justify;text-justify:inter-word;hyphens:auto;overflow-wrap:break-word }
+#canvas main :is(.eyebrow,.hero-kicker,.hero-intro,.archive-tag,.film-meta,.film-page-meta,.mobile-film-meta,.special-kicker,.film-index-note,.letter-note,.fact-note){text-align:start;hyphens:none}
+#canvas #page-home .hero-kicker,#canvas #page-home .hero-intro{text-align:center}
+#canvas .prose p,#canvas .film-page-copy p,#canvas .recognition-entry p:not(.archive-tag),#canvas .testimonial-entry .testimonial-quote p{text-align:justify}
+#canvas :is(.filled,.outlined,.mini-link,.film-trailer-button,[data-trailer],[data-tally-form]){display:inline-flex;align-items:center;justify-content:center;gap:.5em;vertical-align:middle;line-height:1.35;text-align:center;max-width:100%;min-height:44px}
+#canvas :is(.filled,.outlined,[data-trailer],[data-tally-form]){padding:11px 18px}
+#canvas .hero-cta{align-items:stretch}
+#canvas #page-home .hero-cta :is(.filled,.outlined){border-radius:0!important}
+#canvas #page-home .hero-media{box-shadow:none!important}
+#canvas :is(.showcase-poster,.film-page-hero,.film-page-poster,.film-page-stills,.film-still-grid) :is(picture,img){border-radius:0!important;box-shadow:none!important}
+#canvas :is(.showcase-grid,.film-page-body,.film-page-stills,.archive-entry,.award-feature,.about-grid)>*{min-width:0}
+#canvas .showcase-open{width:100%;min-width:0;text-align:start}
+#canvas .showcase-name{overflow-wrap:break-word;align-self:stretch;width:100%;text-align:start}
+#canvas .showcase-poster picture{display:block;width:100%;height:100%}
+#canvas .showcase-poster img{display:block;width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+#canvas .mobile-film-meta{display:none}
+#canvas .date-pending{font-size:clamp(16px,2vw,24px)!important;line-height:1.5!important;letter-spacing:0!important;text-transform:none;max-width:16ch}
+#canvas .archive-entry,#canvas .award-feature{grid-template-columns:minmax(145px,.35fr) minmax(0,1fr);align-items:start}
+#canvas .archive-info,#canvas .award-info{min-width:0;align-self:start}
+#canvas .archive-date,#canvas .award-year{align-self:start;justify-self:start}
+#canvas .recognition-entry{max-width:none}
+#canvas .recognition-content{width:var(--site-content-width)!important;max-width:1230px!important}
+#canvas .recommendation-letter summary{padding-block:10px;min-height:44px}
+#canvas .film-page-related a{padding-block:10px}
+#canvas [dir=rtl],html[lang=ar] #canvas{letter-spacing:normal}
+html[lang=ar] #canvas :is(h1,h2,h3,h4,.brand,.showcase-name,.essay-link,.film-page-related strong){letter-spacing:0!important}
+#canvas .nav-popover{max-height:calc(100dvh - 76px);overflow-y:auto;overscroll-behavior:contain}
+#canvas .footer-inner{align-items:center;gap:16px;flex-wrap:wrap}
+#canvas .footer-legal{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+#canvas .footer-legal :is(a,button){min-height:36px;display:inline-flex;align-items:center}
+#canvas .section-head{gap:20px;flex-wrap:wrap}
+#canvas .film-page-stills img{cursor:default}
+#canvas .film-page-stills picture{display:block}
+#canvas .special-film-lead>*{min-width:0}
+#canvas .special-title-art{min-width:0;max-width:100%}
+#canvas .special-title-art img{max-width:100%;height:auto}
+#canvas #page-home{--home-content-width:var(--site-content-width)}
+@media(max-width:1040px){:root{--site-content-width:calc(100% - 64px)}}
+@media(max-width:800px){:root{--site-content-width:calc(100% - 42px)}}
+@media(max-width:600px){
+ :root{--site-content-width:calc(100% - 34px)}
+ #canvas .showcase-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:24px 16px!important;align-items:start}
+ #canvas .showcase-card[data-mobile-film=mamina]{order:1}
+ #canvas .showcase-card[data-mobile-film=biophilia]{order:2}
+ #canvas .showcase-card[data-mobile-film=sweet-and-salty]{order:3}
+ #canvas .showcase-card[data-mobile-film=street-x-food]{order:4}
+ #canvas .showcase-card[data-mobile-film=double-edged-sword]{order:5}
+ #canvas .showcase-open{height:auto!important;display:flex;flex-direction:column}
+ #canvas .showcase-poster{width:100%;aspect-ratio:2/3!important;height:auto!important;border:0!important;border-radius:0!important}
+ #canvas .showcase-name{font-size:clamp(15px,4vw,19px)!important;line-height:1.3;height:auto;min-height:2.6em;display:block;padding-top:10px}
+ #canvas .showcase-meta,#canvas .showcase-arrow{display:none!important}
+ #canvas .mobile-film-meta{display:block;font-size:12px;color:var(--muted);line-height:1.5;padding-top:4px}
+ #canvas .archive-entry,#canvas .award-feature{grid-template-columns:1fr;gap:16px}
+ #canvas .date-pending{max-width:none}
+ #canvas .film-page-stills{grid-template-columns:1fr!important}
+ #canvas .footer-inner{align-items:flex-start}
+ #canvas .hero-cta :is(.filled,.outlined){flex:1 1 150px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}

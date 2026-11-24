@@ -32,14 +32,14 @@
   function viewImage(src,alt,trigger){if(!viewer)return;viewerTrigger=trigger;viewer.querySelector('img').src=src;viewer.querySelector('img').alt=alt;viewer.querySelector('#filmViewerCaption').textContent=alt;viewer.showModal();}
   viewer?.querySelector('[data-viewer-close]')?.addEventListener('click',()=>viewer.close());
   viewer?.addEventListener('close',()=>{viewer.querySelector('img').removeAttribute('src');viewerTrigger?.focus();});
-  // Static gallery originals and film stills remain available at their original size.
+  // Enlargement remains available for photography galleries only.
   for(const img of document.querySelectorAll('.photography-grid img')){
     if(img.closest('a,button'))continue;
     const button=document.createElement('button');button.type='button';button.className='gallery-original';button.setAttribute('aria-label',(ar?'تكبير الصورة: ':'Enlarge photograph: ')+img.alt);
     const picture=img.closest('picture')||img;picture.replaceWith(button);button.append(picture);button.dataset.original=img.src;
   }
   document.addEventListener('click',event=>{
-    const source=event.target.closest('[data-original]');if(source){event.preventDefault();viewImage(source.dataset.original,source.querySelector('img')?.alt||'',source);}
+    const source=event.target.closest('[data-original]');if(source&&!source.closest('.film-page-stills,.film-still-grid')){event.preventDefault();viewImage(source.dataset.original,source.querySelector('img')?.alt||'',source);}
     const trailer=event.target.closest('[data-trailer]');
     if(trailer){
       const id=trailer.dataset.trailer;if(!/^[\w-]{11}$/.test(id))return;

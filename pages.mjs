@@ -17,7 +17,7 @@ const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
 const verificationFile = /^google[a-z0-9]+\.html$/i;
 const approvedShell = JSON.parse(await readFile(join(root, 'approved-shell.json'), 'utf8'));
-const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','approved-classic.js','theme-init.js','education-announcement.css','education-announcement.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
+const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','handover.css','approved-classic.js','theme-init.js','education-announcement.css','education-announcement.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
 
 // Common header for inner pages; preserve deliberately authored photographic home headers.
 // The private educational pages keep their existing Supabase authorization.
@@ -153,7 +153,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       if (!html.includes('rel="icon"')) html=html.replace(/<\/head>/i,'<link rel="icon" href="'+prefix+'assets/portrait-title.webp" type="image/webp"></head>');
       // Last stylesheet is authoritative; content hashes invalidate stale edge caches.
       html = html.replace(/<link\b[^>]*href=["'][^"']*approved-classic\.css[^"']*["'][^>]*>/gi,'');
-      html = html.replace(/<\/head>/i,'<link rel="stylesheet" href="'+prefix+'approved-classic.css?v='+assetRevisions['approved-classic.css']+'"></head>');
+      html = html.replace(/<\/head>/i,'<link rel="stylesheet" href="'+prefix+'approved-classic.css?v='+assetRevisions['approved-classic.css']+'"><link rel="stylesheet" href="'+prefix+'handover.css?v='+assetRevisions['handover.css']+'"></head>');
       if (!html.includes('approved-classic.js')) html=html.replace(/<\/body>/i,'<script defer src="'+prefix+'approved-classic.js"></script></body>');
       // The original Notebook announcement is a homepage component, not a competing design shell.
       if (file === 'index.html' && html.includes('data-education-announcement')) {

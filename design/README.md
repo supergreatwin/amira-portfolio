@@ -1,4 +1,4 @@
-Visual source: final approved for codex.html, supplied 23 November 2026.
-SHA-256: 8a17b789eb332c2365209b81b057f2dac5ea4c31e166a1c020a46dbd126cb979
+Approved visual and editorial source: amira_films_clean_prototype.html, supplied 24 November 2026.
+SHA-256: 880109b236c35ee2372df42d6388e44f553c617f7bc83a096820261ee1b7e008
 
-Public HTML and approved-classic.css reproduce this source. Prototype toolbar and demo editor are excluded. Real Editorial Desk authentication, original galleries, Notebook subscription and separate editorial/video pages remain production integrations.
+The six-part handover supersedes earlier prototypes. Real authentication, authorization, forms, editorial operations and original assets remain in production. Prototype simulations are excluded. UNICEF announcement wording additionally supplied by the owner on 24 November 2026.
