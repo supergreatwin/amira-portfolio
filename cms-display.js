@@ -63,8 +63,9 @@ stage.addEventListener('touchend',e=>{
   finger=null;
 },{passive:true});
 function stillCard(frame,index,collection=false){
-  const button=node('button','cms-still cms-photo-trigger');button.type='button';
-  button.setAttribute('aria-label','View '+(frame.alt||frame.caption||'frame')+' full screen');
+  const interactive=collection||frame.type==='video';
+  const button=node(interactive?'button':'figure','cms-still'+(interactive?' cms-photo-trigger':''));
+  if(interactive){button.type='button';button.setAttribute('aria-label','View '+(frame.alt||frame.caption||'frame')+' full screen');}
   if(frame.type==='video'){
     const video=node('video');video.src=frame.url;video.preload='metadata';video.muted=true;video.playsInline=true;button.append(video);
   }else{
@@ -72,7 +73,7 @@ function stillCard(frame,index,collection=false){
     img.loading='lazy';img.decoding='async';button.append(img);
   }
   if(frame.caption){const label=node('figcaption','',frame.caption);button.append(label);}
-  button.onclick=()=>openViewer(index,button);
+  if(interactive)button.onclick=()=>openViewer(index,button);
   return button;
 }
 async function loadMedia(table,id){
@@ -114,10 +115,6 @@ async function loadFilm(){
   }
   $('cms-article-content').hidden=false;status.hidden=true;
   await loadMedia('film',film.id);
-  if(hero&&state.media.length){
-    $('cms-hero-image').style.cursor='zoom-in';
-    $('cms-hero-image').onclick=()=>openViewer(0,$('cms-hero-image'));
-  }
 }
 async function loadGallery(){
   const {data:gallery,error}=await cms.from('cms_collections').select('*')

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {films} from '../content.mjs';
+import vm from 'node:vm';
 const read=f=>readFileSync(new URL('../'+f,import.meta.url),'utf8');
 test('Handover preserves separate 20 presentation records, three exhibitions and five awards in both languages',()=>{
  for(const locale of ['','ar/']){
@@ -15,6 +16,7 @@ test('Handover preserves separate 20 presentation records, three exhibitions and
   assert.match(read('dist/'+locale+'about.html'),/artfacts\.net\/artist\/amira-abdel-fadil/);
  }
  const awards=read('dist/awards.html');
+ assert.ok(awards.includes('TULUM ENVIRONMENTAL FILM FESTIVAL'));
  for(const text of ['Best Cinematography','Best Environment and Climate Short Film','Best Featurette','Best Environmental Short Film','Best Idea for a Film','David Všetička','Rama Abdi','Hazar Yazji','Karim El-Mubarak','Date TBC — pending confirmation'])assert.ok(awards.includes(text),text);
 });
 test('Homepage retains films and real popups, exposes Beyond the Frame, and removes only requested home sections',()=>{
@@ -58,4 +60,31 @@ test('Both upcoming collaboration descriptions use the owner-supplied wording',(
  const html=read('dist/collaborations.html');
  assert.ok(html.includes('A collaborative documentary project in collaboration with Unicef "Children of The World"'));
  assert.ok(html.includes('Working on a storytelling workshop across different mediums'));
+});
+test('Archive records have no prototype film actions without a production handler',()=>{
+ for(const locale of ['','ar/'])for(const page of ['screenings','awards']){
+  const html=read('dist/'+locale+page+'.html');
+  assert.doesNotMatch(html,/data-film=|data-page=|data-form=/);
+ }
+});
+test('CMS movie images are noninteractive while photography collections retain their viewer',()=>{
+ const source=read('cms-display.js');
+ const opened=[];
+ const context=vm.createContext({Image:class {},node:(tag,className,text)=>({tag,className,text,children:[],attributes:{},append(...children){this.children.push(...children);},setAttribute(key,value){this.attributes[key]=value;}}),openViewer:index=>opened.push(index)});
+ vm.runInContext(source.slice(source.indexOf('function stillCard('),source.indexOf('async function loadMedia(')),context);
+ const frame={type:'image',url:'https://example.test/original.jpg',caption:'Original film still',alt:'Original scene'};
+ const still=context.stillCard(frame,0,false);
+ assert.equal(still.tag,'figure');assert.equal(still.onclick,undefined);assert.equal(still.children[0].src,frame.url);assert.equal(still.children[1].text,frame.caption);
+ const photo=context.stillCard(frame,1,true);assert.equal(photo.tag,'button');photo.onclick();assert.deepEqual(opened,[1]);
+ const video=context.stillCard({...frame,type:'video'},2,false);assert.equal(video.tag,'button');video.onclick();assert.deepEqual(opened,[1,2]);
+ for(const locale of ['','ar/'])assert.doesNotMatch(read('dist/'+locale+'film.html'),/Select a frame for full-screen viewing|اضغط لعرض الصورة كاملة/);
+});
+test('Public pages use the global header without repeated home and section-return navigation',()=>{
+ for(const locale of ['','ar/'])for(const name of ['index','films','film-mamina','italy','collaborate','pitch','contact']){
+  const html=read('dist/'+locale+name+'.html');
+  const menu=html.match(/<nav class="nav-popover"[\s\S]*?<\/nav>/)[0];
+  assert.doesNotMatch(menu,/>Home<|>الرئيسية</);
+  assert.match(html,/<a\b(?=[^>]*href="index.html")(?=[^>]*aria-label=)(?=[^>]*class="brand")[^>]*>/);
+  assert.doesNotMatch(html,/class="[^"]*\b(?:film-page-back|back-link|studio-back)\b/);
+ }
 });

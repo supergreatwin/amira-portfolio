@@ -17,7 +17,7 @@ const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
 const verificationFile = /^google[a-z0-9]+\.html$/i;
 const approvedShell = JSON.parse(await readFile(join(root, 'approved-shell.json'), 'utf8'));
-const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','handover.css','approved-classic.js','theme-init.js','education-announcement.css','education-announcement.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
+const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','handover.css','approved-classic.js','cms-display.js','theme-init.js','education-announcement.css','education-announcement.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
 
 // Common header for inner pages; preserve deliberately authored photographic home headers.
 // The private educational pages keep their existing Supabase authorization.
@@ -137,9 +137,12 @@ for (const directory of ['', 'ar', 'the-process']) {
       const ar = directory === 'ar';
       const approved = html.includes('data-approved-classic');
       const key = (ar ? 'ar/' : '') + file;
-      const newHeader = approvedShell.headers[key] || approvedShell.headers[(ar?'ar/':'')+'art.html'];
+      const newHeader = (approvedShell.headers[key] || approvedShell.headers[(ar?'ar/':'')+'art.html'])
+        .replace(/<a\b[^>]*href="index\.html"[^>]*>(?:Home|الرئيسية)<\/a>/g,'');
       html = html.replace(/<header\b[\s\S]*?<\/header>/i,newHeader);
       html = html.replace(/<footer\b[\s\S]*?<\/footer>/i,approvedShell.footers[ar?'ar':'en']);
+      // The persistent header provides the section navigation and the home link.
+      html = html.replace(/<a\b[^>]*class="[^"]*\b(?:film-page-back|back-link|studio-back)\b[^"]*"[^>]*>[\s\S]*?<\/a>/gi,'');
       // Old scripts owned a competing header, theme or design mode.
       html = html.replace(/<script\b[^>]*src=["'][^"']*(?:\/|^)(?:home|site|theme|site-refinement|site-design-router|education-announcement)\.js[^"']*["'][^>]*><\/script>/gi,'');
       html = html.replace(/<script\b[^>]*src=["'](?:\.\.\/)?(?:home|site|theme|site-refinement|site-design-router|education-announcement)\.js[^"']*["'][^>]*><\/script>/gi,'');

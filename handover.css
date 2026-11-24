@@ -126,3 +126,16 @@ html[lang=ar] #canvas :is(h1,h2,h3,h4,.brand,.showcase-name,.essay-link,.film-pa
  #canvas .hero-cta :is(.filled,.outlined){flex:1 1 150px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* Equal cinematic frames for direct images and responsive picture elements. */
+#canvas .film-page-stills figure,#canvas .full-film-stills figure,#filmDialog .film-still-grid figure,body[data-cms-kind=film] .cms-stills .cms-still{display:flex;flex-direction:column;align-items:stretch;align-self:stretch;min-width:0;margin:0;gap:0}
+#canvas .film-page-stills figure picture,#canvas .full-film-stills figure picture,#filmDialog .film-still-grid figure picture{display:block;width:100%;line-height:0}
+#canvas .film-page-stills figure img,#canvas .full-film-stills figure img,#filmDialog .film-still-grid figure img,body[data-cms-kind=film] .cms-stills .cms-still img{display:block!important;width:100%!important;height:auto!important;aspect-ratio:16/9!important;object-fit:cover!important;object-position:center!important;min-height:0!important;max-height:none!important;max-width:100%!important;flex:0 0 auto!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+#canvas .film-page-stills figcaption,#canvas .full-film-stills figcaption,#filmDialog .film-still-grid figcaption,body[data-cms-kind=film] .cms-stills figcaption{margin:0!important;padding:9px 0 0!important;min-height:2.9em;line-height:1.45;text-align:start;align-self:stretch}
+body[data-cms-kind=film] .cms-stills figure.cms-still{cursor:default}
+#canvas #page-contact .page-head{padding-bottom:20px}
+#canvas #page-contact .page-head>p:last-child{margin-bottom:0}
+#canvas #page-contact .simple-section{padding-top:0;padding-bottom:40px}
+#canvas #page-contact .form-buttons{padding-top:0;margin-top:0}
+#canvas .contact-channels{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;margin:0 0 24px}
+#canvas .contact-channels a{display:inline-flex;align-items:center;min-height:44px;padding:8px 0;color:var(--wine);font-weight:600;border-bottom:1px solid var(--wine);overflow-wrap:anywhere}
