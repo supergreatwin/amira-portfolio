@@ -12,6 +12,7 @@ test('Both languages include every selected original exactly once and retain the
     assert.equal((html.match(/<figure/g) || []).length, 29);
     for (const photo of diary.photos) {
       assert.ok(html.includes(photo.alt[locale]));
+      assert.ok(html.includes('style="aspect-ratio: '+photo.width+' / '+photo.height+'"')); 
       assert.ok(existsSync(new URL('../' + photo.src, import.meta.url)));
       for (const variant of photo.variants) assert.ok(existsSync(new URL('../' + variant.path, import.meta.url)));
     }
