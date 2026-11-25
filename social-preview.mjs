@@ -63,7 +63,7 @@ const entries = {
   ]
 };
 export function applySocialPreview(html,file,ar){
- const entry=entries[file];if(!entry)return html;
+ const entry=entries[file];if(!entry)return completeSocialPreview(html,ar);
  const [asset,en,arabic,descEn,descAr,altEn,altAr]=entry;
  const name=ar?arabic:en,brand=ar?'أميرة عبد الفضيل':'Amira Abdelfadil';
  const title=file==='index.html'?name:name+' | '+brand;
@@ -77,4 +77,27 @@ export function applySocialPreview(html,file,ar){
  const names={'twitter:card':'summary_large_image','twitter:title':title,'twitter:description':desc,'twitter:image':image,'twitter:image:alt':alt};
  const tags=[...Object.entries(property).map(([k,v])=>'<meta property="'+k+'" content="'+esc(v)+'">'),...Object.entries(names).map(([k,v])=>'<meta name="'+k+'" content="'+esc(v)+'">')].join('\n');
  return html.replace(/<meta\b[^>]*(?:property|name)=["'](?:og:|twitter:)[^"']+["'][^>]*>/gi,'').replace(/<\/head>/i,'\n'+tags+'\n</head>');
+}
+
+// Complete public-page previews without replacing an author's chosen image or copy.
+// Private pages and dynamic CMS shells have no public canonical preview here.
+function completeSocialPreview(html,ar){
+ const head=html.match(/<head\b[^>]*>([\s\S]*?)<\/head>/i)?.[1];if(!head)return html;
+ const attr=(tag,name)=>tag.match(new RegExp('\\b'+name+'\\s*=\\s*(["\'])(.*?)\\1','i'))?.[2];
+ const metas=[...head.matchAll(/<meta\b[^>]*>/gi)].map(m=>m[0]);
+ const meta=name=>metas.find(tag=>(attr(tag,'property')||attr(tag,'name'))?.toLowerCase()===name);
+ if(/noindex/i.test(attr(meta('robots')||'','content')||''))return html;
+ const canonical=[...head.matchAll(/<link\b[^>]*>/gi)].map(m=>m[0]).find(tag=>attr(tag,'rel')==='canonical');
+ const url=attr(canonical||'','href'),title=head.match(/<title>([\s\S]*?)<\/title>/i)?.[1];
+ const description=attr(meta('description')||'','content');
+ if(!url||!title||!description)return html;
+ const existing=name=>attr(meta(name)||'','content');
+ const image=existing('og:image')||'https://amiraabdelfadil.com/assets/amira-portrait.jpg';
+ const imageAlt=existing('og:image:alt')||(existing('og:image')?(ar?'أعمال أميرة عبد الفضيل':'Work by Amira Abdelfadil'):(ar?'أميرة عبد الفضيل تحمل كاميرا':'Amira holding a camera'));
+ const properties={'og:type':'website','og:locale':ar?'ar_EG':'en_GB','og:locale:alternate':ar?'en_GB':'ar_EG','og:site_name':ar?'أميرة عبد الفضيل':'Amira Abdelfadil','og:url':url,'og:title':title,'og:description':description,'og:image':image,'og:image:alt':imageAlt};
+ const names={'twitter:card':'summary_large_image','twitter:title':existing('og:title')||title,'twitter:description':existing('og:description')||description,'twitter:image':image,'twitter:image:alt':imageAlt};
+ // Values already come from HTML attributes or title text; preserve entities.
+ const safe=value=>value.replaceAll('"','&quot;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+ const tags=[...Object.entries(properties).filter(([key])=>!meta(key)).map(([key,value])=>'<meta property="'+key+'" content="'+safe(value)+'">'),...Object.entries(names).filter(([key])=>!meta(key)).map(([key,value])=>'<meta name="'+key+'" content="'+safe(value)+'">')].join('\n');
+ return tags?html.replace(/<\/head>/i,'\n'+tags+'\n</head>'):html;
 }
