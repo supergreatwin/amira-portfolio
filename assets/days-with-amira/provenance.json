@@ -5,7 +5,7 @@
     {
       "source": "31-PXL_20250814_195813327.jpg",
       "kept": "22-PXL_20250814_195813327.jpg",
-      "reason": "byte-identical"
+      "reason": "pixel-identical duplicate (source file bytes differ; decoded pixels are identical)"
     },
     {
       "source": "32-IMG_7100~2.jpg",
@@ -278,3 +278,4 @@
     }
   ]
 }
+
