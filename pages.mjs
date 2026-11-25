@@ -158,6 +158,14 @@ for (const directory of ['', 'ar', 'the-process']) {
       const menuArrow='<svg class="amira-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="'+(ar?'M17 17 7 7m10 0H7v10':'M7 17 17 7M7 7h10v10')+'"/></svg>';
       newHeader=newHeader.replace(/<nav\b[^>]*id="siteMenu"[^>]*>[\s\S]*?<\/nav>/i,menu=>menu.replace(/<a\b[^>]*>[\s\S]*?<\/a>/gi,link=>link.replace(/<\/a>$/i,menuArrow+'</a>')));
       html = html.replace(/<header\b[\s\S]*?<\/header>/i,newHeader);
+      html = html.replace(/<div class="nav-foot">([\s\S]*?)<span>(©[^<]*)<\/span>/g,'<div class="nav-foot">$1<span dir="ltr">$2</span>');
+      if(file==='index.html'){
+        html=html.replace(/(<button\b[^>]*id="filmDialogNext")/,'<span id="filmDialogPosition" dir="ltr" role="status" aria-live="polite" aria-atomic="true"></span><button type="button" class="film-next" id="filmDialogPrevious">'+(ar?'→ السابق':'← Previous')+'</button>$1');
+        if(ar)html=html.replace(/aria-label="Explore ([^"]+) film details"/g,'aria-label="تفاصيل فيلم $1"')
+          .replaceAll('aria-label="Close film details"','aria-label="إغلاق تفاصيل الفيلم"');
+      }
+      if(ar)html=html.replaceAll('aria-label="Featured sections"','aria-label="الأقسام الرئيسية"')
+        .replaceAll('aria-label="Site navigation"','aria-label="التنقل في الموقع"');
       html = html.replace(/<footer\b[\s\S]*?<\/footer>/i,approvedShell.footers[ar?'ar':'en']);
       // The persistent header provides the section navigation and the home link.
       html = html.replace(/<a\b[^>]*class="[^"]*\b(?:film-page-back|back-link|studio-back)\b[^"]*"[^>]*>[\s\S]*?<\/a>/gi,'');
@@ -207,9 +215,11 @@ await writeFile(join(dist, '_headers'),
   (await readFile(join(dist, '_headers'), 'utf8')) +
   '/the-process/*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/portfolio-studio*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
-  '/education-studio.html\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  '/education-studio*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  '/content-studio*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/ar/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
+  'https://amiraabdelfadil.pages.dev/*\n  X-Robots-Tag: noindex\n' +
   '/editorial.js\n  Cache-Control: no-store\n' +
   '/cms-core.js\n  Cache-Control: no-store\n' +
   '/days-with-amira-model.mjs\n  Cache-Control: no-cache\n');

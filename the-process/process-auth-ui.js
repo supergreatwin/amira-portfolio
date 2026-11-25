@@ -1,11 +1,10 @@
-import { processDb, identifyProcess, processInvitation } from './process-auth-core.js';
+import { processDb, identifyProcess, processInvitation, processRecoveryPending, processRecoveryAuth, clearProcessRecovery } from './process-auth-core.js';
 
 const $=id=>document.getElementById(id);
 const modes=['signin','signup','claim','forgot','password'];
 const url=new URL(window.location.href);
 const invitationCode=url.searchParams.get('invite')||'';
 const invitationEmail=url.searchParams.get('email')||'';
-const recoveryRequested=url.searchParams.has('recover');
 let onAccepted=null;
 let busy=false;
 let currentMode='signin';
@@ -32,6 +31,7 @@ function setBusy(active){
   document.querySelectorAll('#process-auth-screen button, #process-auth-screen input').forEach(el=>el.disabled=active);
 }
 async function approved(){
+  if(processRecoveryPending)return false;
   const identity=await identifyProcess();
   if(!identity.approved)return false;
   $('process-auth-screen').hidden=true;
@@ -134,11 +134,13 @@ function setup(){
     setBusy(true);
     try{
       const email=$('process-forgot-email').value.trim().toLowerCase();
-      const url=new URL('./?recover=1',window.location.href);
-      const {error}=await processDb.auth.resetPasswordForEmail(email,{redirectTo:url.href});
-      if(error)throw error;
+      const response=await fetch('https://tfarhghukyogaowjqykn.supabase.co/functions/v1/request-password-reset',{
+        method:'POST',headers:{'Content-Type':'application/json',apikey:'sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS'},
+        body:JSON.stringify({email,platform:'process'})
+      });
+      if(!response.ok)throw Error('Reset request unavailable');
       message('If this email belongs to an account, a password-reset link will arrive shortly.');
-    }catch(error){message(error.message||'Unable to send reset link.',true);}
+    }catch{message('Unable to request a reset right now. Please try again later.',true);}
     finally{setBusy(false);}
   });
   $('process-password-form').addEventListener('submit',async event=>{
@@ -149,12 +151,25 @@ function setup(){
     }
     setBusy(true);
     try{
-      const {error}=await processDb.auth.updateUser({password});
+      if(!processRecoveryPending)throw Error('Use a fresh password-reset link.');
+      const auth=processRecoveryAuth();
+      const {data,error:sessionError}=await auth.getSession();
+      if(sessionError||!data?.session)throw Error('This reset link is invalid or expired.');
+      const {error}=await auth.updateUser({password});
       if(error)throw error;
-      message('Password changed. Checking your Process membership…');
-      await afterSignIn();
+      await auth.signOut({scope:'local'});
+      await processDb.auth.signOut({scope:'local'});
+      clearProcessRecovery();
+      $('process-password-form').reset();mode('signin');
+      message('Password changed. Sign in with your new password.');
     }catch(error){message(error.message||'Could not update the password.',true);}
     finally{setBusy(false);}
+  });
+  $('process-cancel-recovery').addEventListener('click',async()=>{
+    await processRecoveryAuth().signOut({scope:'local'});
+    await processDb.auth.signOut({scope:'local'});
+    clearProcessRecovery();mode('signin');
+    message('Password recovery cancelled. You can sign in normally.');
   });
   $('process-invite-form')?.addEventListener('submit',async event=>{
     event.preventDefault();if(busy)return;
@@ -192,13 +207,17 @@ function setup(){
 export async function mountProcessAuth(callback){
   onAccepted=callback;
   setup();
-  if(recoveryRequested)mode('password');
+  if(processRecoveryPending){
+    mode('password');
+    processRecoveryAuth();
+    return;
+  }
   else if(invitationCode)mode('signup');
   else mode('signin');
   try{
     const id=await identifyProcess();
-    if(id.approved && !recoveryRequested)await approved();
-    else if(id.user && !recoveryRequested){
+    if(id.approved)await approved();
+    else if(id.user){
       mode('claim');
       message('This account needs an invitation before it can enter The Process.');
     }

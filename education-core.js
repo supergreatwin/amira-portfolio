@@ -3,7 +3,9 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 export const db = createClient(
   'https://tfarhghukyogaowjqykn.supabase.co',
   'sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS',
-  { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } }
+  // Shared rendering helpers are also imported by The Process. Its callback
+  // belongs exclusively to the independent Process client, never this staff client.
+  { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: !/(?:^|\/)the-process(?:\/|$)/.test(location.pathname) } }
 );
 
 export const STAGES = [

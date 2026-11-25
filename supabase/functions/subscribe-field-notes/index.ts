@@ -69,8 +69,10 @@ Deno.serve(async (req: Request) => {
     if (email.length > 254 || email.length < 5 || !emailRegex.test(email)) {
       return send(origin, 400, { ok: false, error: "Enter a valid email address" });
     }
-    const clientIP = req.headers.get("cf-connecting-ip") ||
-      req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "not-provided";
+    const forwarded = req.headers.get("x-forwarded-for")?.split(",").at(-1)?.trim();
+    const candidate = (req.headers.get("cf-connecting-ip") || forwarded || "").trim();
+    const clientIP = candidate.length > 0 && candidate.length <= 64 && /^[0-9a-fA-F:.]+$/.test(candidate)
+      ? candidate.toLowerCase() : "not-provided";
     const [emailHash, ipHash] = await Promise.all([
       digest("field-notes/email/" + email),
       digest("field-notes/ip/" + clientIP),
@@ -86,6 +88,16 @@ Deno.serve(async (req: Request) => {
       consent_version: "field-notes-2026-11",
     });
     if (error && error.code !== "23505") throw error;
+    if (error?.code === "23505") {
+      // A fresh explicit consent can reactivate an unsubscribed address.
+      // Keep existing subscriptions idempotent and preserve the unsubscribe token.
+      const now = new Date().toISOString();
+      const { error: renewalError } = await admin.from("field_notes_subscribers")
+        .update({ status: "subscribed", locale, consent_at: now, subscribed_at: now,
+          unsubscribed_at: null, updated_at: now, consent_version: "field-notes-2026-11" })
+        .eq("email", email).eq("status", "unsubscribed");
+      if (renewalError) throw renewalError;
+    }
     return send(origin, 200, { ok: true, message: success });
   } catch (error) {
     console.error("Field Notes signup failed", error instanceof Error ? error.name : "unknown");

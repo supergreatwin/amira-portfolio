@@ -99,7 +99,9 @@ Deno.serve(async (request: Request): Promise<Response> => {
     }
 
     // Redirect target is chosen by the server, never supplied by the caller.
-    const redirectTo = body?.locale === "ar"
+    const redirectTo = body?.platform === "process"
+      ? "https://amiraabdelfadil.com/the-process/?recover=1"
+      : body?.locale === "ar"
       ? "https://amiraabdelfadil.com/ar/editorial.html"
       : "https://amiraabdelfadil.com/editorial.html";
     const { error: resetError } = await admin.auth.resetPasswordForEmail(email, {

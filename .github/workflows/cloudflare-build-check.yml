@@ -1,6 +1,8 @@
 name: Verify Cloudflare production build
 
 on:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
   workflow_dispatch:
@@ -71,4 +73,4 @@ jobs:
           node --check pages.mjs
           node --input-type=module --check < days-with-amira.js
           node --input-type=module --check < days-with-amira-editor.js
-          node --test tests/approved-classic.test.mjs tests/handover.test.mjs tests/days-with-amira.test.mjs
+          node --test tests/approved-classic.test.mjs tests/handover.test.mjs tests/days-with-amira.test.mjs tests/process-recovery.test.mjs
