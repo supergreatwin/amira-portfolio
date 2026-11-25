@@ -35,6 +35,52 @@ async function digest(value: string): Promise<string> {
 }
 const success = "If this address is eligible, it has been added to Field Notes.";
 
+
+type WelcomeSubscriber = { id: string; email: string; locale: string; unsubscribe_token: string; subscribed_at: string };
+
+async function sendWelcome(subscriber: WelcomeSubscriber): Promise<void> {
+  const apiKey = Deno.env.get("NOTEBOOK_RESEND_API_KEY");
+  if (!apiKey) {
+    console.warn("Notebook welcome skipped: sending secret is not configured");
+    return;
+  }
+  const ar = subscriber.locale === "ar";
+  const unsubscribeUrl = "https://amiraabdelfadil.com/" + (ar ? "ar/" : "") +
+    "notes.html?unsubscribe=" + encodeURIComponent(subscriber.unsubscribe_token);
+  const payload = JSON.stringify({
+    from: "Amira Abdelfadil <noreply@amiraabdelfadil.com>",
+    to: [subscriber.email],
+    subject: ar ? "أهلًا بك في Notebook" : "Welcome to Notebook",
+    template: {
+      id: ar ? "30177eb2-01c1-4941-a302-b95d40a3fc5f" : "f501bf64-8902-4560-b6df-ba259581f7d5",
+      variables: { NOTEBOOK_UNSUBSCRIBE_URL: unsubscribeUrl },
+    },
+    tags: [{ name: "category", value: "notebook_welcome" }, { name: "locale", value: ar ? "ar" : "en" }],
+  });
+  const idempotencyKey = "notebook-welcome/" + subscriber.id + "/" + subscriber.subscribed_at;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const result = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: "Bearer " + apiKey, "Content-Type": "application/json", "Idempotency-Key": idempotencyKey },
+        body: payload,
+        signal: AbortSignal.timeout(5000),
+      });
+      if (result.ok) {
+        await result.body?.cancel();
+        console.info("Notebook welcome accepted by Resend");
+        return;
+      }
+      await result.body?.cancel();
+      console.warn("Notebook welcome provider response", result.status);
+      if (result.status < 500 && result.status !== 429) return;
+    } catch {
+      console.warn("Notebook welcome request failed");
+    }
+    if (attempt === 0) await new Promise(resolve => setTimeout(resolve, 1000));
+  }
+}
+
 Deno.serve(async (req: Request) => {
   const origin = req.headers.get("origin") ?? "";
   if (!originSet.has(origin)) {
@@ -83,20 +129,28 @@ Deno.serve(async (req: Request) => {
     });
     if (limitError) throw limitError;
     if (!allowed) return send(origin, 200, { ok: true, message: success });
-    const { error } = await admin.from("field_notes_subscribers").insert({
+    const { data: inserted, error } = await admin.from("field_notes_subscribers").insert({
       email, locale, status: "subscribed", source: "website",
       consent_version: "field-notes-2026-11",
-    });
+    }).select("id,email,locale,unsubscribe_token,subscribed_at").single();
     if (error && error.code !== "23505") throw error;
+    let subscriber: WelcomeSubscriber | null = inserted;
     if (error?.code === "23505") {
-      // A fresh explicit consent can reactivate an unsubscribed address.
-      // Keep existing subscriptions idempotent and preserve the unsubscribe token.
+      // Only an actual transition from unsubscribed to subscribed may send another welcome.
+      // Existing active rows are unchanged, and concurrent duplicate requests cannot both win.
       const now = new Date().toISOString();
-      const { error: renewalError } = await admin.from("field_notes_subscribers")
+      const { data: renewed, error: renewalError } = await admin.from("field_notes_subscribers")
         .update({ status: "subscribed", locale, consent_at: now, subscribed_at: now,
           unsubscribed_at: null, updated_at: now, consent_version: "field-notes-2026-11" })
-        .eq("email", email).eq("status", "unsubscribed");
+        .eq("email", email).eq("status", "unsubscribed")
+        .select("id,email,locale,unsubscribe_token,subscribed_at").maybeSingle();
       if (renewalError) throw renewalError;
+      subscriber = renewed;
+    }
+    // Fail softly on delivery errors; recorded consent remains valid and signup does not fail.
+    if (subscriber) {
+      try { await sendWelcome(subscriber); }
+      catch { console.warn("Notebook welcome processing failed"); }
     }
     return send(origin, 200, { ok: true, message: success });
   } catch (error) {
