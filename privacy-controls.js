@@ -3,7 +3,9 @@
   'use strict';
   const bootScript = document.currentScript;
   const measurementId = bootScript?.dataset.measurementId || '';
-  const activeAnalytics = /^G-[A-Z0-9]+$/.test(measurementId) &&
+  const privateRoute=/(?:^|\/)(?:editorial|content-studio|portfolio-studio|education-studio)(?:\.html)?(?:\/|$)|(?:^|\/)the-process(?:\/|$)/.test(location.pathname);
+  const sensitiveQuery=new URLSearchParams(location.search).has('unsubscribe');
+  const activeAnalytics = !privateRoute && !sensitiveQuery && /^G-[A-Z0-9]+$/.test(measurementId) &&
     ['amiraabdelfadil.com', 'www.amiraabdelfadil.com'].includes(location.hostname);
   const key = 'amira-privacy-choice-v1';
   const oldKey = 'amira-analytics-consent-v2';
@@ -13,7 +15,7 @@
     privacy: 'سياسة الخصوصية', terms: 'شروط الاستخدام', cookies: 'ملفات تعريف الارتباط',
     settings: 'إعدادات الخصوصية', title: 'خيارات الخصوصية', intro: 'نستخدم التخزين الضروري لتشغيل الموقع وحفظ إعداداتك. لا نفعّل Google Analytics إلا بموافقتك. اختيارك اختياري ويمكن تغييره في أي وقت.',
     essential: 'التخزين الضروري', essentialHelp: 'ضروري لتسجيل الدخول وحفظ إعدادات الموقع ولا يمكن تعطيله هنا.',
-    analytics: 'تحليلات اختيارية', analyticsHelp: 'يساعدنا Google Analytics في فهم استخدام صفحات الموقع، ولا يعمل إلا بعد الموافقة.',
+    analytics: 'تحليلات اختيارية', analyticsHelp: 'يساعدنا Google Analytics وCloudflare Web Analytics في فهم استخدام الصفحات العامة وأدائها، ولا يعملان إلا بعد الموافقة.',
     deny: 'رفض الاختياري', accept: 'السماح بالتحليلات', customize: 'تخصيص',
     save: 'حفظ الاختيارات', notice: 'خصوصيتك تهمنا', details: 'لن نستخدم تحليلات اختيارية قبل موافقتك. تستطيع الرفض أو الموافقة أو تعديل اختيارك.',
     more: 'اقرأ سياسة ملفات تعريف الارتباط', close: 'إغلاق'
@@ -22,7 +24,7 @@
     settings: 'Privacy settings', title: 'Privacy preferences',
     intro: 'Essential storage keeps this site working and remembers your choices. Google Analytics is optional and runs only with your permission. You can change your mind at any time.',
     essential: 'Essential storage', essentialHelp: 'Used for authentication and site settings; it cannot be turned off here.',
-    analytics: 'Optional analytics', analyticsHelp: 'Google Analytics helps us understand visits and site use; it only starts after opt-in.',
+    analytics: 'Optional analytics', analyticsHelp: 'Google Analytics and Cloudflare Web Analytics help us understand public-page visits and performance; they only start after opt-in.',
     deny: 'Reject optional', accept: 'Accept analytics', customize: 'Customize',
     save: 'Save choices', notice: 'Your privacy matters', details: 'We do not activate optional analytics without consent. You can accept, reject, or choose your settings.',
     more: 'Read the Cookie Policy', close: 'Close'
@@ -67,6 +69,12 @@
     tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(measurementId);
     tag.dataset.amiraOptionalAnalytics = 'true';
     document.head.appendChild(tag);
+    // Cloudflare's automatic injection is replaced by this consent-controlled
+    // public-page beacon. Account and unsubscribe routes never load analytics.
+    const rum=document.createElement('script');rum.defer=true;
+    rum.src='https://static.cloudflareinsights.com/beacon.min.js';
+    rum.dataset.cfBeacon=JSON.stringify({token:'48e6a91c682040e9a6d6fcae054e89fd'});
+    rum.dataset.amiraOptionalAnalytics='true';document.head.appendChild(rum);
   }
   function clearAnalyticsCookies() {
     for (const part of document.cookie.split(';')) {

@@ -948,6 +948,7 @@ html,body{max-width:100%;overflow-x:clip}
 body.site-menu-open{position:fixed;top:var(--menu-scroll);width:100%;overflow:hidden}
 #canvas #siteMenu{max-height:calc(100dvh - 92px);overscroll-behavior:contain;padding:10px 20px 0}
 #canvas #siteMenu a{min-height:44px;padding-block:10px}
+#canvas #siteMenu a[aria-current]{color:var(--wine)}
 #canvas #siteMenu .nav-foot{padding-block:12px;font-size:11px;gap:12px}
 #canvas .prose p,#canvas .page-head p,#filmDialogSynopsis{text-align:start;text-justify:auto}
 #filmDialog{background:var(--paper);color:var(--ink);border-color:var(--border,#c7b9b0)}

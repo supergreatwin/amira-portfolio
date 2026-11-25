@@ -57,7 +57,9 @@ Deno.serve(async (request: Request): Promise<Response> => {
   }
 
   try {
-    const body = await request.json().catch(() => ({}));
+    const raw = await request.text();
+    if (raw.length > 2500) return anonymousResponse(origin);
+    const body = JSON.parse(raw);
     const email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
     if (email.length < 3 || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return anonymousResponse(origin);

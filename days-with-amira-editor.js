@@ -1,5 +1,5 @@
 import { cms, isEditor, BUCKET } from './cms-core.js';
-import { validateDiary, storagePaths, publicationRows, stripWebpMetadata } from './days-with-amira-model.mjs';
+import { validateDiary, storagePaths, publicationRows, stripWebpMetadata, renderDiary, escape } from './days-with-amira-model.mjs';
 
 const root = document.querySelector('[data-diary-editor]');
 const ar = document.documentElement.lang === 'ar';
@@ -89,7 +89,9 @@ function render() {
   const status = element('p', '', 'ed-status'); status.dataset.diaryNotice = ''; status.setAttribute('role', 'status'); status.setAttribute('aria-live', 'polite');
   const tools = element('div', undefined, 'ed-actions');
   tools.append(button(say('Save private draft', 'حفظ مسودة خاصة'), () => save(false)),
+    button(say('Preview saved photographs', 'معاينة الصور المحفوظة'), preview),
     button(say('Publish diary', 'نشر اليوميات'), () => save(true)),
+    button(say('Restore original diary', 'استعادة اليوميات الأصلية'), restoreOriginal),
     button(say('Reload saved diary', 'إعادة تحميل المحفوظ'), async () => {
       if (confirm(say('Discard unsaved changes and reload?', 'هل تريدين تجاهل التغييرات غير المحفوظة؟'))) await load();
     }));
@@ -139,6 +141,36 @@ function render() {
     card.append(actions); list.append(card);
   }
   body.append(list); uploadForm();
+}
+async function preview(){
+  await editor();validateDiary(diary);
+  if(pending.size)throw Error(say('Save a private draft before previewing new photographs.', 'احفظي مسودة خاصة قبل معاينة الصور الجديدة.'));
+  const tab=window.open('','_blank');
+  if(!tab)throw Error(say('Allow a preview window for this site.', 'اسمحي بفتح نافذة المعاينة لهذا الموقع.'));
+  tab.opener=null;
+  try{
+    const urls={},paths=storagePaths(diary);
+    if(paths.length){
+      const {data,error}=await cms.storage.from(BUCKET).createSignedUrls(paths,3600);
+      if(error)throw error;
+      for(const row of data||[])if(row.signedUrl)urls[row.path]=row.signedUrl;
+    }
+    const locale=ar?'ar':'en',base=new URL(ar?'ar/':'./',import.meta.url);
+    const style=file=>escape(new URL(file,import.meta.url).href);
+    tab.document.open();
+    tab.document.write('<!doctype html><html lang="'+locale+'" dir="'+(ar?'rtl':'ltr')+'" data-theme="'+(document.documentElement.dataset.theme==='dark'?'dark':'light')+'"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><base href="'+escape(base.href)+'"><title>'+say('Private diary preview','معاينة خاصة لليوميات')+'</title><link rel="stylesheet" href="'+style('approved-classic.css')+'"><link rel="stylesheet" href="'+style('days-with-amira.css')+'"></head><body><div id="canvas" dir="'+(ar?'rtl':'ltr')+'"><main class="diary"><p>'+say('Private preview · not published','معاينة خاصة · غير منشورة')+'</p>'+renderDiary(diary,locale,urls)+'</main></div></body></html>');
+    tab.document.close();
+  }catch(error){tab.close();throw error;}
+}
+async function restoreOriginal(){
+  await editor();
+  if(!confirm(say('Restore the built-in diary on the public site? Your private draft will be kept.', 'استعادة اليوميات الأصلية على الموقع مع الاحتفاظ بمسودتك الخاصة؟')))return;
+  const {error}=await cms.from('cms_sections').update({enabled:false})
+    .like('key','days_with_amira%').neq('key','days_with_amira_draft');
+  if(error)throw error;
+  const rows=await records();
+  revision=rows.map(r=>r.key+':'+r.updated_at).sort().join('|');
+  notice(say('Original public diary restored. Your private draft is kept.', 'استُعيدت اليوميات الأصلية مع الاحتفاظ بالمسودة الخاصة.'));
 }
 function uploadForm() {
   const area = element('section', undefined, 'diary-upload');
