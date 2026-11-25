@@ -910,7 +910,22 @@ html,body{max-width:100%;overflow-x:clip}
 /* Homepage film popup: browse the filmography without closing the dialog. */
 #filmDialog .film-dialog-bar{gap:12px;flex-wrap:wrap}
 #filmDialog .film-dialog-actions{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
-#filmDialog .film-next{font:inherit;font-size:13px;font-weight:700;line-height:1.2;padding:10px 14px;min-height:40px;border:1px solid var(--wine);border-radius:0;background:transparent;color:var(--wine);cursor:pointer;white-space:nowrap}
-#filmDialog .film-next:hover{background:var(--wine);color:var(--paper)}
-#filmDialog .film-next:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+/* The film dialog retains its cream surface in both site themes. */
+#filmDialog .film-dialog-actions{--film-control-accent:#743b49;--film-control-paper:#f8f4ec}
+#filmDialog .film-dialog-actions :is(.film-next,.film-close){
+  -webkit-appearance:none;appearance:none;box-sizing:border-box;
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+  height:44px;min-height:44px;margin:0;border:1px solid var(--film-control-accent);
+  border-radius:0;background:transparent;color:var(--film-control-accent);
+  box-shadow:none;text-shadow:none;cursor:pointer;line-height:1;
+}
+#filmDialog .film-next{padding:0 14px;font-size:13px;font-weight:700;white-space:nowrap}
+#filmDialog .film-close{width:44px;min-width:44px;padding:0;font-size:27px;font-weight:400}
+#filmDialog .film-dialog-actions :is(.film-next,.film-close):hover{background:#e9dfe0}
+#filmDialog .film-dialog-actions :is(.film-next,.film-close):focus-visible{
+  outline:none;background:var(--film-control-accent);color:var(--film-control-paper);
+}
+@media(forced-colors:active){
+  #filmDialog .film-dialog-actions :is(.film-next,.film-close):focus-visible{outline:2px solid Highlight;outline-offset:2px}
+}
 #filmDialog .film-next[hidden]{display:none}
