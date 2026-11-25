@@ -910,7 +910,7 @@ html,body{max-width:100%;overflow-x:clip}
 /* Homepage film popup: browse the filmography without closing the dialog. */
 #filmDialog .film-dialog-bar{gap:12px;flex-wrap:wrap}
 #filmDialog .film-dialog-actions{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
-/* The film dialog retains its cream surface in both site themes. */
+/* Popup controls share the current theme and a single border. */
 #filmDialog .film-dialog-actions{--film-control-accent:#743b49;--film-control-paper:#f8f4ec}
 #filmDialog .film-dialog-actions :is(.film-next,.film-close){
   -webkit-appearance:none;appearance:none;box-sizing:border-box;
@@ -936,9 +936,38 @@ html,body{max-width:100%;overflow-x:clip}
 /* Navigation icons are inline SVG generated at build time; suppress legacy pseudo-elements. */
 #canvas #siteMenu a::after{content:none!important;display:none!important}
 #canvas #siteMenu .amira-menu-arrow{width:16px;height:16px;display:block;flex:0 0 16px;color:inherit;pointer-events:none}
-/* The popup is a cream surface even in dark mode; keep its controls legible. */
+/* Film popup palette, including the surface outside the page canvas. */
 #filmDialog{--wine:#743b49;--paper:#f8f4ec;--muted:#62554a;--focus:#743b49;--ink:#292420}
 #filmDialog:focus,#filmDialog:focus-visible{outline:none;border-color:var(--wine)}
 #filmDialog [data-full-film]{color:var(--wine);border-color:var(--wine)}
 #filmDialog [data-full-film]:focus-visible{outline:2px solid var(--wine);outline-offset:2px}
 @media(forced-colors:active){#filmDialog:focus-visible{outline:2px solid Highlight;outline-offset:-2px}#canvas #siteMenu .amira-menu-arrow{color:LinkText}}
+
+/* Release refinements keep the approved classic proportions and colours. */
+#canvas .brand,#canvas .brand:hover,:root[data-theme="dark"] #canvas .brand{text-shadow:none}
+body.site-menu-open{position:fixed;top:var(--menu-scroll);width:100%;overflow:hidden}
+#canvas #siteMenu{max-height:calc(100dvh - 92px);overscroll-behavior:contain;padding:10px 20px 0}
+#canvas #siteMenu a{min-height:44px;padding-block:10px}
+#canvas #siteMenu a[aria-current]{color:var(--wine)}
+#canvas #siteMenu .nav-foot{padding-block:12px;font-size:11px;gap:12px}
+#canvas .prose p,#canvas .page-head p,#filmDialogSynopsis{text-align:start;text-justify:auto}
+#filmDialog{background:var(--paper);color:var(--ink);border-color:var(--border,#c7b9b0)}
+#filmDialog .film-dialog-bar{position:sticky;top:0;z-index:2;background:var(--paper);padding:12px 0;align-items:center}
+#filmDialog .film-dialog-bar .eyebrow{color:var(--wine)}
+#filmDialog .film-dialog-actions{--film-control-accent:var(--wine);--film-control-paper:var(--paper);flex-wrap:wrap;gap:8px}
+#filmDialog .film-dialog-actions :is(.film-next,.film-close):hover{background:var(--soft,#e9dfe0)}
+#filmDialogPosition{font-variant-numeric:tabular-nums;font-size:12px;white-space:nowrap;color:var(--muted)}
+:root[data-theme="dark"] #filmDialog{--paper:#181616;--ink:#eee8e6;--wine:#dbb2be;--muted:#c7bdbb;--border:#51454b;--soft:#30252b;--focus:#e6b6c2}
+#filmDialog :is(#filmDialogMeta,.film-still-grid figcaption){color:var(--muted)}
+#filmDialog :is(.film-dialog-body h3,.film-stills-heading h3,.film-credits strong){color:var(--wine)}
+#filmDialog :is(.film-dialog-bar,.film-credits,.film-stills-heading){border-color:var(--border,#ccbfc0)}
+@media(max-width:520px){
+ #canvas #siteMenu{max-height:calc(100dvh - 76px);padding-inline:16px}
+ #canvas #siteMenu a{padding-block:8px;font-size:17px}
+ #canvas .icon-button,#canvas .menu-toggle{width:44px;height:44px;min-width:44px;min-height:44px}
+ #filmDialog .film-dialog-layout{padding:0 16px 20px}
+ #filmDialog .film-dialog-bar{margin-bottom:20px}
+ #filmDialog .film-dialog-bar .eyebrow{width:100%}
+ #filmDialog .film-dialog-actions{width:100%;justify-content:space-between;margin:0}
+ #filmDialog .film-next{padding-inline:10px;font-size:12px}
+}

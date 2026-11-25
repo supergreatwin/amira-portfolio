@@ -57,7 +57,9 @@ Deno.serve(async (request: Request): Promise<Response> => {
   }
 
   try {
-    const body = await request.json().catch(() => ({}));
+    const raw = await request.text();
+    if (raw.length > 2500) return anonymousResponse(origin);
+    const body = JSON.parse(raw);
     const email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
     if (email.length < 3 || email.length > 254 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
       return anonymousResponse(origin);
@@ -99,7 +101,9 @@ Deno.serve(async (request: Request): Promise<Response> => {
     }
 
     // Redirect target is chosen by the server, never supplied by the caller.
-    const redirectTo = body?.locale === "ar"
+    const redirectTo = body?.platform === "process"
+      ? "https://amiraabdelfadil.com/the-process/?recover=1"
+      : body?.locale === "ar"
       ? "https://amiraabdelfadil.com/ar/editorial.html"
       : "https://amiraabdelfadil.com/editorial.html";
     const { error: resetError } = await admin.auth.resetPasswordForEmail(email, {

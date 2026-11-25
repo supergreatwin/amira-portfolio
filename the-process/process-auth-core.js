@@ -1,5 +1,25 @@
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.119.1/+esm';
 
+const RECOVERY_KEY='amira-process-recovery-pending-v1';
+const address=new URL(location.href);
+export let processRecoveryPending=address.searchParams.has('recover') || new URLSearchParams(address.hash.slice(1)).get('type')==='recovery';
+try{processRecoveryPending=processRecoveryPending||sessionStorage.getItem(RECOVERY_KEY)==='1';}catch{}
+let recoveryClient;
+export function processRecoveryAuth(){
+  processRecoveryPending=true;
+  try{sessionStorage.setItem(RECOVERY_KEY,'1');}catch{}
+  recoveryClient ||= createClient('https://tfarhghukyogaowjqykn.supabase.co','sb_publishable_ggYvVE1DGcf1EnEQcoKcPg_k_QM9HKS',{
+    auth:{storageKey:'amira-process-recovery-memory-v1',persistSession:false,autoRefreshToken:false,detectSessionInUrl:true}
+  });
+  return recoveryClient.auth;
+}
+export function clearProcessRecovery(){
+  processRecoveryPending=false;
+  try{sessionStorage.removeItem(RECOVERY_KEY);}catch{}
+  const clean=new URL(location.href);clean.searchParams.delete('recover');clean.hash='';
+  history.replaceState(null,'',clean.pathname+clean.search);
+}
+
 /* Independent browser session from Amira's Editorial Desk client.
    The identity provider is the same existing Supabase project; process access
    is granted only through active, invited edu_members records. */
@@ -10,7 +30,7 @@ export const processDb = createClient(
     storageKey:'amira-process-session-v1',
     persistSession:true,
     autoRefreshToken:true,
-    detectSessionInUrl:true
+    detectSessionInUrl:!processRecoveryPending
   }}
 );
 

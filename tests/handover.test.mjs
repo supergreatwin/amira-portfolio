@@ -111,6 +111,9 @@ test('Homepage film popups can advance in the displayed order, wrap, and retain 
  for(const locale of ['','ar/']){
   const html=read('dist/'+locale+'index.html');
   assert.match(html,/<button[^>]*id="filmDialogNext"[^>]*>/);
+  assert.match(html,/<button[^>]*id="filmDialogPrevious"[^>]*>/);
+  assert.match(html,/<span[^>]*id="filmDialogPosition"[^>]*aria-live="polite"/);
+  for(const [tag] of html.matchAll(/<button\b[^>]*data-film="[^"]+"[^>]*>/g))assert.doesNotMatch(tag,/aria-label=/);
   const ids=[...html.matchAll(/data-film="([^"]+)"/g)].map(m=>m[1]);
   assert.deepEqual(ids,['sweet-and-salty','street-x-food','biophilia','mamina','double-edged-sword']);
   const node=()=>({textContent:'',attributes:{},events:{},children:[],addEventListener(k,fn){this.events[k]=fn},replaceChildren(...v){this.children=v},setAttribute(k,v){this.attributes[k]=v},cloneNode(){return node()},append(){},focus(){this.focused=true}});
@@ -122,6 +125,11 @@ test('Homepage film popups can advance in the displayed order, wrap, and retain 
   const source=read('approved-classic.js');
   vm.runInNewContext(source.slice(source.indexOf("  const filmDialog=document.getElementById('filmDialog')"),source.indexOf("  for(const d of document.querySelectorAll('dialog'))")),{document,ar:locale==='ar/'});
   cards[0].events.click();assert.equal(dialog.opens,1);
+  assert.equal(get('#filmDialogPosition').textContent,'01 / 05');
+  get('#filmDialogPrevious').events.click();
+  assert.equal(get('#filmDialogTitle').textContent,ids.at(-1));
+  assert.equal(get('#filmDialogPosition').textContent,'05 / 05');
+  get('#filmDialogNext').events.click();
   for(const id of [...ids.slice(1),ids[0]]){
    get('#filmDialogNext').events.click();assert.equal(get('#filmDialogTitle').textContent,id);assert.equal(get('[data-full-film]').href,'film-'+id+'.html');assert.equal(dialog.scrollTop,0);assert.equal(dialog.opens,1);
   }

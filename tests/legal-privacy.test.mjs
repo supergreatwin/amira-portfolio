@@ -3,6 +3,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import vm from 'node:vm';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const source = name => readFileSync(join(root, name), 'utf8');
@@ -59,4 +60,25 @@ test('Cloudflare build includes privacy links, controls, and hardening headers',
   assert.match(headers, /X-Content-Type-Options:\s*nosniff/);
   assert.match(headers, /Content-Security-Policy:\s*frame-ancestors/);
   assert.match(headers, /Cache-Control:\s*private, no-store/);
+});
+
+function privacyRuntime(pathname,search='',consent=null){
+  const scripts=[],storage=new Map(),location={hostname:'amiraabdelfadil.com',pathname,search,reloads:0,reload(){this.reloads++}};
+  if(consent!==null)storage.set('amira-privacy-choice-v1',JSON.stringify({version:1,analytics:consent,time:Date.now()}));
+  const context={URLSearchParams,location,window:{},localStorage:{getItem:key=>storage.get(key),setItem:(key,value)=>storage.set(key,value)},
+    document:{currentScript:{dataset:{measurementId:'G-B9BKV0JKJ8'}},cookie:'',documentElement:{lang:'en'},addEventListener(){},createElement:()=>({dataset:{}}),head:{appendChild:script=>scripts.push(script)}}};
+  const code=source('privacy-controls.js').replace("  document.addEventListener('DOMContentLoaded',", "  globalThis.qaPrivacy={loadAnalytics,setPreference}; document.addEventListener('DOMContentLoaded',");
+  vm.createContext(context);vm.runInContext(code,context);return {context,scripts,location};
+}
+test('Optional analytics stays off on private, recovery and unsubscribe routes even with prior consent',()=>{
+  for(const [path,search] of [['/editorial',''],['/ar/editorial.html',''],['/content-studio',''],['/education-studio.html',''],['/portfolio-studio',''],['/the-process/','?recover=1'],['/notes','?unsubscribe=private-token']]){
+    const x=privacyRuntime(path,search,true);x.context.qaPrivacy.loadAnalytics();assert.equal(x.scripts.length,0,path);
+  }
+});
+test('Both public analytics providers require opt-in and withdrawal stops loaded code',()=>{
+  const x=privacyRuntime('/');x.context.qaPrivacy.loadAnalytics();assert.equal(x.scripts.length,0);
+  x.context.qaPrivacy.setPreference(true);assert.equal(x.scripts.length,2);
+  assert.ok(x.scripts.some(s=>s.src.includes('googletagmanager.com')));
+  assert.ok(x.scripts.some(s=>s.src.includes('cloudflareinsights.com')));
+  x.context.qaPrivacy.setPreference(false);assert.equal(x.location.reloads,1);
 });

@@ -25,7 +25,7 @@
     dismissed = !forceOpen && timestamp > 0 && Date.now() - timestamp < dismissalDuration;
   } catch (_) {}
   const show = () => {
-    if (!ready || dismissed || document.visibilityState === 'hidden' || document.querySelector('dialog[open]')) return;
+    if (!ready || dismissed || document.visibilityState === 'hidden' || document.querySelector('dialog[open], #siteMenu.open')) return;
     notice.hidden = false;
     fitNotice();
     notice.classList.add('is-visible');
@@ -65,5 +65,9 @@
   document.addEventListener('visibilitychange', show);
   window.addEventListener('pageshow', show);
   document.addEventListener('close', show, true);
+  document.addEventListener('amira-menu-change',event=>{
+    if(event.detail.open){notice.hidden=true;notice.classList.remove('is-visible');}
+    else show();
+  });
   window.setTimeout(() => { ready = true; show(); }, 950);
 })();
