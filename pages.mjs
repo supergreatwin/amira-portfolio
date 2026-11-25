@@ -5,6 +5,7 @@ import { site } from './content.mjs';
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import './days-with-amira-build.mjs';
+import { applySocialPreview } from './social-preview.mjs';
 
 const root = fileURLToPath(new URL('./', import.meta.url));
 const dist = join(root, 'dist');
@@ -195,6 +196,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       html=html.replace(/field-notes-native\.js(?:\?v=[a-zA-Z0-9]+)?"/g,'field-notes-native.js?v='+assetRevisions['field-notes-native.js']+'"');
       for (const [asset,hash] of Object.entries(assetRevisions)) html=html.replaceAll(asset+'"',asset+'?v='+hash+'"');
     }
+    if (isDocument && (directory === '' || directory === 'ar')) html = applySocialPreview(html, file, directory === 'ar');
     // Apply the branded canonical domain to public HTML and discovery files.
     const seoOutput = isDocument || ['robots.txt', 'sitemap.xml'].includes(file)
       ? html.replaceAll(site.url, searchCanonical)
