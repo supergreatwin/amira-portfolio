@@ -128,3 +128,19 @@ test('Homepage film popups can advance in the displayed order, wrap, and retain 
   get('#filmDialogClose').events.click();assert.equal(cards[0].focused,true);
  }
 });
+
+test('Shared menu uses genuine inline monochrome SVG in both languages',()=>{
+ for(const locale of ['','ar/'])for(const page of ['index','films','writing','days-with-amira','contact']){
+  const html=read('dist/'+locale+page+'.html');
+  const menu=html.match(/<nav\b[^>]*id="siteMenu"[^>]*>[\s\S]*?<\/nav>/i)?.[0];
+  assert.ok(menu);
+  const links=[...menu.matchAll(/<a\b[^>]*>[\s\S]*?<\/a>/gi)];
+  assert.ok(links.length>0);
+  for(const [link] of links){
+   assert.match(link,/<svg class="amira-menu-arrow"[^>]*stroke="currentColor"/);
+   assert.match(link,locale?/M17 17 7 7/:/M7 17 17 7/);
+   assert.doesNotMatch(link,/[↗↖]/u);
+  }
+ }
+ assert.doesNotMatch(read('approved-classic.css'),/content:\s*['"][↗↖]['"]/u);
+});

@@ -153,6 +153,9 @@ for (const directory of ['', 'ar', 'the-process']) {
         const alternate = (ar?'../':'ar/')+file;
         newHeader = newHeader.replace(/<a\b[^>]*class="header-aux"[^>]*>/,tag=>tag.replace(/href="[^"]*"/,'href="'+alternate+'"'));
       }
+      // Generate real inline navigation icons in the HTML (no emoji glyph or runtime dependency).
+      const menuArrow='<svg class="amira-menu-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="'+(ar?'M17 17 7 7m10 0H7v10':'M7 17 17 7M7 7h10v10')+'"/></svg>';
+      newHeader=newHeader.replace(/<nav\b[^>]*id="siteMenu"[^>]*>[\s\S]*?<\/nav>/i,menu=>menu.replace(/<a\b[^>]*>[\s\S]*?<\/a>/gi,link=>link.replace(/<\/a>$/i,menuArrow+'</a>')));
       html = html.replace(/<header\b[\s\S]*?<\/header>/i,newHeader);
       html = html.replace(/<footer\b[\s\S]*?<\/footer>/i,approvedShell.footers[ar?'ar':'en']);
       // The persistent header provides the section navigation and the home link.
