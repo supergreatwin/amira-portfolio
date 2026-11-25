@@ -753,10 +753,10 @@ html,body{max-width:100%;overflow-x:clip}
   #canvas .home-feature-actions > .outlined { padding-inline: 6px; }
 }
 
-/* Review update: editorial publication credit aligned beside its short label. */
+/* Writing introduction: two consecutive paragraphs in one column. */
 #canvas .writing-publications{
-  display:grid;grid-template-columns:minmax(145px, 220px) minmax(0,1fr);
-  gap:clamp(18px,3vw,48px);padding-top:0;padding-bottom:clamp(28px,4vw,50px);
+  display:grid;grid-template-columns:minmax(0,1fr);
+  gap:6px;padding-top:0;padding-bottom:clamp(28px,4vw,50px);
   align-items:start;color:var(--ink);unicode-bidi:isolate;
 }
 #canvas .writing-collection-label{
