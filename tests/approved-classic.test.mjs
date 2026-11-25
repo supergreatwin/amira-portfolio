@@ -25,11 +25,11 @@ test('Full bilingual film pages retain all source stills, metadata and trailers'
   if(film.trailer)assert.ok(html.includes('data-trailer="'+film.trailer.youtubeId+'"'));
  }
 });
-test('No video is fetched or embedded outside the approved on-demand film page',()=>{
+test('Days with Amira retains the original title artwork without any public video players or clips',()=>{
  for(const locale of ['','ar/']){
   const days=read('dist/'+locale+'days-with-amira.html');
-  for(const file of ['feature','opening','future','conversation','river'])assert.ok(days.includes(`portrait-${file}.mp4`));
-  assert.match(days,/<video[^>]*preload="none"/);assert.doesNotMatch(days,/<video[^>]*src=/);
+  assert.match(days,/portrait-chosen-lettering\.svg/);
+  assert.doesNotMatch(days,/portrait-\w+\.mp4|<video\b|data-video-src|special-player|days-with-amira\.js/);
   for(const page of ['index','writing','beyond-the-frame'])assert.doesNotMatch(read('dist/'+locale+page+'.html'),/portrait-\w+\.mp4|<video/);
  }
 });
