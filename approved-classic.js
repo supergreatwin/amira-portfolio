@@ -4,6 +4,82 @@
   const ar=document.documentElement.lang==='ar';
   const motion=matchMedia('(prefers-reduced-motion: reduce)');
   const canvas=document.getElementById('canvas');
+
+  // Render interface glyphs as real, monochrome SVGs, never platform emoji.
+  // Only interactive labels are processed; editorial prose, images and copyright stay intact.
+  const iconPaths={
+    '↗':'<path d="M7 17 17 7M7 7h10v10"/>',
+    '↖':'<path d="M17 17 7 7m10 0H7v10"/>',
+    '→':'<path d="M4 12h16m-6-6 6 6-6 6"/>',
+    '←':'<path d="M20 12H4m6-6-6 6 6 6"/>',
+    '↑':'<path d="M12 20V4m-6 6 6-6 6 6"/>',
+    '↓':'<path d="M12 4v16m-6-6 6 6 6-6"/>',
+    '×':'<path d="m6 6 12 12M18 6 6 18"/>',
+    '▶':'<path d="m9 5 11 7-11 7z"/>',
+    '☼':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>',
+    '☾':'<path d="M20.9 13.3A9 9 0 0 1 10.7 3.1 9 9 0 1 0 20.9 13.3Z"/>',
+    '✓':'<path d="m5 12 4 4L19 6"/>',
+    '✔':'<path d="m5 12 4 4L19 6"/>',
+    '✕':'<path d="m6 6 12 12M18 6 6 18"/>',
+    '✖':'<path d="m6 6 12 12M18 6 6 18"/>',
+    '☀':'<circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/>'
+  };
+  const interfaceSelector='a,button,summary,[role="button"],.showcase-arrow,.icon-circle,.special-play-symbol,.education-announcement__cta-arrow';
+  const glyphPattern=/[↗↖→←↑↓×▶☼☾✓✔✕✖☀][\uFE0E\uFE0F]?/gu;
+  function interfaceIcon(glyph){
+    const key=glyph[0]==='↗'&&ar?'↖':glyph[0];
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 24 24');svg.setAttribute('class','amira-ui-icon');
+    svg.setAttribute('aria-hidden','true');svg.setAttribute('focusable','false');
+    svg.setAttribute('fill','none');svg.setAttribute('stroke','currentColor');svg.setAttribute('stroke-width','1.8');
+    svg.setAttribute('stroke-linecap','round');svg.setAttribute('stroke-linejoin','round');
+    svg.innerHTML=iconPaths[key];return svg;
+  }
+  function convertInterfaceText(node){
+    const owner=node.parentElement?.closest(interfaceSelector);
+    if(!owner||node.parentElement.closest('svg,script,style,code,pre,textarea,[contenteditable="true"]'))return;
+    const text=node.nodeValue||'';
+    // Multiplication within dimensions or other words is not a close icon.
+    const matches=[...text.matchAll(glyphPattern)].filter(m=>m[0][0]!=='×'||/^\s*×[\uFE0E\uFE0F]?\s*$/.test(text)||/\s×[\uFE0E\uFE0F]?\s*$/.test(text));
+    if(!matches.length)return;
+    const lone=owner.textContent.trim();
+    if(owner.matches('button,a,summary,[role="button"]')&&!owner.hasAttribute('aria-label')&&!owner.hasAttribute('aria-labelledby')&&/^[↗↖→←↑↓×▶☼☾✓✔✕✖☀][\uFE0E\uFE0F]?$/.test(lone)){
+      const labels={'×':ar?'إغلاق':'Close','✕':ar?'إغلاق':'Close','✖':ar?'إغلاق':'Close','▶':ar?'تشغيل':'Play','☼':ar?'تبديل المظهر':'Toggle theme','☀':ar?'تبديل المظهر':'Toggle theme','☾':ar?'تبديل المظهر':'Toggle theme','→':ar?'انتقال إلى اليمين':'Go right','←':ar?'انتقال إلى اليسار':'Go left','↑':ar?'انتقال إلى الأعلى':'Go up','↓':ar?'انتقال إلى الأسفل':'Go down','✓':ar?'تأكيد':'Confirm','✔':ar?'تأكيد':'Confirm'};
+      owner.setAttribute('aria-label',labels[lone[0]]||(ar?'فتح الرابط':'Open link'));
+    }
+    const fragment=document.createDocumentFragment();let cursor=0;
+    for(const match of matches){
+      fragment.append(document.createTextNode(text.slice(cursor,match.index)),interfaceIcon(match[0]));
+      cursor=match.index+match[0].length;
+    }
+    fragment.append(document.createTextNode(text.slice(cursor)));node.replaceWith(fragment);
+  }
+  function convertInterfaceIcons(root){
+    if(root.nodeType===3){convertInterfaceText(root);return;}
+    if(root.nodeType!==1&&root.nodeType!==9)return;
+    if(root.nodeType===1&&root.closest('svg,script,style,code,pre,textarea,[contenteditable="true"]'))return;
+    const controls=[];
+    if(root.nodeType===1&&root.matches(interfaceSelector))controls.push(root);
+    controls.push(...root.querySelectorAll(interfaceSelector));
+    // A newly inserted span inside a control need not itself match the selector.
+    if(root.nodeType===1&&root.closest(interfaceSelector)&&!controls.includes(root))controls.push(root);
+    for(const control of controls){
+      const walker=document.createTreeWalker(control,NodeFilter.SHOW_TEXT);const nodes=[];
+      while(walker.nextNode())nodes.push(walker.currentNode);
+      for(const node of nodes)convertInterfaceText(node);
+    }
+  }
+  function installInterfaceIcons(){
+    convertInterfaceIcons(document);
+    const observer=new MutationObserver(records=>{
+      for(const record of records){
+        if(record.type==='characterData')convertInterfaceIcons(record.target);
+        else for(const node of record.addedNodes)convertInterfaceIcons(node);
+      }
+    });
+    observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+  }
+
   const language=document.querySelector('.header-aux');
   const publicSlug=new URL(location.href).searchParams.get('slug');
   if(language&&publicSlug&&/\/(?:film|collection|journal)(?:\.html)?$/.test(location.pathname)){
@@ -109,6 +185,7 @@
     const close=()=>announcement.close();announcement.querySelector('#collabAnnouncementX').addEventListener('click',close);announcement.querySelector('#collabAnnouncementDismiss').addEventListener('click',close);
     announcement.showModal();const timer=setTimeout(close,12*60*1000);announcement.addEventListener('close',()=>clearTimeout(timer),{once:true});
   }
+  installInterfaceIcons();
   if(canvas&&!motion.matches&&typeof document.startViewTransition==='function'){
     // Native cross-document transitions are provided by the stylesheet, without intercepting links.
     motion.addEventListener('change',()=>{if(motion.matches)document.getAnimations().forEach(a=>a.cancel());});

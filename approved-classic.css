@@ -929,3 +929,17 @@ html,body{max-width:100%;overflow-x:clip}
   #filmDialog .film-dialog-actions :is(.film-next,.film-close):focus-visible{outline:2px solid Highlight;outline-offset:2px}
 }
 #filmDialog .film-next[hidden]{display:none}
+
+/* SVG interface icons inherit the existing label colour, never emoji fonts. */
+.amira-ui-icon{display:inline-block;width:1em;height:1em;flex:none;vertical-align:-.125em;pointer-events:none}
+#canvas .icon-button .amira-ui-icon,#canvas .film-close .amira-ui-icon{width:1em;height:1em}
+#canvas .nav-popover a::after{content:"";display:block;width:16px;height:16px;flex:none;background:currentColor;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 17 17 7M7 7h10v10' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 17 17 7M7 7h10v10' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat}
+#canvas[dir=rtl] .nav-popover a::after{transform:scaleX(-1)}
+/* The popup is a cream surface even in dark mode; keep its controls legible. */
+#filmDialog{--wine:#743b49;--paper:#f8f4ec;--muted:#62554a;--focus:#743b49;--ink:#292420}
+#filmDialog:focus,#filmDialog:focus-visible{outline:none;border-color:var(--wine)}
+#filmDialog [data-full-film]{color:var(--wine);border-color:var(--wine)}
+#filmDialog [data-full-film]:focus-visible{outline:2px solid var(--wine);outline-offset:2px}
+@media(forced-colors:active){#filmDialog:focus-visible{outline:2px solid Highlight;outline-offset:-2px}#canvas .nav-popover a::after{background:LinkText;forced-color-adjust:none}}
