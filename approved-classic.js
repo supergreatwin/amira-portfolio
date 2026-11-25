@@ -12,6 +12,9 @@
   const menu=document.getElementById('siteMenu');
   // Keep Contact last in the shared navigation, including keyboard tab order.
   if(menu){
+    for(const link of menu.querySelectorAll(':scope > a[href]')){
+      if(/\/beyond-the-frame(?:\.html)?\/?$/.test(new URL(link.href,location.href).pathname))link.remove();
+    }
     const contact=[...menu.children].find(link=>link.matches('a[href]')&&/\/contact(?:\.html)?\/?$/.test(new URL(link.href,location.href).pathname));
     const footer=menu.querySelector('.nav-foot');
     if(contact)menu.insertBefore(contact,footer);
