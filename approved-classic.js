@@ -98,19 +98,15 @@
     if(about&&contact)menu.insertBefore(about,contact);
   }
   const toggle=document.getElementById('menuToggle');
-  let menuScroll=0;
+  const root=document.documentElement;
+  // Lock the viewport without fixing the body: a fixed body breaks the sticky header on Safari at nonzero scroll positions.
   const setMenu=open=>{
     if(!menu||!toggle||menu.classList.contains('open')===open)return;
     menu.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));
+    root.classList.toggle('site-menu-open',open);
     if(open){
-      menuScroll=scrollY;
-      document.body.style.setProperty('--menu-scroll',-menuScroll+'px');
-      document.body.classList.add('site-menu-open');
-      menu.querySelector('a')?.focus({preventScroll:true});
-    }else{
-      document.body.classList.remove('site-menu-open');
-      document.body.style.removeProperty('--menu-scroll');
-      scrollTo({top:menuScroll,behavior:'instant'});
+      menu.scrollTop=0;
+      [...menu.querySelectorAll('a[href]')].find(link=>link.getClientRects().length)?.focus({preventScroll:true});
     }
     document.dispatchEvent(new CustomEvent('amira-menu-change',{detail:{open}}));
   };
