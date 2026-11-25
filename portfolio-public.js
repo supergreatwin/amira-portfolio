@@ -31,4 +31,27 @@ function append(r){if(page==='awards'&&r.kind!=='award'||page==='endorsements'&&
  if(page==='endorsements'){a.append(node('p','archive-tag',label||(ar?'شهادة مهنية':'Professional testimonial')),dateNode(r,'portfolio-date'),node('h3','',title));const q=node('blockquote','testimonial-quote');for(const p of body.split(/\n+/).filter(Boolean))q.append(node('p','',p));a.append(q,node('div','testimonial-attribution',attribution));const link=source(r);if(link)a.append(link);document.querySelector('#professional-testimonials')?.append(a);return;}
  const info=node('div',page==='awards'?'award-info':'archive-info');info.append(node('p','archive-tag',label),node('h2','',title));for(const p of body.split(/\n+/).filter(Boolean))info.append(node('p','',p));if(attribution)info.append(node('p','fact-note',attribution));const link=source(r);if(link)info.append(link);a.append(dateNode(r,page==='awards'?'award-year':'archive-date'),info);
  const list=document.querySelector('.archive-list');if(!list)return;if(page==='awards'){list.append(a);return;}const headers=[...list.querySelectorAll(':scope > .archive-group-title')],index=['exhibition','screening','selection'].indexOf(r.kind);const next=headers[index+1];if(next)list.insertBefore(a,next);else list.append(a);}
-if(page){const {data,error}=await cms.from('cms_portfolio_entries').select('id,kind,legacy_key,title_en,title_ar,label_en,label_ar,body_en,body_ar,attribution_en,attribution_ar,source_url,event_date,end_date,event_year,event_month,sort_order').eq('status','published').order('sort_order').order('event_date',{ascending:false,nullsFirst:false});if(error)console.warn('Portfolio updates unavailable',error.message);else for(const r of data||[]){if(r.kind==='date_override')override(r);else append(r);}}
+// Compare recorded dates without inventing missing months or days.
+function chronologyKey(value){
+ const parts=String(value||'').split('-');
+ if(!/^\d{4}$/.test(parts[0]))return '9999-99-99';
+ return [parts[0],parts[1]||'00',parts[2]||'00'].join('-');
+}
+function sortArchive(){
+ if(page!=='awards'&&page!=='screenings')return;
+ const list=document.querySelector('.archive-list');if(!list)return;
+ const groups=[];let entries=[];
+ for(const child of list.children){
+  if(child.matches('.archive-group-title')){if(entries.length)groups.push(entries);entries=[];}
+  if(child.matches('article.award-feature,article.archive-entry'))entries.push(child);
+ }
+ if(entries.length)groups.push(entries);
+ const dateKey=article=>{const el=article.querySelector('.archive-date,.award-year');return chronologyKey(el?.getAttribute('datetime')||el?.dataset.chronology);};
+ for(const group of groups){
+  const anchor=group[group.length-1].nextSibling;
+  const sorted=[...group].sort((a,b)=>dateKey(a).localeCompare(dateKey(b)));
+  for(const article of sorted)list.insertBefore(article,anchor);
+ }
+}
+sortArchive();
+if(page){const {data,error}=await cms.from('cms_portfolio_entries').select('id,kind,legacy_key,title_en,title_ar,label_en,label_ar,body_en,body_ar,attribution_en,attribution_ar,source_url,event_date,end_date,event_year,event_month,sort_order').eq('status','published').order('sort_order').order('event_date',{ascending:false,nullsFirst:false});if(error)console.warn('Portfolio updates unavailable',error.message);else for(const r of data||[]){if(r.kind==='date_override')override(r);else append(r);}sortArchive();}
