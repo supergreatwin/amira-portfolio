@@ -903,3 +903,6 @@ html,body{max-width:100%;overflow-x:clip}
 #canvas .archive-date > span,#canvas .award-year > span{display:block;margin:9px 0 0;font-size:11px;letter-spacing:.12em;line-height:1.35;font-weight:650;color:var(--muted);white-space:normal;}
 #canvas[dir=rtl] .archive-date > span,#canvas[dir=rtl] .award-year > span{letter-spacing:0;}
 @media(max-width:760px){#canvas .archive-date:not(.date-pending),#canvas .award-year:not(.date-pending){font-size:clamp(27px,7vw,35px);}#canvas .archive-date > span,#canvas .award-year > span{display:block;margin:6px 0 0;font-size:10px;}}
+
+/* Beyond the Frame remains public, but is not listed in the hamburger menu. */
+#canvas #siteMenu > a:is([href$="beyond-the-frame.html"],[href$="/beyond-the-frame"],[href$="/beyond-the-frame/"],[href="beyond-the-frame"]){display:none}
