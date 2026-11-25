@@ -79,7 +79,7 @@ async function galleries(){
   }
 }
 async function sections(){
-  const {data,error}=await cms.from('cms_sections').select('key,heading_en,heading_ar,body_en,body_ar,image_path,button_label,button_href').eq('enabled',true);
+  const {data,error}=await cms.from('cms_sections').select('key,heading_en,heading_ar,body_en,body_ar,image_path,button_label,button_href').in('key',['homepage_hero','homepage_intro','about_intro','writing_intro','art_intro','contact_intro','homepage_feature']).eq('enabled',true);
   if(error)throw error;
   for(const s of data||[]){
     const h=(isArabic&&s.heading_ar)||s.heading_en;

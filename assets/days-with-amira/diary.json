@@ -1,0 +1,876 @@
+{
+  "version": 1,
+  "title": {
+    "en": "Days with Amira",
+    "ar": "أيام مع أميرة"
+  },
+  "kicker": {
+    "en": "A life between frames",
+    "ar": "حياة بين الكادرات"
+  },
+  "lead": {
+    "en": "Not everything makes it into the final cut.",
+    "ar": "ليست كل اللحظات جزءًا من المشهد الأخير."
+  },
+  "intro": {
+    "en": "Beyond the films, the photographs and the written words, there are moments that quietly shape the work. The people we meet, the places we find ourselves in, the conversations that stay with us, and the memories we carry into our next story. This is where those moments live.",
+    "ar": "بعيدًا عن الأفلام والصور والكلمات، هناك لحظات صغيرة تشكّل ما نصنعه دون أن ننتبه. أشخاص نلتقي بهم، وأماكن نجد أنفسنا فيها، وأحاديث تظل معنا، وذكريات نحملها إلى حكايتنا القادمة. هنا تعيش تلك اللحظات."
+  },
+  "opening": "memory-28",
+  "chapters": [
+    {
+      "id": "before-the-frame",
+      "title": {
+        "en": "Before the Frame",
+        "ar": "قبل الكادر"
+      },
+      "reflection": {
+        "en": "A little looking. A little listening. A place to begin.",
+        "ar": "شيء من التأمل، وشيء من الإصغاء، وبداية لحكاية."
+      }
+    },
+    {
+      "id": "when-the-lights-go-down",
+      "title": {
+        "en": "When the Lights Go Down",
+        "ar": "عندما تنطفئ الأضواء"
+      },
+      "reflection": {
+        "en": "A screen, a room, and a moment shared.",
+        "ar": "شاشة ومكان ولحظة نتقاسمها."
+      }
+    },
+    {
+      "id": "the-people-we-meet",
+      "title": {
+        "en": "The People We Meet",
+        "ar": "أشخاص نلتقي بهم"
+      },
+      "reflection": {
+        "en": "Some stories begin with a conversation.",
+        "ar": "بعض الحكايات تبدأ بحديث."
+      }
+    },
+    {
+      "id": "somewhere-along-the-way",
+      "title": {
+        "en": "Somewhere Along the Way",
+        "ar": "في مكان ما من الرحلة"
+      },
+      "reflection": {
+        "en": "The spaces between one destination and the next.",
+        "ar": "المسافات الصغيرة بين وجهة وأخرى."
+      }
+    },
+    {
+      "id": "the-little-things",
+      "title": {
+        "en": "The Little Things",
+        "ar": "التفاصيل الصغيرة"
+      },
+      "reflection": {
+        "en": "Small things. Still with us.",
+        "ar": "تفاصيل صغيرة تبقى معنا."
+      }
+    }
+  ],
+  "photos": [
+    {
+      "id": "memory-28",
+      "chapter": "before-the-frame",
+      "alt": {
+        "en": "A camera reflected in a green window",
+        "ar": "انعكاس كاميرا في نافذة خضراء"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 1080,
+      "height": 1440,
+      "src": "assets/days-with-amira/memory-28.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-28-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-28-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-28-1080.webp",
+          "width": 1080
+        }
+      ]
+    },
+    {
+      "id": "memory-27",
+      "chapter": "before-the-frame",
+      "alt": {
+        "en": "Lights and a stool on a studio set",
+        "ar": "إضاءة ومقعد في موقع تصوير"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3468,
+      "height": 4624,
+      "src": "assets/days-with-amira/memory-27.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-27-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-27-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-27-1200.webp",
+          "width": 1200
+        }
+      ]
+    },
+    {
+      "id": "memory-25",
+      "chapter": "before-the-frame",
+      "alt": {
+        "en": "A camera and lights during a studio shoot",
+        "ar": "كاميرا وإضاءة أثناء التصوير في الاستوديو"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 768,
+      "height": 1024,
+      "src": "assets/days-with-amira/memory-25.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-25-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-25-768.webp",
+          "width": 768
+        }
+      ]
+    },
+    {
+      "id": "memory-09",
+      "chapter": "before-the-frame",
+      "alt": {
+        "en": "An editing timeline and film credits on a computer screen",
+        "ar": "خط مونتاج وتترات فيلم على شاشة الكمبيوتر"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3024,
+      "height": 4032,
+      "src": "assets/days-with-amira/memory-09.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-09-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-09-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-09-1200.webp",
+          "width": 1200
+        }
+      ]
+    },
+    {
+      "id": "memory-24",
+      "chapter": "before-the-frame",
+      "alt": {
+        "en": "A colourful illustration in an editing workspace",
+        "ar": "رسم ملون داخل مساحة عمل للمونتاج"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3024,
+      "height": 2868,
+      "src": "assets/days-with-amira/memory-24.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-24-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-24-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-24-1600.webp",
+          "width": 1600
+        }
+      ]
+    },
+    {
+      "id": "memory-10",
+      "chapter": "before-the-frame",
+      "alt": {
+        "en": "Printed photographs arranged on a table",
+        "ar": "صور مطبوعة موزعة على طاولة"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3468,
+      "height": 4624,
+      "src": "assets/days-with-amira/memory-10.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-10-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-10-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-10-1200.webp",
+          "width": 1200
+        }
+      ]
+    },
+    {
+      "id": "memory-20",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "Rows of chairs facing a screen inside a festival tent",
+        "ar": "صفوف مقاعد أمام شاشة داخل خيمة مهرجان"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3072,
+      "height": 4080,
+      "src": "assets/days-with-amira/memory-20.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-20-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-20-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-20-1204.webp",
+          "width": 1204
+        }
+      ]
+    },
+    {
+      "id": "memory-17",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "A film playing inside a screening tent",
+        "ar": "فيلم يُعرض داخل خيمة سينمائية"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3072,
+      "height": 4080,
+      "src": "assets/days-with-amira/memory-17.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-17-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-17-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-17-1204.webp",
+          "width": 1204
+        }
+      ]
+    },
+    {
+      "id": "memory-21",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "An audience gathered for an outdoor screening",
+        "ar": "جمهور يجتمع لمشاهدة عرض في الهواء الطلق"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3072,
+      "height": 4080,
+      "src": "assets/days-with-amira/memory-21.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-21-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-21-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-21-1204.webp",
+          "width": 1204
+        }
+      ]
+    },
+    {
+      "id": "memory-14",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "An illuminated cinema screen in a dark auditorium",
+        "ar": "شاشة سينما مضيئة داخل قاعة مظلمة"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3024,
+      "height": 4032,
+      "src": "assets/days-with-amira/memory-14.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-14-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-14-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-14-1200.webp",
+          "width": 1200
+        }
+      ]
+    },
+    {
+      "id": "memory-19",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "An outdoor amphitheatre and a lit screen at night",
+        "ar": "مسرح مكشوف وشاشة مضيئة ليلًا"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 4032,
+      "height": 2268,
+      "src": "assets/days-with-amira/memory-19.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-19-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-19-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-19-1600.webp",
+          "width": 1600
+        }
+      ]
+    },
+    {
+      "id": "memory-18",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "A projected landscape on a screening-room wall",
+        "ar": "منظر طبيعي معروض على جدار قاعة"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 3072,
+      "height": 4080,
+      "src": "assets/days-with-amira/memory-18.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-18-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-18-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-18-1204.webp",
+          "width": 1204
+        }
+      ]
+    },
+    {
+      "id": "memory-02",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "An audience beneath a red spotlight",
+        "ar": "جمهور تحت ضوء أحمر"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 874,
+      "height": 587,
+      "src": "assets/days-with-amira/memory-02.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-02-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-02-874.webp",
+          "width": 874
+        }
+      ]
+    },
+    {
+      "id": "memory-04",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "People watching together beside green plants",
+        "ar": "أشخاص يشاهدون معًا بجوار نباتات خضراء"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 863,
+      "height": 634,
+      "src": "assets/days-with-amira/memory-04.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-04-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-04-863.webp",
+          "width": 863
+        }
+      ]
+    },
+    {
+      "id": "memory-05",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "Audience members during a shared screening",
+        "ar": "أفراد من الجمهور أثناء عرض سينمائي"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 893,
+      "height": 635,
+      "src": "assets/days-with-amira/memory-05.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-05-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-05-893.webp",
+          "width": 893
+        }
+      ]
+    },
+    {
+      "id": "memory-08",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "A speaker holding a microphone beside the screen",
+        "ar": "متحدثة تحمل ميكروفونًا بجوار الشاشة"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 1074,
+      "height": 650,
+      "src": "assets/days-with-amira/memory-08.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-08-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-08-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-08-1074.webp",
+          "width": 1074
+        }
+      ]
+    },
+    {
+      "id": "memory-13",
+      "chapter": "when-the-lights-go-down",
+      "alt": {
+        "en": "A tent lit by strings of lights at dusk",
+        "ar": "خيمة تضيئها سلاسل أنوار عند الغروب"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 4080,
+      "height": 3072,
+      "src": "assets/days-with-amira/memory-13.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-13-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-13-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-13-1600.webp",
+          "width": 1600
+        }
+      ]
+    },
+    {
+      "id": "memory-01",
+      "chapter": "the-people-we-meet",
+      "alt": {
+        "en": "A large festival gathering in front of a cinema screen",
+        "ar": "تجمع كبير في مهرجان أمام شاشة سينما"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 952,
+      "height": 639,
+      "src": "assets/days-with-amira/memory-01.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-01-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-01-952.webp",
+          "width": 952
+        }
+      ]
+    },
+    {
+      "id": "memory-06",
+      "chapter": "the-people-we-meet",
+      "alt": {
+        "en": "Three friends smiling together outdoors",
+        "ar": "ثلاثة أصدقاء يبتسمون معًا في الهواء الطلق"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 878,
+      "height": 656,
+      "src": "assets/days-with-amira/memory-06.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-06-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-06-878.webp",
+          "width": 878
+        }
+      ]
+    },
+    {
+      "id": "memory-07",
+      "chapter": "the-people-we-meet",
+      "alt": {
+        "en": "A conversation around a table at an outdoor gathering",
+        "ar": "حديث حول طاولة في تجمع خارجي"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 865,
+      "height": 622,
+      "src": "assets/days-with-amira/memory-07.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-07-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-07-865.webp",
+          "width": 865
+        }
+      ]
+    },
+    {
+      "id": "memory-03",
+      "chapter": "the-people-we-meet",
+      "alt": {
+        "en": "A crowd holding up phone lights",
+        "ar": "حضور يرفعون أضواء هواتفهم"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 843,
+      "height": 615,
+      "src": "assets/days-with-amira/memory-03.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-03-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-03-843.webp",
+          "width": 843
+        }
+      ]
+    },
+    {
+      "id": "memory-26",
+      "chapter": "the-people-we-meet",
+      "alt": {
+        "en": "Two people standing beside a display of printed photographs",
+        "ar": "شخصان يقفان بجوار صور مطبوعة معروضة"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 1080,
+      "height": 1440,
+      "src": "assets/days-with-amira/memory-26.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-26-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-26-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-26-1080.webp",
+          "width": 1080
+        }
+      ]
+    },
+    {
+      "id": "memory-11",
+      "chapter": "the-people-we-meet",
+      "alt": {
+        "en": "Two friends smiling beneath a glowing wall map",
+        "ar": "صديقان يبتسمان تحت خريطة مضيئة على الحائط"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 1202,
+      "height": 1600,
+      "src": "assets/days-with-amira/memory-11.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-11-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-11-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-11-1202.webp",
+          "width": 1202
+        }
+      ]
+    },
+    {
+      "id": "memory-30",
+      "chapter": "the-people-we-meet",
+      "alt": {
+        "en": "Two friends embracing against a dark background",
+        "ar": "صديقتان تتعانقان أمام خلفية داكنة"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 1080,
+      "height": 1616,
+      "src": "assets/days-with-amira/memory-30.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-30-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-30-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-30-1069.webp",
+          "width": 1069
+        }
+      ]
+    },
+    {
+      "id": "memory-22",
+      "chapter": "somewhere-along-the-way",
+      "alt": {
+        "en": "Travellers on the stairs of a station",
+        "ar": "مسافرون على درج محطة"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 2296,
+      "height": 4080,
+      "src": "assets/days-with-amira/memory-22.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-22-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-22-900.webp",
+          "width": 900
+        }
+      ]
+    },
+    {
+      "id": "memory-16",
+      "chapter": "somewhere-along-the-way",
+      "alt": {
+        "en": "Flowers and gold ornaments in a portrait seen from behind",
+        "ar": "زهور وزينة ذهبية في بورتريه من الخلف"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 2268,
+      "height": 4032,
+      "src": "assets/days-with-amira/memory-16.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-16-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-16-900.webp",
+          "width": 900
+        }
+      ]
+    },
+    {
+      "id": "memory-12",
+      "chapter": "somewhere-along-the-way",
+      "alt": {
+        "en": "A man seated outdoors beside a kettle and cups",
+        "ar": "رجل يجلس في الهواء الطلق بجوار إبريق وأكواب"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 1080,
+      "height": 720,
+      "src": "assets/days-with-amira/memory-12.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-12-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-12-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-12-1080.webp",
+          "width": 1080
+        }
+      ]
+    },
+    {
+      "id": "memory-23",
+      "chapter": "the-little-things",
+      "alt": {
+        "en": "Two people reflected in an oval mirror above white flowers",
+        "ar": "انعكاس شخصين في مرآة بيضاوية فوق زهور بيضاء"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 828,
+      "height": 1104,
+      "src": "assets/days-with-amira/memory-23.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-23-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-23-828.webp",
+          "width": 828
+        }
+      ]
+    },
+    {
+      "id": "memory-29",
+      "chapter": "the-little-things",
+      "alt": {
+        "en": "A pink rose and a shadow on a pale wall",
+        "ar": "وردة وردية وظل على جدار فاتح"
+      },
+      "caption": {
+        "en": "",
+        "ar": ""
+      },
+      "width": 1066,
+      "height": 967,
+      "src": "assets/days-with-amira/memory-29.jpg",
+      "variants": [
+        {
+          "path": "assets/days-with-amira/memory-29-480.webp",
+          "width": 480
+        },
+        {
+          "path": "assets/days-with-amira/memory-29-960.webp",
+          "width": 960
+        },
+        {
+          "path": "assets/days-with-amira/memory-29-1066.webp",
+          "width": 1066
+        }
+      ]
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { detectLetterboxMargins } from '../homepage-photo-guard.mjs';
@@ -35,6 +36,7 @@ const popup=readFileSync('dist/education-announcement.css','utf8');
 assert.match(popup,/max-height:min\(52dvh,410px\)/);
 assert.match(popup,/education-announcement__masthead/);
 assert.ok(existsSync('dist/homepage-photo-guard.mjs'));
+test('Retired photographic homepage layout', {skip:readFileSync('dist/index.html','utf8').includes('data-approved-classic') ? 'The approved classic design replaced this layout; current layouts are covered by approved-classic.test.mjs.' : false}, () => {
 for(const [path,prefix] of [
  ['dist/index.html',''],['dist/responsive.html',''],
  ['dist/ar/current.html','../'],['dist/ar/responsive.html','../']
@@ -66,9 +68,10 @@ for(const [path,prefix] of [
  assert.ok(html.includes('responsive.js?v=1'),path+' missing modal controller');
  assert.doesNotMatch(html,/subscribe-forms\.beehiiv\.com/,path+' legacy third-party signup');
 }
+});
 for(const path of ['dist/homepage-editor.js','dist/homepage-layout-editor.js']){
  const js=readFileSync(path,'utf8');
  assert.match(js,/from '.\/homepage-photo-guard\.mjs'/,path);
  assert.match(js,/await validateHomepagePhoto\(/,path);
 }
-console.log('PASS: Four-photo hero, two films, About and preserved bilingual popups across all layouts');
+console.log('PASS: Retained photograph validation and legacy editor guards');

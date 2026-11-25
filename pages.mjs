@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { site } from './content.mjs';
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
+import './days-with-amira-build.mjs';
 
 const root = fileURLToPath(new URL('./', import.meta.url));
 const dist = join(root, 'dist');
@@ -18,7 +19,7 @@ const searchCanonical = 'https://amiraabdelfadil.com/';
 const measurementId = 'G-B9BKV0JKJ8';
 const verificationFile = /^google[a-z0-9]+\.html$/i;
 const approvedShell = JSON.parse(await readFile(join(root, 'approved-shell.json'), 'utf8'));
-const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','handover.css','approved-classic.js','cms-display.js','field-notes-native.js','theme-init.js','education-announcement.css','education-announcement.js'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
+const assetRevisions = Object.fromEntries(await Promise.all(['approved-classic.css','handover.css','approved-classic.js','cms-display.js','field-notes-native.js','theme-init.js','education-announcement.css','education-announcement.js','days-with-amira.css','days-with-amira.js','days-with-amira-editor.js','days-with-amira-editor.css'].map(async file=>[file,createHash('sha256').update(await readFile(join(root,file))).digest('hex').slice(0,12)])));
 
 // Common header for inner pages; preserve deliberately authored photographic home headers.
 // The private educational pages keep their existing Supabase authorization.
@@ -55,7 +56,7 @@ await cp(join(root, 'the-process'), join(dist, 'the-process'), { recursive: true
 
 for (const directory of ['', 'ar', 'the-process']) {
   const files = await readdir(join(root, directory));
-  for (const file of files.filter(name => /\.(?:html|css|js)$/.test(name) || ['homepage-photo-guard.mjs', 'robots.txt', 'sitemap.xml'].includes(name))) {
+  for (const file of files.filter(name => /\.(?:html|css|js)$/.test(name) || ['homepage-photo-guard.mjs', 'days-with-amira-model.mjs', 'robots.txt', 'sitemap.xml'].includes(name))) {
     const path = join(directory, file);
     const source = await readFile(join(root, path), 'utf8');
     const output = join(dist, path);
@@ -167,7 +168,7 @@ for (const directory of ['', 'ar', 'the-process']) {
       if (!approved) {
         html = html.replace(/<body([^>]*)>/i,'<body$1><div id="canvas" dir="'+(ar?'rtl':'ltr')+'">');
         html = html.replace(/<\/body>/i,'</div></body>');
-        html = html.replace(/<\/body>/i,'<dialog id="filmImageViewer" aria-label="Original image viewer"><div class="viewer-bar"><strong>Original photograph</strong><button type="button" data-viewer-close aria-label="Close photograph">Close ×</button></div><img id="filmViewerPhoto" alt=""><p id="filmViewerCaption"></p></dialog></body>');
+        if (!html.includes('data-visual-diary')) html = html.replace(/<\/body>/i,'<dialog id="filmImageViewer" aria-label="Original image viewer"><div class="viewer-bar"><strong>Original photograph</strong><button type="button" data-viewer-close aria-label="Close photograph">Close ×</button></div><img id="filmViewerPhoto" alt=""><p id="filmViewerCaption"></p></dialog></body>');
       }
       if (approved) html=html.replace(/<link\b[^>]*href=["'][^"']*theme\.css[^"']*["'][^>]*>/gi,'');
       if (!html.includes('rel="icon"')) html=html.replace(/<\/head>/i,'<link rel="icon" href="'+prefix+'assets/portrait-title.webp" type="image/webp"></head>');
@@ -210,7 +211,8 @@ await writeFile(join(dist, '_headers'),
   '/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/ar/editorial*\n  X-Robots-Tag: noindex, nofollow, noarchive\n  Cache-Control: private, no-store\n' +
   '/editorial.js\n  Cache-Control: no-store\n' +
-  '/cms-core.js\n  Cache-Control: no-store\n');
+  '/cms-core.js\n  Cache-Control: no-store\n' +
+  '/days-with-amira-model.mjs\n  Cache-Control: no-cache\n');
 
 await writeFile(join(dist, '404.html'), `<!doctype html>
 <html lang="en">

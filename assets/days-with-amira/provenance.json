@@ -1,0 +1,280 @@
+{
+  "inputs": 32,
+  "outputs": 29,
+  "duplicates": [
+    {
+      "source": "31-PXL_20250814_195813327.jpg",
+      "kept": "22-PXL_20250814_195813327.jpg",
+      "reason": "byte-identical"
+    },
+    {
+      "source": "32-IMG_7100~2.jpg",
+      "kept": "23-IMG_7100.PNG",
+      "reason": "same photograph; kept larger full photo crop"
+    },
+    {
+      "source": "15-PXL_20261004_130225567.jpg",
+      "kept": "16-PXL_20261004_130227767.jpg",
+      "reason": "near-identical portrait; one selected"
+    }
+  ],
+  "photos": [
+    {
+      "id": "memory-28",
+      "source": "IMG_8372.JPEG",
+      "sourceSha256": "d72b1f108cc97e0bcff92659212f8854c06372fa3878291394c10affcfa62164",
+      "crop": {
+        "left": 0,
+        "top": 450,
+        "width": 1080,
+        "height": 1440
+      },
+      "outputWidth": 1080,
+      "outputHeight": 1440
+    },
+    {
+      "id": "memory-27",
+      "source": "IMG_8126_1.JPEG",
+      "sourceSha256": "77d44bf7ce9951ca4d8cd93d567d87870ba0bfe8b914b9fb31c810f48f73fd0b",
+      "crop": null,
+      "outputWidth": 3468,
+      "outputHeight": 4624
+    },
+    {
+      "id": "memory-25",
+      "source": "IMG_8153.JPEG",
+      "sourceSha256": "d83a170d5c27b4abe54bdff833373161b44b950d05b220e6f303faf932a52873",
+      "crop": null,
+      "outputWidth": 768,
+      "outputHeight": 1024
+    },
+    {
+      "id": "memory-09",
+      "source": "IMG_7621.HEIC",
+      "sourceSha256": "53dc86ad7f8bd314d91615871ea1a0f38824ffa15064365316a8aa4a014c3b2e",
+      "crop": null,
+      "outputWidth": 3024,
+      "outputHeight": 4032
+    },
+    {
+      "id": "memory-24",
+      "source": "IMG_8308.HEIC",
+      "sourceSha256": "9eac74573e6a763e9557cac13c23e229441af3d5e75007e295cc2e6d5321a252",
+      "crop": null,
+      "outputWidth": 3024,
+      "outputHeight": 2868
+    },
+    {
+      "id": "memory-10",
+      "source": "IMG_9725.JPEG",
+      "sourceSha256": "41a833f016ae500ab88f514b09f2304920d31560ccca0aaa9a00bd3883e4bcd5",
+      "crop": null,
+      "outputWidth": 3468,
+      "outputHeight": 4624
+    },
+    {
+      "id": "memory-20",
+      "source": "PXL_20250815_192617972.jpg",
+      "sourceSha256": "ff9804542d753d5aaef0d49e46bf0711c75d6e406a794531b77a0243f69f9500",
+      "crop": null,
+      "outputWidth": 3072,
+      "outputHeight": 4080
+    },
+    {
+      "id": "memory-17",
+      "source": "PXL_20250815_192921006.jpg",
+      "sourceSha256": "b8b851fd1fec2212d39e154190c1b2373095848c2781b569ecdaae0db9b862cb",
+      "crop": null,
+      "outputWidth": 3072,
+      "outputHeight": 4080
+    },
+    {
+      "id": "memory-21",
+      "source": "PXL_20250815_185814659.jpg",
+      "sourceSha256": "d2029aed275d6e973dfba1d46456115730a1b050ded2ee2463f5e5028503f9db",
+      "crop": null,
+      "outputWidth": 3072,
+      "outputHeight": 4080
+    },
+    {
+      "id": "memory-14",
+      "source": "IMG_3621_MP.HEIC",
+      "sourceSha256": "2d929ac101d51ef60673ad223a0f463a4b4a08ab12c91e613a0a25752e40a36a",
+      "crop": null,
+      "outputWidth": 3024,
+      "outputHeight": 4032
+    },
+    {
+      "id": "memory-19",
+      "source": "PXL_20260807_190322500.NIGHT.jpg",
+      "sourceSha256": "b0355a933f5ae22d44e7ccaab548d446f8a41e4f4b7324c8c5f3420476ca6af3",
+      "crop": null,
+      "outputWidth": 4032,
+      "outputHeight": 2268
+    },
+    {
+      "id": "memory-18",
+      "source": "PXL_20250824_173522076.jpg",
+      "sourceSha256": "f57b496945f44ef3c1f95e9b8dcd6fa7c6122b9c84c1198f2ee6c7ee8de5943c",
+      "crop": null,
+      "outputWidth": 3072,
+      "outputHeight": 4080
+    },
+    {
+      "id": "memory-02",
+      "source": "Screenshot_20261124-205355~2.jpg",
+      "sourceSha256": "6cadc0dbca7d9704c0883b7dbf4fb68ba7fb548ced4c4fb623177673907db312",
+      "crop": null,
+      "outputWidth": 874,
+      "outputHeight": 587
+    },
+    {
+      "id": "memory-04",
+      "source": "Screenshot_20261124-205350~2.jpg",
+      "sourceSha256": "96a1a269c533d5a94f7e10ca9e37501c55340733d3abb4f47fd0ca2aaa36a452",
+      "crop": null,
+      "outputWidth": 863,
+      "outputHeight": 634
+    },
+    {
+      "id": "memory-05",
+      "source": "Screenshot_20261124-205348~2.jpg",
+      "sourceSha256": "579d1fa07838c303b25dae288412d0e980a8c012d28c12babf7cb42e97a848eb",
+      "crop": null,
+      "outputWidth": 893,
+      "outputHeight": 635
+    },
+    {
+      "id": "memory-08",
+      "source": "Screenshot_20261124-205337~2.jpg",
+      "sourceSha256": "d939543f1835578a0c0762b35ca2e5cc5009ff792b199690caa3a992222374a8",
+      "crop": null,
+      "outputWidth": 1074,
+      "outputHeight": 650
+    },
+    {
+      "id": "memory-13",
+      "source": "PXL_20250812_183441367.jpg",
+      "sourceSha256": "9c3ef97350231709001178ac96eb57b8fe8e0d45d664582a5ce16adf5474d94b",
+      "crop": null,
+      "outputWidth": 4080,
+      "outputHeight": 3072
+    },
+    {
+      "id": "memory-01",
+      "source": "Screenshot_20261124-210009~2.jpg",
+      "sourceSha256": "039ff6795e543fc8c832f0ce7487b4aeb63add114e578316adf5333607a2372d",
+      "crop": null,
+      "outputWidth": 952,
+      "outputHeight": 639
+    },
+    {
+      "id": "memory-06",
+      "source": "Screenshot_20261124-205343~2.jpg",
+      "sourceSha256": "c5e7b7f8af69767608dab4bf6aee3d3b55f893ed5c76001a8dc7109bd6f1e528",
+      "crop": null,
+      "outputWidth": 878,
+      "outputHeight": 656
+    },
+    {
+      "id": "memory-07",
+      "source": "Screenshot_20261124-205340~2.jpg",
+      "sourceSha256": "8b6470a7a63d6e243e6601991eff57ffe7ce4a19f82636d58f12c667ca506f63",
+      "crop": null,
+      "outputWidth": 865,
+      "outputHeight": 622
+    },
+    {
+      "id": "memory-03",
+      "source": "Screenshot_20261124-205354~2.jpg",
+      "sourceSha256": "e78cab0099d31da58594aa45eb68c364f3643f7c12b377372830b32410382517",
+      "crop": null,
+      "outputWidth": 843,
+      "outputHeight": 615
+    },
+    {
+      "id": "memory-26",
+      "source": "IMG_0166.JPEG",
+      "sourceSha256": "e0a8618981ec3c47b04e016b6ec2105179bc761abbb8dfbb41289429b1421817",
+      "crop": {
+        "left": 0,
+        "top": 450,
+        "width": 1080,
+        "height": 1440
+      },
+      "outputWidth": 1080,
+      "outputHeight": 1440
+    },
+    {
+      "id": "memory-11",
+      "source": "IMG_8137.JPEG",
+      "sourceSha256": "e333960a9577b140f4aa6a1f97d4c7d5f24044cc97533ff60519655d4e2b9c7f",
+      "crop": null,
+      "outputWidth": 1202,
+      "outputHeight": 1600
+    },
+    {
+      "id": "memory-30",
+      "source": "IMG_9876.JPEG",
+      "sourceSha256": "7de8f3585c7c4d41622d863ab864dd23ca1f36e8f67bda9ab83d06bbd21d950e",
+      "crop": {
+        "left": 0,
+        "top": 362,
+        "width": 1080,
+        "height": 1616
+      },
+      "outputWidth": 1080,
+      "outputHeight": 1616
+    },
+    {
+      "id": "memory-22",
+      "source": "PXL_20250814_195813327.jpg",
+      "sourceSha256": "db6503aeda7a2e2700566a38123f558169c8ca14af0d2d169ec14e61a9327af8",
+      "crop": null,
+      "outputWidth": 2296,
+      "outputHeight": 4080
+    },
+    {
+      "id": "memory-16",
+      "source": "PXL_20261004_130227767.jpg",
+      "sourceSha256": "cd21c6dc54971bc0142187c9ae8f053d7a9a620af9709ca7332c35b62d5f3ab4",
+      "crop": null,
+      "outputWidth": 2268,
+      "outputHeight": 4032
+    },
+    {
+      "id": "memory-12",
+      "source": "IMG_0828.JPEG",
+      "sourceSha256": "85dfbb82d6db9ba38dc6e4e030a334d6ad910494345a0e1f5f1003d2bc230fc4",
+      "crop": {
+        "left": 0,
+        "top": 810,
+        "width": 1080,
+        "height": 720
+      },
+      "outputWidth": 1080,
+      "outputHeight": 720
+    },
+    {
+      "id": "memory-23",
+      "source": "IMG_7100.PNG",
+      "sourceSha256": "e2e478c427954ccc425575e36a29c5050347dd02c1c65a4dd4fced620065fbc0",
+      "crop": {
+        "left": 0,
+        "top": 344,
+        "width": 828,
+        "height": 1104
+      },
+      "outputWidth": 828,
+      "outputHeight": 1104
+    },
+    {
+      "id": "memory-29",
+      "source": "IMG_2809.PNG",
+      "sourceSha256": "fc0436e961af3a67ba6a85e618150ec79a8825900eea6609941fb0d28f552417",
+      "crop": null,
+      "outputWidth": 1066,
+      "outputHeight": 967
+    }
+  ]
+}

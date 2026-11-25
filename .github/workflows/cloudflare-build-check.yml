@@ -69,4 +69,6 @@ jobs:
         run: |
           node --check approved-classic.js
           node --check pages.mjs
-          node --test tests/approved-classic.test.mjs tests/handover.test.mjs
+          node --input-type=module --check < days-with-amira.js
+          node --input-type=module --check < days-with-amira-editor.js
+          node --test tests/approved-classic.test.mjs tests/handover.test.mjs tests/days-with-amira.test.mjs

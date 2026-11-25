@@ -13,10 +13,10 @@ test('Handover preserves separate 20 presentation records, three exhibitions and
   assert.equal((exhibitions.match(/class="archive-entry"/g)||[]).length,3);
   assert.equal((read('dist/'+locale+'awards.html').match(/class="award-feature"/g)||[]).length,5);
   assert.match(screenings,/artfacts\.net\/artist\/amira-abdel-fadil/);
-  assert.match(read('dist/'+locale+'about.html'),/artfacts\.net\/artist\/amira-abdel-fadil/);
+  assert.doesNotMatch(read('dist/'+locale+'about.html'),/artfacts\.net|External professional profile|ملف مهني خارجي/i);
  }
  const awards=read('dist/awards.html');
- assert.ok(awards.includes('TULUM ENVIRONMENTAL FILM FESTIVAL'));
+ assert.ok(awards.includes('TULUM WORLD ENVIRONMENT FILM FESTIVAL'));
  for(const text of ['Best Cinematography','Best Environment and Climate Short Film','Best Featurette','Best Environmental Short Film','Best Idea for a Film','David Všetička','Rama Abdi','Hazar Yazji','Karim El-Mubarak','Date TBC — pending confirmation'])assert.ok(awards.includes(text),text);
 });
 test('Homepage retains films and real popups, exposes Beyond the Frame, and removes only requested home sections',()=>{

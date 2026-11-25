@@ -42,7 +42,7 @@ async function loadGalleries(){
 }
 async function loadSections(){
   const {data,error}=await cms.from('cms_sections').select('*').order('key');if(error)throw error;
-  state.sections=data||[];const area=$('cms-section-list');area.replaceChildren();
+  state.sections=(data||[]).filter(s=>!s.key.startsWith('days_with_amira'));const area=$('cms-section-list');area.replaceChildren();
   for(const s of state.sections){
     const b=node('button');b.type='button';b.setAttribute('aria-current',String(s.key===state.section?.key));
     b.append(node('strong','',sectionLabels[s.key]||s.key),node('span','',s.enabled?'Live override enabled':'Original site unchanged'));
