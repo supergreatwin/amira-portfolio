@@ -163,6 +163,9 @@ for (const directory of ['', 'ar', 'the-process']) {
         html=html.replace(/(<button\b[^>]*id="filmDialogNext")/,'<span id="filmDialogPosition" dir="ltr" role="status" aria-live="polite" aria-atomic="true"></span><button type="button" class="film-next" id="filmDialogPrevious">'+(ar?'→ السابق':'← Previous')+'</button>$1');
         if(ar)html=html.replace(/aria-label="Explore ([^"]+) film details"/g,'aria-label="تفاصيل فيلم $1"')
           .replaceAll('aria-label="Close film details"','aria-label="إغلاق تفاصيل الفيلم"');
+        // Let the visible title and metadata name each film button. A shorter
+        // aria-label omits the visible duration and breaks voice-control matching.
+        html=html.replace(/<button\b[^>]*data-film="[^"]+"[^>]*>/g,tag=>tag.replace(/\saria-label="[^"]*"/,''));
       }
       if(ar)html=html.replaceAll('aria-label="Featured sections"','aria-label="الأقسام الرئيسية"')
         .replaceAll('aria-label="Site navigation"','aria-label="التنقل في الموقع"');

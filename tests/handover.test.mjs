@@ -113,6 +113,7 @@ test('Homepage film popups can advance in the displayed order, wrap, and retain 
   assert.match(html,/<button[^>]*id="filmDialogNext"[^>]*>/);
   assert.match(html,/<button[^>]*id="filmDialogPrevious"[^>]*>/);
   assert.match(html,/<span[^>]*id="filmDialogPosition"[^>]*aria-live="polite"/);
+  for(const [tag] of html.matchAll(/<button\b[^>]*data-film="[^"]+"[^>]*>/g))assert.doesNotMatch(tag,/aria-label=/);
   const ids=[...html.matchAll(/data-film="([^"]+)"/g)].map(m=>m[1]);
   assert.deepEqual(ids,['sweet-and-salty','street-x-food','biophilia','mamina','double-edged-sword']);
   const node=()=>({textContent:'',attributes:{},events:{},children:[],addEventListener(k,fn){this.events[k]=fn},replaceChildren(...v){this.children=v},setAttribute(k,v){this.attributes[k]=v},cloneNode(){return node()},append(){},focus(){this.focused=true}});
