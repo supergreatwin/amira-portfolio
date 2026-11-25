@@ -5,7 +5,8 @@
 #canvas .diary-kicker{font-size:11px;font-weight:650;letter-spacing:.13em;text-transform:uppercase;color:var(--wine);margin:0 0 21px;text-align:start;hyphens:none}
 #canvas .diary h1{font-size:clamp(48px,5.9vw,86px);font-weight:600;line-height:1.05;letter-spacing:-.055em;margin:0 0 28px;text-wrap:balance}
 #canvas .diary-lead{font-size:clamp(21px,2vw,28px);line-height:1.45;margin:0 0 24px;font-style:italic;text-align:start;hyphens:none}
-#canvas .diary-intro-text{color:var(--muted);max-width:43ch;font-size:16px;line-height:1.9;text-align:justify;hyphens:none}
+#canvas .diary-intro-copy{min-width:0}
+#canvas .diary-intro-text{color:var(--muted);width:100%;max-width:none;font-size:16px;line-height:1.9;text-align:justify;hyphens:auto;text-wrap:pretty}
 #canvas .diary-begin{display:inline-flex;gap:22px;align-items:center;margin-top:24px;padding-bottom:8px;border-bottom:1px solid var(--border);font-size:13px}
 #canvas .diary-photo{margin:0;min-width:0}
 #canvas .diary-photo picture{display:block;background:transparent}

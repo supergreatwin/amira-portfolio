@@ -13,7 +13,7 @@ for (const locale of ['en', 'ar']) {
 <link rel="canonical" href="https://amiraabdelfadil.com/${ar ? 'ar/' : ''}days-with-amira">
 <link rel="alternate" hreflang="en" href="https://amiraabdelfadil.com/days-with-amira"><link rel="alternate" hreflang="ar" href="https://amiraabdelfadil.com/ar/days-with-amira">
 <script src="${prefix}theme-init.js"></script><link rel="stylesheet" href="${prefix}theme.css">
-<link rel="stylesheet" href="${prefix}days-with-amira.css?v=2"><script type="module" src="${prefix}days-with-amira.js"></script>
+<link rel="stylesheet" href="${prefix}days-with-amira.css?v=3"><script type="module" src="${prefix}days-with-amira.js"></script>
 </head><body class="visual-diary-page" data-visual-diary>
 <a href="#main" class="diary-skip">${ar ? 'انتقل للمحتوى' : 'Skip to content'}</a>
 <header class="site-header"><a href="index.html">${ar ? 'أميرة عبد الفضيل' : 'amira abdelfadil'}</a></header>
