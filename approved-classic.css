@@ -945,8 +945,7 @@ html,body{max-width:100%;overflow-x:clip}
 
 /* Release refinements keep the approved classic proportions and colours. */
 #canvas .brand,#canvas .brand:hover,:root[data-theme="dark"] #canvas .brand{text-shadow:none}
-html{scrollbar-gutter:stable}
-html.site-menu-open{overflow:hidden;overscroll-behavior:none}
+
 #canvas #siteMenu{max-height:calc(100dvh - 92px);overscroll-behavior:contain;padding:10px 20px 0}
 #canvas #siteMenu a{min-height:44px;padding-block:10px}
 #canvas #siteMenu a[aria-current]{color:var(--wine)}

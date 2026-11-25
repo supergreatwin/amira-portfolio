@@ -154,20 +154,26 @@ test('Shared menu uses genuine inline monochrome SVG in both languages',()=>{
 });
 
 
-test('Menu locks the viewport without moving the sticky header or jumping the document',()=>{
+test('Menu blocks background gestures without changing the document scroll container',()=>{
  const css=read('approved-classic.css');
- assert.match(css,/html\.site-menu-open\{overflow:hidden;overscroll-behavior:none\}/);
- assert.doesNotMatch(css,/body\.site-menu-open\{[^}]*position:fixed/);
- const classList=()=>{const classes=new Set();return {contains:c=>classes.has(c),toggle(c,v){v?classes.add(c):classes.delete(c)}}};
- const root={classList:classList()}, events={}, dispatched=[];
- const hidden={getClientRects:()=>[],focus(){assert.fail('Hidden navigation link received focus')}};
+ assert.doesNotMatch(css,/(?:body|html)\.site-menu-open\s*\{/);
+ const classes=new Set(),events={},dispatched=[],windowEvents={};
+ const hidden={getClientRects:()=>[],focus(){assert.fail('Hidden link received focus')}};
  const first={getClientRects:()=>[{}],focus(opts){assert.equal(opts.preventScroll,true);this.focused=true}};
- const menu={classList:classList(),scrollTop:100,querySelectorAll:()=>[hidden,first],addEventListener(k,f){events['menu:'+k]=f}};
- const toggle={setAttribute(k,v){this[k]=v},addEventListener(k,f){events['toggle:'+k]=f},focus(){this.focused=true}};
- const document={documentElement:root,getElementById:()=>toggle,addEventListener(k,f){events[k]=f},dispatchEvent(e){dispatched.push(e.detail.open)}};
+ const menu={classList:{contains:c=>classes.has(c),toggle(c,v){v?classes.add(c):classes.delete(c)}},scrollTop:100,querySelectorAll:()=>[hidden,first],contains:t=>t===first,addEventListener(k,f){events['menu:'+k]=f}};
+ const toggle={setAttribute(k,v){this[k]=v},addEventListener(k,f){events['toggle:'+k]=f},focus(opts){assert.equal(opts.preventScroll,true);this.focused=true}};
+ const document={getElementById:()=>toggle,addEventListener(k,f){assert.equal(events[k],undefined);events[k]=f},dispatchEvent(e){dispatched.push(e.detail.open)}};
  const source=read('approved-classic.js');
- vm.runInNewContext(source.slice(source.indexOf("  const toggle=document.getElementById('menuToggle')"),source.indexOf("  const theme=document.getElementById('themeIcon')")),{document,menu,CustomEvent:class{constructor(n,o){this.detail=o.detail}},scrollY:1400,scrollTo(){assert.fail('Menu changed the document scroll position')}});
- events['toggle:click']();assert.ok(root.classList.contains('site-menu-open'));assert.ok(menu.classList.contains('open'));assert.equal(menu.scrollTop,0);assert.ok(first.focused);assert.equal(toggle['aria-expanded'],'true');
- events.keydown({key:'Escape'});assert.equal(root.classList.contains('site-menu-open'),false);assert.equal(menu.classList.contains('open'),false);assert.ok(toggle.focused);assert.equal(toggle['aria-expanded'],'false');
- events['toggle:click']();events.pointerdown({target:{closest:()=>null}});assert.equal(root.classList.contains('site-menu-open'),false);assert.deepEqual(dispatched,[true,false,true,false]);
+ vm.runInNewContext(source.slice(source.indexOf("  const toggle=document.getElementById('menuToggle')"),source.indexOf("  const theme=document.getElementById('themeIcon')")),{document,menu,window:{addEventListener(k,f){windowEvents[k]=f}},CustomEvent:class{constructor(n,o){this.detail=o.detail}},scrollY:1400,scrollTo(){assert.fail('Menu moved the document')}});
+ events['toggle:click']();assert.ok(classes.has('open'));assert.equal(menu.scrollTop,0);assert.ok(first.focused);assert.equal(toggle['aria-expanded'],'true');
+ let prevented=0;
+ for(const type of ['wheel','touchmove']){
+  events[type]({target:{},cancelable:true,preventDefault(){prevented++}});
+  events[type]({target:first,cancelable:true,preventDefault(){assert.fail('Menu scrolling blocked')}});
+ }
+ assert.equal(prevented,2);
+ events.keydown({key:'Escape'});assert.equal(classes.has('open'),false);assert.ok(toggle.focused);assert.equal(toggle['aria-expanded'],'false');
+ events['toggle:click']();events.pointerdown({target:{closest:()=>null}});assert.equal(classes.has('open'),false);
+ events['toggle:click']();windowEvents.pagehide();assert.equal(classes.has('open'),false);
+ assert.deepEqual(dispatched,[true,false,true,false,true,false]);
 });

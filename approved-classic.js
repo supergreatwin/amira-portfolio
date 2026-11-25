@@ -98,30 +98,42 @@
     if(about&&contact)menu.insertBefore(about,contact);
   }
   const toggle=document.getElementById('menuToggle');
-  const root=document.documentElement;
-  // Lock the viewport without fixing the body: a fixed body breaks the sticky header on Safari at nonzero scroll positions.
+  // Do not change body positioning or root overflow: doing either can relocate
+  // Safari's sticky header while the document is scrolled.
+  const menuIsOpen=()=>!!menu?.classList.contains('open');
   const setMenu=open=>{
-    if(!menu||!toggle||menu.classList.contains('open')===open)return;
+    if(!menu||!toggle||menuIsOpen()===open)return;
     menu.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));
-    root.classList.toggle('site-menu-open',open);
     if(open){
       menu.scrollTop=0;
       [...menu.querySelectorAll('a[href]')].find(link=>link.getClientRects().length)?.focus({preventScroll:true});
     }
     document.dispatchEvent(new CustomEvent('amira-menu-change',{detail:{open}}));
   };
-  toggle?.addEventListener('click',()=>setMenu(!menu.classList.contains('open')));
+  toggle?.addEventListener('click',()=>setMenu(!menuIsOpen()));
   document.addEventListener('pointerdown',e=>{if(!e.target.closest('.site-header'))setMenu(false);});
   menu?.addEventListener('click',e=>{if(e.target.closest('a'))setMenu(false);});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&menu?.classList.contains('open')){setMenu(false);toggle.focus();}});
+  // Prevent background gestures without changing the scroll container.
+  const blockBackgroundScroll=e=>{
+    if(menuIsOpen()&&!menu.contains(e.target)&&e.cancelable)e.preventDefault();
+  };
+  document.addEventListener('wheel',blockBackgroundScroll,{passive:false});
+  document.addEventListener('touchmove',blockBackgroundScroll,{passive:false});
   document.addEventListener('keydown',e=>{
-    if(e.key!=='Tab'||!menu?.classList.contains('open'))return;
+    if(!menuIsOpen())return;
+    if(e.key==='Escape'){setMenu(false);toggle.focus({preventScroll:true});return;}
+    if(['PageDown','PageUp','Home','End','ArrowUp','ArrowDown',' '].includes(e.key)&&!menu.contains(e.target)){
+      e.preventDefault();return;
+    }
+    if(e.key!=='Tab')return;
     const links=[...menu.querySelectorAll('a[href]')].filter(el=>el.getClientRects().length);
     const first=links[0],last=links.at(-1);
-    if(e.shiftKey&&(document.activeElement===first||document.activeElement===toggle)){e.preventDefault();last?.focus();}
-    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();toggle.focus();}
-    else if(!e.shiftKey&&document.activeElement===toggle){e.preventDefault();first?.focus();}
+    if(e.shiftKey&&(document.activeElement===first||document.activeElement===toggle)){e.preventDefault();last?.focus({preventScroll:true});}
+    else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();toggle.focus({preventScroll:true});}
+    else if(!e.shiftKey&&document.activeElement===toggle){e.preventDefault();first?.focus({preventScroll:true});}
   });
+  window.addEventListener('pagehide',()=>setMenu(false));
+  window.addEventListener('pageshow',()=>setMenu(false));
   const theme=document.getElementById('themeIcon');
   const system=matchMedia('(prefers-color-scheme: dark)');
   function applyTheme(value,persist=false){
