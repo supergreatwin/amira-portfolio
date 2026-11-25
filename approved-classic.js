@@ -10,14 +10,16 @@
     const target=new URL(language.href,location.href);target.searchParams.set('slug',publicSlug);language.href=target.href;
   }
   const menu=document.getElementById('siteMenu');
-  // Keep Contact last in the shared navigation, including keyboard tab order.
+  // Keep About immediately before Contact in the shared navigation, including keyboard tab order.
   if(menu){
     for(const link of menu.querySelectorAll(':scope > a[href]')){
       if(/\/beyond-the-frame(?:\.html)?\/?$/.test(new URL(link.href,location.href).pathname))link.remove();
     }
     const contact=[...menu.children].find(link=>link.matches('a[href]')&&/\/contact(?:\.html)?\/?$/.test(new URL(link.href,location.href).pathname));
     const footer=menu.querySelector('.nav-foot');
+    const about=[...menu.children].find(link=>link.matches('a[href]')&&/\/about(?:\.html)?\/?$/.test(new URL(link.href,location.href).pathname));
     if(contact)menu.insertBefore(contact,footer);
+    if(about&&contact)menu.insertBefore(about,contact);
   }
   const toggle=document.getElementById('menuToggle');
   const setMenu=open=>{if(!menu||!toggle)return;menu.classList.toggle('open',open);toggle.setAttribute('aria-expanded',String(open));};
