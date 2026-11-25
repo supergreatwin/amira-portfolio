@@ -73,7 +73,7 @@
     // public-page beacon. Account and unsubscribe routes never load analytics.
     const rum=document.createElement('script');rum.defer=true;
     rum.src='https://static.cloudflareinsights.com/beacon.min.js';
-    rum.dataset.cfBeacon=JSON.stringify({token:'48e6a91c682040e9a6d6fcae054e89fd'});
+    rum.dataset.cfBeacon=JSON.stringify({token:'d1b8df1a57674a22bfcf836dc51a2c67'});
     rum.dataset.amiraOptionalAnalytics='true';document.head.appendChild(rum);
   }
   function clearAnalyticsCookies() {
