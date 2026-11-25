@@ -906,3 +906,11 @@ html,body{max-width:100%;overflow-x:clip}
 
 /* Beyond the Frame remains public, but is not listed in the hamburger menu. */
 #canvas #siteMenu > a:is([href$="beyond-the-frame.html"],[href$="/beyond-the-frame"],[href$="/beyond-the-frame/"],[href="beyond-the-frame"]){display:none}
+
+/* Homepage film popup: browse the filmography without closing the dialog. */
+#filmDialog .film-dialog-bar{gap:12px;flex-wrap:wrap}
+#filmDialog .film-dialog-actions{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
+#filmDialog .film-next{font:inherit;font-size:13px;font-weight:700;line-height:1.2;padding:10px 14px;min-height:40px;border:1px solid var(--wine);border-radius:0;background:transparent;color:var(--wine);cursor:pointer;white-space:nowrap}
+#filmDialog .film-next:hover{background:var(--wine);color:var(--paper)}
+#filmDialog .film-next:focus-visible{outline:2px solid var(--wine);outline-offset:3px}
+#filmDialog .film-next[hidden]{display:none}

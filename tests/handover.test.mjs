@@ -106,3 +106,25 @@ test('Endorsements omit Human Impacts Institute and Artfacts while retaining MSA
   for(const i of [0,1,2,3,4,6])assert.ok(html.includes('data-portfolio-key="endorsements-'+i+'"'));
  }
 });
+
+test('Homepage film popups can advance in the displayed order, wrap, and retain the original focus target',()=>{
+ for(const locale of ['','ar/']){
+  const html=read('dist/'+locale+'index.html');
+  assert.match(html,/<button[^>]*id="filmDialogNext"[^>]*>/);
+  const ids=[...html.matchAll(/data-film="([^"]+)"/g)].map(m=>m[1]);
+  assert.deepEqual(ids,['sweet-and-salty','street-x-food','biophilia','mamina','double-edged-sword']);
+  const node=()=>({textContent:'',attributes:{},events:{},children:[],addEventListener(k,fn){this.events[k]=fn},replaceChildren(...v){this.children=v},setAttribute(k,v){this.attributes[k]=v},cloneNode(){return node()},append(){},focus(){this.focused=true}});
+  const selectors=new Map();const get=s=>{if(!selectors.has(s))selectors.set(s,node());return selectors.get(s)};
+  const dialog={...node(),open:false,opens:0,scrollTop:42,querySelector:get,showModal(){assert.equal(this.open,false);this.open=true;this.opens++},close(){this.open=false;this.events.close()}};
+  const cards=ids.map(id=>({...node(),dataset:{film:id}}));
+  const templates=new Map(ids.map(id=>['popup-'+id,{content:{querySelector(s){if(s==='[data-trailer]')return null;return {...node(),textContent:id,src:id+'.jpg',alt:id}}}}]));
+  const document={getElementById:id=>id==='filmDialog'?dialog:templates.get(id),querySelectorAll:()=>cards};
+  const source=read('approved-classic.js');
+  vm.runInNewContext(source.slice(source.indexOf("  const filmDialog=document.getElementById('filmDialog')"),source.indexOf("  for(const d of document.querySelectorAll('dialog'))")),{document,ar:locale==='ar/'});
+  cards[0].events.click();assert.equal(dialog.opens,1);
+  for(const id of [...ids.slice(1),ids[0]]){
+   get('#filmDialogNext').events.click();assert.equal(get('#filmDialogTitle').textContent,id);assert.equal(get('[data-full-film]').href,'film-'+id+'.html');assert.equal(dialog.scrollTop,0);assert.equal(dialog.opens,1);
+  }
+  get('#filmDialogClose').events.click();assert.equal(cards[0].focused,true);
+ }
+});
