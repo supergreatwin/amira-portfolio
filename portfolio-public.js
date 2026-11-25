@@ -30,7 +30,7 @@ function append(r){if(page==='awards'&&r.kind!=='award'||page==='endorsements'&&
  const title=pick(r,'title'),body=pick(r,'body'),label=pick(r,'label'),attribution=pick(r,'attribution'),a=node('article',page==='awards'?'award-feature':page==='screenings'?'archive-entry':'recognition-entry testimonial-entry');a.dataset.portfolioId=r.id;
  if(page==='endorsements'){a.append(node('p','archive-tag',label||(ar?'شهادة مهنية':'Professional testimonial')),dateNode(r,'portfolio-date'),node('h3','',title));const q=node('blockquote','testimonial-quote');for(const p of body.split(/\n+/).filter(Boolean))q.append(node('p','',p));a.append(q,node('div','testimonial-attribution',attribution));const link=source(r);if(link)a.append(link);document.querySelector('#professional-testimonials')?.append(a);return;}
  const info=node('div',page==='awards'?'award-info':'archive-info');info.append(node('p','archive-tag',label),node('h2','',title));for(const p of body.split(/\n+/).filter(Boolean))info.append(node('p','',p));if(attribution)info.append(node('p','fact-note',attribution));const link=source(r);if(link)info.append(link);a.append(dateNode(r,page==='awards'?'award-year':'archive-date'),info);
- const list=document.querySelector('.archive-list');if(!list)return;if(page==='awards'){list.append(a);return;}const headers=[...list.querySelectorAll(':scope > .archive-group-title')],index=['exhibition','screening','selection'].indexOf(r.kind);const next=headers[index+1];if(next)list.insertBefore(a,next);else list.append(a);}
+ const list=document.querySelector('.archive-list');if(!list)return;list.append(a);}
 // Compare recorded dates without inventing missing months or days.
 function chronologyKey(value){
  const parts=String(value||'').split('-');
