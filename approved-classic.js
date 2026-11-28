@@ -221,7 +221,13 @@
     const dialog=document.createElement('dialog');dialog.className='modal';dialog.setAttribute('aria-labelledby','form-dialog-title');
     dialog.innerHTML='<div class="modal-inner"><div class="modal-top"><h2 id="form-dialog-title"></h2><button type="button" aria-label="'+(ar?'إغلاق النموذج':'Close form')+'">×</button></div><p class="hint">'+(ar?'تتولى Tally معالجة بيانات النموذج.':'Tally processes information submitted through this form.')+'</p><iframe title="'+(ar?'نموذج التواصل':'Submission form')+'" referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
     document.body.append(dialog);const frame=dialog.querySelector('iframe');let origin;
-    for(const b of formButtons)b.addEventListener('click',()=>{origin=b;dialog.querySelector('h2').textContent=b.textContent;frame.src='https://tally.so/embed/'+encodeURIComponent(b.dataset.tallyForm)+'?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1';dialog.showModal();});
+    for(const b of formButtons)b.addEventListener('click',()=>{
+      origin=b;dialog.querySelector('h2').textContent=b.textContent;
+      // Tally's saved light theme needs its opaque background on a dark page.
+      const transparentBackground=document.documentElement.dataset.theme==='dark'?'0':'1';
+      frame.src='https://tally.so/embed/'+encodeURIComponent(b.dataset.tallyForm)+'?alignLeft=1&hideTitle=1&transparentBackground='+transparentBackground+'&dynamicHeight=1';
+      dialog.showModal();
+    });
     dialog.querySelector('button').addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>{frame.removeAttribute('src');origin?.focus();});
   }
   const announcement=document.getElementById('collabAnnouncement');
